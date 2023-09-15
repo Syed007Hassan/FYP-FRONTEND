@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -32,14 +33,21 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [company, setCompany] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+
+  const handleSubmit = (event: any) => {
+    console.log("handleSubmit");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    const data = { firstName, lastName, company, phoneNumber, email, password, repeatPassword };
+    console.log(data);
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -88,6 +96,7 @@ export default function SignInSide() {
                       id="firstName"
                       type="text"
                       placeholder="First Name"
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
                   </div>
                   <div className="w-full md:w-1/2 px-3">
@@ -99,6 +108,7 @@ export default function SignInSide() {
                       id="lastName"
                       type="text"
                       placeholder="Last Name"
+                      onChange={(e) => setLastName(e.target.value)}
                     />
                   </div>
                 </div>
@@ -112,6 +122,7 @@ export default function SignInSide() {
                     id="company"
                     type="text"
                     placeholder="Company"
+                    onChange={(e) => setCompany(e.target.value)}
                   />
                 </div>
                 <div className="mb-4">
@@ -124,6 +135,7 @@ export default function SignInSide() {
                       id="phoneNumber"
                       type="text"
                       placeholder="Phone Number"
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </div>
                 </div>
@@ -136,6 +148,7 @@ export default function SignInSide() {
                     id="email"
                     type="email"
                     placeholder="Email Address"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-4 flex flex-wrap -mx-3">
@@ -148,6 +161,7 @@ export default function SignInSide() {
                       id="password"
                       type="password"
                       placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <div className="w-full md:w-1/2 px-3">
@@ -159,18 +173,19 @@ export default function SignInSide() {
                       id="repeatPassword"
                       type="password"
                       placeholder="Repeat Password"
+                      onChange={(e) => setRepeatPassword(e.target.value)}
                     />
                   </div>
                 </div>
-                <div className="mb-4">
+                
+                <div className="mb-4 mt-3">
                   <button
-                    className="bubble-element Button clickable-element bg-blue-500 text-white font-semibold py-2 px-4 rounded-full shadow-md hover:bg-blue-700 focus:outline-none"
-                    // tabindex="6"
-                    id="rabot"
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleSubmit}
                   >
-                    Create ➔
+                    Sign Up ➔
                   </button>
-
                 </div>
 
                 <div className="text-center">

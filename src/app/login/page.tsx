@@ -1,5 +1,6 @@
 "use client";
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,14 +32,26 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [company, setCompany] = useState('');
+
+  const handleSubmit = (event: any) => {
+    console.log("handleSubmit");
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    const data = { email, password, company };
+    console.log(data);
+  }
+
+  const showPassword = () => {
+    var isCheck = document.getElementById("password");
+    if (isCheck!.getAttribute("type") === "password") {
+      isCheck!.setAttribute("type", "text");
+    } else {
+      isCheck!.setAttribute("type", "password");
+    }
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -91,59 +104,72 @@ export default function SignInSide() {
             </Typography>
 
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+              <div className="shadow-md rounded px-20 pt-6 pb-8 mb-4">
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                    Email Address
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
                     id="email"
-                    type="email"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
-                    Company Name
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="company"
-                    type="text"
-                    placeholder="Company"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                />
+                <div className="mb-4">
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="company"
+                    label="Company Name"
+                    id="company"
+                    autoComplete="company"
+                    onChange={(e) => setCompany(e.target.value)}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+  
+                <div className="mb-4 mt-3">
+                  <input type="checkbox" onClick={showPassword} /> Show Password
+                </div>
 
                 <div className="mb-4 mt-3">
                   <button
-                    className="bubble-element Button clickable-element bg-blue-500 text-white font-semibold py-2 px-4 rounded-full shadow-md hover:bg-blue-700 focus:outline-none"
-                    tabindex="6"
-                    id="rabot"
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleSubmit}
                   >
                     Sign In ➔
                   </button>
-
                 </div>
 
-                <div className="text-center">
-                  <a
-                    className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                    href="/signup"
-                  >
-                    {"Sign UP"}
-                  </a>
+                <div className="text-center text-sm text-gray-500">
+                  <p>
+                    Don't have an account?{' '}
+                    <a href="/signup" className="text-blue-500 hover:text-blue-700">
+                      Sign up
+                    </a>
+                  </p>
                 </div>
               </div>
+
               <Copyright sx={{ mt: 2 }} />
             </Box>
 

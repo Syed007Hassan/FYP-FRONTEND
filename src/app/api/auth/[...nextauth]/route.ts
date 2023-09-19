@@ -21,9 +21,6 @@ async function refreshToken(token: JWT): Promise<JWT> {
   };
 }
 
-
-
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -37,6 +34,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+
         if (!credentials?.email || !credentials?.password) return null;
         const { email, password } = credentials;
         const res = await fetch(Backend_URL + "/auth/login", {
@@ -58,7 +56,6 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
         const user = await res.json();
-        
         return user;
       },
     }),

@@ -15,6 +15,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { registerUser } from "@/redux/features/auth/authActions";
+import { redirect } from 'next/navigation';
 
 function Copyright(props: any) {
   return (
@@ -42,11 +45,23 @@ export default function SignInSide() {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
+  const { loading, userInfo, error, success } = useAppSelector((state) => state.authReducer);
+  const dispatch = useAppDispatch()
+
   const handleSubmit = (event: any) => {
     console.log("handleSubmit");
     event.preventDefault();
-    const data = { firstName, lastName, company, phoneNumber, email, password, repeatPassword };
+    const name = firstName + " " + lastName;
+    const data = { name, email, password };
     console.log(data);
+
+    if(password !== repeatPassword) {
+      alert("Passwords do not match");
+    }
+
+    data.email = data.email.toLowerCase();
+    dispatch(registerUser(data));
+    redirect("/login");
   }
 
   return (

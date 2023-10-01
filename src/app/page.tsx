@@ -1,7 +1,13 @@
 "use client";
 
 import { useGetUsersQuery } from "@/redux/services/userApi";
-import { decrement, increment, reset, incrementByAmount } from "@/redux/features/counterSlice";
+import {
+  decrement,
+  increment,
+  reset,
+  incrementByAmount,
+} from "@/redux/features/counterSlice";
+import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export default function Home() {
@@ -10,7 +16,6 @@ export default function Home() {
 
   const { isLoading, isFetching, data, error } = useGetUsersQuery(null);
 
-
   return (
     <main style={{ maxWidth: 1200, marginInline: "auto", padding: 20 }}>
       <div style={{ marginBottom: "4rem", textAlign: "center" }}>
@@ -18,14 +23,14 @@ export default function Home() {
         <button onClick={() => dispatch(increment())}>increment</button>
         <button
           onClick={() => dispatch(decrement())}
-          style={{ marginInline: 16 }}  
+          style={{ marginInline: 16 }}
         >
           decrement
         </button>
         <button onClick={() => dispatch(reset())}>reset</button>
         <button
           onClick={() => dispatch(incrementByAmount(2))}
-          style={{ marginInline: 16 }}  
+          style={{ marginInline: 16 }}
         >
           increment by 2
         </button>
@@ -48,10 +53,11 @@ export default function Home() {
               key={user.id}
               style={{ border: "1px solid #ccc", textAlign: "center" }}
             >
-              <img
+              <Image
                 src={`https://robohash.org/${user.id}?set=set2&size=180x180`}
                 alt={user.name}
-                style={{ height: 180, width: 180 }}
+                width={180}
+                height={180}
               />
               <h3>{user.name}</h3>
             </div>

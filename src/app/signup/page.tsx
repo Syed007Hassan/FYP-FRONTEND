@@ -52,7 +52,8 @@ export default function SignInSide() {
     console.log("handleSubmit");
     event.preventDefault();
     const name = firstName + " " + lastName;
-    const data = { name, email, password };
+    const role = "employee";
+    const data = { name, email, password, role };
     console.log(data);
 
     if(password !== repeatPassword) {

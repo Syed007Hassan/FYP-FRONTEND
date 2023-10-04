@@ -1,16 +1,15 @@
 // authActions.js
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-
-const backendURL = 'http://localhost:5000'
+import { Backend_URL } from '@/lib/Constants';
 
 export const registerUser = createAsyncThunk<
   void,
-  { name: string; email: string; password: string },
+  { name: string; email: string; password: string, role: string },
   { rejectValue: string }
 >(
   "auth/register",
-  async ({ name, email, password }, { rejectWithValue }) => {
+  async ({ name, email, password, role }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -19,8 +18,8 @@ export const registerUser = createAsyncThunk<
       };
 
       await axios.post(
-        `${backendURL}/api/auth/register`,
-        { name, email, password },
+        `${Backend_URL}/auth/register`,
+        { name, email, password, role },
         config
       );
     } catch (error: any) {

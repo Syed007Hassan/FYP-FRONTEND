@@ -3,7 +3,8 @@ import { registerUser } from "./authActions";
 
 export interface AuthState {
   loading: boolean;
-  userInfo: null | {};
+  
+    userInfo: null | {};
   userToken: null | string;
   error: null | string;
   success: boolean;

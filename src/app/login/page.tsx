@@ -14,6 +14,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { signIn } from "next-auth/react";
 
 function Copyright(props: any) {
   return (
@@ -41,11 +42,13 @@ export default function SignInSide() {
   const [password, setPassword] = useState("");
   const [company, setCompany] = useState("");
 
-  const handleSubmit = (event: any) => {
-    console.log("handleSubmit");
-    event.preventDefault();
-    const data = { email, password, company };
-    console.log(data);
+  const handleSubmit = async (event: any) => {
+    const result = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: true,
+      callbackUrl: "/dashboard",
+    });
   };
 
   const showPassword = () => {

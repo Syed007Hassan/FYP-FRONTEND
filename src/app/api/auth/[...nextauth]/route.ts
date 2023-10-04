@@ -37,46 +37,68 @@ export const authOptions: NextAuthOptions = {
 
         if (!credentials?.email || !credentials?.password) return null;
         const { email, password } = credentials;
+        const role = "employee"
         const res = await fetch(Backend_URL + "/auth/login", {
           method: "POST",
           body: JSON.stringify({
             email,
             password,
+            role,
           }),
           headers: {
             "Content-Type": "application/json",
           },
         });
 
-        console.log(res + 'status');
-
+        // console.log(res);
+        // console.log(res.success + "status");
         if (res.status == 401) {
           console.log(res.statusText + 'nulllllll');
 
           return null;
         }
         const user = await res.json();
+        if (!user.success) return null;
+        // const user = response.data.jwt;
+        console.log(user);
         return user;
+        // const user = await res.json();
+        // return user;
       },
     }),
   ],
 
+  // callbacks: {
+  //   async jwt({ token, user }) {
+  //     if (user) return { ...token, ...user };
+
+  //     if (new Date().getTime() < token.backendTokens.expiresIn)
+  //       return token;
+
+  //     return token;
+  //     return await refreshToken(token);
+  //   },
+
+  //   async session({ token, session }) {
+  //     // console.log(session);
+  //     session.user = token.user;
+  //     session.backendTokens = token.backendTokens;
+
+  //     return session;
+  //   },
+  // },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) return { ...token, ...user };
-
-      if (new Date().getTime() < token.backendTokens.expiresIn)
-        return token;
-
-      return await refreshToken(token);
+      return { ...token, ...user };
     },
-
-    async session({ token, session }) {
-      session.user = token.user;
-      session.backendTokens = token.backendTokens;
-
+    async session({ session, token, user }) {
+      session.user = token as any;
       return session;
     },
+  },
+
+  pages: {
+    signIn: "/login",
   },
 };
 

@@ -1,0 +1,39 @@
+.noUi-horizontal {
+    @apply h-[10px] bg-white border border-gray-100/50 dark:bg-neutral-600 dark:border-neutral-600;
+}
+.noUi-horizontal .noUi-handle {
+    @apply w-5 h-5 rounded-full shadow-none border-gray-100/50;
+}
+
+[data-theme-color="violet"] .noUi-horizontal .noUi-handle {
+    @apply bg-violet-50;
+}
+
+[data-theme-color="sky"] .noUi-horizontal .noUi-handle {
+    @apply bg-sky-50;
+}
+
+[data-theme-color="red"] .noUi-horizontal .noUi-handle {
+    @apply bg-red-50;
+}
+
+[data-theme-color="green"] .noUi-horizontal .noUi-handle {
+    @apply bg-green-50;
+}
+
+[data-theme-color="pink"] .noUi-horizontal .noUi-handle {
+    @apply bg-pink-50;
+}
+
+[data-theme-color="blue"] .noUi-horizontal .noUi-handle {
+    @apply bg-blue-50;
+}
+
+.noUi-horizontal .noUi-handle::after, .noUi-horizontal .noUi-handle::before {
+    content: "";
+    opacity: 0;
+}
+
+.noUi-target{
+    @apply shadow-none;
+}

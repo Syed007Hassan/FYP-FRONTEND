@@ -1,0 +1,24 @@
+.dropdown-menu {
+    @apply hidden;
+}
+.dropdown:focus .dropdown-menu {
+    @apply relative block;
+}
+
+@media (min-width:992px) {
+    .dropdown-menu {
+        @apply hidden;
+    }
+    .dropdown:hover .dropdown-menu {
+        @apply block !important;
+    }
+}
+
+@media (max-width:959px) {
+  
+    .navbar-res {
+        height: 400px;
+        overflow-y: auto;
+    }
+}
+

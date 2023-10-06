@@ -2,6 +2,7 @@ import AppBar from "@/components/AppBar";
 import "./globals.css";
 import Provider from "@/components/Providers";
 import { Providers } from "@/redux/provider";
+import Header from "@/components/Header";
 
 export const metadata = {
   title: "Next-Auth Tutorial",
@@ -18,7 +19,8 @@ export default function RootLayout(props: Props) {
       <body>
         <Provider>
           <Providers>
-            <AppBar />
+            {/* <AppBar /> */}
+            <Header />
             {props.children}
           </Providers>
         </Provider>

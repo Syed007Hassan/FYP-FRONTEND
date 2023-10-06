@@ -15,6 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "next-auth/react";
+import styles from "./login.module.css";
 
 function Copyright(props: any) {
   return (
@@ -61,14 +62,14 @@ export default function SignInSide() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+    <div className={`bg-blue-500 p-20`} >
+      <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Grid
           item
-          xs={12}
+          xs={15}
           sm={4}
-          md={7}
+          md={5}
           sx={{
             backgroundImage:
               "url(https://source.unsplash.com/random?wallpapers)",
@@ -79,34 +80,23 @@ export default function SignInSide() {
                 : t.palette.grey[900],
             backgroundSize: "cover",
             backgroundPosition: "center",
+            borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
+            height: "80vh",
+            paddingRight: "0px",
           }}
         />
-
-        {/* <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        /> */}
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square 
+            sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
           <Box
             sx={{
-              my: 8,
+              my: 4,
               mx: 4,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -117,9 +107,9 @@ export default function SignInSide() {
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+              sx={{ m:2 }}
             >
-              <div className="shadow-md rounded px-20 pt-6 pb-8 mb-4">
+              <div className="">
                 <div className="mb-4">
                   <TextField
                     margin="normal"
@@ -130,6 +120,8 @@ export default function SignInSide() {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    variant="outlined"
+                    size="small"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -143,6 +135,9 @@ export default function SignInSide() {
                     label="Company Name"
                     id="company"
                     autoComplete="company"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
                     onChange={(e) => setCompany(e.target.value)}
                   />
                 </div>
@@ -157,6 +152,9 @@ export default function SignInSide() {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
@@ -193,6 +191,7 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    
+    </div>
   );
 }

@@ -66,14 +66,14 @@ export default function SignInSide() {
   }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+    <div className={`bg-blue-500 p-20`} >
+      <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Grid
           item
           xs={false}
           sm={4}
-          md={7}
+          md={5}
           sx={{
             backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
             backgroundRepeat: 'no-repeat',
@@ -81,12 +81,15 @@ export default function SignInSide() {
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
+            height: "80vh",
+            paddingRight: "0px",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
           <Box
             sx={{
-              my: 8,
+              my: 1,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
@@ -100,97 +103,118 @@ export default function SignInSide() {
               Sign Up as a Recruiter
             </Typography>
     
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <div className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ m:1}}>
+            <div className="">
                 <div className="mb-4 flex flex-wrap -mx-3">
                   <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
-                      First Name
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="firstName"
-                      type="text"
-                      placeholder="First Name"
-                      onChange={(e) => setFirstName(e.target.value)}
-                    />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="f_name"
+                    label="First Name"
+                    name="f_name"
+                    autoComplete="first_name"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
                   </div>
                   <div className="w-full md:w-1/2 px-3">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="lastName">
-                      Last Name
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="lastName"
-                      type="text"
-                      placeholder="Last Name"
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="l_name"
+                    label="Last Name"
+                    name="l_name"
+                    autoComplete="last_name"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
                   </div>
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="company">
-                    Company
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                <div className="mb-4 flex flex-wrap -mx-3">
+                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
                     id="company"
-                    type="text"
-                    placeholder="Company"
+                    label="Company Name"
+                    name="company"
+                    autoComplete="company"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
                     onChange={(e) => setCompany(e.target.value)}
                   />
                 </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phoneNumber">
-                    Phone Number
-                  </label>
-                  <div className="flex">
-                    <input
-                      className="shadow appearance-none border rounded-l w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="phoneNumber"
-                      type="text"
-                      placeholder="Phone Number"
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                  </div>
+                <div className="w-full md:w-1/2 px-3">
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="phone"
+                    label="Phone Number"
+                    name="phone"
+                    autoComplete="phone"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
                 </div>
                 <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                    Email Address
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
                     id="email"
-                    type="email"
-                    placeholder="Email Address"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="mb-4 flex flex-wrap -mx-3">
                   <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                      Password
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="password"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="password"
+                    label="Password"
+                    name="password"
+                    autoComplete="password"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                   </div>
                   <div className="w-full md:w-1/2 px-3">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="repeatPassword">
-                      Repeat Password
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="repeatPassword"
-                      type="password"
-                      placeholder="Repeat Password"
-                      onChange={(e) => setRepeatPassword(e.target.value)}
-                    />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="repeat_password"
+                    label="Repeat Password"
+                    name="repeat_password"
+                    autoComplete="repeat_password"
+                    autoFocus
+                    variant="outlined"
+                    size="small"
+                    onChange={(e) => setRepeatPassword(e.target.value)}
+                  />
                   </div>
                 </div>
                 
@@ -220,6 +244,6 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </div>
   );
 }

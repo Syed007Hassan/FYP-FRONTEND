@@ -1,0 +1,59 @@
+.search-job .choices__list--multiple .choices__item {
+    @apply pt-1 pb-1 mb-0 border border-transparent;
+}
+
+[data-theme-color="violet"] .search-job .choices__list--multiple .choices__item {
+    @apply bg-violet-500;
+}
+
+[data-theme-color="sky"] .search-job .choices__list--multiple .choices__item {
+    @apply bg-sky-500;
+}
+
+[data-theme-color="red"] .search-job .choices__list--multiple .choices__item {
+    @apply bg-red-500;
+}
+
+[data-theme-color="green"] .search-job .choices__list--multiple .choices__item {
+    @apply bg-green-500;
+}
+
+[data-theme-color="pink"] .search-job .choices__list--multiple .choices__item {
+    @apply bg-pink-500;
+}
+
+[data-theme-color="blue"] .search-job .choices__list--multiple .choices__item {
+    @apply bg-blue-500;
+}
+
+.search-job .choices__list--dropdown {
+    @apply font-medium border-gray-100/50 ;
+    z-index: 2;
+    max-height: 280px;
+}
+.search-job .choices__list--dropdown .choices__item--selectable {
+    @apply p-0 pl-[15px] pr-[29px] text-left text-base;
+    padding: 0;
+    line-height: 43px;
+    min-height: 44px;
+}
+.search-job .choices__list--dropdown .choices__item--selectable::after {
+    @apply hidden;
+}
+
+.search-job .choices__input {
+    @apply bg-transparent;
+    margin-bottom: 0;
+}
+.search-job .choices__inner {
+    @apply font-medium text-gray-900 bg-transparent border border-gray-100 dark:border-neutral-600;
+    padding: 6px 10px;
+    min-height: 39px;
+}
+.search-job .choices__inner:focus {
+    border: 0 !important;
+}
+
+.choices [type='search']:focus{
+ @apply border-transparent ring-0 ring-offset-0 outline-none p-0 ml-2 !important;
+}

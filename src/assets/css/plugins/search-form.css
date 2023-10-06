@@ -1,0 +1,212 @@
+.filter-search-form {
+    @apply relative dark:bg-neutral-700 !important;
+}
+.filter-search-form i  {
+    @apply absolute top-[48%] ltr:left-3 text-xl rtl:right-3;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+[data-theme-color="violet"] .filter-search-form i {
+    @apply text-violet-500 ;
+}
+
+[data-theme-color="sky"] .filter-search-form i {
+    @apply text-sky-500;
+}
+
+[data-theme-color="red"] .filter-search-form i {
+    @apply text-red-500;
+}
+
+[data-theme-color="green"] .filter-search-form i {
+    @apply text-green-500;
+}
+
+[data-theme-color="pink"] .filter-search-form i {
+    @apply text-pink-500;
+}
+
+[data-theme-color="blue"] .filter-search-form i {
+    @apply text-blue-500;
+}
+
+.registration-form {
+    @apply relative;
+}
+.registration-form .submit-btn {
+    @apply rounded-lg;
+}
+.registration-form .form-control, .registration-form .choices[data-type*=select-one] .choices__inner {
+    @apply rounded-lg;
+}
+
+.filter-border{
+    @apply border-0 border-gray-100/50 dark:border-gray-500/20 !important;
+}
+
+.filter-search-form{
+    @apply border-0 border-gray-100/50 dark:border-gray-500/20;
+}
+
+@media (min-width: 992px) {
+    .filter-border::before {
+        @apply absolute border-r-[1px] border-gray-100/50 ltr:right-1 rtl:left-1 h-[35px] top-[14px] dark:border-neutral-600;
+        content: "";
+        z-index: 1;
+    }
+    .registration-form {
+        @apply relative;
+    }
+    .registration-form .submit-btn {
+        border-radius: 8px 0px 0px 8px;
+    }
+    .registration-form .form-control {
+        border-radius: 8px 0px 0px 8px;
+    }
+
+    .registration-form .choices[data-type*=select-one] .choices__inner {
+        @apply rounded-lg xl:rounded-none;
+    }
+}
+.filter-input-box, .form-select, .filter-search-form .choices__inner {
+    @apply border-none text-base h-[60px] ltr:xl:rounded-none ltr:xl:rounded-l-lg rtl:xl:rounded-r-lg rtl:xl:rounded-l-none pt-4 pb-[15px] ltr:pr-[6px] ltr:pl-[38px] rtl:pl-[6px] rtl:pr-[38px];
+    box-shadow: none !important;
+}
+
+
+.filter-input-box{
+    @apply dark:bg-neutral-700;
+}
+
+.treding-keywords li a {
+    @apply text-gray-500;
+    transition: all 0.5s ease;
+}
+.treding-keywords li a:hover {
+    @apply text-white;
+}
+
+.filter-search-form .form-select{
+    @apply bg-white border border-white dark:bg-neutral-700;
+}
+
+
+/* choice */
+
+.choices__list--multiple .choices__item {
+    @apply py-5 mb-0 bg-transparent border bg-violet-500 dark:bg-neutral-700 dark:border-neutral-700;
+}
+.choices__list--dropdown {
+    @apply border border-white dark:border-neutral-700;
+    z-index: 2;
+    font-weight: 500;
+    max-height: 280px;
+}
+.choices__list--dropdown .choices__item--selectable {
+    @apply p-0 leading-10 ltr:pl-[15px] ltr:pr-[29px] rtl:pr-[15px] rtl:pl-[29px] text-left text-base;
+    min-height: 44px;
+}
+.choices__list--dropdown .choices__item--selectable::after {
+    display: none;
+}
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    @apply bg-transparent bg-violet-500 dark:bg-neutral-600/50;
+}
+
+.choices__list--dropdown .choices__item, .choices__list[aria-expanded] .choices__item{
+    padding: 5px 10px ;
+}
+
+.choices__list--dropdown.choices__list[aria-expanded] {
+    @apply bg-white border border-white dark:bg-neutral-700 dark:text-gray-50 dark:border-neutral-700;
+}
+.choices__input {
+    @apply mb-0 bg-white;
+}
+.choices__inner {
+    @apply text-gray-500 bg-white border border-gray-100/50 dark:bg-neutral-700 dark:text-gray-50 dark:border-neutral-600 dark:bg-transparent;
+    padding: 6px 10px;
+    min-height: 39px;
+    font-weight: 500;
+}
+.choices__inner:focus {
+    @apply border border-white;
+}
+.choices[data-type*=select-one] .choices__input {
+    @apply bg-white border m-[10px] dark:bg-neutral-800;
+    border-radius: 5px;
+    width: 90%;
+}
+
+
+.choices[data-type*=select-one]::after {
+    @apply border-none ltr:right-7 rtl:left-7 ltr:left-auto rtl:right-auto top-[35%] dark:text-gray-50;
+    content: "\F0140";
+    font-family: 'Material Design Icons';
+}
+.choices[data-type*=select-one].is-open .choices__list--dropdown, .choices[data-type*=select-one].is-open .choices__inner {
+    @apply border shadow shadow-gray-100 border-gray-50 dark:border-neutral-700 dark:shadow-neutral-500;
+}
+.choices[data-type*=select-one].is-open::after {
+    margin-top: -2.5px;
+}
+.choices[data-type*=select-one] .is-focused .choices__inner, .choices[data-type*=select-one] .is-open .choices__inner {
+    @apply border border-gray-300 dark:border-neutral-700;
+}
+.choices[data-type*=select-one] .selection-widget .form-select {
+    @apply text-gray-900 border border-gray-100;
+    padding: 8px 20px;
+}
+.choices[data-type*=select-one] .selection-widget .form-select:focus {
+    box-shadow: none;
+}
+.choices[data-type*=select-one] .selection-widget .form-select option {
+    padding: 20px;
+}
+
+/* filler-job-form */
+.filter-job-input-box{
+    @apply ltr:mr-10 rtl:ml-10 text-sm h-11 rounded-md border-gray-100/50 dark:bg-neutral-700 dark:border-gray-100/20 py-[6px] ltr:pr-[6px] ltr:pl-[40px] rtl:pr-[40px] rtl:pl-[6px] focus:ring-0 focus:ring-offset-0;
+}
+
+.filler-job-form i {
+    @apply absolute top-[48%] ltr:left-[10px] rtl:right-[10px] z-10 text-xl;
+    transform: translateY(-50%);
+}
+
+[data-theme-color="violet"] .filler-job-form i {
+    @apply text-violet-500;
+}
+
+[data-theme-color="sky"] .filler-job-form i {
+    @apply text-sky-500;
+}
+
+[data-theme-color="red"] .filler-job-form i {
+    @apply text-red-500;
+}
+
+[data-theme-color="green"] .filler-job-form i {
+    @apply text-green-500;
+}
+
+[data-theme-color="pink"] .filler-job-form i {
+    @apply text-pink-500;
+}
+
+[data-theme-color="blue"] .filler-job-form i {
+    @apply text-blue-500;
+}
+
+.filler-job-form .choices__inner{
+    @apply border border-gray-100/50 rounded-md dark:border-gray-100/20 dark:text-gray-50 py-[6px] ltr:pr-[6px] ltr:pl-[40px] rtl:pr-[40px] rtl:pl-[6px];
+}
+
+
+/* candidate */
+
+.selection-widget .choices{
+    @apply border rounded border-gray-100/50 dark:border-neutral-600;
+}
+

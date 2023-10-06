@@ -1,0 +1,84 @@
+.job-categorie .uim-svg svg{
+    @apply w-8 h-8;
+}
+
+[data-theme-color="violet"] .job-categorie .uim-svg svg {
+    @apply fill-violet-500;
+}
+
+[data-theme-color="sky"] .job-categorie .uim-svg svg {
+    @apply fill-sky-500;
+}
+
+[data-theme-color="red"] .job-categorie .uim-svg svg {
+    @apply fill-red-500;
+}
+
+[data-theme-color="green"] .job-categorie .uim-svg svg {
+    @apply fill-green-500;
+}
+
+
+[data-theme-color="pink"] .job-categorie .uim-svg svg {
+    @apply fill-pink-500;
+}
+
+[data-theme-color="blue"] .job-categorie .uim-svg svg {
+    @apply fill-blue-500;
+}
+
+.key-features .uim-svg svg{
+    @apply w-6 h-6;
+}
+
+[data-theme-color="violet"] .key-features .uim-svg svg {
+    @apply fill-violet-500;
+}
+
+[data-theme-color="sky"] .key-features .uim-svg svg {
+    @apply fill-sky-500;
+}
+
+[data-theme-color="red"] .key-features .uim-svg svg {
+    @apply fill-red-500;
+}
+
+[data-theme-color="green"] .key-features .uim-svg svg {
+    @apply fill-green-500;
+}
+
+[data-theme-color="pink"] .key-features .uim-svg svg {
+    @apply fill-pink-500;
+}
+
+[data-theme-color="blue"] .key-features .uim-svg svg {
+    @apply fill-blue-500;
+}
+
+.pricing-icon .uim-svg svg {
+    @apply w-8 h-8;
+}
+
+[data-theme-color="violet"] .pricing-icon .uim-svg svg {
+    @apply fill-violet-500;
+}
+
+[data-theme-color="sky"] .pricing-icon .uim-svg svg {
+    @apply fill-sky-500;
+}
+
+[data-theme-color="red"] .pricing-icon .uim-svg svg {
+    @apply fill-red-500;
+}
+
+[data-theme-color="green"] .pricing-icon .uim-svg svg {
+    @apply fill-green-500;
+}
+
+[data-theme-color="pink"] .pricing-icon .uim-svg svg {
+    @apply fill-pink-500;
+}
+
+[data-theme-color="blue"] .pricing-icon .uim-svg svg {
+    @apply fill-blue-500;
+}

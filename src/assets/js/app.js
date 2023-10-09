@@ -1,7 +1,3 @@
-
-
-/********************* Menu Js **********************/
-
 //  Window scroll sticky class add
 function windowScroll() {
     const navbar = document.getElementById("navbar");

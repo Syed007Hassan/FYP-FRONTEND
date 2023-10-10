@@ -32,17 +32,20 @@ export const authOptions: NextAuthOptions = {
           placeholder: "jsmith",
         },
         password: { label: "Password", type: "password" },
+        companyName: { label: "Company Name", type: "text" },
       },
       async authorize(credentials, req) {
 
-        if (!credentials?.email || !credentials?.password) return null;
-        const { email, password } = credentials;
-        const role = "employee"
-        const res = await fetch(Backend_URL + "/auth/login", {
+        if (!credentials?.email || !credentials?.password || !credentials?.companyName ) return null;
+        const { email, password, companyName } = credentials;
+        // const companyName = "Dasda";
+        const role = "employer"
+        const res = await fetch(Backend_URL + "/auth/loginEmployer", {
           method: "POST",
           body: JSON.stringify({
             email,
             password,
+            companyName,
             role,
           }),
           headers: {
@@ -60,6 +63,7 @@ export const authOptions: NextAuthOptions = {
         const user = await res.json();
         if (!user.success) return null;
         // const user = response.data.jwt;
+        console.log(user);
         console.log(user);
         return user;
         // const user = await res.json();

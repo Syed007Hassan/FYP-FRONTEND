@@ -5,11 +5,11 @@ import { Backend_URL } from '@/lib/Constants';
 
 export const registerUser = createAsyncThunk<
   void,
-  { name: string; email: string; password: string, role: string },
+  { name: string; email: string; password: string, phone: number, companyName: string, role: string },
   { rejectValue: string }
 >(
-  "auth/register",
-  async ({ name, email, password, role }, { rejectWithValue }) => {
+  "/auth/registerEmployer",
+  async ({ name, email, password, phone, companyName, role }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -17,9 +17,11 @@ export const registerUser = createAsyncThunk<
         },
       };
 
+      console.log(name, email, password, phone, companyName, role);
+
       await axios.post(
-        `${Backend_URL}/auth/register`,
-        { name, email, password, role },
+        `${Backend_URL}/auth/registerEmployer`,
+        { name, email, password, phone, companyName ,role },
         config
       );
     } catch (error: any) {

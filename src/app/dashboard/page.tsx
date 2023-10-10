@@ -1,16 +1,20 @@
+
 'use client'
 import React from "react";
 import axios from "axios";
 import { Backend_URL } from "@/lib/Constants";
 import { getSession } from "next-auth/react";
-const DashboardPage = () => {
-  
 
+const DashboardPage = () => {
   const verifyToken = async () => {
     try {
       const session = await getSession();
-      const jwt = session?.user.data.jwt;
-      // console.log(jwt);
+      // console.log(session);
+      if (!session || !session?.user || !session?.user.data) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session?.user.data.jwt;
+      console.log(jwt);
       const result = await axios.get(Backend_URL + "/auth/validateToken", {
         headers: {
           Authorization: `Bearer ${jwt}`,
@@ -24,7 +28,10 @@ const DashboardPage = () => {
 
   const getMySession = async () => {
     const session = await getSession();
-    const jwt = session?.user.data.jwt;
+    if (!session || !session?.user || !session?.user.data) {
+      throw new Error("Invalid session");
+    }
+    const jwt: string = session?.user.data.jwt;
     console.log(jwt);
   };
 
@@ -34,8 +41,7 @@ const DashboardPage = () => {
       <button onClick={verifyToken}>VerifyToken</button>
       <button onClick={getMySession}>GetMySession</button>
     </div>
-
-  )
+  );
 };
 
 export default DashboardPage;

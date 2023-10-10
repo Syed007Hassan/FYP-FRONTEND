@@ -44,9 +44,11 @@ export default function SignInSide() {
   const [company, setCompany] = useState("");
 
   const handleSubmit = async (event: any) => {
+    const companyName = company;
     const result = await signIn("credentials", {
       email: email,
       password: password,
+      companyName: companyName,
       redirect: true,
       callbackUrl: "/dashboard",
     });

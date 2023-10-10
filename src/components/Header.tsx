@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 // Import your DemoPage component
 
 

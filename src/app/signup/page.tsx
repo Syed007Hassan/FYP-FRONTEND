@@ -39,8 +39,8 @@ export default function SignInSide() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [company, setCompany] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [phoneNum, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -52,9 +52,11 @@ export default function SignInSide() {
     console.log("handleSubmit");
     event.preventDefault();
     const name = firstName + " " + lastName;
-    const role = "employee";
-    const data = { name, email, password, role };
-    console.log(data);
+    const role = "employer";
+    // change the phone type from string to number
+    const phone = parseInt(phoneNum);
+    const data = { name, email, password, phone, companyName ,role };
+    // console.log(data);
 
     if(password !== repeatPassword) {
       alert("Passwords do not match");
@@ -151,7 +153,7 @@ export default function SignInSide() {
                     autoFocus
                     variant="outlined"
                     size="small"
-                    onChange={(e) => setCompany(e.target.value)}
+                    onChange={(e) => setCompanyName(e.target.value)}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-3">
@@ -166,7 +168,7 @@ export default function SignInSide() {
                     autoFocus
                     variant="outlined"
                     size="small"
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
                 </div>

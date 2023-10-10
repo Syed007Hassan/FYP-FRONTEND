@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = () => {
                     : 'bg-blue-900'
                 } p-4 lg:p-6 transition-all duration-300 ease-in-out text-white`}
         >
-            <div className="container mx-auto flex justify-between bg-blue-900 items-center h-16">
+            <div className="container mx-auto flex justify-between bg-blue-900 items-center h-10">
                 <Link href="/" legacyBehavior className='py-3'>
                     <a>
                         <img src="/synnc.png" alt="Logo" className="w-32 h-32" /> {/* Replace with your logo image path */}
@@ -89,7 +89,7 @@ const Header: React.FC<HeaderProps> = () => {
                         <a href="/login" className="hover:text-gray-200 cursor-pointer border border-gray-300 px-6 py-3 rounded-full  hover:bg-blue-600">Sign In</a>
                     </div>
                     <div className="hidden lg:flex items-center space-x-4">
-                        <a href="/demopage" className='text-white rounded-full py-3 px-6 border border-gray-300 font-semibold hover:bg-blue-600'>Request a demo</a>
+                        <a href="/demo" className='text-white rounded-full py-3 px-6 border border-gray-300 font-semibold hover:bg-blue-600'>Request a demo</a>
                     </div>
                     <div className="text-gray-300 cursor-pointer">
                         <svg

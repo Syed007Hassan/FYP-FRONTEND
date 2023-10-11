@@ -33,7 +33,7 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function Demo() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -135,7 +135,7 @@ export default function Demo() {
                     onClick={handleSubmit}
                   >
                     Show Demo ➔
-                  </button>
+              </button>
               
               <Copyright sx={{ mt: 1}} />
             </Box>

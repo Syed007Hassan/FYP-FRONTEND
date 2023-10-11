@@ -165,7 +165,7 @@ export default function Footer() {
                         <li className="text-sm transition-all duration-500 ease-in-out text-white/50 hover:text-gray-50 hover:text-base dark:text-gray-300 dark:hover:text-gray-50">
                           <Link legacyBehavior href="/faqs">
                             <a>
-                              <i className="mdi mdi-chevron-right"></i> FAQ'S
+                                <i className="mdi mdi-chevron-right"></i> FAQ&apos;S
                             </a>
                           </Link>
                         </li>

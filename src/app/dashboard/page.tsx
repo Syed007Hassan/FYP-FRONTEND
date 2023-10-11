@@ -10,7 +10,7 @@ const DashboardPage = () => {
     try {
       const session = await getSession();
       // console.log(session);
-      if (!session || !session?.user || !session?.user.data) {
+      if (!session || !session?.user || !session?.user?.data) {
         throw new Error("Invalid session");
       }
       const jwt: string = session?.user.data.jwt;

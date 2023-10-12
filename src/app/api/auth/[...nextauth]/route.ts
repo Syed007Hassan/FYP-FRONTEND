@@ -3,6 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { getSession } from "next-auth/react";
 
 async function refreshToken(token: JWT): Promise<JWT> {
   const res = await fetch(Backend_URL + "/auth/refresh", {
@@ -63,8 +64,8 @@ export const authOptions: NextAuthOptions = {
         const user = await res.json();
         if (!user.success) return null;
         // const user = response.data.jwt;
-        console.log(user);
-        console.log(user);
+        // console.log(user);
+        // console.log(user);
         return user;
         // const user = await res.json();
         // return user;

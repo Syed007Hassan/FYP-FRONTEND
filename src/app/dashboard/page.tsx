@@ -9,11 +9,12 @@ const DashboardPage = () => {
   const verifyToken = async () => {
     try {
       const session = await getSession();
-      // console.log(session);
-      if (!session || !session?.user || !session?.user?.data) {
+      if (!session || !session.user || !session.user.data) {
         throw new Error("Invalid session");
       }
-      const jwt: string = session?.user.data.jwt;
+      // session.user.companyName = "test";
+      console.log(session);
+      const jwt: string = session.user.data.jwt;
       console.log(jwt);
       const result = await axios.get(Backend_URL + "/auth/validateToken", {
         headers: {

@@ -1,4 +1,3 @@
-import AppBar from "@/components/AppBar";
 import "./globals.css";
 import Provider from "@/components/Providers";
 import { Providers } from "@/redux/provider";

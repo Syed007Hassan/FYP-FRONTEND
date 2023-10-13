@@ -3,13 +3,14 @@ import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Backend_URL } from '@/lib/Constants';
 
-export const registerUser = createAsyncThunk<
+export const updateEmployee = createAsyncThunk<
   void,
-  { name: string; email: string; password: string, phone: number, companyName: string, role: string, designation: string },
+  { name: string, designation: string, phone: number, email: string; password: string, role: string, companyId: number },
   { rejectValue: string }
 >(
-  "/auth/registerEmployer",
-  async ({ name, email, password, phone, companyName, role, designation }, { rejectWithValue }) => {
+  "/employer/create",
+  async ({ name, email, password, phone, designation, role, companyId }, { rejectWithValue }) => {
+    
     try {
       const config = {
         headers: {
@@ -17,11 +18,10 @@ export const registerUser = createAsyncThunk<
         },
       };
 
-      // console.log(name, email, password, phone, companyName, role);
-
+    //   console.log(name, email, password, phone, designation);
       await axios.post(
-        `${Backend_URL}/auth/registerEmployer`,
-        { name, email, password, phone, companyName ,role, designation },
+        `${Backend_URL}/employer/create`,
+        { name, email, password, phone, designation, role, companyId },
         config
       );
     } catch (error: any) {

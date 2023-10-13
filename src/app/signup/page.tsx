@@ -49,14 +49,11 @@ export default function SignInSide() {
   const dispatch = useAppDispatch()
 
   const handleSubmit = (event: any) => {
-    console.log("handleSubmit");
-    event.preventDefault();
     const name = firstName + " " + lastName;
     const role = "employer";
-    // change the phone type from string to number
+    const designation = "HR";
     const phone = parseInt(phoneNum);
-    const data = { name, email, password, phone, companyName ,role };
-    // console.log(data);
+    const data = { name, email, password, phone, companyName ,role, designation };
 
     if(password !== repeatPassword) {
       alert("Passwords do not match");
@@ -64,7 +61,7 @@ export default function SignInSide() {
 
     data.email = data.email.toLowerCase();
     dispatch(registerUser(data));
-    redirect("/login");
+    redirect("/");
   }
 
   return (
@@ -195,6 +192,7 @@ export default function SignInSide() {
                     fullWidth
                     id="password"
                     label="Password"
+                    type='password'
                     name="password"
                     autoComplete="password"
                     autoFocus
@@ -210,6 +208,7 @@ export default function SignInSide() {
                     fullWidth
                     id="repeat_password"
                     label="Repeat Password"
+                    type='password'
                     name="repeat_password"
                     autoComplete="repeat_password"
                     autoFocus

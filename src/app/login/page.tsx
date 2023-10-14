@@ -43,14 +43,11 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [company, setCompany] = useState("");
 
   const handleSubmit = async (event: any) => {
-    const companyName = company;
     const result = await signIn("credentials", {
       email: email,
       password: password,
-      companyName: companyName,
       redirect: true,
       callbackUrl: "/dashboard",
     });
@@ -134,22 +131,6 @@ export default function SignInSide() {
                     variant="outlined"
                     size="small"
                     onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="company"
-                    label="Company Name"
-                    id="company"
-                    autoComplete="company"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setCompany(e.target.value)}
                   />
                 </div>
 

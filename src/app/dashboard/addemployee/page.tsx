@@ -1,6 +1,11 @@
 "use client";
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { getSession } from 'next-auth/react';
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { updateEmployee } from '@/redux/services/addEmployee/employeeAction';
+import { redirect } from 'next/navigation';
 
 const Page = () => {
 
@@ -11,20 +16,58 @@ const Page = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
+    const [decodedData, setDecodedData] = useState(null);
+    const [companyIdTemp, setCompanyIdTemp] = useState('');
+
+    const { success } = useAppSelector((state) => state.userReducer);
+    const dispatch = useAppDispatch();
+
+
+
+    useEffect(() => {
+
+        const parseJwt = async () => {
+            const session = await getSession();
+            if (!session || !session?.user || !session?.user.data) {
+              throw new Error("Invalid session");
+            }
+            const jwt: string = session?.user.data.jwt;
+            const base64Url = jwt.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            const decodedData = JSON.parse(window.atob(base64));
+            setDecodedData(decodedData);
+            setCompanyIdTemp(decodedData.companyId.toString() || '');
+        }
+
+        parseJwt();
+    }
+    , []);
 
 
     const handleSubmit = (event: any) => {
+        const name = firstName + " " + lastName;
+
+        const role = "employer";
+
+        if (password !== repeatPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+        const companyId = parseInt(companyIdTemp);
         event.preventDefault();
+        const phone = parseInt(phoneNum);
         const data = {
-            firstName,
-            lastName,
+            name,
             designation,
-            phoneNum,
+            role,
+            phone,
             email,
             password,
-            repeatPassword
+            companyId,
         }
         console.log(data);
+        dispatch(updateEmployee(data));
+        redirect("/dashboard");
     };
 
     return (

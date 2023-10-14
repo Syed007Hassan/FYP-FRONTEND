@@ -2,14 +2,16 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Backend_URL } from '@/lib/Constants';
+import { getSession } from 'next-auth/react';
 
-export const registerUser = createAsyncThunk<
+export const updateUser = createAsyncThunk<
   void,
-  { name: string; email: string; password: string, phone: number, companyName: string, role: string, designation: string },
+  { name: string; email: string; password: string, phone: number, designation: string },
   { rejectValue: string }
 >(
-  "/auth/registerEmployer",
-  async ({ name, email, password, phone, companyName, role, designation }, { rejectWithValue }) => {
+  "/employer/updateRecruiter",
+  async ({ name, email, password, phone, designation }, { rejectWithValue }) => {
+    
     try {
       const config = {
         headers: {
@@ -17,11 +19,10 @@ export const registerUser = createAsyncThunk<
         },
       };
 
-      // console.log(name, email, password, phone, companyName, role);
-
-      await axios.post(
-        `${Backend_URL}/auth/registerEmployer`,
-        { name, email, password, phone, companyName ,role, designation },
+      console.log(name, email, password, phone, designation);
+      await axios.patch(
+        `${Backend_URL}/employer/updateRecruiter`,
+        { name, email, password, phone, designation },
         config
       );
     } catch (error: any) {

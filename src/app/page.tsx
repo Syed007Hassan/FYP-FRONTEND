@@ -4,11 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Images from '@/app/public/images/landing-pic.png';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 
 export default function Home() {
 
   return (
+
     <div className=" min-h-screen justify-center">
+      <Header />
+     
       {/* 1 container */}
       <div className="grid grid-rows-1 grid-flow-col">
         <div className='pt-6 pr-20 pl-10 pb-6'>

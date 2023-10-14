@@ -18,16 +18,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { registerUser } from "@/redux/features/auth/authActions";
 import { redirect } from 'next/navigation';
+import Header from "@/components/Header";
 
 function Copyright(props: any) {
   return (
+
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
       </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {new Date().getFullYear()}  
+      {'.'}        
     </Typography>
   );
 }
@@ -68,7 +70,11 @@ export default function SignInSide() {
   }
 
   return (
+    <div>
+    <Header />
+    
     <div className={`bg-blue-500 p-20`} >
+      
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Grid
@@ -246,6 +252,7 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
+    </div>
     </div>
   );
 }

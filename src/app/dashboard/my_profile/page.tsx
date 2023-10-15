@@ -2,10 +2,10 @@
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useGetUserByEmailQuery } from "@/redux/services/userApi";
+import { useGetUserByEmailQuery } from "@/redux/services/User/getUserApi";
 import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { updateUser } from '@/redux/services/updateUser/userAction';
+import { updateUser } from '@/redux/services/User/userAction';
 import { redirect } from 'next/navigation';
 
 interface User {
@@ -47,6 +47,13 @@ const Page = () => {
 
     }
     , []);
+
+    useEffect(() => {
+        if(success) {
+            alert("Update success");
+        }
+    }
+    , [success]);
 
     // useEffect(() => {
     //     setFirstName(data?.name?.split(' ')[0] || '');
@@ -190,7 +197,6 @@ const Page = () => {
                                         />
                                 </div>
                                 <div className='grid grid-rows-1 grid-flow-col pt-10'>
-                                    {/* password and repeat password fields */}
                                     <div className='pr-4'>
                                         <TextField
                                             required
@@ -219,6 +225,16 @@ const Page = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className='grid grid-rows-1 grid-flow-col pt-10'>
+                            <div className='flex justify-end'>
+                                <button
+                                type="button"
+                                onClick={handleClick}
+                                className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                >
+                                Refresh
+                                </button>
+                            </div>
                             <div className='flex justify-end'>
                                 <button
                                 type="submit"
@@ -227,22 +243,13 @@ const Page = () => {
                                 Update
                                 </button>
                             </div>
+                            </div>
                         </form>
                     </div>
                 </div>
                 <div className='pl-10 pb-6 pr-10 flex' style={{ width: '650px', height: '630px' }}>
                     <Image src="/landing-pic.png" alt="Picture of the author" width={500} height={500} className="object-cover w-full h-full"/>
                 </div>
-            </div>
-            <div>
-            <button
-                                type="button"
-                                onClick={handleClick}
-                                className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                >
-                                Click
-                                </button>
-                
             </div>
         </div>
     )

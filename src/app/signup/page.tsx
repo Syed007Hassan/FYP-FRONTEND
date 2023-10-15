@@ -64,6 +64,13 @@ export default function SignInSide() {
     redirect("/");
   }
 
+  useEffect(() => {
+    if(success) {
+      alert("Registration Successful");
+    }
+  }
+  , [success]);
+
   return (
     <div className={`bg-blue-500 p-20`} >
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

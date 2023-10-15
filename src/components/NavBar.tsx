@@ -83,7 +83,7 @@ const Header: React.FC<HeaderProps> = () => {
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" className="block px-4 py-2 hover:bg-gray-200 text-blue-500">
+                                            <a href="/api/auth/signout" className="block px-4 py-2 hover:bg-gray-200 text-blue-500">
                                                 Logout
                                             </a>
                                         </li>
@@ -101,7 +101,7 @@ const Header: React.FC<HeaderProps> = () => {
                         </Link>
                     </div>
                     <div className="flex items-center">
-    <Link href="/dashboard/addcompany">
+    <Link href="/dashboard/company_profile">
         <button>
             <FaBuilding className="mr-2" size={25} />
         </button>

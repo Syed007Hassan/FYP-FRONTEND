@@ -1,7 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FaUser, FaSignOutAlt, FaUserPlus } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt,  FaUserPlus, FaBuilding} from 'react-icons/fa';
+import { } from 'react-icons/fa';
 // Import your DemoPage component
 
 
@@ -50,7 +51,7 @@ const Header: React.FC<HeaderProps> = () => {
                         <img src="/synnc.png" alt="Logo" className="w-32 h-32" /> {/* Replace with your logo image path */}
                     </a>
                 </Link>
-                
+
                 <div className="flex items-center space-x-7">
                     <button className="lg:hidden" onClick={toggle}>
                         <svg
@@ -77,7 +78,7 @@ const Header: React.FC<HeaderProps> = () => {
                                 <div className="absolute mt-2  left-0 w-48 bg-white border rounded-lg shadow-md">
                                     <ul>
                                         <li>
-                                            <a href="#" className="block px-4 py-2 hover:bg-gray-200 text-blue-500">
+                                            <a href="/dashboard/my_profile" className="block px-4 py-2 hover:bg-gray-200 text-blue-500">
                                                 Your Profile
                                             </a>
                                         </li>
@@ -93,11 +94,19 @@ const Header: React.FC<HeaderProps> = () => {
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <button>
-                            <FaUserPlus className="mr-2" size={25} />
-                        </button>
+                        <Link href="/dashboard/addemployee">
+                            <button>
+                                <FaUserPlus className="mr-2" size={25} />
+                            </button>
+                        </Link>
                     </div>
-
+                    <div className="flex items-center">
+    <Link href="/dashboard/addcompany">
+        <button>
+            <FaBuilding className="mr-2" size={25} />
+        </button>
+    </Link>
+</div>
                     <div className="text-gray-300 cursor-pointer">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

@@ -16,9 +16,11 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "next-auth/react";
 import styles from "./login.module.css";
+import Header from "@/components/Header";
 
 function Copyright(props: any) {
   return (
+    
     <Typography
       variant="body2"
       color="text.secondary"
@@ -52,6 +54,7 @@ export default function SignInSide() {
   };
 
   const showPassword = () => {
+
     var isCheck = document.getElementById("password");
     if (isCheck!.getAttribute("type") === "password") {
       isCheck!.setAttribute("type", "text");
@@ -61,7 +64,13 @@ export default function SignInSide() {
   };
 
   return (
-    <div className={`bg-blue-500 p-20`} >
+    // include Header Component here
+    
+<div>
+  <Header />
+
+
+<div className={`bg-blue-500 p-20`} >
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Grid
@@ -176,5 +185,7 @@ export default function SignInSide() {
       </Grid>
     
     </div>
+</div>
+   
   );
 }

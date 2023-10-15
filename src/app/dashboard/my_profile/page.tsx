@@ -7,6 +7,7 @@ import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateUser } from '@/redux/services/User/userAction';
 import { redirect } from 'next/navigation';
+import Alert from "@/components/Alert";
 
 interface User {
     data: any; // Define the data property as any type
@@ -49,28 +50,22 @@ const Page = () => {
     , []);
 
     useEffect(() => {
-        if(success) {
-            alert("Update success");
+
+        const newUser: User = {
+            data: data,
         }
-    }
-    , [success]);
 
-    // useEffect(() => {
-    //     setFirstName(data?.name?.split(' ')[0] || '');
-    //     setLastName(data?.name?.split(' ')[1] || '');
-    // }, [data?.data?.name]);
-
-    // when ever the first name or last name is changed, the value filed in the form is also changed
-
-    // const GetUserData = async ({email}) => {
-    //     const { data, error, isLoading } = await useGetUserByEmailQuery({ email });
-    //     if (data) {
-    //     //   setUserData(data);
-    //     console.log(data);
-    //     } else if (error) {
-    //       console.error(error);
-    //     }
-    // };
+        if (newUser?.data) {
+            const firstName = newUser?.data?.data?.name?.split(' ')[0];
+            const lastName = newUser?.data?.data?.name?.split(' ')[1];
+            setFirstName(firstName || '');
+            setLastName(lastName || '');
+            setDesignation(newUser?.data?.data?.designation || '');
+            setPhone(newUser?.data?.data?.phone?.toString() || '');
+            setEmail(newUser?.data?.data?.email || '');
+        }
+    
+    }, [data]);
 
     const handleSubmit = (event: any) => {
 
@@ -120,6 +115,7 @@ const Page = () => {
                     <div className="pr-20 pl-20">
                         <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
                         <h1 className="text-4xl text-blue-900 pt-20">My Profile</h1>
+                        {success && <Alert message="Profile updated successfully" />}
                         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className='grid grid-rows-1 grid-flow-col'>

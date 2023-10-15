@@ -8,10 +8,12 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetCompanyQuery } from '@/redux/services/Company/getCompanyApi';
 import { updateCompany } from '@/redux/services/Company/companyAction';
 import { redirect } from 'next/navigation';
+import Alert from '@/components/Alert';
 
 interface User {
     data: any; // Define the data property as any type
 }
+
 
 const Page = () => {
 
@@ -45,17 +47,24 @@ const Page = () => {
 
         }
 
+
         parseJwt();
 
     }
     , []);
 
     useEffect(() => {
-        if(success) {
-            alert("Update success");
+        const newUser: User = {
+            data: data,
         }
-    }
-    , [success]);
+        
+        setCompanyName(newUser?.data?.data?.companyName || '');
+        setCompanyAddress(newUser?.data?.data?.companyAddress || '');
+        setCompanyPhone(newUser?.data?.data?.companyPhone || '');
+        setCompanyEmail(newUser?.data?.data?.companyEmail || '');
+        setCompanyWebsite(newUser?.data?.data?.companyWebsite || '');
+    
+    }, [data]);
 
     const handleSubmit = (event: any) => {
         // event.preventDefault();
@@ -102,6 +111,7 @@ const Page = () => {
                     <div className="pr-20 pl-20">
                         <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
                         <h1 className="text-4xl text-blue-900 pt-20">Company Profile</h1>
+                        {success && <Alert message="Update success" />}
                         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className='grid grid-rows-1 grid-flow-col'>

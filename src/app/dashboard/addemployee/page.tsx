@@ -87,6 +87,7 @@ const Page = () => {
                     <div className="pr-20 pl-20">
                         <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
                         <h1 className="text-4xl text-blue-900 pt-20">Add Employee</h1>
+                        {success && <Alert message="Added Employee Successfully" />}
                         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className='grid grid-rows-1 grid-flow-col'>

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateUser } from '@/redux/services/User/userAction';
 import { redirect } from 'next/navigation';
 import Alert from "@/components/Alert";
+import Loader from '@/components/Loader';
 
 interface User {
     data: any; // Define the data property as any type
@@ -109,6 +110,7 @@ const Page = () => {
 
 
     return (
+        isLoading ? <Loader /> :
         <div className=" min-h-screen justify-center">
             <div className="grid grid-rows-1 grid-flow-col">
                 <div className='pt-6 pr-20 pl-10 pb-16'>

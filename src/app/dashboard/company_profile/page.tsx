@@ -9,6 +9,7 @@ import { useGetCompanyQuery } from '@/redux/services/Company/getCompanyApi';
 import { updateCompany } from '@/redux/services/Company/companyAction';
 import { redirect } from 'next/navigation';
 import Alert from '@/components/Alert';
+import Loader from '@/components/Loader';
 
 interface User {
     data: any; // Define the data property as any type
@@ -57,7 +58,7 @@ const Page = () => {
         const newUser: User = {
             data: data,
         }
-        
+
         setCompanyName(newUser?.data?.data?.companyName || '');
         setCompanyAddress(newUser?.data?.data?.companyAddress || '');
         setCompanyPhone(newUser?.data?.data?.companyPhone || '');
@@ -105,6 +106,7 @@ const Page = () => {
 
 
     return (
+        isLoading ? <Loader /> :
         <div className=" min-h-screen justify-center">
             <div className="grid grid-rows-1 grid-flow-col">
                 <div className='pt-6 pr-20 pl-10 pb-16'>

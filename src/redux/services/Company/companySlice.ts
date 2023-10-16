@@ -13,10 +13,18 @@ const companySlice = createSlice({
   name: "updateCompany",
   initialState,
   reducers: {},
-  extraReducers: {
-    [updateCompany.fulfilled.toString()]: (state, action) => {
+  extraReducers: (builder) => {
+    // [updateCompany.fulfilled.toString()]: (state, action) => {
+    //   state.success = true;
+    // },
+    builder
+    .addCase(updateCompany.fulfilled.toString(), (state, action) => {
       state.success = true;
-    },
+    })
+    .addDefaultCase((state, action) => {
+      state.success = false;
+    });
+
   },
 });
 

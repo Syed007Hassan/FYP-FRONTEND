@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getSession } from 'next-auth/react';
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { updateEmployee } from '@/redux/services/Employee/employeeAction';
-import Alert from '@/components/Alert';
+import { createEmployee } from '@/redux/services/Recruiter/recruiterAction';
+// import Alert from '@/components/Alert';
+import Alert from '@mui/material/Alert';
 import { redirect } from 'next/navigation';
 
 const Page = () => {
@@ -19,6 +20,7 @@ const Page = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [decodedData, setDecodedData] = useState(null);
     const [companyIdTemp, setCompanyIdTemp] = useState('');
+    const [ passwordMatch, setPasswordMatch ] = useState(true);
 
     const { success } = useAppSelector((state) => state.employeeReducer);
     const dispatch = useAppDispatch();
@@ -44,14 +46,6 @@ const Page = () => {
     }
     , []);
 
-    useEffect(() => {
-        if(success) {
-            // <Alert message="Update success" />;
-            alert("Update success");
-        }
-    }
-    , [success]);
-
 
     const handleSubmit = (event: any) => {
         const name = firstName + " " + lastName;
@@ -59,11 +53,10 @@ const Page = () => {
         const role = "employer";
 
         if (password !== repeatPassword) {
-            alert("Passwords do not match");
+            setPasswordMatch(false);
             return;
         }
         const companyId = parseInt(companyIdTemp);
-        // event.preventDefault();
         const phone = parseInt(phoneNum);
         const data = {
             name,
@@ -75,7 +68,7 @@ const Page = () => {
             companyId,
         }
         console.log(data);
-        dispatch(updateEmployee(data));
+        dispatch(createEmployee(data));
         console.log(success);
         // redirect("/dashboard");
     };
@@ -87,7 +80,8 @@ const Page = () => {
                     <div className="pr-20 pl-20">
                         <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
                         <h1 className="text-4xl text-blue-900 pt-20">Add Employee</h1>
-                        {success && <Alert message="Added Employee Successfully" />}
+                        {!passwordMatch && <Alert severity="error">Passwords do not match</Alert>}
+                        {success && <Alert severity="success">Employee Added Successfully</Alert>}
                         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className='grid grid-rows-1 grid-flow-col'>

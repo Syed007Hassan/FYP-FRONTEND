@@ -2,6 +2,18 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Backend_URL } from '@/lib/Constants';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+type Company = {
+  data: {
+    id: number;
+    companyName: string;
+    companyEmail: string;
+    companyWebsite: string;
+    companyAddress: string;
+    companyPhone: number;
+  };
+};
 
 export const updateCompany = createAsyncThunk<
   void,
@@ -34,3 +46,18 @@ export const updateCompany = createAsyncThunk<
     }
   }
 );
+
+export const companyApi = createApi({
+  reducerPath: "companyApi",
+  refetchOnFocus: true,
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:5000/api/company/",
+  }),
+  endpoints: (builder) => ({
+    getCompany: builder.query<Company, { id: number }>({
+      query: ({ id }) => `findOne/${id}`,
+    }),
+  }),
+});
+
+export const { useGetCompanyQuery } = companyApi;

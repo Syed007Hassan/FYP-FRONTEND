@@ -2,14 +2,15 @@
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useGetUserByEmailQuery } from "@/redux/services/User/getUserApi";
 import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useGetCompanyQuery } from '@/redux/services/Company/getCompanyApi';
+import { useGetCompanyQuery } from '@/redux/services/Company/companyAction';
 import { updateCompany } from '@/redux/services/Company/companyAction';
 import { redirect } from 'next/navigation';
-import Alert from '@/components/Alert';
+// import Alert from '@/components/Alert';
+import Alert from '@mui/material/Alert';
 import Loader from '@/components/Loader';
+import { useRouter } from 'next/navigation';
 
 interface User {
     data: any; // Define the data property as any type
@@ -25,6 +26,7 @@ const Page = () => {
     const [companyWebsite, setCompanyWebsite] = useState('');
     const [companyId, setCompanyId] = useState(0);
     const [decodedData, setDecodedData] = useState(null);
+    const router = useRouter();
 
     const { success } = useAppSelector((state) => state.companyReducer);
     const dispatch = useAppDispatch();
@@ -55,15 +57,12 @@ const Page = () => {
     , []);
 
     useEffect(() => {
-        const newUser: User = {
-            data: data,
-        }
 
-        setCompanyName(newUser?.data?.data?.companyName || '');
-        setCompanyAddress(newUser?.data?.data?.companyAddress || '');
-        setCompanyPhone(newUser?.data?.data?.companyPhone || '');
-        setCompanyEmail(newUser?.data?.data?.companyEmail || '');
-        setCompanyWebsite(newUser?.data?.data?.companyWebsite || '');
+        setCompanyName(data?.data?.companyName || '');
+        setCompanyAddress(data?.data?.companyAddress || '');
+        setCompanyPhone(data?.data?.companyPhone.toString() || '');
+        setCompanyEmail(data?.data?.companyEmail || '');
+        setCompanyWebsite(data?.data?.companyWebsite || '');
     
     }, [data]);
 
@@ -82,26 +81,18 @@ const Page = () => {
         datas.companyEmail = datas.companyEmail.toLowerCase();
         console.log(datas);
         dispatch(updateCompany(datas));
-        // update success
-        console.log(success);
-        redirect("/dashboard");
+        // router.push("/dashboard");
 
 
     };
 
     const handleClick = (event: any) => {
 
-        const newUser: User = {
-            data: data,
-        }
-
-        if (newUser?.data) {
-            setCompanyName(newUser?.data?.data?.companyName || '');
-            setCompanyAddress(newUser?.data?.data?.companyAddress || '');
-            setCompanyPhone(newUser?.data?.data?.companyPhone || '');
-            setCompanyEmail(newUser?.data?.data?.companyEmail || '');
-            setCompanyWebsite(newUser?.data?.data?.companyWebsite || '');
-        }
+            setCompanyName(data?.data?.companyName || '');
+            setCompanyAddress(data?.data?.companyAddress || '');
+            setCompanyPhone(data?.data?.companyPhone.toString() || '');
+            setCompanyEmail(data?.data?.companyEmail || '');
+            setCompanyWebsite(data?.data?.companyWebsite || '');
     }
 
 
@@ -113,7 +104,7 @@ const Page = () => {
                     <div className="pr-20 pl-20">
                         <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
                         <h1 className="text-4xl text-blue-900 pt-20">Company Profile</h1>
-                        {success && <Alert message="Update success" />}
+                        {success && <Alert severity="success">Company profile updated successfully</Alert>}
                         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                             <div className="rounded-md shadow-sm -space-y-px">
                                 <div className='grid grid-rows-1 grid-flow-col'>
@@ -129,6 +120,8 @@ const Page = () => {
                                             size="small"
                                             value={companyName}
                                             onChange={(e) => setCompanyName(e.target.value)}
+                                            InputProps={{ readOnly: true }}
+                                            title="This field is read-only"
                                         />
                                     </div>
                                     <div className='pl-4'>
@@ -183,11 +176,14 @@ const Page = () => {
                                             id="email"
                                             label="Email Address"
                                             name="email"
+                                            type='email'
                                             autoComplete="email"
                                             variant="outlined"
                                             size="small"
                                             value={companyEmail}
                                             onChange={(e) => setCompanyEmail(e.target.value)}
+                                            InputProps={{ readOnly: true }}
+                                            title="This field is read-only"
                                         />
                                 </div>
 
@@ -215,7 +211,7 @@ const Page = () => {
                     </div>
                 </div>
                 <div className='pl-10 pb-6 pr-10 flex' style={{ width: '650px', height: '630px' }}>
-                    <Image src="/landing-pic.png" alt="Picture of the author" width={500} height={500} className="object-cover w-full h-full"/>
+                    <Image src="/landing-pic.png" alt="Picture of the author" width={500} height={500} className="object-cover w-full h-full" priority/>
                 </div>
             </div>
         </div>

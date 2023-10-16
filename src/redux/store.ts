@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth/authSlice"
+import authReducer from "./services/auth/authSlice"
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { userApi } from "./services/User/getUserApi";
-import { companyApi } from "./services/Company/getCompanyApi";
+import { userApi } from "./services/Recruiter/recruiterAction";
+import { companyApi } from "./services/Company/companyAction";
 
-import userReducer from "./services/User/userSlice";
-import employeeReducer from "./services/Employee/employeeSlice";
+import { userReducer } from "./services/Recruiter/recruiterSlice";
+import { employeeReducer } from "./services/Recruiter/recruiterSlice";
 import companyReducer from "./services/Company/companySlice";
 
 export const store = configureStore({

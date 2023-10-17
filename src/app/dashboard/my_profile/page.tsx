@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 // import Alert from "@/components/Alert";
 import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
+import { parseJwt } from "@/lib/Constants";
 
 const Page = () => {
   const [firstName, setFirstName] = useState("");
@@ -28,20 +29,18 @@ const Page = () => {
   const { data, error, isLoading } = useGetUserByEmailQuery({ email });
 
   useEffect(() => {
-    const parseJwt = async () => {
+    const parseJwtFromSession = async () => {
       const session = await getSession();
       if (!session) {
         throw new Error("Invalid session");
       }
       const jwt: string = session.toString();
-      const base64Url = jwt.split(".")[1];
-      const base64 = base64Url.replace("-", "+").replace("_", "/");
-      const decodedData = JSON.parse(window.atob(base64));
+      const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
     };
 
-    parseJwt();
+    parseJwtFromSession();
   }, []);
 
   useEffect(() => {

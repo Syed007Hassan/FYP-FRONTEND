@@ -91,12 +91,17 @@ export const authOptions: NextAuthOptions = {
   //   },
   // },
   callbacks: {
+    // using jwt callback to refresh token
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
+    // using session callback to attach user info to session
     async session({ session, token, user }) {
       session.user = token as any;
-      return session;
+      const sessionUser = JSON.stringify(token);
+      const parsedSessionUser = JSON.parse(sessionUser);
+      const jwt = parsedSessionUser.data.jwt;
+      return jwt;
     },
   },
 

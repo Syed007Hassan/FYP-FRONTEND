@@ -55,21 +55,22 @@ const Page = () => {
   const handleSubmit = (event: any) => {
     if (password !== repeatPassword) {
       setPasswordMatch(false);
-      return;
+      event.preventDefault();
+    } else {
+      const name = firstName + " " + lastName;
+      const phone = parseInt(phoneNum);
+      const datas = {
+        name,
+        email,
+        password,
+        phone,
+        designation,
+      };
+      datas.email = datas.email.toLowerCase();
+      console.log(datas);
+      dispatch(updateUser(datas));
+      // redirect("/dashboard");
     }
-    const name = firstName + " " + lastName;
-    const phone = parseInt(phoneNum);
-    const datas = {
-      name,
-      email,
-      password,
-      phone,
-      designation,
-    };
-    datas.email = datas.email.toLowerCase();
-    console.log(datas);
-    dispatch(updateUser(datas));
-    // redirect("/dashboard");
   };
 
   return isLoading ? (

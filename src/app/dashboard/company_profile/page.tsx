@@ -88,7 +88,7 @@ const Page = () => {
       <div className="grid grid-rows-1 grid-flow-col">
         <div className="pt-6 pr-20 pl-10 pb-16">
           <div className="pr-20 pl-20">
-            <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
+            <h1 className=" text-blue-500 mb-4">SyncFlow Recruitment</h1>
             <h1 className="text-4xl text-blue-900 pt-20">Company Profile</h1>
             {success && (
               <Alert severity="success">

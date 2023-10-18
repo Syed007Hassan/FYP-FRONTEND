@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-
+import NavBar from "@/components/NavBar"; 
 type Props = {
   children: React.ReactNode;
 };
@@ -8,10 +8,12 @@ type Props = {
 const DashBoardLayout = async (props: Props) => {
   const session = await getServerSession(authOptions);
   return (
-    <div className=" grid grid-cols-12">
-      <div className="grid-cols-4 border-r shadow h-screen p-2">
-      </div>
-      <div className="col-span-4">{props.children}</div>
+
+    <div>
+      
+    <NavBar />
+      {props.children}
+      
     </div>
   );
 };

@@ -14,7 +14,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Footer from '@/components/Footer';
-
+import Header from '@/components/Header';
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -44,7 +44,10 @@ export default function Demo() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <div>
+
+      <Header />
+      <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
 
         <CssBaseline />
@@ -144,5 +147,7 @@ export default function Demo() {
       </Grid>
       <Footer />
     </ThemeProvider>
-  );
+ 
+    </div>
+    );
 }

@@ -7,6 +7,11 @@ declare module "next-auth" {
       id: number;
       email: string;
       name: string;
+      companyName: string;
+    };
+
+    jwt: {
+      jwt: string;
     };
 
     backendTokens: {

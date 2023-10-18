@@ -16,9 +16,11 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "next-auth/react";
 import styles from "./login.module.css";
+import Header from "@/components/Header";
 
 function Copyright(props: any) {
   return (
+    
     <Typography
       variant="body2"
       color="text.secondary"
@@ -41,20 +43,18 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [company, setCompany] = useState("");
 
   const handleSubmit = async (event: any) => {
-    const companyName = company;
     const result = await signIn("credentials", {
       email: email,
       password: password,
-      companyName: companyName,
       redirect: true,
       callbackUrl: "/dashboard",
     });
   };
 
   const showPassword = () => {
+
     var isCheck = document.getElementById("password");
     if (isCheck!.getAttribute("type") === "password") {
       isCheck!.setAttribute("type", "text");
@@ -64,7 +64,13 @@ export default function SignInSide() {
   };
 
   return (
-    <div className={`bg-blue-500 p-20`} >
+    // include Header Component here
+    
+<div>
+  <Header />
+
+
+<div className={`bg-blue-500 p-20`} >
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Grid
@@ -133,22 +139,6 @@ export default function SignInSide() {
                     margin="normal"
                     required
                     fullWidth
-                    name="company"
-                    label="Company Name"
-                    id="company"
-                    autoComplete="company"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setCompany(e.target.value)}
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
                     name="password"
                     label="Password"
                     type="password"
@@ -195,5 +185,7 @@ export default function SignInSide() {
       </Grid>
     
     </div>
+</div>
+   
   );
 }

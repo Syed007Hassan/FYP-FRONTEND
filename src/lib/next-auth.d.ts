@@ -10,6 +10,10 @@ declare module "next-auth" {
       companyName: string;
     };
 
+    jwt: {
+      jwt: string;
+    };
+
     backendTokens: {
       accessToken: string;
       refreshToken: string;

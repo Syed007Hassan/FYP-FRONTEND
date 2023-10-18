@@ -37,13 +37,14 @@ function Copyright(props: any) {
   );
 }
 
+ 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleSubmit = async (event: any) => {
     const result = await signIn("credentials", {
       email: email,
@@ -62,7 +63,24 @@ export default function SignInSide() {
       isCheck!.setAttribute("type", "password");
     }
   };
-
+  useEffect(() => {
+    // ... other code ...
+  
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    // ... other code ...
+  
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  
   return (
     // include Header Component here
     
@@ -73,11 +91,12 @@ export default function SignInSide() {
 <div className={`bg-blue-500 p-20`} >
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
+        {windowWidth >= 768 ? ( // For desktop view
         <Grid
           item
-          xs={15}
-          sm={4}
-          md={5}
+          xs={12}
+          sm={12} // Full width on small screens
+          md={6} // Half width on medium screens
           sx={{
             backgroundImage:
               "url(https://source.unsplash.com/random?wallpapers)",
@@ -92,7 +111,8 @@ export default function SignInSide() {
             height: "80vh",
             paddingRight: "0px",
           }}
-        />
+        /> ): null}
+        
         <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square 
             sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
           <Box
@@ -118,7 +138,7 @@ export default function SignInSide() {
               sx={{ m:2 }}
             >
               <div className="">
-                <div className="mb-4">
+              <div className="mb-2 mb-md-4">
                   <TextField
                     margin="normal"
                     required
@@ -134,7 +154,7 @@ export default function SignInSide() {
                   />
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-2 mb-md-4">
                   <TextField
                     margin="normal"
                     required
@@ -151,11 +171,11 @@ export default function SignInSide() {
                   />
                 </div>
 
-                <div className="mb-4 mt-3">
+                <div className="mb-2 mb-md-4 mt-2 mt-md-3">
                   <input type="checkbox" onClick={showPassword} /> Show Password
                 </div>
 
-                <div className="mb-4 mt-3">
+                <div className="mb-2 mb-md-4 mt-2 mt-md-3"> 
                   <button
                     className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     type="button"

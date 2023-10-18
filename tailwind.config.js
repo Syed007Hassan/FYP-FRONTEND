@@ -6,5 +6,7 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {},
-  plugins: [],
+  plugins: [  require('flowbite/plugin')({
+    charts: true,
+}),],
 };

@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -46,6 +45,7 @@ export default function SignInSide() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const { loading, userInfo, error, success } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch()
@@ -65,15 +65,30 @@ export default function SignInSide() {
     dispatch(registerUser(data));
     redirect("/");
   }
-
+  useEffect(() => {
+    // ... other code ...
+  
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    // ... other code ...
+  
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <div>
-    <Header />
-    
+   
     <div className={`bg-blue-500 p-20`} >
       
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
+        {windowWidth >= 768 ? ( // For desktop view
         <Grid
           item
           xs={false}
@@ -90,8 +105,8 @@ export default function SignInSide() {
             height: "80vh",
             paddingRight: "0px",
           }}
-        />
-        <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
+        /> ) : null }
+        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
           <Box
             sx={{
               my: 1,

@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -15,9 +16,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { registerUser } from "@/redux/features/auth/authActions";
+import { registerUser } from "@/redux/services/auth/authActions";
 import { redirect } from 'next/navigation';
 import Header from "@/components/Header";
+import Alert from '@mui/material/Alert';
+import { useRouter } from 'next/navigation';
 
 function Copyright(props: any) {
   return (
@@ -45,7 +48,7 @@ export default function SignInSide() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const router = useRouter();
 
   const { loading, userInfo, error, success } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch()
@@ -63,32 +66,18 @@ export default function SignInSide() {
 
     data.email = data.email.toLowerCase();
     dispatch(registerUser(data));
-    redirect("/");
+    console.log(userInfo);
+    // redirect("/");
+    router.push("/login");
   }
-  useEffect(() => {
-    // ... other code ...
-  
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-  
-    window.addEventListener('resize', handleResize);
-  
-    // ... other code ...
-  
-    return () => {
-      // Clean up the event listener when the component is unmounted
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+
   return (
     <div>
-   
+    <Header />
+    
     <div className={`bg-blue-500 p-20`} >
-      
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
-        {windowWidth >= 768 ? ( // For desktop view
         <Grid
           item
           xs={false}
@@ -105,8 +94,8 @@ export default function SignInSide() {
             height: "80vh",
             paddingRight: "0px",
           }}
-        /> ) : null }
-        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
+        />
+        <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
           <Box
             sx={{
               my: 1,
@@ -122,6 +111,8 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign Up as a Recruiter
             </Typography>
+
+            {success && <Alert severity="success">User Registered Successfully</Alert>}
     
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ m:1}}>
             <div className="">

@@ -5,7 +5,6 @@ import { Backend_URL } from "@/lib/Constants";
 import { getSession } from "next-auth/react";
 import Chart1 from "@/components/chart1";
 import Header from "@/components/Header";
-import Chart2 from "@/components/chart2";
 import Navbar from "@/components/NavBar";
 
 const DashboardPage = () => {
@@ -134,7 +133,7 @@ const DashboardPage = () => {
                      <Chart1 />
                   </div>
                   <div className="flex items-center justify-center h-95 w-96 rounded bg-gray-50 dark:bg-gray-800">
-                     <Chart2 />
+                     
                   </div>
                   <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
                      <p className="text-2xl text-gray-400 dark:text-gray-500">

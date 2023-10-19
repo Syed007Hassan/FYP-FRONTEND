@@ -87,11 +87,10 @@ export default function SignInSide() {
 <div>
   <Header />
 
-
-<div className={`bg-blue-500 p-20`} >
-      {/* <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <CssBaseline /> */}
-        {/* {windowWidth >= 768 ? ( // For desktop view */}
+<div className={`bg-blue-500 p-20 text-center sm:text-left`} >
+      <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <CssBaseline />
+        {windowWidth >= 768 ? ( 
         <Grid
           item
           xs={12}
@@ -111,8 +110,7 @@ export default function SignInSide() {
             height: "80vh",
             paddingRight: "0px",
           }}
-        />
-         {/* ): null} */}
+        /> ): null }
         
         <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square 
             sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
@@ -203,9 +201,10 @@ export default function SignInSide() {
             </Box>
           </Box>
         </Grid>
-      {/* </Grid> */}
+      </Grid>
     
     </div>
-    </div>   
+</div>
+   
   );
 }

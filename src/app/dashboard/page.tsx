@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import Chart1 from "@/components/chart1";
 import Header from "@/components/Header";
 import Chart2 from "@/components/chart2";
+import Navbar from "@/components/NavBar";
 
 const DashboardPage = () => {
    const verifyToken = async () => {

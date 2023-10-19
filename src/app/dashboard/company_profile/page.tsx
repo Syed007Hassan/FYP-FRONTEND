@@ -2,31 +2,35 @@
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useGetUserByEmailQuery } from "@/redux/services/Recruiter/recruiterAction";
 import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { updateUser } from "@/redux/services/Recruiter/recruiterAction";
+import { useGetCompanyQuery } from "@/redux/services/Company/companyAction";
+import { updateCompany } from "@/redux/services/Company/companyAction";
 import { redirect } from "next/navigation";
-// import Alert from "@/components/Alert";
+// import Alert from '@/components/Alert';
 import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
+import { useRouter } from "next/navigation";
 import { parseJwt } from "@/lib/Constants";
 
-const Page = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [phoneNum, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-  const [decodedData, setDecodedData] = useState(null);
-  const [passwordMatch, setPasswordMatch] = useState(true);
+interface User {
+  data: any; // Define the data property as any type
+}
 
-  const { success } = useAppSelector((state) => state.userReducer);
+const Page = () => {
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyPhoneNum, setCompanyPhone] = useState("");
+  const [companyEmail, setCompanyEmail] = useState("");
+  const [companyWebsite, setCompanyWebsite] = useState("");
+  const [companyId, setCompanyId] = useState(0);
+  const [decodedData, setDecodedData] = useState(null);
+  const router = useRouter();
+
+  const { success } = useAppSelector((state) => state.companyReducer);
   const dispatch = useAppDispatch();
 
-  const { data, error, isLoading } = useGetUserByEmailQuery({ email });
+  const { data, error, isLoading } = useGetCompanyQuery({ id: companyId });
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
@@ -37,40 +41,44 @@ const Page = () => {
       const jwt: string = session.toString();
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
-      setEmail(decodedData?.email || "");
+      setCompanyId(decodedData?.companyId);
     };
 
     parseJwtFromSession();
   }, []);
 
   useEffect(() => {
-    const firstName = data?.data?.name?.split(" ")[0];
-    const lastName = data?.data?.name?.split(" ")[1];
-    setFirstName(firstName || "");
-    setLastName(lastName || "");
-    setDesignation(data?.data?.designation || "");
-    setPhone(data?.data?.phone?.toString() || "");
+    setCompanyName(data?.data?.companyName || "");
+    setCompanyAddress(data?.data?.companyAddress || "");
+    setCompanyPhone(data?.data?.companyPhone.toString() || "");
+    setCompanyEmail(data?.data?.companyEmail || "");
+    setCompanyWebsite(data?.data?.companyWebsite || "");
   }, [data]);
 
   const handleSubmit = (event: any) => {
-    if (password !== repeatPassword) {
-      setPasswordMatch(false);
-      event.preventDefault();
-    } else {
-      const name = firstName + " " + lastName;
-      const phone = parseInt(phoneNum);
-      const datas = {
-        name,
-        email,
-        password,
-        phone,
-        designation,
-      };
-      datas.email = datas.email.toLowerCase();
-      console.log(datas);
-      dispatch(updateUser(datas));
-      // redirect("/dashboard");
-    }
+    // event.preventDefault();
+
+    const companyPhone = parseInt(companyPhoneNum);
+    const datas = {
+      companyId,
+      companyName,
+      companyAddress,
+      companyPhone,
+      companyEmail,
+      companyWebsite,
+    };
+    datas.companyEmail = datas.companyEmail.toLowerCase();
+    console.log(datas);
+    dispatch(updateCompany(datas));
+    // router.push("/dashboard");
+  };
+
+  const handleClick = (event: any) => {
+    setCompanyName(data?.data?.companyName || "");
+    setCompanyAddress(data?.data?.companyAddress || "");
+    setCompanyPhone(data?.data?.companyPhone.toString() || "");
+    setCompanyEmail(data?.data?.companyEmail || "");
+    setCompanyWebsite(data?.data?.companyWebsite || "");
   };
 
   return isLoading ? (
@@ -80,13 +88,12 @@ const Page = () => {
       <div className="grid grid-rows-1 grid-flow-col">
         <div className="pt-6 pr-20 pl-10 pb-16">
           <div className="pr-20 pl-20">
-            <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
-            <h1 className="text-4xl text-blue-900 pt-20">My Profile</h1>
-            {passwordMatch === false && (
-              <Alert severity="error">Passwords do not match</Alert>
-            )}
+            <h1 className=" text-blue-500 mb-4">SyncFlow Recruitment</h1>
+            <h1 className="text-4xl text-blue-900 pt-20">Company Profile</h1>
             {success && (
-              <Alert severity="success">Profile updated successfully</Alert>
+              <Alert severity="success">
+                Company profile updated successfully
+              </Alert>
             )}
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div className="rounded-md shadow-sm -space-y-px">
@@ -95,28 +102,30 @@ const Page = () => {
                     <TextField
                       required
                       fullWidth
-                      id="firstName"
-                      label="First Name"
-                      name="firstName"
+                      id="companyName"
+                      label="companyName"
+                      name="companyName"
                       autoComplete="given-name"
                       variant="outlined"
                       size="small"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      InputProps={{ readOnly: true }}
+                      title="This field is read-only"
                     />
                   </div>
                   <div className="pl-4">
                     <TextField
                       required
                       fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
+                      id="companyAddress"
+                      label="companyAddress"
+                      name="companyAddress"
                       autoComplete="family-name"
                       variant="outlined"
                       size="small"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      value={companyAddress}
+                      onChange={(e) => setCompanyAddress(e.target.value)}
                     />
                   </div>
                 </div>
@@ -125,14 +134,14 @@ const Page = () => {
                     <TextField
                       required
                       fullWidth
-                      id="designation"
-                      label="Designation"
-                      name="designation"
-                      autoComplete="designation"
+                      id="companyWebsite"
+                      label="companyWebsite"
+                      name="companyWebsite"
+                      autoComplete="companyWebsite"
                       variant="outlined"
                       size="small"
-                      value={designation}
-                      onChange={(e) => setDesignation(e.target.value)}
+                      value={companyWebsite}
+                      onChange={(e) => setCompanyWebsite(e.target.value)}
                     />
                   </div>
                   <div className="pl-4">
@@ -145,8 +154,8 @@ const Page = () => {
                       autoComplete="tel"
                       variant="outlined"
                       size="small"
-                      value={phoneNum}
-                      onChange={(e) => setPhone(e.target.value)}
+                      value={companyPhoneNum}
+                      onChange={(e) => setCompanyPhone(e.target.value)}
                     />
                   </div>
                 </div>
@@ -157,45 +166,27 @@ const Page = () => {
                     id="email"
                     label="Email Address"
                     name="email"
-                    // autoComplete="email"
+                    type="email"
+                    autoComplete="email"
                     variant="outlined"
                     size="small"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={companyEmail}
+                    onChange={(e) => setCompanyEmail(e.target.value)}
                     InputProps={{ readOnly: true }}
                     title="This field is read-only"
                   />
                 </div>
-                <div className="grid grid-rows-1 grid-flow-col pt-10">
-                  <div className="pr-4">
-                    <TextField
-                      required
-                      fullWidth
-                      id="password"
-                      label="Password"
-                      name="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      size="small"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="pl-4">
-                    <TextField
-                      required
-                      fullWidth
-                      id="password"
-                      label="Repeat Password"
-                      name="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      size="small"
-                      onChange={(e) => setRepeatPassword(e.target.value)}
-                    />
-                  </div>
-                </div>
               </div>
-              <div className="grid grid-rows-1 grid-flow-col pt-4">
+              <div className="grid grid-rows-1 grid-flow-col pt-2 pb-2">
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    onClick={handleClick}
+                  >
+                    Refresh
+                  </button>
+                </div>
                 <div className="flex justify-end">
                   <button
                     type="submit"

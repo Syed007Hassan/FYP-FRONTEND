@@ -1,20 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth/authSlice"
+import authReducer from "./services/auth/authSlice"
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-import { userApi } from "./services/userApi";
-import userReducer from "./services/updateUser/userSlice";
-import employeeReducer from "./services/addEmployee/employeeSlice";
+import { userApi } from "./services/Recruiter/recruiterAction";
+import { companyApi } from "./services/Company/companyAction";
+
+import { userReducer } from "./services/Recruiter/recruiterSlice";
+import { employeeReducer } from "./services/Recruiter/recruiterSlice";
+import companyReducer from "./services/Company/companySlice";
 
 export const store = configureStore({
   reducer: {
     authReducer,
     userReducer,
     employeeReducer,
+    companyReducer,
     [userApi.reducerPath]: userApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(userApi.middleware),
+  getDefaultMiddleware()
+  .concat(userApi.middleware)
+  .concat(companyApi.middleware),
 });
 
 setupListeners(store.dispatch);

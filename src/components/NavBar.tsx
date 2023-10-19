@@ -101,7 +101,62 @@ const Header: React.FC<HeaderProps> = () => {
                                 {/* Your settings icon */}
                             </div>
 
+
+                    <div className="flex items-center">
+                        <div className="relative" onClick={toggleDropdown}>
+                            <FaUser className="mr-2" size={22} />
+                            {dropdownVisible && (
+                                <div className="absolute mt-2  left-0 w-48 bg-white border rounded-lg shadow-md">
+                                    <ul>
+                                        <li>
+                                            <a href="/dashboard/my_profile" className="block px-4 py-2 hover:bg-gray-200 text-blue-500">
+                                                Your Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/api/auth/signout" className="block px-4 py-2 hover:bg-gray-200 text-blue-500">
+                                                Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            )}
                         </div>
+                    </div>
+                    <div className="flex items-center">
+                        <Link href="/dashboard/addemployee">
+                            <button>
+                                <FaUserPlus className="mr-2" size={25} />
+                            </button>
+                        </Link>
+                    </div>
+                    <div className="flex items-center">
+    <Link href="/dashboard/company_profile">
+        <button>
+            <FaBuilding className="mr-2" size={25} />
+        </button>
+    </Link>
+</div>
+                    <div className="text-gray-300 cursor-pointer">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M21 21l-5.2-5.2"
+                            />
+                            <circle cx="10" cy="10" r="8" />
+                        </svg>
+                    </div>
+                        </div>
+
 
                     </>
                 )}

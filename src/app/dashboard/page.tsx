@@ -1,11 +1,14 @@
-'use client'
+"use client";
 import React from "react";
 import axios from "axios";
 import { Backend_URL } from "@/lib/Constants";
 import { getSession } from "next-auth/react";
+import Link from "next/link";
+import { parseJwt } from "@/lib/Constants";
 import Chart1 from "@/components/chart1";
 import Header from "@/components/Header";
 import Navbar from "@/components/NavBar";
+
 
 const DashboardPage = () => {
    const verifyToken = async () => {
@@ -31,25 +34,44 @@ const DashboardPage = () => {
 
    const getMySession = async () => {
       const session = await getSession();
-      if (!session || !session?.user || !session?.user.data) {
-         throw new Error("Invalid session");
-      }
-      const jwt: string = session?.user.data.jwt;
-      // console.log(jwt);
-      console.log(session);
-   };
 
-   const parseJwt = async () => {
-      const session = await getSession();
-      if (!session || !session?.user || !session?.user.data) {
-         throw new Error("Invalid session");
+      if (!session) {
+        throw new Error("Invalid session");
       }
-      const jwt: string = session?.user.data.jwt;
-      const base64Url = jwt.split('.')[1];
-      const base64 = base64Url.replace('-', '+').replace('_', '/');
-      console.log(JSON.parse(window.atob(base64)));
-      // return JSON.parse(window.atob(base64));
-   }
+
+      const jwt: string = session.toString();
+      console.log(jwt);
+      const result = await axios.get(Backend_URL + "/auth/validateToken", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+      console.log(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getMySession = async () => {
+    const session = await getSession();
+    if (!session) {
+      throw new Error("Invalid session");
+    }
+    const jwt: string = session.toString();
+
+    console.log(session);
+  };
+
+  const parseTestJwt = async () => {
+    const session = await getSession();
+    if (!session) {
+      throw new Error("Invalid session");
+    }
+    const jwt: string = session.toString();
+    const parsedJwt = parseJwt(jwt);
+    console.log(parsedJwt);
+  };
+
 
 
 
@@ -69,6 +91,7 @@ const DashboardPage = () => {
             <div id="logo-sidebar" className=" top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar" style={{ backgroundColor: 'blue' }}>
                <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-blue-700">
                   <ul className="space-y-2 font-medium">
+
 
                      <li>
                         <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

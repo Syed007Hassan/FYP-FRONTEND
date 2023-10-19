@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -49,6 +48,8 @@ export default function SignInSide() {
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const router = useRouter();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
   const { loading, userInfo, error, success } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch()
@@ -70,14 +71,29 @@ export default function SignInSide() {
     // redirect("/");
     router.push("/login");
   }
-
+  useEffect(() => {
+    // ... other code ...
+  
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    // ... other code ...
+  
+    return () => {
+      // Clean up the event listener when the component is unmounted
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <div>
-    <Header />
-    
+   
     <div className={`bg-blue-500 p-20`} >
       <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
+        {windowWidth >= 768 ? ( // For desktop view
         <Grid
           item
           xs={false}
@@ -94,8 +110,8 @@ export default function SignInSide() {
             height: "80vh",
             paddingRight: "0px",
           }}
-        />
-        <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
+        /> ) : null }
+        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "81vh"}}>
           <Box
             sx={{
               my: 1,
@@ -116,8 +132,8 @@ export default function SignInSide() {
     
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ m:1}}>
             <div className="">
-                <div className="mb-4 flex flex-wrap -mx-3">
-                  <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div className="mb-0 flex flex-wrap -mx-3">
+                  <div className="w-full md:w-1/2 px-3 mb-0 md:mb-0 sm:mb-0 sm:w-1/2">
                   <TextField
                     margin="normal"
                     required
@@ -132,7 +148,7 @@ export default function SignInSide() {
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                   </div>
-                  <div className="w-full md:w-1/2 px-3">
+                  <div className="w-full md:w-1/2 px-3 md:mb-0 sm:w-1/2 sm:mb-0">
                   <TextField
                     margin="normal"
                     required
@@ -149,8 +165,8 @@ export default function SignInSide() {
                   </div>
                 </div>
 
-                <div className="mb-4 flex flex-wrap -mx-3">
-                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div className="mb-2 mt-0 flex flex-wrap -mx-3">
+                <div className="w-full md:w-1/2 px-3 md:mb-0 sm:mb-0">
                 <TextField
                     margin="normal"
                     required
@@ -165,7 +181,7 @@ export default function SignInSide() {
                     onChange={(e) => setCompanyName(e.target.value)}
                   />
                 </div>
-                <div className="w-full md:w-1/2 px-3">
+                <div className="w-full md:w-1/2 sm:mb-0 px-3 mt-1">
                 <TextField
                     margin="normal"
                     required
@@ -181,7 +197,7 @@ export default function SignInSide() {
                   />
                 </div>
                 </div>
-                <div className="mb-4">
+                <div className="sm:mb-0">
                 <TextField
                     margin="normal"
                     required
@@ -196,8 +212,8 @@ export default function SignInSide() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <div className="mb-4 flex flex-wrap -mx-3">
-                  <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <div className="mb-2 flex flex-wrap -mx-3">
+                  <div className="w-full md:w-1/2 px-3  md:mb-0 sm:w-1/2">
                   <TextField
                     margin="normal"
                     required
@@ -213,7 +229,7 @@ export default function SignInSide() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   </div>
-                  <div className="w-full md:w-1/2 px-3">
+                  <div className="w-full md:w-1/2 px-3  md:mb-0 sm:w-1/2">
                   <TextField
                     margin="normal"
                     required
@@ -231,9 +247,9 @@ export default function SignInSide() {
                   </div>
                 </div>
                 
-                <div className="mb-4 mt-3">
+                <div className="mb-0">
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
                     onClick={handleSubmit}
                   >
@@ -243,14 +259,14 @@ export default function SignInSide() {
 
                 <div className="text-center">
                   <a
-                    className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                    className="inline-block align-baseline sm:mt-0 mb-0 font-bold text-sm text-blue-500 hover:text-blue-800"
                     href="/login"
                   >
                     {"Already have an account? Sign In"}
                   </a>
                 </div>
               </div>
-              <Copyright sx={{ mt: 2 }} />
+              <Copyright sx={{ mt: 0 }} className ="text-xxs mt-0" />
             </Box>
 
 

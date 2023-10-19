@@ -77,7 +77,7 @@ export default function Home() {
                 </p>
               </div>
               <div className='w-full lg:w-1/2'>
-                <img
+                <Image
                   src='/landing-pic.png'
                   alt='Image Description 1'
                   className='w-full h-auto max-w-md'
@@ -87,7 +87,7 @@ export default function Home() {
 
             <div className='lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4 pt-20'>
               <div className='w-full lg:w-1/2'>
-                <img
+                <Image
                   src='/landing-pic.png'
                   alt='Image Description 2'
                   className='w-full h-auto max-w-md'
@@ -109,7 +109,7 @@ export default function Home() {
                 </p>
               </div>
               <div className='w-full lg:w-1/2'>
-                <img
+                <Image
                   src='/landing-pic.png'
                   alt='Image Description 3'
                   className='w-full h-auto max-w-md'
@@ -122,7 +122,7 @@ export default function Home() {
 
             <div className='lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4 pt-20'>
               <div className='w-full lg:w-1/2'>
-                <img
+                <Image
                   src='/landing-pic.png'
                   alt='Image Description 4'
                   className='w-full h-auto max-w-md'

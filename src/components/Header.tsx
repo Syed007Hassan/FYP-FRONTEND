@@ -1,6 +1,8 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+
 // Import your DemoPage component
 
 
@@ -37,7 +39,7 @@ const Header: React.FC<HeaderProps> = () => {
             <div className="container mx-auto flex justify-between bg-blue-900 items-center h-10">
                 <Link href="/" legacyBehavior className='py-3'>
                     <a>
-                        <img src="/synnc.png" alt="Logo" className="w-32 h-32" /> {/* Replace with your logo image path */}
+                        <Image src="/synnc.png" alt="Logo" width={32} height={32} /> {/* Replace with your logo image path */}
                     </a>
                 </Link>
                 <div className="text-center flex-grow px-10"> {/* Use flex-grow to push items to the center */}

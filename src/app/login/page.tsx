@@ -20,7 +20,6 @@ import Header from "@/components/Header";
 
 function Copyright(props: any) {
   return (
-    
     <Typography
       variant="body2"
       color="text.secondary"
@@ -37,14 +36,12 @@ function Copyright(props: any) {
   );
 }
 
- 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleSubmit = async (event: any) => {
     const result = await signIn("credentials", {
       email: email,
@@ -55,7 +52,6 @@ export default function SignInSide() {
   };
 
   const showPassword = () => {
-
     var isCheck = document.getElementById("password");
     if (isCheck!.getAttribute("type") === "password") {
       isCheck!.setAttribute("type", "text");
@@ -63,148 +59,152 @@ export default function SignInSide() {
       isCheck!.setAttribute("type", "password");
     }
   };
-  useEffect(() => {
-    // ... other code ...
-  
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-  
-    window.addEventListener('resize', handleResize);
-  
-    // ... other code ...
-  
-    return () => {
-      // Clean up the event listener when the component is unmounted
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  
-  
+
   return (
     // include Header Component here
-    
-<div>
-  <Header />
 
-<div className={`bg-blue-500 p-20 text-center sm:text-left`} >
-      <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <CssBaseline />
-        {windowWidth >= 768 ? ( 
+    <div>
+      <Header />
+
+      <div className={`bg-blue-500 p-20 text-center sm:text-left`}>
         <Grid
-          item
-          xs={12}
-          sm={12} // Full width on small screens
-          md={6} // Half width on medium screens
+          container
+          component="main"
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
-            height: "80vh",
-            paddingRight: "0px",
+            height: "77.4vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        /> ): null }
-        
-        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square 
-            sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
-          <Box
+        >
+          <CssBaseline />
+
+          <Grid
+            item
+            xs={12}
+            sm={12} // Full width on small screens
+            md={6} // Half width on medium screens
             sx={{
-              my: 4,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              backgroundImage:
+                "url(https://source.unsplash.com/random?wallpapers)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              borderEndStartRadius: "40px",
+              borderTopLeftRadius: "40px",
+              height: "80vh",
+              paddingRight: "0px",
+            }}
+          />
+
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={3}
+            component={Paper}
+            elevation={6}
+            square
+            sx={{
+              borderEndEndRadius: "40px",
+              borderTopRightRadius: "40px",
+              height: "80vh",
             }}
           >
-            <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Login As A Recruiter
-            </Typography>
-
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ m:2 }}
+              sx={{
+                my: 4,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <div className="">
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
+              <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Login As A Recruiter
+              </Typography>
 
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ m: 2 }}
+              >
+                <div className="">
+                  <div className="mb-4">
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      variant="outlined"
+                      size="small"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
 
-                <div className="mb-4 mt-3">
-                  <input type="checkbox" onClick={showPassword} /> Show Password
-                </div>
+                  <div className="mb-4">
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      autoFocus
+                      variant="outlined"
+                      size="small"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
 
-                <div className="mb-4 mt-3">
-                  <button
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    type="button"
-                    onClick={handleSubmit}
-                  >
-                    Sign In ➔
-                  </button>
-                </div>
+                  <div className="mb-4 mt-3">
+                    <input type="checkbox" onClick={showPassword} /> Show
+                    Password
+                  </div>
 
-                <div className="text-center text-sm text-gray-500">
-                  <p>
-                    Don&apos;t have an account?{" "}
-                    <a
-                      href="/signup"
-                      className="text-blue-500 hover:text-blue-700"
+                  <div className="mb-4 mt-3">
+                    <button
+                      className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                      type="button"
+                      onClick={handleSubmit}
                     >
-                      Sign up
-                    </a>
-                  </p>
-                </div>
-              </div>
+                      Sign In ➔
+                    </button>
+                  </div>
 
-              <Copyright sx={{ mt: 2 }} />
+                  <div className="text-center text-sm text-gray-500">
+                    <p>
+                      Don&apos;t have an account?{" "}
+                      <a
+                        href="/signup"
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        Sign up
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                <Copyright sx={{ mt: 2 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    
+      </div>
     </div>
-</div>
-   
   );
 }

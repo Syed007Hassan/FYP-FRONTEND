@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 
 export default function Home() {
   return (
-    <div className=" min-h-screen justify-center">
+    <div className=" mt-10 min-h-screen justify-center">
       <Header />
 
       {/* 1 container */}

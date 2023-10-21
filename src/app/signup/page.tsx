@@ -153,149 +153,108 @@ export default function SignInSide() {
                 <Alert severity="success">User Registered Successfully</Alert>
               )}
 
-              <Box
-                component="form"
-                noValidate
-                onSubmit={handleSubmit}
-                sx={{ m: 1 }}
-              >
-                <div className="">
-                  <div className="mb-0 flex flex-wrap -mx-3">
-                    <div className="w-full md:w-1/2 px-3 mb-0 md:mb-0 sm:mb-0 sm:w-1/2">
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="f_name"
-                        label="First Name"
-                        name="f_name"
-                        autoComplete="first_name"
-                        autoFocus
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setFirstName(e.target.value)}
-                      />
-                    </div>
-                    <div className="w-full md:w-1/2 px-3 md:mb-0 sm:w-1/2 sm:mb-0">
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="l_name"
-                        label="Last Name"
-                        name="l_name"
-                        autoComplete="last_name"
-                        autoFocus
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setLastName(e.target.value)}
-                      />
-                    </div>
+          
+              <div className="pt-3 container">
+                <div className="mb-3 flex space-x-3">
+                  <div>
+                    <label htmlFor="f_name" className="block text-sm font-medium text-gray-900 dark:text-white">First name</label>
+                    <input type="text" 
+                    id="f_name" 
+                    className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="John" 
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required />
+                  </div>
+                  <div>
+                    <label htmlFor="l_name" className="block text-sm font-medium text-gray-900 dark:text-white">Last name</label>
+                    <input type="text" 
+                    id="l_name" 
+                    className="w-1/2  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                    placeholder="Doe" 
+                    onChange={(e) => setLastName(e.target.value)}
+                    required />
                   </div>
 
-                  <div className="mb-2 mt-0 flex flex-wrap -mx-3">
-                    <div className="w-full md:w-1/2 px-3 md:mb-0 sm:mb-0">
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="company"
-                        label="Company Name"
-                        name="company"
-                        autoComplete="company"
-                        autoFocus
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setCompanyName(e.target.value)}
-                      />
-                    </div>
-                    <div className="w-full md:w-1/2 sm:mb-0 px-3 mt-1">
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="phone"
-                        label="Phone Number"
-                        name="phone"
-                        autoComplete="phone"
-                        autoFocus
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="sm:mb-0">
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                      autoFocus
-                      variant="outlined"
-                      size="small"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-2 flex flex-wrap -mx-3">
-                    <div className="w-full md:w-1/2 px-3  md:mb-0 sm:w-1/2">
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="password"
-                        label="Password"
-                        type="password"
-                        name="password"
-                        autoComplete="password"
-                        autoFocus
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-                    <div className="w-full md:w-1/2 px-3  md:mb-0 sm:w-1/2">
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="repeat_password"
-                        label="Repeat Password"
-                        type="password"
-                        name="repeat_password"
-                        autoComplete="repeat_password"
-                        autoFocus
-                        variant="outlined"
-                        size="small"
-                        onChange={(e) => setRepeatPassword(e.target.value)}
-                      />
-                    </div>
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="company" className="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
+                  <input type="text" 
+                  id="company" 
+                  className="max-w-xs border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  required />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
+                  <input type="phone" 
+                  id="phone" 
+                  className="max-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
+                  placeholder="123-45-678"
+                   pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" 
+                   onChange={(e) => setPhone(e.target.value)}
+                   required />
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white">Email address</label>
+                  <input 
+                  type="email" 
+                  id="email" 
+                  className="max-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
+                  placeholder="john.doe@company.com" 
+                  onChange={(e) => setEmail(e.target.value)}
+                  required />
+                </div>
+
+
+                <div className="flex space-x-3">
+                  <div className="mb-3">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <input 
+                    type="password" 
+                    id="password" 
+                    className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
+                    onChange={(e) => setPassword(e.target.value)}
+                    required />
                   </div>
 
-                  <div className="mb-0">
-                    <button
-                      className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
-                      type="button"
-                      onClick={handleSubmit}
-                    >
-                      Sign Up ➔
-                    </button>
-                  </div>
-
-                  <div className="text-center">
-                    <a
-                      className="inline-block align-baseline sm:mt-0 mb-0 font-bold text-sm text-blue-500 hover:text-blue-800"
-                      href="/login"
-                    >
-                      {"Already have an account? Sign In"}
-                    </a>
+                  <div className="mb-3">
+                    <label htmlFor="repeat_password" className="block text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+                    <input
+                      type="password"
+                      id="repeat_password"
+                      className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      onChange={(e) => setRepeatPassword(e.target.value)}
+                      required />
                   </div>
                 </div>
+
+
+                <div className="mb-0">
+                  <button
+                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleSubmit}
+                  >
+                    Sign Up ➔
+                  </button>
+                </div>
+
+                <div className="text-center">
+                  <a
+                    className="inline-block align-baseline sm:mt-0 mb-0 font-bold text-sm text-blue-500 hover:text-blue-800"
+                    href="/login"
+                  >
+                    {"Already have an account? Sign In"}
+                  </a>
+                </div>
+
                 <Copyright sx={{ mt: 0 }} className="text-xxs mt-0" />
-              </Box>
+
+
+              </div>
             </Box>
           </Grid>
         </Grid>

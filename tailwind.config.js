@@ -1,3 +1,5 @@
+
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,8 +7,23 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/app/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {},
+  theme: {
+    // container: {
+    //   center: true,
+    // },
+  },
+  
   plugins: [  require('flowbite/plugin')({
     charts: true,
 }),],
 };
+// /** @type {import('tailwindcss').Config} */
+// module.exports = {
+//   content: [
+//     "./src/pages/**/*.{js,ts,jsx,tsx}",
+//     "./src/components/**/*.{js,ts,jsx,tsx}",
+//     "./src/app/**/*.{js,ts,jsx,tsx}",
+//   ],
+//   theme: {},
+//   plugins: [],
+// };

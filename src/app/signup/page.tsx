@@ -85,6 +85,7 @@ export default function SignInSide() {
 
   return (
     <div>
+       <Header />
       <div className={`bg-blue-500 p-20`}>
         <Grid
           container
@@ -177,11 +178,11 @@ export default function SignInSide() {
 
                 </div>
 
-                <div className="mb-3">
+                <div className="w-full mb-3">
                   <label htmlFor="company" className="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
                   <input type="text" 
                   id="company" 
-                  className="max-w-xs border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                  className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                   onChange={(e) => setCompanyName(e.target.value)}
                   required />
                 </div>
@@ -190,7 +191,7 @@ export default function SignInSide() {
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
                   <input type="phone" 
                   id="phone" 
-                  className="max-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
+                  className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
                   placeholder="123-45-678"
                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" 
                    onChange={(e) => setPhone(e.target.value)}
@@ -202,7 +203,7 @@ export default function SignInSide() {
                   <input 
                   type="email" 
                   id="email" 
-                  className="max-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
+                  className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
                   placeholder="john.doe@company.com" 
                   onChange={(e) => setEmail(e.target.value)}
                   required />

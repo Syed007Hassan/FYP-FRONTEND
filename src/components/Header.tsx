@@ -4,16 +4,16 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 const Header = () => {
   useEffect(() => {
-    // Get references to the button and the element to toggle (the menu).
+
     const button = document.querySelector<HTMLButtonElement>(
       '[data-collapse-toggle="navbar-sticky"]'
     );
     const menu = document.getElementById('navbar-sticky');
 
     if (button && menu) {
-      // Add a click event listener to the button.
+
       button.addEventListener('click', () => {
-        // Toggle the visibility of the menu.
+
         menu.classList.toggle('hidden');
       });
     }
@@ -21,35 +21,27 @@ const Header = () => {
 
   return (
     <nav
-      className="sticky h-32 w-full bg-white dark:bg-gray-900 z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600"
+      className=
+      "overflow sticky top-0 left-0 w-full bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue"
+
     >
-      <div className="container mx-auto bg-white items-center h-10">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py:5 px-3">
+
+      <div className="mb-0 container mx-auto bg-white items-center h-10">
+        <div className="container mx-auto flex justify-between bg-white items-center h-10">
           <Link href="/" legacyBehavior className="py-3">
             <a>
               <Image src="/synnc.png" alt="Logo" width={150} height={150} />
             </a>
           </Link>
           <div className="flex md:order-2">
-
-            {/* <a href="/login" className="hover:text-gray-200 cursor-pointer border border-gray-300 px-3 py-2 rounded">Login</a> Added border classes */}
-
             <div className="hidden lg:flex items-center space-x-4">
-
-
             </div>
             <a href="/demo">
               <button type="button" className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-4 px-8 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Request A Demo</button>
-
-
             </a>
             <a href="/login">
-              <button type="button" className="ml-5  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-4 px-8 text-center mr-5 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
-
-
+              <button type="button" className="ml-5 mr-8 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-4 px-8 text-center md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
             </a>
-
-
           </div>
           <div className="md:hidden">
 
@@ -88,6 +80,8 @@ const Header = () => {
 
       </div>
     </nav>
+
+
   );
 };
 export default Header;

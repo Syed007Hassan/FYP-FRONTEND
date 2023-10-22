@@ -93,12 +93,12 @@ const Header: React.FC<HeaderProps> = () => {
                 <div className="relative" onClick={toggleDropdown}>
                   <FaUser className="space-x-4" size={22} />
                   {dropdownVisible && (
-                    <div className="absolute mt-2 z-100  left-0 w-48 bg-white border rounded-lg shadow-md">
+                    <div className="absolute mt-2 z-100  top-0 w-48 bg-white border rounded-lg shadow-md">
                       <ul>
                         <li>
                           <a
                             href="/dashboard/my_profile"
-                            className="block px-4 py-2 hover:bg-gray-200 text-blue-500"
+                            className="sticky block px-4 py-2 hover:bg-gray-200 text-blue-500"
                           >
                             Your Profile
                           </a>

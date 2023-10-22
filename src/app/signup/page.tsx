@@ -85,7 +85,7 @@ export default function SignInSide() {
 
   return (
     <div>
-       <Header />
+      <Header />
       <div className={`bg-blue-500 p-20`}>
         <Grid
           container
@@ -146,83 +146,86 @@ export default function SignInSide() {
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              {/* <Typography component="h1" variant="h5">
                 Sign Up as a Recruiter
-              </Typography>
+              </Typography> */}
+              <div>
+                <h1 className="font-bold text-2xl mb-0">Sign Up as a Recruiter</h1>
+              </div>
 
               {success && (
                 <Alert severity="success">User Registered Successfully</Alert>
               )}
 
-          
+
               <div className="pt-3 container">
-                <div className="mb-3 flex space-x-3">
+                <div className="mb-4 flex space-x-3">
                   <div>
-                    <label htmlFor="f_name" className="block text-sm font-medium text-gray-900 dark:text-white">First name</label>
-                    <input type="text" 
-                    id="f_name" 
-                    className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      placeholder="John" 
+                    <label htmlFor="f_name" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">First name</label>
+                    <input type="text"
+                      id="f_name"
+                      className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="John"
                       onChange={(e) => setFirstName(e.target.value)}
                       required />
                   </div>
                   <div>
-                    <label htmlFor="l_name" className="block text-sm font-medium text-gray-900 dark:text-white">Last name</label>
-                    <input type="text" 
-                    id="l_name" 
-                    className="w-1/2  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                    placeholder="Doe" 
-                    onChange={(e) => setLastName(e.target.value)}
-                    required />
+                    <label htmlFor="l_name" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Last name</label>
+                    <input type="text"
+                      id="l_name"
+                      className="w-1/2  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="Doe"
+                      onChange={(e) => setLastName(e.target.value)}
+                      required />
                   </div>
 
                 </div>
 
-                <div className="w-full mb-3">
-                  <label htmlFor="company" className="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
-                  <input type="text" 
-                  id="company" 
-                  className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                  onChange={(e) => setCompanyName(e.target.value)}
-                  required />
+                <div className="w-full mb-4">
+                  <label htmlFor="company" className="mb-1 block mt-2 text-sm font-bold text-gray-900 dark:text-white">Company</label>
+                  <input type="text"
+                    id="company"
+                    className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    required />
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
-                  <input type="phone" 
-                  id="phone" 
-                  className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
-                  placeholder="123-45-678"
-                   pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" 
-                   onChange={(e) => setPhone(e.target.value)}
-                   required />
+                <div className="mb-4">
+
+                  <label htmlFor="phone" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Phone Number</label>
+                  <input type="text"
+                    id="phone"
+                    className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white">Email address</label>
-                  <input 
-                  type="email" 
-                  id="email" 
-                  className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
-                  placeholder="john.doe@company.com" 
-                  onChange={(e) => setEmail(e.target.value)}
-                  required />
+                <div className="mb-4">
+                  <label htmlFor="email" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                    placeholder="john.doe@company.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required />
                 </div>
 
 
                 <div className="flex space-x-3">
-                  <div className="mb-3">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                    <input 
-                    type="password" 
-                    id="password" 
-                    className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75" 
-                    onChange={(e) => setPassword(e.target.value)}
-                    required />
+                  <div className="mb-4">
+                    <label htmlFor="password" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required />
                   </div>
 
-                  <div className="mb-3">
-                    <label htmlFor="repeat_password" className="block text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+                  <div className="mb-4">
+                    <label htmlFor="repeat_password" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Repeat password</label>
                     <input
                       type="password"
                       id="repeat_password"
@@ -251,10 +254,6 @@ export default function SignInSide() {
                     {"Already have an account? Sign In"}
                   </a>
                 </div>
-
-                <Copyright sx={{ mt: 0 }} className="text-xxs mt-0" />
-
-
               </div>
             </Box>
           </Grid>

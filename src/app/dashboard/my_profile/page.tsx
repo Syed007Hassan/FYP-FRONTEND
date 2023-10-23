@@ -92,76 +92,121 @@ const Page = () => {
               <div className="rounded-md shadow-sm">
                 <div className="grid grid-rows-1 grid-flow-col">
                   <div className="pr-4">
-                    <label htmlFor="firstName" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">First name</label>
-                    <input type="text"
+                    <label
+                      htmlFor="firstName"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      First name
+                    </label>
+                    <input
+                      type="text"
                       id="firstName"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      placeholder="John"
+                      value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      required />
+                      required
+                    />
                   </div>
                   <div className="pl-4">
-                    <label htmlFor="lastName" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Last name</label>
-                    <input type="text"
+                    <label
+                      htmlFor="lastName"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Last name
+                    </label>
+                    <input
+                      type="text"
                       id="lastName"
                       className="w-full  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      placeholder="Doe"
+                      value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      required />
-
+                      required
+                    />
                   </div>
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10 pb-10">
                   <div className="pr-4">
-                    <label htmlFor="designation" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Designation</label>
-                    <input type="text"
+                    <label
+                      htmlFor="designation"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Designation
+                    </label>
+                    <input
+                      type="text"
                       id="designation"
+                      value={designation}
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setDesignation(e.target.value)}
                       required
                     />
                   </div>
                   <div className="pl-4">
-
-                    <label htmlFor="phone" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Phone Number</label>
-                    <input type="text"
+                    <label
+                      htmlFor="phone"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      type="number"
                       id="phone"
+                      value={phoneNum}
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setPhone(e.target.value)}
                       required
                     />
-
                   </div>
-
                 </div>
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                  >
+                    Email address
+                  </label>
                   <input
                     type="email"
                     id="email"
+                    value={email}
                     className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                     placeholder="john.doe@company.com"
                     onChange={(e) => setEmail(e.target.value)}
-                    required />
+                    required
+                  />
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10">
                   <div className="pr-4">
-                    <label htmlFor="password" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Password</label>
+                    <label
+                      htmlFor="password"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Password
+                    </label>
                     <input
+                      value={password}
                       type="password"
                       id="password"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setPassword(e.target.value)}
-                      required />
+                      required
+                    />
                   </div>
                   <div className="pl-4">
-                    <label htmlFor="repeat_password" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Repeat password</label>
+                    <label
+                      htmlFor="repeat_password"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Repeat password
+                    </label>
                     <input
+                      value={repeatPassword}
                       type="password"
                       id="password"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setRepeatPassword(e.target.value)}
-                      required />
+                      required
+                    />
                   </div>
                 </div>
               </div>

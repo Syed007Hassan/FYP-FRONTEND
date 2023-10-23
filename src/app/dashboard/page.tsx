@@ -64,26 +64,28 @@ const DashboardPage = () => {
 
   return (
 
-    <div className="flex grid-rows-1 grid-flow-col">
+    <div className="fixed flex grid-rows-1 grid-flow-col">
       <Sidebar />
-      <div className="pt-10 border-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div className="border-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <div className="pl-6 grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-          <div className="flex items-center justify-center h-100 w-86 rounded bg-gray-50 dark:bg-gray-800">
+          <div className="flex items-center justify-center h-50 w-96 rounded bg-gray-50 dark:bg-gray-800">
             <Chart1 />
           </div>
-          <div className="pl-6 flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
-            {/* <Chart1 /> */}
-          </div>
-          {/* <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
+          <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
             <Chart1 />
-          </div> */}
-          {/* <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
-            <Chart3 />
-          </div> */}
+          </div>
+
+          <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
+            <Chart1 />
+          </div>
 
         </div>
       </div>
-    </div >
+      <div className="grid-rows-1 grid-flow-col">
+
+
+      </div>
+    </div>
 
   );
 };

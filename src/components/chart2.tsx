@@ -35,7 +35,7 @@ const MyChart = () => {
       ],
       chart: {
         type: 'bar',
-        height: '320px',
+        height: '150',
         fontFamily: 'Inter, sans-serif',
         toolbar: {
           show: false,
@@ -44,7 +44,7 @@ const MyChart = () => {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: '70%',
+          columnWidth: '50%',
           borderRadiusApplication: 'end',
           borderRadius: 8,
         },
@@ -75,7 +75,7 @@ const MyChart = () => {
         padding: {
           left: 2,
           right: 2,
-          top: -14,
+          top: 0,
         },
       },
       dataLabels: {

@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 
 export default function Home() {
   return (
-    <div className=" mt-10 min-h-screen justify-center">
+    <div className=" min-h-screen justify-center">
       <Header />
 
       {/* 1 container */}
@@ -24,7 +24,7 @@ export default function Home() {
               interview, and hire the best talent for their business.
             </p>
             {/* request a demo button */}
-            <div className="flex pt-9 ">
+            <div className="flex pt-9">
               <button className="bg-blue-800 text-white rounded-full py-3 px-6 font-semibold hover:bg-blue-600">
                 Request a demo
               </button>
@@ -40,48 +40,48 @@ export default function Home() {
             alt="Picture of the author"
             width={500}
             height={500}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full hidden lg:block"
           />
         </div>
       </div>
 
       {/* 2 container */}
-      <div className="pl-20 pb-10 pt-10 pr-20">
-        <div className="pl=20 pr-64">
-          <h1 className="text-5xl font-normal text-gray-800 my-8 pl-20 pr-64">
+      <div className="lg:pl-20 pb-10 pt-10 lg:pr-20 pl-32 pr-10">
+        <div className="lg:pr-64 pr-10">
+          <h1 className="text-5xl font-normal text-gray-800 my-8 lg:pl-20 lg:pr-64 pr-10">
             Get the technology and know-how to be great at hiring so you can:
           </h1>
         </div>
-        <div className="grid grid-rows-1 grid-flow-col pt-16 pl-16 pr-16">
+        <div className="grid grid-rows-1 grid-flow-col pt-16 lg:pl-16 lg:pr-16">
           <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
-            <p className="text-lg font-medium text-gray-800 my-4">
+            <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Source and nurture the right candidates
             </p>
           </div>
           <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
-            <p className="text-lg font-medium text-gray-800 my-4">
+            <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Source and nurture the right candidates
             </p>
           </div>
           <div className=" flex justify-center border-solid border-blue-800 border-b-2 pt-12 pb-12">
-            <p className="text-lg font-medium text-gray-800 my-4">
+            <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Source and nurture the right candidates
             </p>
           </div>
         </div>
-        <div className="grid grid-rows-1 grid-flow-col pr-16 pb-16 pl-16">
+        <div className="grid grid-rows-1 grid-flow-col lg:pr-16 pb-16 lg:pl-16">
           <div className="flex justify-center border-solid border-blue-800 border-r-2 pt-12 pb-12">
-            <p className="text-lg font-medium text-gray-800 my-4">
+            <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Source and nurture the right candidates
             </p>
           </div>
           <div className="flex justify-center border-solid border-blue-800 border-r-2 pt-12 pb-12">
-            <p className="text-lg font-medium text-gray-800 my-4">
+            <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Source and nurture the right candidates
             </p>
           </div>
           <div className=" flex justify-center pt-12 pb-12">
-            <p className="text-lg font-medium text-gray-800 my-4">
+            <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Source and nurture the right candidates
             </p>
           </div>
@@ -190,10 +190,10 @@ export default function Home() {
       </div>
 
       {/* products */}
-      <div className="grid grid-rows-1 grid-flow-col pt-20">
-        <div className="pt-6 pr-20 pl-10 pb-6">
-          <header className="pr-20 pl-20">
-            <h1 className="pr-20 text-7xl font-semibold text-gray-800 my-8 pt-16 ">
+      <div className="lg:grid lg:grid-rows-1 lg:grid-flow-col pt-20">
+        <div className="pt-6 lg:pr-20 lg:pl-10 pb-6">
+          <header className="lg:pr-20 lg:pl-20 pr-10 pl-10">
+            <h1 className="lg:pr-20 text-7xl font-semibold text-gray-800 my-8 pt-16 ">
               SyncFlow Recruiter
             </h1>
             <p className="text-lg text-gray-600">
@@ -203,7 +203,7 @@ export default function Home() {
           </header>
         </div>
         <div
-          className="pt-6 pl-10 flex"
+          className="pt-6 lg:pl-10 flex"
           style={{ width: "780px", height: "500px" }}
         >
           <Image
@@ -215,7 +215,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="grid grid-rows-1 grid-flow-col">
+      <div className="lg:grid lg:grid-rows-1 lg:grid-flow-col pb-10 lg:pb-0">
         <div className=" flex" style={{ width: "780px", height: "500px" }}>
           <Image
             src="/syncflow-applicant.webp"
@@ -225,9 +225,9 @@ export default function Home() {
             className="object-cover w-full h-full"
           />
         </div>
-        <div className="pt-6 pr-20 pl-10">
-          <header className="pr-20 pl-20">
-            <h1 className="pr-20 text-7xl font-semibold text-gray-800 my-8 pt-16 ">
+        <div className="pt-6 lg:pr-20 lg:pl-10">
+          <header className="lg:pr-20 lg:pl-20 pr-10 pl-10">
+            <h1 className="lg:pr-20 text-7xl font-semibold text-gray-800 my-8 pt-16 ">
               SyncFlow Applicant
             </h1>
             <p className="text-lg text-gray-600">

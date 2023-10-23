@@ -20,7 +20,7 @@ import Header from "@/components/Header";
 
 function Copyright(props: any) {
   return (
-    
+
     <Typography
       variant="body2"
       color="text.secondary"
@@ -65,93 +65,85 @@ export default function SignInSide() {
 
   return (
     // include Header Component here
-    
-<div>
-  <Header />
 
-
-<div className={`bg-blue-500 p-20`} >
-      <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={15}
-          sm={4}
-          md={5}
-          sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
-            height: "80vh",
-            paddingRight: "0px",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square 
-            sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
-          <Box
+    <div>
+      <Header />
+      <div className={`bg-blue-500 p-20`} >
+        <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={15}
+            sm={4}
+            md={5}
             sx={{
-              my: 4,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              backgroundImage:
+                "url(https://source.unsplash.com/random?wallpapers)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
+              height: "80vh",
+              paddingRight: "0px",
             }}
-          >
-            <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Login As A Recruiter
-            </Typography>
-
+          />
+          <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square
+            sx={{ borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh" }}>
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ m:2 }}
+              sx={{
+                my: 4,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <div className="">
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
+              <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              {/* <Typography component="h1" variant="h5">
+                Login As A Recruiter
+              </Typography> */}
+              <div>
+                <h1 className="font-bold text-2xl mb-0">Login As A Recruiter</h1>
+              </div>
 
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ m: 2 }}
+              >
+                <div className="grid grid-cols-1 gap-4 pt-10">
+                  <div className="mb-3">
+                    <label htmlFor="email" className="font-bold block mb-2 text-sm text-gray-900 dark:text-white">Email :</label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="mb-3 w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="abc@gmail.com"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
 
-                <div className="mb-4 mt-3">
+                  <div className="mb-3">
+                    <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Password :</label>
+                    <input
+                      type="password"
+                      id="password"
+                      className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="mb-2 mt-3">
                   <input type="checkbox" onClick={showPassword} /> Show Password
                 </div>
 
@@ -176,16 +168,13 @@ export default function SignInSide() {
                     </a>
                   </p>
                 </div>
-              </div>
-
-              <Copyright sx={{ mt: 2 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    
+
+      </div>
     </div>
-</div>
-   
+
   );
 }

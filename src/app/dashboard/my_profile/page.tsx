@@ -88,110 +88,80 @@ const Page = () => {
             {success && (
               <Alert severity="success">Profile updated successfully</Alert>
             )}
-            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-              <div className="rounded-md shadow-sm -space-y-px">
+            <form className="mt-8" onSubmit={handleSubmit}>
+              <div className="rounded-md shadow-sm">
                 <div className="grid grid-rows-1 grid-flow-col">
                   <div className="pr-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="firstName" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">First name</label>
+                    <input type="text"
                       id="firstName"
-                      label="First Name"
-                      name="firstName"
-                      autoComplete="given-name"
-                      variant="outlined"
-                      size="small"
-                      value={firstName}
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="John"
                       onChange={(e) => setFirstName(e.target.value)}
-                    />
+                      required />
                   </div>
                   <div className="pl-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="lastName" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Last name</label>
+                    <input type="text"
                       id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                      variant="outlined"
-                      size="small"
-                      value={lastName}
+                      className="w-full  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="Doe"
                       onChange={(e) => setLastName(e.target.value)}
-                    />
+                      required />
+
                   </div>
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10 pb-10">
                   <div className="pr-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="designation" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Designation</label>
+                    <input type="text"
                       id="designation"
-                      label="Designation"
-                      name="designation"
-                      autoComplete="designation"
-                      variant="outlined"
-                      size="small"
-                      value={designation}
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setDesignation(e.target.value)}
+                      required
                     />
                   </div>
                   <div className="pl-4">
-                    <TextField
-                      required
-                      fullWidth
+
+                    <label htmlFor="phone" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Phone Number</label>
+                    <input type="text"
                       id="phone"
-                      label="Phone Number"
-                      name="phone"
-                      autoComplete="tel"
-                      variant="outlined"
-                      size="small"
-                      value={phoneNum}
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setPhone(e.target.value)}
+                      required
                     />
+
                   </div>
+
                 </div>
                 <div>
-                  <TextField
-                    required
-                    fullWidth
+                  <label htmlFor="email" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
+                  <input
+                    type="email"
                     id="email"
-                    label="Email Address"
-                    name="email"
-                    // autoComplete="email"
-                    variant="outlined"
-                    size="small"
-                    value={email}
+                    className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                    placeholder="john.doe@company.com"
                     onChange={(e) => setEmail(e.target.value)}
-                    InputProps={{ readOnly: true }}
-                    title="This field is read-only"
-                  />
+                    required />
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10">
                   <div className="pr-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="password" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Password</label>
+                    <input
+                      type="password"
                       id="password"
-                      label="Password"
-                      name="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      size="small"
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setPassword(e.target.value)}
-                    />
+                      required />
                   </div>
                   <div className="pl-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="repeat_password" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Repeat password</label>
+                    <input
+                      type="password"
                       id="password"
-                      label="Repeat Password"
-                      name="password"
-                      autoComplete="new-password"
-                      variant="outlined"
-                      size="small"
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setRepeatPassword(e.target.value)}
-                    />
+                      required />
                   </div>
                 </div>
               </div>
@@ -209,7 +179,7 @@ const Page = () => {
           </div>
         </div>
         <div
-          className="pl-10 pb-6 pr-10 flex"
+          className="pl-10 pt-40 pb-6 pr-10 flex"
           style={{ width: "650px", height: "630px" }}
         >
           <Image

@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 import Image from "next/image";
-interface HeaderProps {}
+interface HeaderProps { }
 
 const Header: React.FC<HeaderProps> = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -41,9 +41,8 @@ const Header: React.FC<HeaderProps> = () => {
   }, []);
 
   const handleResize = () => {
-    // Check the window width and set isMobileView accordingly.
+
     if (window.innerWidth <= 768) {
-      // Adjust the breakpoint as needed.
 
       setIsMobileView(true);
     } else {
@@ -67,41 +66,39 @@ const Header: React.FC<HeaderProps> = () => {
 
   return (
     <nav
-      className={`${
-        sticky
-          ? "fixed top-0 left-0 w-full bg-blue-900 shadow-lg"
-          : "bg-blue-900"
-      } p-4 lg:p-6 transition-all duration-300 ease-in-out text-white`}
+      className=
+      "overflow sticky top-0 left-0 w-full bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue"
+
     >
-      <div className="container mx-auto flex justify-between bg-blue-900 items-center h-10">
+      <div className="container mx-auto flex justify-between bg-white items-center h-10">
         <Link href="/" legacyBehavior className="py-3">
           <a>
-            <Image src="/synnc.png" alt="Logo" width={32} height={32} />
+            <Image src="/synnc.png" alt="Logo" width={150} height={150} />
           </a>
         </Link>
 
         {isMobileView ? (
-          <button className="lg:hidden" onClick={toggleSidebar}>
+          <button className="lg:hidden z-100" onClick={toggleSidebar}>
             {isSidebarOpen ? ( // Display close (cross) icon when the sidebar is open
-              <FaTimes className="w-6 h-6" onClick={closeSidebar} />
+              <FaTimes className="w-6 h-6 blue-icon" onClick={closeSidebar} />
             ) : (
               // Display hamburger icon when the sidebar is closed
-              <FaBars className="w-6 h-6" />
+              <FaBars className="w-6 h-6 blue-icon" />
             )}
           </button>
         ) : (
           <>
-            <div className="flex mr-3">
+            <div className="flex space-x-8">
               <div className="flex items-center">
                 <div className="relative" onClick={toggleDropdown}>
-                  <FaUser className="mr-2" size={22} />
+                  <FaUser className="space-x-4" size={22} />
                   {dropdownVisible && (
-                    <div className="absolute mt-2  left-0 w-48 bg-white border rounded-lg shadow-md">
+                    <div className="absolute mt-2 z-100  top-0 w-48 bg-white border rounded-lg shadow-md">
                       <ul>
                         <li>
                           <a
                             href="/dashboard/my_profile"
-                            className="block px-4 py-2 hover:bg-gray-200 text-blue-500"
+                            className="sticky block px-4 py-2 hover:bg-gray-200 text-blue-500"
                           >
                             Your Profile
                           </a>
@@ -122,14 +119,14 @@ const Header: React.FC<HeaderProps> = () => {
               <div className="flex items-center">
                 <Link href="/dashboard/addemployee">
                   <button>
-                    <FaUserPlus className="mr-2" size={25} />
+                    <FaUserPlus className="space-x-4 blue-icon" size={25} />
                   </button>
                 </Link>
               </div>
               <div className="flex items-center">
                 <Link href="/dashboard/company_profile">
                   <button>
-                    <FaBuilding className="mr-2" size={25} />
+                    <FaBuilding className="space-x-4 " size={25} />
                   </button>
                 </Link>
               </div>
@@ -155,30 +152,31 @@ const Header: React.FC<HeaderProps> = () => {
         )}
       </div>
       {isSidebarOpen && (
-        <div className="pt-12 fixed top-0 right-0 w-100 bg-blue-900 h-full z-50 transition-transform transform translate-x-0 lg:translate-x-full">
+        <div className="pt-12 fixed top-0 right-10 w-100 bg-blue-900 text-white h-full z-100 transition-transform transform lg:translate-x-full sm:translate-x-0">
+
           <ul className="p-4 space-y-4">
             <li>
               <Link href="/dashboard/my_profile" legacyBehavior>
-                <a className="block text-white hover:text-blue-500">
+                <a className="block text-blue hover:text-blue-500">
                   Your Profile
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/api/auth/signout" legacyBehavior>
-                <a className="block text-white hover:text-blue-500">Logout</a>
+                <a className="block text-blue hover:text-blue-500">Logout</a>
               </Link>
             </li>
             <li>
               <Link href="/dashboard/addemployee" legacyBehavior>
-                <a className="block text-white hover:text-blue-500">
+                <a className="block text-blue hover:text-blue-500">
                   Add Employee
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/dashboard/company_profile" legacyBehavior>
-                <a className="block text-white hover:text-blue-500">
+                <a className="block text-blue hover:text-blue-500">
                   Company Profile
                 </a>
               </Link>

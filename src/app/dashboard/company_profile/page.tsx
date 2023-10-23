@@ -99,81 +99,57 @@ const Page = () => {
               <div className="rounded-md shadow-sm -space-y-px">
                 <div className="grid grid-rows-1 grid-flow-col">
                   <div className="pr-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="companyName" className="mb-2  font-bold block text-sm text-gray-900 dark:text-white">Company name</label>
+                    <input type="text"
                       id="companyName"
-                      label="companyName"
-                      name="companyName"
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="given-name"
-                      variant="outlined"
-                      size="small"
-                      value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
-                      InputProps={{ readOnly: true }}
-                      title="This field is read-only"
-                    />
+                      required />
                   </div>
                   <div className="pl-4">
-                    <TextField
-                      required
-                      fullWidth
+
+                    <label htmlFor="companyAddress" className="mb-2  font-bold block text-sm text-gray-900 dark:text-white">Company Address</label>
+                    <input type="text"
                       id="companyAddress"
-                      label="companyAddress"
-                      name="companyAddress"
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="family-name"
-                      variant="outlined"
-                      size="small"
-                      value={companyAddress}
                       onChange={(e) => setCompanyAddress(e.target.value)}
-                    />
+                      required />
                   </div>
+
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10 pb-10">
                   <div className="pr-4">
-                    <TextField
-                      required
-                      fullWidth
+                    <label htmlFor="companyWebsite" className="mb-2  font-bold block text-sm text-gray-900 dark:text-white">Companys Website</label>
+                    <input type="text"
                       id="companyWebsite"
-                      label="companyWebsite"
-                      name="companyWebsite"
-                      autoComplete="companyWebsite"
-                      variant="outlined"
-                      size="small"
-                      value={companyWebsite}
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      autoComplete="family-name"
                       onChange={(e) => setCompanyWebsite(e.target.value)}
-                    />
+                      required />
+
                   </div>
                   <div className="pl-4">
-                    <TextField
-                      required
-                      fullWidth
+
+                    <label htmlFor="phone" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Phone Number</label>
+                    <input type="text"
                       id="phone"
-                      label="Phone Number"
-                      name="phone"
-                      autoComplete="tel"
-                      variant="outlined"
-                      size="small"
-                      value={companyPhoneNum}
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setCompanyPhone(e.target.value)}
+                      required
                     />
-                  </div>
-                </div>
+
+                  </div>                </div>
                 <div>
-                  <TextField
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
+                  <label htmlFor="email" className="font-bold block mb-2 text-sm text-gray-900 dark:text-white">Email :</label>
+                  <input
                     type="email"
-                    autoComplete="email"
-                    variant="outlined"
-                    size="small"
+                    id="email"
+                    className="mb-3 w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                     value={companyEmail}
                     onChange={(e) => setCompanyEmail(e.target.value)}
-                    InputProps={{ readOnly: true }}
-                    title="This field is read-only"
+                    required
                   />
                 </div>
               </div>
@@ -181,7 +157,7 @@ const Page = () => {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className=" mb-2  flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     onClick={handleClick}
                   >
                     Refresh
@@ -190,7 +166,7 @@ const Page = () => {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="mb-2 flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   >
                     Update
                   </button>

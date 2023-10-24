@@ -105,9 +105,7 @@ export default function SignInSide() {
               <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              {/* <Typography component="h1" variant="h5">
-                Login As A Recruiter
-              </Typography> */}
+
               <div>
                 <h1 className="font-bold text-2xl mb-0">Login As A Recruiter</h1>
               </div>
@@ -118,17 +116,17 @@ export default function SignInSide() {
                 onSubmit={handleSubmit}
                 sx={{ m: 2 }}
               >
-                <div className="grid grid-cols-1 gap-4 pt-10">
-                  <div className="mb-3">
-                    <label htmlFor="email" className="font-bold block mb-2 text-sm text-gray-900 dark:text-white">Email :</label>
+                <div className="pt-3 grid grid-cols-1 gap-4">
+
+                  <div className="mb-4">
+                    <label htmlFor="email" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
                     <input
                       type="email"
                       id="email"
-                      className="mb-3 w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      placeholder="abc@gmail.com"
+                      className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="john.doe@company.com"
                       onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
+                      required />
                   </div>
 
                   <div className="mb-3">

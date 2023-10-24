@@ -13,10 +13,12 @@ import Image from "next/image";
 interface HeaderProps { }
 
 const Header: React.FC<HeaderProps> = () => {
+
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [sticky, setSticky] = useState<boolean>(false);
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -64,6 +66,9 @@ const Header: React.FC<HeaderProps> = () => {
     setIsSidebarOpen(false);
   };
 
+  const MaintoggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <nav
       className=
@@ -71,11 +76,28 @@ const Header: React.FC<HeaderProps> = () => {
 
     >
       <div className="container mx-auto flex justify-between bg-white items-center h-10">
-        <Link href="/" legacyBehavior className="py-3">
-          <a>
-            <Image src="/synnc.png" alt="Logo" width={150} height={150} />
-          </a>
-        </Link>
+        <div className="flex items-center">
+          <button className="text-blue-900" onClick={MaintoggleSidebar}>
+            {isOpen ? (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+
+          <div>
+            <Link href="/" legacyBehavior className="py-3">
+              <a>
+                <Image src="/synnc.png" alt="Logo" width={150} height={150} />
+              </a>
+            </Link>
+          </div>
+        </div>
+
 
         {isMobileView ? (
           <button className="lg:hidden z-100" onClick={toggleSidebar}>

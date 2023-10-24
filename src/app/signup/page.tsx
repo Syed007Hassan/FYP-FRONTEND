@@ -146,9 +146,7 @@ export default function SignInSide() {
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              {/* <Typography component="h1" variant="h5">
-                Sign Up as a Recruiter
-              </Typography> */}
+
               <div>
                 <h1 className="font-bold text-2xl mb-0">Sign Up as a Recruiter</h1>
               </div>
@@ -236,7 +234,7 @@ export default function SignInSide() {
                 </div>
 
 
-                <div className="mb-0">
+                <div className="mt-3">
                   <button
                     className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
@@ -246,7 +244,7 @@ export default function SignInSide() {
                   </button>
                 </div>
 
-                <div className="text-center">
+                <div className="text-center mt-3">
                   <a
                     className="inline-block align-baseline sm:mt-0 mb-0 font-bold text-sm text-blue-500 hover:text-blue-800"
                     href="/login"

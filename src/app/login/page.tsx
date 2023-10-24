@@ -18,31 +18,13 @@ import { signIn } from "next-auth/react";
 import styles from "./login.module.css";
 import Header from "@/components/Header";
 
-function Copyright(props: any) {
-  return (
-
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [result, setResult] = useState(false);
 
   const handleSubmit = async (event: any) => {
     const result = await signIn("credentials", {
@@ -51,10 +33,13 @@ export default function SignInSide() {
       redirect: true,
       callbackUrl: "/dashboard",
     });
+
+    if (result) {
+      setResult(true);
+    }
   };
 
   const showPassword = () => {
-
     var isCheck = document.getElementById("password");
     if (isCheck!.getAttribute("type") === "password") {
       isCheck!.setAttribute("type", "text");
@@ -68,8 +53,29 @@ export default function SignInSide() {
 
     <div>
       <Header />
-      <div className={`bg-blue-500 p-20`} >
-        <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div className="relative">
+        {!result && (
+          <div
+            className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20"
+            role="alert"
+          >
+            <p className="text-base font-semibold text-gray-900 dark:text-white">
+              User Logged In Successfully!
+            </p>
+          </div>
+        )}
+      </div>
+      <div className={`bg-blue-500 p-20`}>
+        <Grid
+          container
+          component="main"
+          sx={{
+            height: "77.4vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <CssBaseline />
           <Grid
             item
@@ -86,13 +92,26 @@ export default function SignInSide() {
                   : t.palette.grey[900],
               backgroundSize: "cover",
               backgroundPosition: "center",
-              borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
+              borderEndStartRadius: "40px",
+              borderTopLeftRadius: "40px",
               height: "80vh",
               paddingRight: "0px",
             }}
           />
-          <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square
-            sx={{ borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh" }}>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={3}
+            component={Paper}
+            elevation={6}
+            square
+            sx={{
+              borderEndEndRadius: "40px",
+              borderTopRightRadius: "40px",
+              height: "80vh",
+            }}
+          >
             <Box
               sx={{
                 my: 4,
@@ -107,7 +126,9 @@ export default function SignInSide() {
               </Avatar>
 
               <div>
-                <h1 className="font-bold text-2xl mb-0">Login As A Recruiter</h1>
+                <h1 className="font-bold text-2xl mb-0">
+                  Login As A Recruiter
+                </h1>
               </div>
 
               <Box
@@ -117,20 +138,30 @@ export default function SignInSide() {
                 sx={{ m: 2 }}
               >
                 <div className="pt-3 grid grid-cols-1 gap-4">
-
                   <div className="mb-4">
-                    <label htmlFor="email" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
+                    <label
+                      htmlFor="email"
+                      className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Email address
+                    </label>
                     <input
                       type="email"
                       id="email"
                       className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       placeholder="john.doe@company.com"
                       onChange={(e) => setEmail(e.target.value)}
-                      required />
+                      required
+                    />
                   </div>
 
                   <div className="mb-3">
-                    <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Password :</label>
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Password :
+                    </label>
                     <input
                       type="password"
                       id="password"
@@ -170,9 +201,7 @@ export default function SignInSide() {
             </Box>
           </Grid>
         </Grid>
-
       </div>
     </div>
-
   );
 }

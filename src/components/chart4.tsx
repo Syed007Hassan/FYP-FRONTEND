@@ -32,7 +32,7 @@ const SalesChart = () => {
     },
   ]);
   return (
-    <div className="p-4  bg-white border w-full h-64 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div className="bg-white border w-full h-72 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       <div className="flex items-center justify-between mb-4">
         <div className="flex-shrink-0">
           <span className="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">
@@ -69,7 +69,7 @@ const SalesChart = () => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
-          <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="weekly-sales-dropdown">
+          <div className="z-0 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="weekly-sales-dropdown">
             <div className="px-4 py-3" role="none">
               <p className="text-sm font-medium text-gray-900 truncate dark:text-white" role="none">
                 Sep 16, 2021 - Sep 22, 2021

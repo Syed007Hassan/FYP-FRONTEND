@@ -418,19 +418,19 @@ const LineChart = () => {
                     CPC growth - Incremental
                   </h3>
                   <p>
-                    Report helps navigate cumulative growth of community
+                    {/* Report helps navigate cumulative growth of community
                     activities. Ideally, the chart should have a growing trend,
                     as stagnating chart signifies a significant decrease of
-                    community activity.
+                    community activity. */}
                   </p>
                   <h3 className="font-semibold text-gray-900 dark:text-white">
                     Calculation
                   </h3>
                   <p>
-                    For each date bucket, the all-time volume of activities is
+                    {/* For each date bucket, the all-time volume of activities is
                     calculated. This means that activities in period n contain
                     all activities up to period n, plus the activities generated
-                    by your community in period.
+                    by your community in period. */}
                   </p>
                   <a
                     href="#"

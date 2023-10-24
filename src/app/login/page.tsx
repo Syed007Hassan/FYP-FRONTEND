@@ -51,7 +51,7 @@ export default function SignInSide() {
   return (
     // include Header Component here
 
-    <div>
+    <div className=" min-h-screen justify-center">
       <Header />
       <div className="relative">
         {result && (
@@ -160,7 +160,7 @@ export default function SignInSide() {
                       htmlFor="password"
                       className="block mb-2 text-sm font-bold text-gray-900 dark:text-white"
                     >
-                      Password :
+                      Password
                     </label>
                     <input
                       type="password"
@@ -172,8 +172,17 @@ export default function SignInSide() {
                     />
                   </div>
                 </div>
-                <div className="mb-2 mt-3">
-                  <input type="checkbox" onClick={showPassword} /> Show Password
+                <div className="flex items-center mb-4 mt-6">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300 text-blue-500 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mr-4"
+                      onClick={showPassword}
+                    />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Show Password
+                    </span>
+                  </label>
                 </div>
 
                 <div className="mb-4 mt-3">

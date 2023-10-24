@@ -173,6 +173,7 @@ const Page = () => {
                     placeholder="john.doe@company.com"
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    disabled={true}
                   />
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10">

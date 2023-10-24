@@ -54,7 +54,7 @@ export default function SignInSide() {
     <div>
       <Header />
       <div className="relative">
-        {!result && (
+        {result && (
           <div
             className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20"
             role="alert"

@@ -1,6 +1,6 @@
 // Sidebar.tsx
-import Link from 'next/link';
-import { FaUser, FaSignOutAlt, FaUserPlus, FaBuilding } from 'react-icons/fa';
+import Link from "next/link";
+import { FaUser, FaSignOutAlt, FaUserPlus, FaBuilding } from "react-icons/fa";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,15 +17,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
     >
       <div className="h-full px-3 py-4 bg-blue-800">
         <ul className="space-y-2 font-medium">
-          <li>
-
-          </li>
+          <li></li>
           <li>
             <a
               href="#"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900 group"
             >
-
               <svg
                 className="flex-shrink-0  w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                 aria-hidden="true"
@@ -92,9 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
               >
                 <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z" />
               </svg>
-              <span className="flex-1 ml-3 whitespace-nowrap">
-                Products
-              </span>
+              <span className="flex-1 ml-3 whitespace-nowrap">Products</span>
             </a>
           </li>
           <li>
@@ -111,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
+                  strokeLinecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
                   d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
@@ -139,11 +134,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
               <span className="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
             </a>
           </li>
-          <button id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar" className="relative p-2 md:hidden">
-            <svg id="toggleSidebarMobileHamburger" className="w-6 h-6 fill-current text-black" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <button
+            id="toggleSidebarMobile"
+            aria-expanded="true"
+            aria-controls="sidebar"
+            className="relative p-2 md:hidden"
+          >
+            <svg
+              id="toggleSidebarMobileHamburger"
+              className="w-6 h-6 fill-current text-black"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"></path>
             </svg>
-            <svg id="toggleSidebarMobileClose" className="w-6 h-6 fill-current text-black hidden" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              id="toggleSidebarMobileClose"
+              className="w-6 h-6 fill-current text-black hidden"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"></path>
             </svg>
           </button>

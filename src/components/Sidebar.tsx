@@ -10,7 +10,7 @@ const Sidebar = () => {
   return (
     <div
       id="logo-sidebar"
-      className="top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      className="pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 bg-blue-900">

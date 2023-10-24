@@ -70,20 +70,16 @@ const Header: React.FC<HeaderProps> = () => {
     setIsOpen(!isOpen);
   };
   return (
-    <nav
-      className=
-      "overflow sticky top-0 left-0 w-full bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue"
-
-    >
-      <div className="container mx-auto flex justify-between bg-white items-center h-10">
+    <nav className="overflow z-50  sticky top-0 left-0 w-full bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
+      <div className="container mx-auto flex justify-between bg-white items-center h-12">
         <div className="flex items-center">
           <button className="text-blue-900" onClick={MaintoggleSidebar}>
             {isOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
@@ -100,7 +96,7 @@ const Header: React.FC<HeaderProps> = () => {
 
 
         {isMobileView ? (
-          <button className="lg:hidden z-100" onClick={toggleSidebar}>
+          <button className="lg:hidden z-50" onClick={toggleSidebar}>
             {isSidebarOpen ? ( // Display close (cross) icon when the sidebar is open
               <FaTimes className="w-6 h-6 blue-icon" onClick={closeSidebar} />
             ) : (
@@ -115,7 +111,7 @@ const Header: React.FC<HeaderProps> = () => {
                 <div className="relative" onClick={toggleDropdown}>
                   <FaUser className="space-x-4" size={22} />
                   {dropdownVisible && (
-                    <div className="absolute mt-2 z-100  top-0 w-48 bg-white border rounded-lg shadow-md">
+                    <div className="absolute mt-2 z-auto top-0 w-48 bg-white border rounded-lg shadow-md">
                       <ul>
                         <li>
                           <a
@@ -155,7 +151,7 @@ const Header: React.FC<HeaderProps> = () => {
               <div className="text-gray-300 cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
+                  className="w-6 h-10"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -174,7 +170,7 @@ const Header: React.FC<HeaderProps> = () => {
         )}
       </div>
       {isSidebarOpen && (
-        <div className="pt-12 fixed top-0 right-10 w-100 bg-blue-900 text-white h-full z-100 transition-transform transform lg:translate-x-full sm:translate-x-0">
+        <div className="pt-12 fixed top-0 right-10 w-100 bg-blue-900 text-white h-full z-50 transition-transform transform lg:translate-x-full sm:translate-x-0">
 
           <ul className="p-4 space-y-4">
             <li>

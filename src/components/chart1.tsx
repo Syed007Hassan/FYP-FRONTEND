@@ -169,7 +169,7 @@ const Chart1 = ({ }: Chart1Props) => {
                     },
                 }} series={options.series} type="area" height="350" />
             </div>
-            <div className="grid grid-cols-2 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+            <div className="fixed grid grid-cols-2 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
                 <div className="flex justify-between items-center pt-5">
                     {/* Button */}
                     <button
@@ -191,7 +191,7 @@ const Chart1 = ({ }: Chart1Props) => {
                         </svg>
                     </button>
                     {/* Dropdown menu */}
-                    <div id="lastDaysdropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <div id="lastDaysdropdown" className="z-ahidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                             <li>
                                 <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
@@ -222,7 +222,7 @@ const Chart1 = ({ }: Chart1Props) => {
                     </div>
                     <a
                         href="#"
-                        className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
+                        className="z-0 uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
                     >
                         Users Report
                         <svg className="w-2.5 h-2.5 ml-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">

@@ -65,14 +65,14 @@ const DashboardPage = () => {
 
   return (
 
-    <div className="fixed flex">
+    <div className="flex">
       <Sidebar />
       <div className=" w-full border-gray-200 border-dashed rounded-lg dark:border-gray-700" style={{ height: "98%" }}>
-        <div className="pl-6 w-full grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
+        <div className="w-full grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
+          <div className="pl-24 flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
             <Chart1 />
           </div>
-          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
+          <div className="pl-0 flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
             <Chart1 />
           </div>
           <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">

@@ -111,7 +111,7 @@ const BarChart = () => {
   };
 
   return (
-    <div className="min-w-lg w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+    <div className="min-w-lg w-50 h-50 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
         <dl>
           <dt className="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Profit</dt>
@@ -127,7 +127,7 @@ const BarChart = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 py-3">
+      <div className="grid grid-cols-1 py-3">
         <dl>
           <dt className="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Income</dt>
           <dd className="leading-none text-xl font-bold text-green-500 dark:text-green-400">$23,635</dd>

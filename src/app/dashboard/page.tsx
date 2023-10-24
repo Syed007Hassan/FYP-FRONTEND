@@ -10,6 +10,7 @@ import Navbar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
 import Chart2 from "@/components/chart2";
 import Chart3 from "@/components/chart3";
+import Chart4 from "@/components/chart4";
 
 
 const DashboardPage = () => {
@@ -64,29 +65,26 @@ const DashboardPage = () => {
 
   return (
 
-    <div className="fixed flex grid-rows-1 grid-flow-col">
+    <div className="fixed flex">
       <Sidebar />
-      <div className="border-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-        <div className="pl-6 grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-          <div className="flex items-center justify-center h-50 w-96 rounded bg-gray-50 dark:bg-gray-800">
+      <div className=" w-full border-gray-200 border-dashed rounded-lg dark:border-gray-700" style={{ height: "98%" }}>
+        <div className="pl-6 w-full grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
+          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
             <Chart1 />
           </div>
-          <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
+          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
             <Chart1 />
           </div>
+          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
+            <Chart1 />
+          </div>
+        </div>
 
-          <div className="flex items-center justify-center h-100 w-96 rounded bg-gray-50 dark:bg-gray-800">
-            <Chart1 />
-          </div>
-
+        <div className="pl-6 flex  grid-rows-2 items-center justify-center h-68 w-full mb-4 rounded bg-gray-50 dark:bg-gray-800">
+          <Chart4 />
         </div>
       </div>
-      <div className="grid-rows-1 grid-flow-col">
-
-
-      </div>
     </div>
-
   );
 };
 export default DashboardPage;

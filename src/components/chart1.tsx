@@ -90,7 +90,7 @@ const Chart1 = ({ }: Chart1Props) => {
     }, [options]);
 
     return (
-        <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+        <div className="max-w-sm w-50 h-50 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <div className="flex justify-between">
                 <div>
                     <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">32.4k</h5>
@@ -169,7 +169,7 @@ const Chart1 = ({ }: Chart1Props) => {
                     },
                 }} series={options.series} type="area" height="350" />
             </div>
-            <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+            <div className="grid grid-cols-2 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
                 <div className="flex justify-between items-center pt-5">
                     {/* Button */}
                     <button

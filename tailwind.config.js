@@ -53,9 +53,9 @@ module.exports = {
   plugins: [  require('flowbite/plugin')({
     charts: true,
 }),],
-screens: {
-  'sm': '640px', // Apply responsive classes at or above 640px
-  'md': '768px', // Apply responsive classes at or above 768px
-  'lg': '1024px', // Apply responsive classes at or above 1024px
-},
+// screens: {
+//   'sm': '640px', // Apply responsive classes at or above 640px
+//   'md': '768px', // Apply responsive classes at or above 768px
+//   'lg': '1024px', // Apply responsive classes at or above 1024px
+// },
 };

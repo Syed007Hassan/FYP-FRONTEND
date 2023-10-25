@@ -65,7 +65,7 @@ const DashboardPage = () => {
 
   return (
 
-    <div className="flex">
+    <div className="sticky flex">
       <div className=" w-full border-gray-200 border-dashed rounded-lg dark:border-gray-700" style={{ height: "98%" }}>
         <div className="w-full grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
           <div className="pl-24 flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
@@ -79,9 +79,9 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        {/* <div className="flex  grid-rows-1 items-center justify-center h-68 w-full mb-4 rounded bg-gray-50 dark:bg-gray-800">
+        <div className="flex  grid-rows-2 items-center justify-center h-68 w-full mb-4 rounded bg-gray-50 dark:bg-gray-800">
           <Chart4 />
-        </div> */}
+        </div>
       </div>
     </div>
   );

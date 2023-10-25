@@ -51,7 +51,7 @@ export default function SignInSide() {
   return (
     // include Header Component here
 
-    <div className=" min-h-screen justify-center">
+    <div className="min-h-screen justify-center">
       <Header />
       <div className="relative">
         {result && (

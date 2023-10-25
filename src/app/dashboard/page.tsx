@@ -8,7 +8,6 @@ import { parseJwt } from "@/lib/Constants";
 import Chart1 from "@/components/chart1";
 import Navbar from "@/components/NavBar";
 import Sidebar from "@/components/Sidebar";
-import Chart2 from "@/components/chart2";
 import Chart3 from "@/components/chart3";
 import Chart4 from "@/components/chart4";
 

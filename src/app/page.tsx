@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className=" min-h-screen justify-center">
       <Header />
-      {/* 1 container */}
+
       <div className="grid grid-rows-1 grid-flow-col">
         <div className="pt-6 pr-20 pl-10 pb-6">
           <header className="pr-20 pl-20">

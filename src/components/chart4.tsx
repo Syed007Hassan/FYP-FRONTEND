@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+import Chart from "react-apexcharts";
+import ApexCharts from 'apexcharts';
 
 const SalesChart = () => {
+  const chartRef = useRef(null);
+
   const [options, setOptions] = useState({
     chart: {
       id: "sales-chart",
@@ -31,6 +34,7 @@ const SalesChart = () => {
       data: [20, 35, 45, 30, 60, 40, 80],
     },
   ]);
+
   return (
     <div className="bg-white border w-full h-72 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       <div className="flex items-center justify-between mb-4">
@@ -58,9 +62,7 @@ const SalesChart = () => {
           </svg>
         </div>
       </div>
-      <div>
-        <Chart options={options} series={series} type="line" height={350} />
-      </div>
+      <Chart options={options} series={series} type="line" height={400} />
       <div className="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
         <div>
           <button className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="weekly-sales-dropdown">

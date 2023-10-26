@@ -7,7 +7,7 @@ interface Props {
 
 import React from 'react'
 
-const ColumnChart = () => {
+const chart3 = () => {
 
 
   const chartRef = useRef(null);
@@ -145,4 +145,4 @@ const ColumnChart = () => {
     </div>
   )
 };
-export default ColumnChart;
+export default chart3;

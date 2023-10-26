@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FaUser, FaUserPlus, FaBuilding } from "react-icons/fa";
+import { FaUser, FaUserPlus, FaBuilding, FaBriefcase } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -93,6 +93,13 @@ const Header: React.FC<HeaderProps> = () => {
             <Link href="/dashboard/company_profile">
               <button>
                 <FaBuilding className="space-x-4 " size={25} />
+              </button>
+            </Link>
+          </div>
+          <div className="flex items-center">
+            <Link href="#">
+              <button>
+                <FaBriefcase className="material-icons" size={25} />
               </button>
             </Link>
           </div>

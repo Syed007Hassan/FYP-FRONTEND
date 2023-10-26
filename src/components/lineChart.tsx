@@ -1,16 +1,24 @@
-import { useState, useRef, useEffect } from "react";
-import dynamic from "next/dynamic";
-import Chart from "react-apexcharts";
-import ApexCharts from 'apexcharts';
+import { useState } from "react";
 
-const SalesChart = () => {
-  const chartRef = useRef(null);
+import Chart from "react-apexcharts";
+
+
+const chart4 = () => {
 
   const [options, setOptions] = useState({
     chart: {
       id: "sales-chart",
       toolbar: {
         show: false,
+      },
+    },
+    grid: {
+      show: true,
+      strokeDashArray: 10,
+      padding: {
+        left: 0,
+        right: 2,
+        top: 10,
       },
     },
     xaxis: {
@@ -33,11 +41,12 @@ const SalesChart = () => {
       name: "Product B",
       data: [20, 35, 45, 30, 60, 40, 80],
     },
+
   ]);
 
   return (
-    <div className="bg-white border w-full h-72 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-      <div className="flex items-center justify-between mb-4">
+    <div className="h-full w-screen text-center bg-white border h-50 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+      <div className="flex justify-between">
         <div className="flex-shrink-0">
           <span className="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">
             $45,385
@@ -124,4 +133,4 @@ const SalesChart = () => {
   );
 };
 
-export default SalesChart;
+export default chart4;

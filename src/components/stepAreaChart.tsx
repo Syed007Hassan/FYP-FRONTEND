@@ -3,7 +3,7 @@ import ApexCharts from 'apexcharts';
 import { useEffect, useRef } from 'react';
 
 
-const SalesChart = () => {
+const Chart2 = () => {
 
   const chartRef = useRef(null);
 
@@ -33,7 +33,7 @@ const SalesChart = () => {
           opacityFrom: 0.55,
           opacityTo: 0,
           shade: '#1C64F2',
-          gradientToColors: ['#1C64F2'],
+          gradientToColors: '#FDBA8C'
         },
       },
       dataLabels: {
@@ -121,4 +121,4 @@ const SalesChart = () => {
 };
 
 
-export default SalesChart;
+export default Chart2;

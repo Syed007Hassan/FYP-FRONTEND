@@ -13,7 +13,7 @@ const Chart1 = ({ }: Chart1Props) => {
 
     useEffect(() => {
         let options = {
-            // set the formatter callback function to format data
+
             yaxis: {
                 show: true,
                 labels: {
@@ -97,14 +97,10 @@ const Chart1 = ({ }: Chart1Props) => {
         };
     }, []);
 
-
-
     return (
         <div>
             <div ref={chartRef}></div>
         </div>
-
-
     );
 
 };

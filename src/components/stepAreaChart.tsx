@@ -119,6 +119,4 @@ const Chart2 = () => {
     </div>
   );
 };
-
-
 export default Chart2;

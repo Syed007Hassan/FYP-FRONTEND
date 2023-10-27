@@ -18,31 +18,13 @@ import { signIn } from "next-auth/react";
 import styles from "./login.module.css";
 import Header from "@/components/Header";
 
-function Copyright(props: any) {
-  return (
-    
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [result, setResult] = useState(false);
 
   const handleSubmit = async (event: any) => {
     const result = await signIn("credentials", {
@@ -51,10 +33,13 @@ export default function SignInSide() {
       redirect: true,
       callbackUrl: "/dashboard",
     });
+
+    if (result) {
+      setResult(true);
+    }
   };
 
   const showPassword = () => {
-
     var isCheck = document.getElementById("password");
     if (isCheck!.getAttribute("type") === "password") {
       isCheck!.setAttribute("type", "text");
@@ -65,94 +50,139 @@ export default function SignInSide() {
 
   return (
     // include Header Component here
-    
-<div>
-  <Header />
 
-
-<div className={`bg-blue-500 p-20`} >
-      <Grid container component="main" sx={{ height: "77.4vh", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <CssBaseline />
+    <div className="min-h-screen justify-center">
+      <Header />
+      <div className="relative">
+        {result && (
+          <div
+            className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20"
+            role="alert"
+          >
+            <p className="text-base font-semibold text-gray-900 dark:text-white">
+              User Logged In Successfully!
+            </p>
+          </div>
+        )}
+      </div>
+      <div className={`bg-blue-500 p-20`}>
         <Grid
-          item
-          xs={15}
-          sm={4}
-          md={5}
+          container
+          component="main"
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?wallpapers)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderEndStartRadius: '40px', borderTopLeftRadius: '40px',
-            height: "80vh",
-            paddingRight: "0px",
+            height: "77.4vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
-        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square 
-            sx={{borderEndEndRadius: '40px', borderTopRightRadius: '40px', height: "80vh"}}>
-          <Box
+        >
+          <CssBaseline />
+          <Grid
+            item
+            xs={15}
+            sm={4}
+            md={5}
             sx={{
-              my: 4,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              backgroundImage:
+                "url(https://source.unsplash.com/random?wallpapers)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              borderEndStartRadius: "40px",
+              borderTopLeftRadius: "40px",
+              height: "80vh",
+              paddingRight: "0px",
+            }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={3}
+            component={Paper}
+            elevation={6}
+            square
+            sx={{
+              borderEndEndRadius: "40px",
+              borderTopRightRadius: "40px",
+              height: "80vh",
             }}
           >
-            <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Login As A Recruiter
-            </Typography>
-
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ m:2 }}
+              sx={{
+                my: 4,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <div className="">
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
+              <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
 
-                <div className="mb-4">
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                    autoFocus
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+              <div>
+                <h1 className="font-bold text-2xl mb-0">
+                  Login As A Recruiter
+                </h1>
+              </div>
 
-                <div className="mb-4 mt-3">
-                  <input type="checkbox" onClick={showPassword} /> Show Password
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ m: 2 }}
+              >
+                <div className="pt-3 grid grid-cols-1 gap-4">
+                  <div className="mb-4">
+                    <label
+                      htmlFor="email"
+                      className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="john.doe@company.com"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-3">
+                    <label
+                      htmlFor="password"
+                      className="block mb-2 text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      id="password"
+                      className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center mb-4 mt-6">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300 text-blue-500 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mr-4"
+                      onClick={showPassword}
+                    />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Show Password
+                    </span>
+                  </label>
                 </div>
 
                 <div className="mb-4 mt-3">
@@ -176,16 +206,11 @@ export default function SignInSide() {
                     </a>
                   </p>
                 </div>
-              </div>
-
-              <Copyright sx={{ mt: 2 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    
+      </div>
     </div>
-</div>
-   
   );
 }

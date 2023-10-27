@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 
 
 const Chart2 = () => {
-
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -105,6 +104,7 @@ const Chart2 = () => {
         color: '#7E3BF2',
       },
     ];
+
 
     const chart = new ApexCharts(chartRef.current, options);
     chart.render();

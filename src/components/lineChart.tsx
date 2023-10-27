@@ -3,7 +3,7 @@ import { useState } from "react";
 import Chart from "react-apexcharts";
 
 
-const chart4 = () => {
+const Chart4 = () => {
 
   const [options, setOptions] = useState({
     chart: {
@@ -133,4 +133,4 @@ const chart4 = () => {
   );
 };
 
-export default chart4;
+export default Chart4;

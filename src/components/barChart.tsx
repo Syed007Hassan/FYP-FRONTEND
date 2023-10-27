@@ -7,11 +7,10 @@ interface Props {
 
 import React from 'react'
 
-const chart3 = () => {
+const Chart3 = () => {
 
 
   const chartRef = useRef(null);
-
   useEffect(() => {
     const options = {
       colors: ["#1A56DB", "#FDBA8C"],
@@ -130,7 +129,6 @@ const chart3 = () => {
         opacity: 1,
       },
     }
-
     const chart = new ApexCharts(chartRef.current, options);
     chart.render();
     return () => {
@@ -145,4 +143,4 @@ const chart3 = () => {
     </div>
   )
 };
-export default chart3;
+export default Chart3;

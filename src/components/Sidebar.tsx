@@ -1,13 +1,10 @@
-// Sidebar.tsx
-import Link from "next/link";
-import { FaUser, FaSignOutAlt, FaUserPlus, FaBuilding } from "react-icons/fa";
+"use client";
 
 interface SidebarProps {
   isOpen: boolean;
-  toggle: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggle }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   return (
     <div
       id="logo-sidebar"

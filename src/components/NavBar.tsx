@@ -23,12 +23,6 @@ const Header: React.FC<HeaderProps> = () => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
-  const closeSidebar = () => {
-    console.log("close");
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <nav className="overflow z-50  sticky top-0 left-0 w-full bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
       <div className="container mx-auto flex justify-between bg-white items-center h-12">
@@ -123,9 +117,7 @@ const Header: React.FC<HeaderProps> = () => {
           </div>
         </div>
       </div>
-      {isSidebarOpen && (
-        <Sidebar isOpen={isSidebarOpen} toggle={closeSidebar} />
-      )}
+      {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} />}
     </nav>
   );
 };

@@ -14,16 +14,11 @@ const page = () => {
                 <h1 className="pl-10 text-4xl text-blue-900 pt-10 text-right">All Jobs</h1>
                 <a
                   href="/dashboard/addjob"
-                  target="_blank"
                   className="pr-6 mr-12 py-2.5 px-5 mb-2 text-sm mt-10 font-medium text-gray-900 focus:outline-none bg-white rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 >
                   Add New Job
                 </a>
-
               </div>
-
-
-
             </div>
           </div>
         </div>
@@ -73,7 +68,7 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full h-64">
-                        <Image src="/landing-pic.png" alt="Image description" width={32} height={32} className="rounded-lg" />
+                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
@@ -119,7 +114,7 @@ const page = () => {
                     <a href="#">
                       {/* <img src="assets/images/featured-job/img-02.png" alt="" className="img-fluid rounded-3"> */}
                       <div className="w-full h-64">
-                        <Image src="/landing-pic.png" alt="Image description" width={32} height={32} className="rounded-lg" />
+                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div>
 
                     </a>
@@ -166,7 +161,7 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full h-64">
-                        <Image src="/landing-pic.png" alt="Image description" width={32} height={32} className="rounded-lg" />
+                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
@@ -211,7 +206,7 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full h-64">
-                        <Image src="/landing-pic.png" alt="Image description" width={32} height={32} className="rounded-lg" />
+                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
@@ -256,7 +251,7 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full h-64">
-                        <Image src="/landing-pic.png" alt="Image description" width={32} height={32} className="rounded-lg" />
+                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
@@ -300,7 +295,7 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full h-64">
-                        <Image src="/landing-pic.png" alt="Image description" width={32} height={32} className="rounded-lg" />
+                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">

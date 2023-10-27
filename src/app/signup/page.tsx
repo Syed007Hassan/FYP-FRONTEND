@@ -144,14 +144,14 @@ export default function SignInSide() {
                 <LockOutlinedIcon />
               </Avatar>
 
-              <div className="mt-7">
-                <h1 className="font-bold text-2xl mb-2">
+              <div className="mt-1">
+                <h1 className="font-bold text-2xl mb-1">
                   Sign Up as a Recruiter
                 </h1>
               </div>
 
               <div className="pt-3 container">
-                <div className="mb-4 flex space-x-3">
+                <div className="mb-3 flex space-x-3">
                   <div>
                     <label
                       htmlFor="f_name"
@@ -269,7 +269,7 @@ export default function SignInSide() {
                   </div>
                 </div>
 
-                <div className="mt-3">
+                <div>
                   <button
                     className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
@@ -279,7 +279,7 @@ export default function SignInSide() {
                   </button>
                 </div>
 
-                <div className="text-center mt-3">
+                <div className="text-center ">
                   <a
                     className="inline-block align-baseline sm:mt-0 mb-0 font-bold text-sm text-blue-500 hover:text-blue-800"
                     href="/login"

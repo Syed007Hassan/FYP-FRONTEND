@@ -3,17 +3,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Backend_URL } from "@/lib/Constants";
 import { getSession } from "next-auth/react";
-import Link from "next/link";
 import { parseJwt } from "@/lib/Constants";
-import Chart1 from "@/components/chart1";
-import Navbar from "@/components/NavBar";
-import Sidebar from "@/components/Sidebar";
-import Chart2 from "@/components/chart2";
-import Chart3 from "@/components/chart3";
-import Chart4 from "@/components/chart4";
+import Chart1 from "@/components/areaChart";
+import Chart3 from "@/components/barChart";
+import Chart4 from "@/components/lineChart";
+import SalesChart from "@/components/stepAreaChart";
+
 
 
 const DashboardPage = () => {
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const verifyToken = async () => {
     try {
@@ -65,24 +64,23 @@ const DashboardPage = () => {
 
   return (
 
-    <div className="fixed flex">
-      <Sidebar />
-      <div className=" w-full border-gray-200 border-dashed rounded-lg dark:border-gray-700" style={{ height: "98%" }}>
-        <div className="pl-6 w-full grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
-            <Chart1 />
+    <div className="w-full pt-10 sticky">
+      <Chart4 />
+      <div className="h-50  flex pt-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700" style={{ height: "98%" }}>
+        <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
+
+          <div className="pl-2 w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
+            <Chart3 />
           </div>
-          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
-            <Chart1 />
+
+          <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
+            <SalesChart />
           </div>
-          <div className="flex items-center justify-center h-50 w-50 rounded bg-gray-50 dark:bg-gray-800">
+          <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
             <Chart1 />
           </div>
         </div>
 
-        <div className="pl-6 flex  grid-rows-2 items-center justify-center h-68 w-full mb-4 rounded bg-gray-50 dark:bg-gray-800">
-          <Chart4 />
-        </div>
       </div>
     </div>
   );

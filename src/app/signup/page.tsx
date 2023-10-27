@@ -18,26 +18,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { registerUser } from "@/redux/services/auth/authActions";
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
-import Alert from "@mui/material/Alert";
 import { useRouter } from "next/navigation";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -78,14 +59,30 @@ export default function SignInSide() {
 
     data.email = data.email.toLowerCase();
     dispatch(registerUser(data));
-    console.log(userInfo);
-    // redirect("/");
-    router.push("/login");
+    console.log(success + "here is success");
   };
+
+  useEffect(() => {
+    if (success) {
+      router.push("/login");
+    }
+  }, [router, success, userInfo]);
 
   return (
     <div>
       <Header />
+      <div className="relative">
+        {success && (
+          <div
+            className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20"
+            role="alert"
+          >
+            <p className="text-base font-semibold text-gray-900 dark:text-white">
+              User Registered Successfully!
+            </p>
+          </div>
+        )}
+      </div>
       <div className={`bg-blue-500 p-20`}>
         <Grid
           container
@@ -147,94 +144,132 @@ export default function SignInSide() {
                 <LockOutlinedIcon />
               </Avatar>
 
-              <div>
-                <h1 className="font-bold text-2xl mb-0">Sign Up as a Recruiter</h1>
+              <div className="mt-1">
+                <h1 className="font-bold text-2xl mb-1">
+                  Sign Up as a Recruiter
+                </h1>
               </div>
 
-              {success && (
-                <Alert severity="success">User Registered Successfully</Alert>
-              )}
-
-
               <div className="pt-3 container">
-                <div className="mb-4 flex space-x-3">
+                <div className="mb-3 flex space-x-3">
                   <div>
-                    <label htmlFor="f_name" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">First name</label>
-                    <input type="text"
+                    <label
+                      htmlFor="f_name"
+                      className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      First name
+                    </label>
+                    <input
+                      type="text"
                       id="f_name"
                       className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       placeholder="John"
                       onChange={(e) => setFirstName(e.target.value)}
-                      required />
+                      required={true}
+                    />
                   </div>
                   <div>
-                    <label htmlFor="l_name" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Last name</label>
-                    <input type="text"
+                    <label
+                      htmlFor="l_name"
+                      className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Last name
+                    </label>
+                    <input
+                      type="text"
                       id="l_name"
                       className="w-1/2  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       placeholder="Doe"
                       onChange={(e) => setLastName(e.target.value)}
-                      required />
+                      required={true}
+                    />
                   </div>
-
                 </div>
 
                 <div className="w-full mb-4">
-                  <label htmlFor="company" className="mb-1 block mt-2 text-sm font-bold text-gray-900 dark:text-white">Company</label>
-                  <input type="text"
+                  <label
+                    htmlFor="company"
+                    className="mb-1 block mt-2 text-sm font-bold text-gray-900 dark:text-white"
+                  >
+                    Company
+                  </label>
+                  <input
+                    type="text"
                     id="company"
                     className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                     onChange={(e) => setCompanyName(e.target.value)}
-                    required />
-                </div>
-
-                <div className="mb-4">
-
-                  <label htmlFor="phone" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Phone Number</label>
-                  <input type="text"
-                    id="phone"
-                    className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
+                    required={true}
                   />
                 </div>
 
                 <div className="mb-4">
-                  <label htmlFor="email" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
+                  <label
+                    htmlFor="phone"
+                    className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    id="phone"
+                    className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                    onChange={(e) => setPhone(e.target.value)}
+                    required={true}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label
+                    htmlFor="email"
+                    className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                  >
+                    Email address
+                  </label>
                   <input
                     type="email"
                     id="email"
                     className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                     placeholder="john.doe@company.com"
                     onChange={(e) => setEmail(e.target.value)}
-                    required />
+                    required={true}
+                  />
                 </div>
-
 
                 <div className="flex space-x-3">
                   <div className="mb-4">
-                    <label htmlFor="password" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Password</label>
+                    <label
+                      htmlFor="password"
+                      className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Password
+                    </label>
                     <input
                       type="password"
                       id="password"
                       className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setPassword(e.target.value)}
-                      required />
+                      required={true}
+                    />
                   </div>
 
                   <div className="mb-4">
-                    <label htmlFor="repeat_password" className="mb-1 block text-sm font-bold text-gray-900 dark:text-white">Repeat password</label>
+                    <label
+                      htmlFor="repeat_password"
+                      className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
+                    >
+                      Repeat password
+                    </label>
                     <input
                       type="password"
                       id="repeat_password"
                       className="w-1/2 min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       onChange={(e) => setRepeatPassword(e.target.value)}
-                      required />
+                      required={true}
+                    />
                   </div>
                 </div>
 
-
-                <div className="mt-3">
+                <div>
                   <button
                     className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
@@ -244,7 +279,7 @@ export default function SignInSide() {
                   </button>
                 </div>
 
-                <div className="text-center mt-3">
+                <div className="text-center ">
                   <a
                     className="inline-block align-baseline sm:mt-0 mb-0 font-bold text-sm text-blue-500 hover:text-blue-800"
                     href="/login"

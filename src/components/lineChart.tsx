@@ -1,13 +1,24 @@
 import { useState } from "react";
-import dynamic from "next/dynamic";
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const SalesChart = () => {
+import Chart from "react-apexcharts";
+
+
+const Chart4 = () => {
+
   const [options, setOptions] = useState({
     chart: {
       id: "sales-chart",
       toolbar: {
         show: false,
+      },
+    },
+    grid: {
+      show: true,
+      strokeDashArray: 10,
+      padding: {
+        left: 0,
+        right: 2,
+        top: 10,
       },
     },
     xaxis: {
@@ -30,10 +41,12 @@ const SalesChart = () => {
       name: "Product B",
       data: [20, 35, 45, 30, 60, 40, 80],
     },
+
   ]);
+
   return (
-    <div className="p-4  bg-white border w-full h-64 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-      <div className="flex items-center justify-between mb-4">
+    <div className="h-full w-screen text-center bg-white border h-50 border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+      <div className="flex justify-between">
         <div className="flex-shrink-0">
           <span className="text-xl font-bold leading-none text-gray-900 sm:text-2xl dark:text-white">
             $45,385
@@ -58,9 +71,7 @@ const SalesChart = () => {
           </svg>
         </div>
       </div>
-      <div>
-        <Chart options={options} series={series} type="line" height={350} />
-      </div>
+      <Chart options={options} series={series} type="line" height={400} />
       <div className="flex items-center justify-between pt-3 mt-4 border-t border-gray-200 sm:pt-6 dark:border-gray-700">
         <div>
           <button className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" type="button" data-dropdown-toggle="weekly-sales-dropdown">
@@ -69,7 +80,7 @@ const SalesChart = () => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           </button>
-          <div className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="weekly-sales-dropdown">
+          <div className="z-0 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="weekly-sales-dropdown">
             <div className="px-4 py-3" role="none">
               <p className="text-sm font-medium text-gray-900 truncate dark:text-white" role="none">
                 Sep 16, 2021 - Sep 22, 2021
@@ -122,4 +133,4 @@ const SalesChart = () => {
   );
 };
 
-export default SalesChart;
+export default Chart4;

@@ -9,10 +9,7 @@ import Chart3 from "@/components/barChart";
 import Chart4 from "@/components/lineChart";
 import SalesChart from "@/components/stepAreaChart";
 
-
-
 const DashboardPage = () => {
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const verifyToken = async () => {
     try {
@@ -63,16 +60,16 @@ const DashboardPage = () => {
   };
 
   return (
-
     <div className="w-full pt-10 sticky">
       <Chart4 />
-      <div className="h-50  flex pt-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700" style={{ height: "98%" }}>
+      <div
+        className="h-50  flex pt-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+        style={{ height: "98%" }}
+      >
         <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-
           <div className="pl-2 w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
             <Chart3 />
           </div>
-
           <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
             <SalesChart />
           </div>
@@ -80,7 +77,6 @@ const DashboardPage = () => {
             <Chart1 />
           </div>
         </div>
-
       </div>
     </div>
   );

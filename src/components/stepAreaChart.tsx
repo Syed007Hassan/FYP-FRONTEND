@@ -1,7 +1,7 @@
-import React from 'react';
-import ApexCharts from 'apexcharts';
-import { useEffect, useRef } from 'react';
-
+"use client";
+import React from "react";
+import ApexCharts from "apexcharts";
+import { useEffect, useRef } from "react";
 
 const Chart2 = () => {
   const chartRef = useRef(null);
@@ -11,8 +11,8 @@ const Chart2 = () => {
       chart: {
         height: 350,
         width: 500,
-        type: 'area',
-        fontFamily: 'Inter, sans-serif',
+        type: "area",
+        fontFamily: "Inter, sans-serif",
         dropShadow: {
           enabled: false,
         },
@@ -27,12 +27,12 @@ const Chart2 = () => {
         },
       },
       fill: {
-        type: 'gradient',
+        type: "gradient",
         gradient: {
           opacityFrom: 0.55,
           opacityTo: 0,
-          shade: '#1C64F2',
-          gradientToColors: '#FDBA8C'
+          shade: "#1C64F2",
+          gradientToColors: "#FDBA8C",
         },
       },
       dataLabels: {
@@ -52,25 +52,25 @@ const Chart2 = () => {
       },
       series: [
         {
-          name: 'Developer Edition',
+          name: "Developer Edition",
           data: [1500, 1418, 1456, 1526, 1356, 1256],
-          color: '#1A56DB',
+          color: "#1A56DB",
         },
         {
-          name: 'Designer Edition',
+          name: "Designer Edition",
           data: [643, 413, 765, 412, 1423, 1731],
-          color: '#7E3BF2',
+          color: "#7E3BF2",
         },
       ],
       xaxis: {
         categories: [
-          '01 February',
-          '02 February',
-          '03 February',
-          '04 February',
-          '05 February',
-          '06 February',
-          '07 February',
+          "01 February",
+          "02 February",
+          "03 February",
+          "04 February",
+          "05 February",
+          "06 February",
+          "07 February",
         ],
         labels: {
           show: true,
@@ -86,7 +86,7 @@ const Chart2 = () => {
         show: true,
         labels: {
           formatter: function (value: any) {
-            return '$' + value;
+            return "$" + value;
           },
         },
       },
@@ -94,17 +94,16 @@ const Chart2 = () => {
 
     const series = [
       {
-        name: 'Developer Edition',
+        name: "Developer Edition",
         data: [1500, 1418, 1456, 1526, 1356, 1256],
-        color: '#1A56DB',
+        color: "#1A56DB",
       },
       {
-        name: 'Designer Edition',
+        name: "Designer Edition",
         data: [643, 413, 765, 412, 1423, 1731],
-        color: '#7E3BF2',
+        color: "#7E3BF2",
       },
     ];
-
 
     const chart = new ApexCharts(chartRef.current, options);
     chart.render();
@@ -119,4 +118,5 @@ const Chart2 = () => {
     </div>
   );
 };
+
 export default Chart2;

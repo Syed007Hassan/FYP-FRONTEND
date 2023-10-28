@@ -6,43 +6,38 @@ import Sidebar from "./Sidebar";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-
-
 interface HeaderProps { }
 
 const Header: React.FC<HeaderProps> = () => {
-
-
   const [sticky, setSticky] = useState<boolean>(false);
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
-
   const toggleSidebar = () => {
+    console.log("toggle");
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
-
-
   return (
     <nav className="overflow z-50  sticky top-0 left-0 w-full bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
       <div className="container mx-auto flex justify-between bg-white items-center h-12">
         <div className="flex items-center">
-          <button className="p-2" onClick={isSidebarOpen ? closeSidebar : toggleSidebar}>
+          <button className="p-2 z-30" onClick={toggleSidebar}>
             {isSidebarOpen ? (
-              <FaTimes style={{ width: '24px', height: '24px' }} className="blue-icon" />
+              <FaTimes
+                style={{ width: "24px", height: "24px" }}
+                className="blue-icon"
+              />
             ) : (
-              <FaBars style={{ width: '24px', height: '24px' }} className="blue-icon" />
+              <FaBars
+                style={{ width: "24px", height: "24px" }}
+                className="blue-icon"
+              />
             )}
           </button>
           <div>
@@ -121,11 +116,8 @@ const Header: React.FC<HeaderProps> = () => {
             </svg>
           </div>
         </div>
-
       </div>
-      {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} toggle={closeSidebar} />}
-
-
+      {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} />}
     </nav>
   );
 };

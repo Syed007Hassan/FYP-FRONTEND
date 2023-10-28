@@ -1,26 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import dynamic from 'next/dynamic';
-import ApexCharts from 'apexcharts';
-const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+"use client";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import ApexCharts from "apexcharts";
+const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 type Chart1Props = {};
 
-import React from 'react'
+import React from "react";
 
 const Chart1 = ({ }: Chart1Props) => {
-
     const chartRef = useRef(null);
 
     useEffect(() => {
         let options = {
-
             yaxis: {
                 show: true,
                 labels: {
                     formatter: function (value: any) {
-                        return '€' + value;
-                    }
-                }
+                        return "€" + value;
+                    },
+                },
             },
             chart: {
                 height: "350",
@@ -61,7 +60,7 @@ const Chart1 = ({ }: Chart1Props) => {
                 padding: {
                     left: 2,
                     right: 2,
-                    top: -26
+                    top: -26,
                 },
             },
             series: [
@@ -77,7 +76,15 @@ const Chart1 = ({ }: Chart1Props) => {
                 },
             ],
             xaxis: {
-                categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb'],
+                categories: [
+                    "01 Feb",
+                    "02 Feb",
+                    "03 Feb",
+                    "04 Feb",
+                    "05 Feb",
+                    "06 Feb",
+                    "07 Feb",
+                ],
                 labels: {
                     show: true,
                 },
@@ -102,6 +109,5 @@ const Chart1 = ({ }: Chart1Props) => {
             <div ref={chartRef}></div>
         </div>
     );
-
 };
 export default Chart1;

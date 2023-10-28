@@ -1,15 +1,14 @@
-import { useEffect, useRef } from 'react';
-import ApexCharts from 'apexcharts';
+"use client";
+import { useEffect, useRef } from "react";
+import ApexCharts from "apexcharts";
 
 interface Props {
   options: any;
 }
 
-import React from 'react'
+import React from "react";
 
 const Chart3 = () => {
-
-
   const chartRef = useRef(null);
   useEffect(() => {
     const options = {
@@ -97,7 +96,7 @@ const Chart3 = () => {
         padding: {
           left: 2,
           right: 2,
-          top: -26
+          top: -26,
         },
       },
       dataLabels: {
@@ -112,8 +111,8 @@ const Chart3 = () => {
           show: true,
           style: {
             fontFamily: "Inter, sans-serif",
-            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-          }
+            cssClass: "text-xs font-normal fill-gray-500 dark:fill-gray-400",
+          },
         },
         axisBorder: {
           show: true,
@@ -128,7 +127,7 @@ const Chart3 = () => {
       fill: {
         opacity: 1,
       },
-    }
+    };
     const chart = new ApexCharts(chartRef.current, options);
     chart.render();
     return () => {
@@ -136,11 +135,10 @@ const Chart3 = () => {
     };
   }, []);
 
-
   return (
-    <div className='w-full items-center'>
+    <div className="w-full items-center">
       <div ref={chartRef}></div>
     </div>
-  )
+  );
 };
 export default Chart3;

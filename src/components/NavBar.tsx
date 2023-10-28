@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-interface HeaderProps { }
+interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
   const [sticky, setSticky] = useState<boolean>(false);

@@ -8,8 +8,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   return (
     <div
       id="logo-sidebar"
-      className={`pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
-        } sm:translate-x-0`}
+      className={`pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } sm:translate-x-0`}
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 bg-blue-800">
@@ -97,8 +98,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
           >
             <svg
               id="toggleSidebarMobileHamburger"
-              className={`w-6 h-6 fill-current text-black ${isOpen ? "hidden" : ""
-                }`}
+              className={`w-6 h-6 fill-current text-black ${
+                isOpen ? "hidden" : ""
+              }`}
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -106,8 +108,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
             </svg>
             <svg
               id="toggleSidebarMobileClose"
-              className={`w-6 h-6 fill-current text-black ${isOpen ? "" : "hidden"
-                }`}
+              className={`w-6 h-6 fill-current text-black ${
+                isOpen ? "" : "hidden"
+              }`}
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >

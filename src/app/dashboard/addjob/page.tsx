@@ -1,7 +1,13 @@
 import React from 'react'
 
-export default function page() {
+
+const page = () => {
   return (
-    <div>page</div>
+    <div>
+      new job
+    </div>
   )
 }
+
+export default page
+

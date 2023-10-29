@@ -83,16 +83,17 @@ export default function SignInSide() {
           </div>
         )}
       </div>
-      <div className={`bg-blue-500 p-20`}>
+      <div className={`bg-blue-500 p-6`}>
         <Grid
           container
           component="main"
           sx={{
-            height: "77.4vh",
+            // height: "100vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
+          // className="h-screen"
         >
           <CssBaseline />
           <Grid
@@ -112,9 +113,10 @@ export default function SignInSide() {
               backgroundPosition: "center",
               borderEndStartRadius: "40px",
               borderTopLeftRadius: "40px",
-              height: "80vh",
+              height: "83.4vh",
               paddingRight: "0px",
             }}
+            className="hidden md:flex"
           />
 
           <Grid
@@ -126,10 +128,11 @@ export default function SignInSide() {
             elevation={6}
             square
             sx={{
-              borderEndEndRadius: "40px",
-              borderTopRightRadius: "40px",
-              height: "81vh",
+              // borderEndEndRadius: "40px",
+              // borderTopRightRadius: "40px",
+              // height: "81vh",
             }}
+            className="rounded md:rounded-tl-none md:rounded-bl-none md:rounded-tr-[40px] md:rounded-br-[40px] md:h-[83vh]"
           >
             <Box
               sx={{

@@ -99,7 +99,7 @@ export default function SignInSide() {
             item
             xs={false}
             sm={4}
-            md={5}
+            md={6}
             sx={{
               backgroundImage:
                 "url(https://source.unsplash.com/random?wallpapers)",

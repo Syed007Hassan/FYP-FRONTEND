@@ -68,9 +68,9 @@ const Page = () => {
 
   return (
     <div className=" min-h-screen justify-center">
-      <div className="grid grid-rows-1 grid-flow-col">
-        <div className="pt-6 pr-20 pl-10 pb-16">
-          <div className="pr-20 pl-20">
+      <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
+        <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
+          <div className="pr-2 pl-2">
             <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
             <h1 className="text-4xl text-blue-900 pt-20">Add Employee</h1>
             {!passwordMatch && (
@@ -168,7 +168,7 @@ const Page = () => {
             </form>
           </div>
         </div>
-        <div className="bg-white shadow-lg  p-6">
+        <div className="bg-white shadow-lg ml-10 pr-20 p-6 hidden md:block lg:-mr-0">
           <h2 className="text-2xl font-bold mb-4 text-center text-gray-800 uppercase tracking-wide pt-10">
             Guidelines
           </h2>

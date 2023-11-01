@@ -2,7 +2,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { getSession } from "next-auth/react";
 
 const page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks

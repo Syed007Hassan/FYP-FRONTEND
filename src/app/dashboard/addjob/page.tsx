@@ -5,6 +5,11 @@ import Image from "next/image";
 import { getSession } from "next-auth/react";
 
 const page = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [selectedCategory, setSelectedCategory] = useState("Select a category");
+
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">
       <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
@@ -65,39 +70,81 @@ const page = () => {
                   </div>
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col pt-10 pb-10">
-                  <div className="pr-4">
+                  <div className="pr-0">
                     <label
                       htmlFor="jobCategory"
-                      className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
+                      className="mb-2 font-bold block text-sm text-gray-900 dark:text-white"
                     >
                       Job Category
                     </label>
-                    <input
-                      type="text"
-                      id="jobCategory"
-                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      autoComplete="family-name"
-                      // value={companyWebsite}
-                      // onChange={(e) => setCompanyWebsite(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="pl-4">
-                    <label
-                      htmlFor="phone"
-                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
+                    <button
+                      id="dropdownDefaultButton"
+                      data-dropdown-toggle="dropdown"
+                      className="w-full text-black bg-white border-black px-5 py-2.5 text-center inline-flex items-center justify-between min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      type="button"
+                      onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
-                      Phone Number
-                    </label>
-                    <input
-                      type="text"
-                      id="phone"
-                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      // value={companyPhoneNum}
-                      // onChange={(e) => setCompanyPhone(e.target.value)}
-                      required
-                    />
-                  </div>{" "}
+                      {selectedCategory}
+                      <svg
+                        className="w-2.5 h-2.5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 1 4 4 4-4"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      id="dropdown"
+                      className={`z-10 ${
+                        dropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                    >
+                      <ul
+                        className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownDefaultButton"
+                      >
+                        <li
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            setSelectedCategory("Category 1");
+                          }}
+                        >
+                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Category 1
+                          </p>
+                        </li>
+                        <li
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            setSelectedCategory("Category 2");
+                          }}
+                        >
+                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Category 2
+                          </p>
+                        </li>
+                        <li
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            setSelectedCategory("Category 3");
+                          }}
+                        >
+                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Category 3
+                          </p>
+                        </li>
+                        {/* Add more options as needed */}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <label

@@ -77,9 +77,9 @@ const Page = () => {
     <Loader />
   ) : (
     <div className=" min-h-screen justify-center">
-      <div className="grid grid-rows-1 grid-flow-col">
-        <div className="pt-6 pr-20 pl-10 pb-16">
-          <div className="pr-20 pl-20">
+      <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
+        <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
+          <div className="pr-2 pl-2">
             <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
             <h1 className="text-4xl text-blue-900 pt-20">My Profile</h1>
             {passwordMatch === false && (
@@ -225,7 +225,7 @@ const Page = () => {
           </div>
         </div>
         <div
-          className="pl-10 pt-40 pb-6 pr-10 flex"
+          className="pl-10 pb-6 pr-10 hidden md:block md:-mr-20 lg:-mr-0"
           style={{ width: "650px", height: "630px" }}
         >
           <Image
@@ -233,7 +233,7 @@ const Page = () => {
             alt="Picture of the author"
             width={500}
             height={500}
-            className="object-cover w-full h-full"
+            className="object-cover md:w-25 md:h-25 lg:w-full lg:h-full"
             priority
           />
         </div>

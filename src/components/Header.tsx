@@ -1,8 +1,10 @@
-"use cleint";
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const Header = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   useEffect(() => {
     const button = document.querySelector<HTMLButtonElement>(
       '[data-collapse-toggle="navbar-sticky"]'
@@ -26,19 +28,19 @@ const Header = () => {
             </a>
           </Link>
           <div className="flex md:order-2">
-            <div className="hidden lg:flex items-center space-x-4"></div>
+            {/* <div className="hidden lg:flex items-center space-x-4"></div> */}
             <a href="/demo">
               <button
                 type="button"
-                className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-4 px-8 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-2 sm:py-4 px-8 mt-[5px] sm:mt-0 text-center mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                Request A Demo
+                Request Demo
               </button>
             </a>
             <a href="/login">
               <button
                 type="button"
-                className="ml-5 mr-8 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-4 px-8 text-center md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className=" ml-5 mr-8 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm py-2 sm:py-4 mt-[5px] sm:mt-0 px-8 text-center md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Sign In
               </button>
@@ -51,6 +53,7 @@ const Header = () => {
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-full md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="navbar-sticky"
               aria-expanded="false"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -71,7 +74,7 @@ const Header = () => {
             </button>
           </div>
           <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            className={`items-center justify-between w-25 md:flex md:w-auto md:order-1 ${sidebarOpen ? "absolute top-16 right-6" : "hidden"}`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">

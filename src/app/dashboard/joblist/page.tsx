@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
-import Link from 'next/link';
+import Pagination from '@/components/pagination';
 
 const page = () => {
   return (
@@ -29,12 +29,7 @@ const page = () => {
         <div className="container mx-auto">
           <div className="grid items-center grid-cols-12 mb-4">
             <div className="col-span-12 lg:col-span-8">
-              {/* <div className="mb-3 mb-lg-0">
-                  <h6 className="text-gray-900 text-16 dark:text-gray-50"> Showing 1 – 8 of 11 results </h6>
-                </div> */}
             </div>
-
-
             <div className="col-span-12 lg:col-span-4">
               <div className="candidate-list-widgets">
                 <div className="grid items-center grid-cols-12 gap-3">
@@ -61,18 +56,18 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div className="mt-0">
+          <div className="justify-center h-32 mb-5">
             <div className="grid grid-cols-1 gap-y-5">
               <div className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900">
-                <div className="grid grid-cols-12">
-                  <div className="col-span-12 lg:col-span-1">
+                <div className="pt-6 pl-10 bg-gray-100 grid grid-cols-12">
+                  <div className="justify-center col-span-12 lg:col-span-1">
                     <a href="#">
-                      <div className="w-full h-64">
+                      <div className="w-full">
                         <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
-                  <div className="col-span-12 lg:col-span-9">
-                    <div className="mt-0 lg:mt-0">
+                  <div className=" col-span-12 lg:col-span-9">
+                    <div className="pb-3 mt-0 lg:mt-0">
                       <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">Business Associate</a></h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
@@ -109,11 +104,11 @@ const page = () => {
               </div>
 
               <div className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900">
-                <div className="grid grid-cols-12">
+                <div className="pt-6 pb-6 pl-10 bg-gray-100 grid grid-cols-12">
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       {/* <img src="assets/images/featured-job/img-02.png" alt="" className="img-fluid rounded-3"> */}
-                      <div className="w-full h-64">
+                      <div className="w-full ">
                         <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div>
 
@@ -157,10 +152,10 @@ const page = () => {
               </div>
 
               <div className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900">
-                <div className="grid grid-cols-12">
+                <div className="pt-6 pl-10 pb-6 bg-gray-100 grid grid-cols-12">
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
-                      <div className="w-full h-64">
+                      <div className="w-full ">
                         <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
@@ -202,10 +197,10 @@ const page = () => {
               </div>
 
               <div className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900">
-                <div className="grid grid-cols-12">
+                <div className="pt-6 pl-10 pb-6 bg-gray-100 grid grid-cols-12">
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
-                      <div className="w-full h-64">
+                      <div className="w-full ">
                         <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
@@ -247,10 +242,10 @@ const page = () => {
               </div>
 
               <div className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900">
-                <div className="grid grid-cols-12">
+                <div className="pt-6 pl-10 pb-6 bg-gray-100 grid grid-cols-12">
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
-                      <div className="w-full h-64">
+                      <div className="w-full ">
                         <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
@@ -291,10 +286,10 @@ const page = () => {
               </div>
 
               <div className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900">
-                <div className="grid grid-cols-12">
+                <div className="pt-6 pl-10 pb-6 bg-gray-100 grid grid-cols-12">
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
-                      <div className="w-full h-64">
+                      <div className="w-full ">
                         <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
                       </div></a>
                   </div>
@@ -333,40 +328,16 @@ const page = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-12">
-            <div className="col-span-12">
-              <ul className="flex justify-center gap-2 mt-8">
-                <li className="w-12 h-12 text-center border rounded-full cursor-default border-gray-100/50 dark:border-gray-100/20">
-                  {/* <a className="cursor-auto" href="javascript:void(0)" tabindex="-1">
-                      <i className="mdi mdi-chevron-double-left text-16 leading-[2.8] dark:text-white"></i>
-                    </a> */}
-                </li>
-                <li className="w-12 h-12 text-center text-white border border-transparent rounded-full cursor-pointer group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                  <a className="text-16 leading-[2.8]" href="javascript:void(0)">1</a>
-                </li>
-                <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                  <a className="text-16 leading-[2.8]" href="javascript:void(0)">2</a>
-                </li>
-                <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                  <a className="text-16 leading-[2.8]" href="javascript:void(0)">3</a>
-                </li>
-                <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                  <a className="text-16 leading-[2.8]" href="javascript:void(0)">4</a>
-                </li>
-                <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                  {/* <a href="javascript:void(0)" tabindex="-1">
-                      <i className="mdi mdi-chevron-double-right text-16 leading-[2.8]"></i>
-                    </a> */}
-                </li>
-              </ul>
-            </div>
 
+            </div>
+            <Pagination />
           </div>
         </div>
       </section>
+
+
     </div>
+
 
   )
 }

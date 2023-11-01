@@ -24,38 +24,38 @@ const page = () => {
         <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
           <div className="pr-2 pl-2">
             <h1 className=" text-blue-500 mb-4">SyncFlow Recruitment</h1>
-            <h1 className="text-4xl text-blue-900 pt-20">Company Profile</h1>
+            <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
 
             <form className="mt-8 space-y-6">
               <div className="rounded-md shadow-sm -space-y-px">
                 <div className="grid grid-rows-1 grid-flow-col">
                   <div className="pr-4">
                     <label
-                      htmlFor="companyName"
+                      htmlFor="jobTitle"
                       className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
                     >
-                      Company name
+                      Job Title
                     </label>
                     <input
                       type="text"
-                      id="companyName"
+                      id="jobTitle"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="given-name"
-                      value="companyName"
+                      // value="companyName"
                       // onChange
                       required
                     />
                   </div>
                   <div className="pl-4">
                     <label
-                      htmlFor="companyAddress"
+                      htmlFor="jobType"
                       className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
                     >
-                      Company Address
+                      Job Type
                     </label>
                     <input
                       type="text"
-                      id="companyAddress"
+                      id="jobType"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="family-name"
                       // value={companyAddress}
@@ -67,14 +67,14 @@ const page = () => {
                 <div className="grid grid-rows-1 grid-flow-col pt-10 pb-10">
                   <div className="pr-4">
                     <label
-                      htmlFor="companyWebsite"
+                      htmlFor="jobCategory"
                       className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
                     >
-                      Companys Website
+                      Job Category
                     </label>
                     <input
                       type="text"
-                      id="companyWebsite"
+                      id="jobCategory"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="family-name"
                       // value={companyWebsite}
@@ -101,14 +101,13 @@ const page = () => {
                 </div>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="jobDescription"
                     className="font-bold block mb-2 text-sm text-gray-900 dark:text-white"
                   >
-                    Email :
+                    Job Description
                   </label>
-                  <input
-                    type="email"
-                    id="email"
+                  <textarea
+                    id="jobDescription"
                     className="mb-3 w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                     // value={companyEmail}
                     // onChange={(e) => setCompanyEmail(e.target.value)}
@@ -121,7 +120,7 @@ const page = () => {
                   type="submit"
                   className="mb-2 flex justify-center py-2 px-8 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
-                  Update
+                  Add
                 </button>
               </div>
             </form>

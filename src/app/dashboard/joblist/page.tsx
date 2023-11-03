@@ -1,19 +1,20 @@
-import React from 'react'
-import Image from 'next/image';
-import Pagination from '@/components/pagination';
+import React from "react";
+import Image from "next/image";
+import Pagination from "@/components/pagination";
 
 const page = () => {
   return (
     <div className="main-content">
       <div className="page-content">
-
-        <div className=" group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500 dark:bg-neutral-900  bg-center bg-cover relative" >
+        <div className=" group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500 dark:bg-neutral-900  bg-center bg-cover relative">
           <div className="container mx-auto">
             <div className="grid">
               <div className="col-span-12 flex justify-between items-center">
-                <h1 className="pl-10 text-4xl text-blue-900 pt-10 text-right">All Jobs</h1>
+                <h1 className="pl-10 text-4xl text-blue-900 pt-10 text-right">
+                  All Jobs
+                </h1>
                 <a
-                  href="/dashboard/create_job"
+                  href="/dashboard/addjob"
                   className="pr-6 mr-12 py-2.5 px-5 mb-2 text-sm mt-10 font-medium text-gray-900 focus:outline-none bg-white rounded border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 >
                   Add New Job
@@ -22,20 +23,24 @@ const page = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       <section className="py-20">
         <div className="container mx-auto">
           <div className="grid items-center grid-cols-12 mb-4">
-            <div className="col-span-12 lg:col-span-8">
-            </div>
+            <div className="col-span-12 lg:col-span-8"></div>
             <div className="col-span-12 lg:col-span-4">
               <div className="candidate-list-widgets">
                 <div className="grid items-center grid-cols-12 gap-3">
                   <div className="col-span-12 lg:col-span-6">
                     <div className="selection-widget">
-                      <select className="form-select" data-trigger name="choices-single-filter-orderby" id="choices-single-filter-orderby" aria-label="Default select example">
+                      <select
+                        className="form-select"
+                        data-trigger
+                        name="choices-single-filter-orderby"
+                        id="choices-single-filter-orderby"
+                        aria-label="Default select example"
+                      >
                         <option value="df">Default</option>
                         <option value="ne">Newest</option>
                         <option value="od">Oldest</option>
@@ -45,7 +50,13 @@ const page = () => {
                   </div>
                   <div className="col-span-12 lg:col-span-6">
                     <div className="selection-widget">
-                      <select className="form-select" data-trigger name="choices-candidate-page" id="choices-candidate-page" aria-label="Default select example">
+                      <select
+                        className="form-select"
+                        data-trigger
+                        name="choices-candidate-page"
+                        id="choices-candidate-page"
+                        aria-label="Default select example"
+                      >
                         <option value="df">All</option>
                         <option value="ne">8 per Page</option>
                         <option value="ne">12 per Page</option>
@@ -63,38 +74,83 @@ const page = () => {
                   <div className="justify-center col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full">
-                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
-                      </div></a>
+                        <Image
+                          src="/job.png"
+                          alt="Image description"
+                          width={100}
+                          height={350}
+                          className="rounded-lg"
+                        />
+                      </div>
+                    </a>
                   </div>
                   <div className=" col-span-12 lg:col-span-9">
                     <div className="pb-3 mt-0 lg:mt-0">
-                      <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">Business Associate</a></h5>
+                      <h5 className="mb-1 text-17">
+                        <a
+                          href="job-details.html"
+                          className="text-gray-900 dark:text-gray-50"
+                        >
+                          Business Associate
+                        </a>
+                      </h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">Jobcy Technology Pvt.Ltd</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            Jobcy Technology Pvt.Ltd
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="mdi mdi-map-marker"></i> California</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="mdi mdi-map-marker"></i> California
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="uil uil-wallet"></i> $250 - $800 / month</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="uil uil-wallet"></i> $250 - $800 /
+                            month
+                          </p>
                         </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-0.5 mt-1 font-medium text-red-500 rounded bg-red-500/20 text-13">Part Time</span>
-                        <span className="px-2 py-0.5 mt-1 font-medium text-yellow-500 rounded bg-yellow-500/20 text-13">Urgent</span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-red-500 rounded bg-red-500/20 text-13">
+                          Part Time
+                        </span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-yellow-500 rounded bg-yellow-500/20 text-13">
+                          Urgent
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="items-center col-span-12 lg:col-span-2 ">
                     <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                        <a href="manage-jobs-post.html" className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Edit"
+                        data-bs-original-title="Edit"
+                      >
+                        <a
+                          href="manage-jobs-post.html"
+                          className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-edit"></i>
                         </a>
                       </li>
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Delete"
+                        data-bs-original-title="Delete"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-trash-alt"></i>
                         </a>
                       </li>
@@ -109,40 +165,86 @@ const page = () => {
                     <a href="#">
                       {/* <img src="assets/images/featured-job/img-02.png" alt="" className="img-fluid rounded-3"> */}
                       <div className="w-full ">
-                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
+                        <Image
+                          src="/job.png"
+                          alt="Image description"
+                          width={100}
+                          height={350}
+                          className="rounded-lg"
+                        />
                       </div>
-
                     </a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
                     <div className="mt-4 lg:mt-0">
-                      <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">Marketing Director</a> <small className="font-normal text-gray-500">(2-4 Yrs Exp.)</small></h5>
+                      <h5 className="mb-1 text-17">
+                        <a
+                          href="job-details.html"
+                          className="text-gray-900 dark:text-gray-50"
+                        >
+                          Marketing Director
+                        </a>{" "}
+                        <small className="font-normal text-gray-500">
+                          (2-4 Yrs Exp.)
+                        </small>
+                      </h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">Creative Agency</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            Creative Agency
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="mdi mdi-map-marker"></i> New York</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="mdi mdi-map-marker"></i> New York
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="uil uil-wallet"></i> $250 - $800 / month</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="uil uil-wallet"></i> $250 - $800 /
+                            month
+                          </p>
                         </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-0.5 mt-1 font-medium text-red-500 rounded bg-red-500/20 text-13">Part Time</span>
-                        <span className="px-2 py-0.5 mt-1 font-medium text-sky-500 rounded bg-sky-500/20 text-13">Private</span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-red-500 rounded bg-red-500/20 text-13">
+                          Part Time
+                        </span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-sky-500 rounded bg-sky-500/20 text-13">
+                          Private
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="items-center col-span-12 lg:col-span-2">
                     <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                        <a href="manage-jobs-post.html" className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Edit"
+                        data-bs-original-title="Edit"
+                      >
+                        <a
+                          href="manage-jobs-post.html"
+                          className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-edit"></i>
                         </a>
                       </li>
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Delete"
+                        data-bs-original-title="Delete"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-trash-alt"></i>
                         </a>
                       </li>
@@ -156,38 +258,86 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full ">
-                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
-                      </div></a>
+                        <Image
+                          src="/job.png"
+                          alt="Image description"
+                          width={100}
+                          height={350}
+                          className="rounded-lg"
+                        />
+                      </div>
+                    </a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
                     <div className="mt-4 lg:mt-0">
-                      <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">HTML Developer</a> <small className="font-normal text-gray-500">(2-4 Yrs Exp.)</small></h5>
+                      <h5 className="mb-1 text-17">
+                        <a
+                          href="job-details.html"
+                          className="text-gray-900 dark:text-gray-50"
+                        >
+                          HTML Developer
+                        </a>{" "}
+                        <small className="font-normal text-gray-500">
+                          (2-4 Yrs Exp.)
+                        </small>
+                      </h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">Jobcy Technology Pvt.Ltd</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            Jobcy Technology Pvt.Ltd
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="mdi mdi-map-marker"></i> California</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="mdi mdi-map-marker"></i> California
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="uil uil-wallet"></i> $250 - $800 / month</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="uil uil-wallet"></i> $250 - $800 /
+                            month
+                          </p>
                         </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-0.5 mt-1 font-medium text-violet-500 rounded bg-violet-500/20 text-13">Freelance</span>
-                        <span className="px-2 py-0.5 mt-1 font-medium text-violet-500 rounded bg-violet-500/20 text-13">Freelance</span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-violet-500 rounded bg-violet-500/20 text-13">
+                          Freelance
+                        </span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-violet-500 rounded bg-violet-500/20 text-13">
+                          Freelance
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="items-center col-span-12 lg:col-span-2">
                     <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                        <a href="manage-jobs-post.html" className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Edit"
+                        data-bs-original-title="Edit"
+                      >
+                        <a
+                          href="manage-jobs-post.html"
+                          className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-edit"></i>
                         </a>
                       </li>
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Delete"
+                        data-bs-original-title="Delete"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-trash-alt"></i>
                         </a>
                       </li>
@@ -201,38 +351,86 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full ">
-                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
-                      </div></a>
+                        <Image
+                          src="/job.png"
+                          alt="Image description"
+                          width={100}
+                          height={350}
+                          className="rounded-lg"
+                        />
+                      </div>
+                    </a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
                     <div className="mt-4 lg:mt-0">
-                      <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">HTML Developer</a> <small className="font-normal text-gray-500">(5+ Yrs Exp.)</small></h5>
+                      <h5 className="mb-1 text-17">
+                        <a
+                          href="job-details.html"
+                          className="text-gray-900 dark:text-gray-50"
+                        >
+                          HTML Developer
+                        </a>{" "}
+                        <small className="font-normal text-gray-500">
+                          (5+ Yrs Exp.)
+                        </small>
+                      </h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">Jobcy Technology Pvt.Ltd</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            Jobcy Technology Pvt.Ltd
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="mdi mdi-map-marker"></i> California</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="mdi mdi-map-marker"></i> California
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="uil uil-wallet"></i> $250 - $800 / month</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="uil uil-wallet"></i> $250 - $800 /
+                            month
+                          </p>
                         </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-0.5 mt-1 font-medium text-green-500 rounded bg-green-500/20 text-13">Full Time</span>
-                        <span className="px-2 py-0.5 mt-1 font-medium text-sky-500 rounded bg-sky-500/20 text-13">Private</span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-green-500 rounded bg-green-500/20 text-13">
+                          Full Time
+                        </span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-sky-500 rounded bg-sky-500/20 text-13">
+                          Private
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="items-center col-span-12 lg:col-span-2">
                     <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                        <a href="manage-jobs-post.html" className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Edit"
+                        data-bs-original-title="Edit"
+                      >
+                        <a
+                          href="manage-jobs-post.html"
+                          className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-edit"></i>
                         </a>
                       </li>
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Delete"
+                        data-bs-original-title="Delete"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-trash-alt"></i>
                         </a>
                       </li>
@@ -246,37 +444,83 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full ">
-                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
-                      </div></a>
+                        <Image
+                          src="/job.png"
+                          alt="Image description"
+                          width={100}
+                          height={350}
+                          className="rounded-lg"
+                        />
+                      </div>
+                    </a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
                     <div className="mt-4 lg:mt-0">
-                      <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">Product Designer </a> <small className="font-normal text-gray-500">(0-5 Yrs Exp.)</small></h5>
+                      <h5 className="mb-1 text-17">
+                        <a
+                          href="job-details.html"
+                          className="text-gray-900 dark:text-gray-50"
+                        >
+                          Product Designer{" "}
+                        </a>{" "}
+                        <small className="font-normal text-gray-500">
+                          (0-5 Yrs Exp.)
+                        </small>
+                      </h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">Creative Agency </p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            Creative Agency{" "}
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="mdi mdi-map-marker"></i> California</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="mdi mdi-map-marker"></i> California
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="uil uil-wallet"></i> $250 - $800 / month</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="uil uil-wallet"></i> $250 - $800 /
+                            month
+                          </p>
                         </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-0.5 mt-1 font-medium text-blue-500 rounded bg-blue-500/20 text-13">Internship</span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-blue-500 rounded bg-blue-500/20 text-13">
+                          Internship
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="items-center col-span-12 lg:col-span-2">
                     <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                        <a href="manage-jobs-post.html" className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Edit"
+                        data-bs-original-title="Edit"
+                      >
+                        <a
+                          href="manage-jobs-post.html"
+                          className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-edit"></i>
                         </a>
                       </li>
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Delete"
+                        data-bs-original-title="Delete"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-trash-alt"></i>
                         </a>
                       </li>
@@ -290,37 +534,83 @@ const page = () => {
                   <div className="col-span-12 lg:col-span-1">
                     <a href="#">
                       <div className="w-full ">
-                        <Image src="/job.png" alt="Image description" width={100} height={350} className="rounded-lg" />
-                      </div></a>
+                        <Image
+                          src="/job.png"
+                          alt="Image description"
+                          width={100}
+                          height={350}
+                          className="rounded-lg"
+                        />
+                      </div>
+                    </a>
                   </div>
                   <div className="col-span-12 lg:col-span-9">
                     <div className="mt-4 lg:mt-0">
-                      <h5 className="mb-1 text-17"><a href="job-details.html" className="text-gray-900 dark:text-gray-50">Project Manager </a> <small className="font-normal text-gray-500">(0-2 Yrs Exp.)</small></h5>
+                      <h5 className="mb-1 text-17">
+                        <a
+                          href="job-details.html"
+                          className="text-gray-900 dark:text-gray-50"
+                        >
+                          Project Manager{" "}
+                        </a>{" "}
+                        <small className="font-normal text-gray-500">
+                          (0-2 Yrs Exp.)
+                        </small>
+                      </h5>
                       <ul className="flex gap-3 mb-0">
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">Jobcy Technology Pvt.Ltd </p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            Jobcy Technology Pvt.Ltd{" "}
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="mdi mdi-map-marker"></i> California</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="mdi mdi-map-marker"></i> California
+                          </p>
                         </li>
                         <li className="">
-                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300"><i className="uil uil-wallet"></i> $250 - $800 / month</p>
+                          <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
+                            <i className="uil uil-wallet"></i> $250 - $800 /
+                            month
+                          </p>
                         </li>
                       </ul>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        <span className="px-2 py-0.5 mt-1 font-medium text-blue-500 rounded bg-blue-500/20 text-13">Internship</span>
+                        <span className="px-2 py-0.5 mt-1 font-medium text-blue-500 rounded bg-blue-500/20 text-13">
+                          Internship
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="items-center col-span-12 lg:col-span-2">
                     <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit" data-bs-original-title="Edit">
-                        <a href="manage-jobs-post.html" className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Edit"
+                        data-bs-original-title="Edit"
+                      >
+                        <a
+                          href="manage-jobs-post.html"
+                          className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-edit"></i>
                         </a>
                       </li>
-                      <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete" data-bs-original-title="Delete">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#deleteModal" className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18">
+                      <li
+                        className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        aria-label="Delete"
+                        data-bs-original-title="Delete"
+                      >
+                        <a
+                          href="javascript:void(0)"
+                          data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"
+                          className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
+                        >
                           <i className="uil uil-trash-alt"></i>
                         </a>
                       </li>
@@ -328,18 +618,13 @@ const page = () => {
                   </div>
                 </div>
               </div>
-
             </div>
             <Pagination />
           </div>
         </div>
       </section>
-
-
     </div>
+  );
+};
 
-
-  )
-}
-
-export default page
+export default page;

@@ -88,7 +88,7 @@ const page = () => {
                     <div className="pb-3 mt-0 lg:mt-0">
                       <h5 className="mb-1 text-17">
                         <a
-                          href="job-details.html"
+                          href="/dashboard/job-details"
                           className="text-gray-900 dark:text-gray-50"
                         >
                           Business Associate
@@ -179,7 +179,7 @@ const page = () => {
                     <div className="mt-4 lg:mt-0">
                       <h5 className="mb-1 text-17">
                         <a
-                          href="job-details.html"
+                          href="/job-details"
                           className="text-gray-900 dark:text-gray-50"
                         >
                           Marketing Director
@@ -272,7 +272,7 @@ const page = () => {
                     <div className="mt-4 lg:mt-0">
                       <h5 className="mb-1 text-17">
                         <a
-                          href="job-details.html"
+                          href="/job-details"
                           className="text-gray-900 dark:text-gray-50"
                         >
                           HTML Developer
@@ -365,7 +365,7 @@ const page = () => {
                     <div className="mt-4 lg:mt-0">
                       <h5 className="mb-1 text-17">
                         <a
-                          href="job-details.html"
+                          href="/job-details"
                           className="text-gray-900 dark:text-gray-50"
                         >
                           HTML Developer
@@ -458,7 +458,7 @@ const page = () => {
                     <div className="mt-4 lg:mt-0">
                       <h5 className="mb-1 text-17">
                         <a
-                          href="job-details.html"
+                          href="/job-details"
                           className="text-gray-900 dark:text-gray-50"
                         >
                           Product Designer{" "}
@@ -548,7 +548,7 @@ const page = () => {
                     <div className="mt-4 lg:mt-0">
                       <h5 className="mb-1 text-17">
                         <a
-                          href="job-details.html"
+                          href="/job-details"
                           className="text-gray-900 dark:text-gray-50"
                         >
                           Project Manager{" "}

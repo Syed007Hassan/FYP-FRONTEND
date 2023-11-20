@@ -102,8 +102,20 @@ const Page = () => {
     category: string;
   }
 
+  interface Workflow {
+    id: number;
+    companyId: number;
+    stages: {
+      id: number;
+      name: string;
+      category: string;
+    }[];
+  }
+
   const [jobList, setJobList] = useState<Job[]>([]);
   const [job, setJob] = useState<Job | null>(null);
+  const [workflowList, setWorkflowList] = useState<Workflow[]>([]);
+  const [workflow, setWorkflow] = useState<Workflow | null>(null);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -118,13 +130,20 @@ const Page = () => {
     if (savedJobs) {
       setJobList(JSON.parse(savedJobs));
     }
+
+    const workflow = localStorage.getItem("workflow");
+
+    if (workflow) {
+      setWorkflowList(JSON.parse(workflow));
+    }
   }, []);
 
       useEffect(() => {
       // Save jobs to local storage whenever it changes
     //   localStorage.setItem('job_list', JSON.stringify(jobList));
       setJob(jobList.find((job) => job.id === jobId) || null);
-    }, [jobList, jobId]);
+      setWorkflow(workflowList.find((workflow) => workflow.id === jobId) || null);
+    }, [jobList, jobId, workflowList]);
 
   return (
     <div className="main-content">
@@ -352,6 +371,26 @@ const Page = () => {
                             designing: 1 year (Preferred){" "}
                           </li>
                         </ul>
+                      </div>
+                    </div>
+
+                    <div>
+                      {/* display workflow attributes here */}
+                      <h5 className="mb-3 text-gray-900 dark:text-gray-50">
+                        Workflow
+                      </h5>
+                      <div>
+                      <ul className="mb-0 text-gray-500 dark:text-gray-300">
+                          {workflow?.stages.map((stage) => {
+                            return (
+                              <li key={stage.id} className="mb-2 text-gray-500 dark:text-gray-300">
+                                <i className="mr-2 uil uil-circle"></i>{" "}
+                                {stage.name} - {stage.category}
+                              </li>
+                            );
+                          })}
+                        </ul>
+
                       </div>
                     </div>
 

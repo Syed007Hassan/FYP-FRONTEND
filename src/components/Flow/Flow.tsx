@@ -4,6 +4,8 @@ import CustomNode from "./CustomNode";
 import styles from "./Flow.module.css";
 
 import "reactflow/dist/style.css";
+import { usePathname, useSearchParams } from "next/navigation";
+import { workflow } from "@/data/data";
 
 import React, { useCallback } from "react";
 import ReactFlow, {
@@ -63,8 +65,14 @@ const defaultEdgeOptions = {
 };
 
 const App = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const pathParts = pathname.split("/");
+  const jobId = pathParts[pathParts.length - 2] || "";
 
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -113,18 +121,37 @@ const App = () => {
 
     console.log(sequence);
 
-    const category = [];
+    const category: string[] = [];
 
     category.push(nodes[0].data.category);
 
     edges.map((edge) => {
-        const targetNode = nodes.find((node) => node.id === edge.target);
-        if (targetNode) {
-            category.push(targetNode.data.category);
-        }
-        });
+      const targetNode = nodes.find((node) => node.id === edge.target);
+      if (targetNode) {
+        category.push(targetNode.data.category);
+      }
+    });
 
     console.log(category);
+
+    const data = {
+      id: parseInt(jobId),
+      companyId: 1,
+      stages: sequence.map((name, index) => ({
+        id: Math.floor(Math.random() * 1000),
+        name: name,
+        category: category[index],
+      })),
+    };
+
+    console.log(jobId);
+    console.log(data);
+
+    workflow.push(data);
+
+    console.log(workflow);
+
+    localStorage.setItem('workflow', JSON.stringify(workflow));
   };
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
@@ -147,121 +174,130 @@ const App = () => {
 
   return (
     <div className={styles.flow}>
-      <span className="flex justify-center pt-2 ">
-        <h1 className="text-2xl font-bold">Add Stages</h1>
-      </span>
-      <span className={`flex justify-center pt-4 pb-4 ${styles.stages}`}>
-        <button
-          onClick={handleSaveFlow}
-          className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          type="button"
-        >
-          Save Flow to API
-        </button>
-        {initialNodes.map((node) => {
-          return (
-            <button
-              key={node.id}
-              name={node.data.label + " " + node.data.category}
-              onClick={(event) =>
-                addMeetingNode(event, (event.target as HTMLInputElement).name)
-              }
-              className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
-            >
-              {node.data.label}
-            </button>
-          );
-        })}
-      </span>
-
-      <span className="flex justify-center pt-4">
-        <h1 className="text-2xl font-bold">Add Custom Stages</h1>
-      </span>
-
-      <div>
-        <form
-          className={`max-w-sm mx-auto`}
-          onSubmit={handleFormSubmit}
-        >
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-bold mb-2"
-              htmlFor="name"
-            >
-              Name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="Enter name"
-            />
+      <div className="flex justify-between">
+        <div className="w-[65%] h-[35rem]">
+          <div className="flex justify-center pt-4">
+            <h1 className="text-2xl font-bold">Workflow</h1>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Category
-            </label>
-            <div>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  className="form-radio"
-                  name="category"
-                  value="meeting"
-                />
-                <span className="ml-2">meeting</span>
-              </label>
-              <label className="inline-flex items-center ml-6">
-                <input
-                  type="radio"
-                  className="form-radio"
-                  name="category"
-                  value="test"
-                />
-                <span className="ml-2">test</span>
-              </label>
-              <label className="inline-flex items-center ml-6">
-                <input
-                  type="radio"
-                  className="form-radio"
-                  name="category"
-                  value="offer"
-                />
-                <span className="ml-2">offer</span>
-              </label>
+
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onNodeClick={onNodeClick}
+            nodeTypes={nodeTypes}
+            defaultEdgeOptions={defaultEdgeOptions}
+            connectionLineType={ConnectionLineType.SmoothStep}
+            fitView
+          >
+            <Controls />
+            {/* <MiniMap /> */}
+            {/* <Background variant="dots" gap={12} size={1} /> */}
+          </ReactFlow>
+        </div>
+
+        <div className="flex flex-col gap-5 pt-3 pb-3 bg-yellow-50">
+          <span className="flex justify-center pt-2 ">
+            <h1 className="text-2xl font-bold">Add Stages</h1>
+          </span>
+          <span
+            className={`flex justify-center pt-4 pb-4 px-2 ${styles.stages}`}
+          >
+            <button
+              onClick={handleSaveFlow}
+              className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              type="button"
+            >
+              Save Flow to API
+            </button>
+            <div className="grid grid-cols-3 gap-3">
+              {initialNodes.map((node) => {
+                return (
+                  <button
+                    key={node.id}
+                    name={node.data.label + " " + node.data.category}
+                    onClick={(event) =>
+                      addMeetingNode(
+                        event,
+                        (event.target as HTMLInputElement).name
+                      )
+                    }
+                    className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+                  >
+                    {node.data.label}
+                  </button>
+                );
+              })}
             </div>
+          </span>
+
+          <div className="bg-yellow-300 pt-4 pb-4">
+            <span className="flex justify-center">
+              <h1 className="text-2xl font-bold">Add Custom Stages</h1>
+            </span>
+            <form className={`max-w-sm mx-auto`} onSubmit={handleFormSubmit}>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 font-bold mb-2"
+                  htmlFor="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  placeholder="Enter name"
+                />
+              </div>
+              <div className="mb-4 flex gap-3">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Category:
+                </label>
+                <div>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      className="form-radio"
+                      name="category"
+                      value="meeting"
+                    />
+                    <span className="ml-2">meeting</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      type="radio"
+                      className="form-radio"
+                      name="category"
+                      value="test"
+                    />
+                    <span className="ml-2">test</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      type="radio"
+                      className="form-radio"
+                      name="category"
+                      value="offer"
+                    />
+                    <span className="ml-2">offer</span>
+                  </label>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <button
+                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Add stage
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="flex items-center justify-center">
-            <button
-              className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Add stage
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
-
-      <span className="flex justify-center pt-4">
-        <h1 className="text-2xl font-bold">Workflow</h1>
-      </span>
-
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onNodeClick={onNodeClick}
-        nodeTypes={nodeTypes}
-        defaultEdgeOptions={defaultEdgeOptions}
-        connectionLineType={ConnectionLineType.SmoothStep}
-        fitView
-      >
-        <Controls />
-        {/* <MiniMap /> */}
-        {/* <Background variant="dots" gap={12} size={1} /> */}
-      </ReactFlow>
     </div>
   );
 };

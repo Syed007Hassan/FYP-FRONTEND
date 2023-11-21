@@ -1,6 +1,6 @@
 export { default } from "next-auth/middleware";
 
-export const config = { matcher: ["/dashboards/:path*"] };
+export const config = { matcher: ["/dashboard/:path*"] };
 
 // import { withAuth } from "next-auth/middleware";
 // import { NextRequest, NextResponse } from "next/server";

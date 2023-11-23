@@ -1,68 +1,3 @@
-// "use client";
-// import { usePathname, useSearchParams } from "next/navigation";
-// import { useEffect, useState } from "react";
-
-// const Page = () => {
-//   interface Job {
-//     id: number;
-//     companyId: number;
-//     image: {
-//       src: string;
-//       height: number;
-//       width: number;
-//     };
-//     title: string;
-//     experience: string;
-//     salary: string;
-//     qualification: string;
-//     company: string;
-//     location: string;
-//     urgency: string;
-//     desc: string;
-//     type: string;
-//     category: string;
-//   }
-
-//   const [jobList, setJobList] = useState<Job[]>([]);
-//   const [job, setJob] = useState<Job | null>(null);
-
-//   const pathname = usePathname();
-//   const searchParams = useSearchParams();
-
-//   const jobIdString = pathname.split("/").pop() || "";
-//   const jobId = parseInt(jobIdString, 10);
-
-//   useEffect(() => {
-//     // Load jobs from local storage when component mounts
-//     const savedJobs = localStorage.getItem("job_list");
-//     // console.log(savedJobs);
-//     if (savedJobs) {
-//       setJobList(JSON.parse(savedJobs));
-//     }
-
-//     // find job from job list with jobId
-//     setJob(jobList.find((job) => job.id === jobId) || null);
-//   }, []);
-
-//     useEffect(() => {
-//       // Save jobs to local storage whenever it changes
-//     //   localStorage.setItem('job_list', JSON.stringify(jobList));
-//       setJob(jobList.find((job) => job.id === jobId) || null);
-//     }, [jobList, jobId]);
-
-//   return (
-//     <div>
-//       {/* <h1>Joblist</h1>
-//       <h2>{pathname}</h2>
-//       <h2>{jobId}</h2> */}
-//       {/* map job_list with jobId */}
-//       {job && <h2>{job.title}</h2>}
-//     </div>
-//   );
-// };
-
-// export default Page;
-
 "use client";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -80,37 +15,9 @@ import {
   FaStarHalfAlt,
   FaUser,
 } from "react-icons/fa";
+import { Job, Workflow, Stage } from "@/data/data";
 
 const Page = () => {
-  interface Job {
-    id: number;
-    companyId: number;
-    image: {
-      src: string;
-      height: number;
-      width: number;
-    };
-    title: string;
-    experience: string;
-    salary: string;
-    qualification: string;
-    company: string;
-    location: string;
-    urgency: string;
-    desc: string;
-    type: string;
-    category: string;
-  }
-
-  interface Workflow {
-    id: number;
-    companyId: number;
-    stages: {
-      id: number;
-      name: string;
-      category: string;
-    }[];
-  }
 
   const [jobList, setJobList] = useState<Job[]>([]);
   const [job, setJob] = useState<Job | null>(null);

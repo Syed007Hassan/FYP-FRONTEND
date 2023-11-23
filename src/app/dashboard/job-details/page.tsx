@@ -251,6 +251,12 @@ const page = () => {
                 </div>
 
               </div>
+              <div className="col-span-12 space-y-6 lg:col-span-4">
+                <div className="border rounded border-gray-100/30 dark:border-neutral-600/80">
+
+                </div>
+
+              </div>
             </div>
           </div>
         </section>

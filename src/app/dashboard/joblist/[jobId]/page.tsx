@@ -116,6 +116,7 @@ const Page = () => {
   const [job, setJob] = useState<Job | null>(null);
   const [workflowList, setWorkflowList] = useState<Workflow[]>([]);
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
+  const colorClasses = ['bg-blue-100', 'bg-green-100', 'bg-red-100', 'bg-yellow-100', 'bg-purple-100'];
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -138,12 +139,12 @@ const Page = () => {
     }
   }, []);
 
-      useEffect(() => {
-      // Save jobs to local storage whenever it changes
+  useEffect(() => {
+    // Save jobs to local storage whenever it changes
     //   localStorage.setItem('job_list', JSON.stringify(jobList));
-      setJob(jobList.find((job) => job.id === jobId) || null);
-      setWorkflow(workflowList.find((workflow) => workflow.id === jobId) || null);
-    }, [jobList, jobId, workflowList]);
+    setJob(jobList.find((job) => job.id === jobId) || null);
+    setWorkflow(workflowList.find((workflow) => workflow.id === jobId) || null);
+  }, [jobList, jobId, workflowList]);
 
   return (
     <div className="main-content">
@@ -374,8 +375,8 @@ const Page = () => {
                       </div>
                     </div>
 
-                    <div>
-                      {/* display workflow attributes here */}
+                    {/* <div>
+                      {/* display workflow attributes here 
                       <h5 className="mb-3 text-gray-900 dark:text-gray-50">
                         Workflow
                       </h5>
@@ -392,7 +393,7 @@ const Page = () => {
                         </ul>
 
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="mt-4">
                       <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
@@ -553,10 +554,35 @@ const Page = () => {
                     </div>
                   </div>
                 </div>
+
+                <div className="col-span-12 space-y-6 lg:col-span-4">
+                  <div className="border rounded border-gray-100/30 dark:border-neutral-600/80">
+                    <div className="p-6">
+                      <h6 className="text-gray-900 text-17 font-bold dark:text-gray-50">
+                        Workflow
+                      </h6>
+                      <div className="space-y-6">
+                        {workflow?.stages.map((stage, index) => {
+                          return (
+                            <div key={stage.id} className={`${colorClasses[index % colorClasses.length]} p-4 rounded`}>
+                              <p className="font-bold">Stage-{String(index + 1).padStart(2, '0')}. {stage.name}</p>
+                              <p>{stage.category}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
         </section>
+        <section className="py-16 px-16">
+
+        </section>
+
       </div>
     </div>
   );

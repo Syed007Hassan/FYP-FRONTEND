@@ -1,6 +1,5 @@
-import image from '../../public/job.png';
-import { StaticImageData } from 'next/image';
-
+import image from "../../public/job.png";
+import { StaticImageData } from "next/image";
 
 export interface Job {
   id: number;
@@ -30,22 +29,35 @@ export interface Workflow {
   stages: Stage[];
 }
 
+export interface User {
+  id: number;
+  name: string;
+  companyId: number;
+}
+
+export interface Assignee {
+  userId: number;
+  stageId: number;
+  userName: string;
+  workflowId: number;
+}
+
 export const job_list: Job[] = [
   {
     id: 1,
     companyId: 1,
     image: image,
-    title: 'Frontend Developer',
-    experience: '2 - 3 Years',
-    qualification: 'B.Tech',
-    company: 'Google',
-    location: 'New York',
-    salary: '$120k - $140k',
-    type: 'Full Time',
+    title: "Frontend Developer",
+    experience: "2 - 3 Years",
+    qualification: "B.Tech",
+    company: "Google",
+    location: "New York",
+    salary: "$120k - $140k",
+    type: "Full Time",
     urgency: "urgent",
-    category: 'IT',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam. Quam, quibusdam. Quam, quibusdam.',
-  }
+    category: "IT",
+    desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam. Quam, quibusdam. Quam, quibusdam.",
+  },
 ];
 
 export const workflow: Workflow[] = [
@@ -55,19 +67,46 @@ export const workflow: Workflow[] = [
     stages: [
       {
         id: 1,
-        name: 'Meeting',
-        category: 'Interview',
+        name: "Meeting",
+        category: "Interview",
       },
       {
         id: 2,
-        name: 'Coding',
-        category: 'Test',
+        name: "Coding",
+        category: "Test",
       },
       {
         id: 3,
-        name: 'Hiring',
-        category: 'Interview',
+        name: "Hiring",
+        category: "Interview",
       },
-    ]
+    ],
+  },
+];
+
+export const users: User[] = [
+  {
+    id: 1,
+    name: "John Doe",
+    companyId: 1,
+  },
+  {
+    id: 2,
+    name: "Harris Rauf",
+    companyId: 1,
+  },
+  {
+    id: 3,
+    name: "Babar Azam",
+    companyId: 1,
+  },
+];
+
+export const assignee: Assignee[] = [
+  {
+    userId: 100,
+    userName: "John Doe",
+    stageId: 100,
+    workflowId: 100,
   }
 ];

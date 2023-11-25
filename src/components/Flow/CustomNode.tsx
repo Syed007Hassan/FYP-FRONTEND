@@ -1,18 +1,18 @@
-import { memo, FC, CSSProperties } from 'react';
+import { memo, FC } from 'react';
 import { Handle, Position, NodeProps, NodeResizer } from 'reactflow';
 
-const sourceHandleStyleA: CSSProperties = { left: 50 };
-const sourceHandleStyleB: CSSProperties = {
-  right: 50,
-  left: 'auto',
-};
+// const sourceHandleStyleA: CSSProperties = { left: 50 };
+// const sourceHandleStyleB: CSSProperties = {
+//   right: 50,
+//   left: 'auto',
+// };
 
 const CustomNode: FC<NodeProps> = ({ data, xPos, yPos }) => {
   return (
     <>
       <NodeResizer />
       <Handle type="target" position={Position.Top} />
-      <div>
+      <div className="customNode">
         <div>
           Label: <strong>{data.label}</strong>
         </div>
@@ -28,13 +28,15 @@ const CustomNode: FC<NodeProps> = ({ data, xPos, yPos }) => {
         type="source"
         position={Position.Bottom}
         id="a"
-        style={sourceHandleStyleA}
+        className="stages"
+        style={{ left: 50 }}
       />
       <Handle
         type="source"
         position={Position.Bottom}
         id="b"
-        style={sourceHandleStyleB}
+        className="stages"
+        style={{ right: 50, left: 'auto' }}
       />
     </>
   );

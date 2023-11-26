@@ -5,7 +5,6 @@ import React from "react";
 import Image from "next/image";
 import job_img from "../../../../../public/job.png";
 import Link from "next/link";
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
 import {
   FaBuilding,
   FaDollarSign,

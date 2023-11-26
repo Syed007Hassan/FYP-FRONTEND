@@ -1,68 +1,3 @@
-// "use client";
-// import { usePathname, useSearchParams } from "next/navigation";
-// import { useEffect, useState } from "react";
-
-// const Page = () => {
-//   interface Job {
-//     id: number;
-//     companyId: number;
-//     image: {
-//       src: string;
-//       height: number;
-//       width: number;
-//     };
-//     title: string;
-//     experience: string;
-//     salary: string;
-//     qualification: string;
-//     company: string;
-//     location: string;
-//     urgency: string;
-//     desc: string;
-//     type: string;
-//     category: string;
-//   }
-
-//   const [jobList, setJobList] = useState<Job[]>([]);
-//   const [job, setJob] = useState<Job | null>(null);
-
-//   const pathname = usePathname();
-//   const searchParams = useSearchParams();
-
-//   const jobIdString = pathname.split("/").pop() || "";
-//   const jobId = parseInt(jobIdString, 10);
-
-//   useEffect(() => {
-//     // Load jobs from local storage when component mounts
-//     const savedJobs = localStorage.getItem("job_list");
-//     // console.log(savedJobs);
-//     if (savedJobs) {
-//       setJobList(JSON.parse(savedJobs));
-//     }
-
-//     // find job from job list with jobId
-//     setJob(jobList.find((job) => job.id === jobId) || null);
-//   }, []);
-
-//     useEffect(() => {
-//       // Save jobs to local storage whenever it changes
-//     //   localStorage.setItem('job_list', JSON.stringify(jobList));
-//       setJob(jobList.find((job) => job.id === jobId) || null);
-//     }, [jobList, jobId]);
-
-//   return (
-//     <div>
-//       {/* <h1>Joblist</h1>
-//       <h2>{pathname}</h2>
-//       <h2>{jobId}</h2> */}
-//       {/* map job_list with jobId */}
-//       {job && <h2>{job.title}</h2>}
-//     </div>
-//   );
-// };
-
-// export default Page;
-
 "use client";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -70,7 +5,6 @@ import React from "react";
 import Image from "next/image";
 import job_img from "../../../../../public/job.png";
 import Link from "next/link";
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
 import {
   FaBuilding,
   FaDollarSign,
@@ -80,43 +14,21 @@ import {
   FaStarHalfAlt,
   FaUser,
 } from "react-icons/fa";
+import Stages from "@/components/Flow/Stages";
+import { Job, Workflow, Stage } from "@/data/data";
 
 const Page = () => {
-  interface Job {
-    id: number;
-    companyId: number;
-    image: {
-      src: string;
-      height: number;
-      width: number;
-    };
-    title: string;
-    experience: string;
-    salary: string;
-    qualification: string;
-    company: string;
-    location: string;
-    urgency: string;
-    desc: string;
-    type: string;
-    category: string;
-  }
-
-  interface Workflow {
-    id: number;
-    companyId: number;
-    stages: {
-      id: number;
-      name: string;
-      category: string;
-    }[];
-  }
-
   const [jobList, setJobList] = useState<Job[]>([]);
   const [job, setJob] = useState<Job | null>(null);
   const [workflowList, setWorkflowList] = useState<Workflow[]>([]);
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
-  const colorClasses = ['bg-blue-100', 'bg-green-100', 'bg-red-100', 'bg-yellow-100', 'bg-purple-100'];
+  const colorClasses = [
+    "bg-blue-100",
+    "bg-green-100",
+    "bg-red-100",
+    "bg-yellow-100",
+    "bg-purple-100",
+  ];
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -546,7 +458,8 @@ const Page = () => {
 
                     <div className="mt-8 space-y-2">
                       <Link
-                        href="/dashboard/joblist/[jobId]/workflow" as={`/dashboard/joblist/${job?.id}/workflow`}
+                        href="/dashboard/joblist/[jobId]/workflow"
+                        as={`/dashboard/joblist/${job?.id}/workflow`}
                         className="btn w-full py-3 px-24 bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
                       >
                         <i className="fas fa-bookmark"></i> Add Workflow
@@ -554,35 +467,34 @@ const Page = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="col-span-12 space-y-6 lg:col-span-4">
-                  <div className="border rounded border-gray-100/30 dark:border-neutral-600/80">
-                    <div className="p-6">
-                      <h6 className="text-gray-900 text-17 font-bold dark:text-gray-50">
-                        Workflow
-                      </h6>
-                      <div className="space-y-6">
-                        {workflow?.stages.map((stage, index) => {
-                          return (
-                            <div key={stage.id} className={`${colorClasses[index % colorClasses.length]} p-4 rounded`}>
-                              <p className="font-bold">Stage-{String(index + 1).padStart(2, '0')}. {stage.name}</p>
-                              <p>{stage.category}</p>
-                            </div>
-                          );
-                        })}
+                {workflow && (
+                  <div className="col-span-12 space-y-6 lg:col-span-4">
+                    <div className="border rounded border-gray-100/30 dark:border-neutral-600/80">
+                      <div className="p-6">
+                        <h6 className="text-gray-900 text-17 font-bold dark:text-gray-50 mb-2">
+                          Workflow
+                        </h6>
+                        <div className="space-y-6">
+                          {workflow?.stages.map((stage, index) => {
+                            return (
+                              <Stages
+                                key={stage.id}
+                                stage={stage}
+                                index={index}
+                                workflowId={workflow.id}
+                              />
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
-
             </div>
           </div>
         </section>
-        <section className="py-16 px-16">
-
-        </section>
-
+        <section className="py-16 px-16"></section>
       </div>
     </div>
   );

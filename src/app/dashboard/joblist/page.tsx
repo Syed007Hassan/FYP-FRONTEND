@@ -4,30 +4,31 @@ import Image from "next/image";
 import Pagination from "@/components/pagination";
 
 import { useRouter } from 'next/navigation'
+import { Job } from "@/data/data";
 
 // import { job_list } from "@/data/data";
 
 const Page = () => {
 
-  interface Job {
-    id: number;
-    companyId: number;
-    image: {
-      src: string;
-      height: number;
-      width: number;
-    };
-    title: string;
-    experience: string;
-    salary: string;
-    qualification: string;
-    company: string;
-    location: string;
-    urgency: string;
-    desc: string;
-    type: string;
-    category: string;
-  }
+  // interface Job {
+  //   id: number;
+  //   companyId: number;
+  //   image: {
+  //     src: string;
+  //     height: number;
+  //     width: number;
+  //   };
+  //   title: string;
+  //   experience: string;
+  //   salary: string;
+  //   qualification: string;
+  //   company: string;
+  //   location: string;
+  //   urgency: string;
+  //   desc: string;
+  //   type: string;
+  //   category: string;
+  // }
 
   const router = useRouter();
   const [jobList, setJobList] = useState<Job[]>([]);

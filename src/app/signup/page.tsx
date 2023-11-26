@@ -102,13 +102,12 @@ export default function SignInSide() {
             sm={4}
             md={6}
             sx={{
-              backgroundImage:
-                "url(https://source.unsplash.com/random?wallpapers)",
+              backgroundImage: "url(/sign-up.png)",
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
-                t.palette.mode === "light"
+                t.palette.mode === "dark"
                   ? t.palette.grey[50]
-                  : t.palette.grey[900],
+                  : t.palette.grey[100],
               backgroundSize: "cover",
               backgroundPosition: "center",
               borderEndStartRadius: "40px",
@@ -127,11 +126,13 @@ export default function SignInSide() {
             component={Paper}
             elevation={6}
             square
-            sx={{
-              // borderEndEndRadius: "40px",
-              // borderTopRightRadius: "40px",
-              // height: "81vh",
-            }}
+            sx={
+              {
+                // borderEndEndRadius: "40px",
+                // borderTopRightRadius: "40px",
+                // height: "81vh",
+              }
+            }
             className="rounded md:rounded-tl-none md:rounded-bl-none md:rounded-tr-[40px] md:rounded-br-[40px] md:h-[83vh]"
           >
             <Box

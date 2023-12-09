@@ -1,19 +1,40 @@
 import Image from "next/image";
-import '../../src/styles/chatbot.css';
+import "../../src/styles/chatbot.css";
+import { useState } from "react";
 
 interface ChatbotProps {
   click: boolean;
+  setQuery: (query: string) => void;
+  queryResponse: {
+    data: string;
+  } | string;
 }
 
+const Chatbot: React.FC<ChatbotProps> = ({
+  click,
+  setQuery,
+  queryResponse,
+}) => {
+  const [data, setData] = useState("");
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    console.log("submit");
+    setQuery(data);
+    event.preventDefault();
+    // Your code here
+  };
 
-const Chatbot: React.FC<ChatbotProps> = ({ click })=> {
   return (
-    <div className={`${click ? 'block opacity-100 transition-opacity duration-500 ease-in-out' : 'hidden opacity-0 transition-opacity duration-500 ease-in-out'}`}>
+    <div
+      className={`${
+        click
+          ? "block opacity-100 transition-opacity duration-500 ease-in-out"
+          : "hidden opacity-0 transition-opacity duration-500 ease-in-out"
+      }`}
+    >
       {/* Prompt Messages Container - Modify the height according to your need */}
       <div className="flex w-3/12 flex-col absolute right-[2rem] top-[24rem]">
         {/* Prompt Messages */}
         <div className="flex flex-col overflow-y-auto bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
-
           {/* <div className="flex flex-row px-4 py-8 sm:px-6">
             <Image
               className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
@@ -39,10 +60,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ click })=> {
 
             <div className="flex w-full flex-col items-start lg:flex-row lg:justify-between">
               <p className="max-w-3xl">
-                Three great applications of quantum computing are: Optimization
-                of complex problems, Drug Discovery and Cryptography.  Three great applications of quantum computing are: Optimization
-                of complex problems, Drug Discovery and Cryptography.Three great applications of quantum computing are: Optimization
-                of complex problems, Drug Discovery and Cryptography.
+                <div>{JSON.stringify(queryResponse)}</div>
               </p>
               <div className="mt-4 flex flex-col gap-y-2 text-slate-500 lg:mt-0">
                 <button className="hover:text-blue-600">
@@ -97,7 +115,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ click })=> {
         </div>
 
         {/* Prompt message input */}
-        <form className="flex w-full items-center rounded-b-md border-t border-slate-300 bg-slate-200 p-2 dark:border-slate-700 dark:bg-slate-900">
+        <form
+          className="flex w-full items-center rounded-b-md border-t border-slate-300 bg-slate-200 p-2 dark:border-slate-700 dark:bg-slate-900"
+          onSubmit={handleSubmit}
+        >
           <label htmlFor="chat" className="sr-only">
             Enter your prompt
           </label>
@@ -129,6 +150,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ click })=> {
             rows={1}
             className="mx-2 flex min-h-full w-full rounded-md border border-slate-300 bg-slate-50 p-2 text-base text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 dark:placeholder-slate-400 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             placeholder="Enter your prompt"
+            value={data}
+            onChange={(e) => setData(e.target.value)}
           ></textarea>
           <div>
             <button

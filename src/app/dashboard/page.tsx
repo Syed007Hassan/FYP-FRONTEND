@@ -60,7 +60,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="ml-7 w-full pt-10 sticky">
+    <div className=" w-full pt-10 sticky">
       <div className="pr-30 mb-4 h-50 w-full  pt-4 bg-white border border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <LineChart />
       </div>

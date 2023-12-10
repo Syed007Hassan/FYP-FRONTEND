@@ -3,6 +3,7 @@ import authReducer from "./services/auth/authSlice"
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { userApi } from "./services/Recruiter/recruiterAction";
 import { companyApi } from "./services/Company/companyAction";
+import { chatApi } from "./services/chat/chatAction";
 
 import { userReducer } from "./services/Recruiter/recruiterSlice";
 import { employeeReducer } from "./services/Recruiter/recruiterSlice";
@@ -16,12 +17,14 @@ export const store = configureStore({
     companyReducer,
     [userApi.reducerPath]: userApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
+    [chatApi.reducerPath]: chatApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware()
   .concat(userApi.middleware)
-  .concat(companyApi.middleware),
+  .concat(companyApi.middleware)
+  .concat(chatApi.middleware),
 });
 
 setupListeners(store.dispatch);

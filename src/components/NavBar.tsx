@@ -31,7 +31,7 @@ const NavBar: React.FC<HeaderProps> = () => {
     setDropdownVisible(!dropdownVisible);
   };
   return (
-    <nav className="overflow z-50 w-screen sticky top-0 left-0 bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
+    <nav className="overflow z-50 sticky top-0 left-0 bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
       <div className="container mx-auto flex justify-between bg-white items-center h-12">
         <div className="flex items-center">
           <button className="p-2 z-30" onClick={toggleSidebar}>

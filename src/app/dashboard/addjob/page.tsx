@@ -1,9 +1,15 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { job_list } from "@/data/data";
-import image_1 from "../../../../public/job.png"; 
+import image_1 from "../../../../public/job.png";
+
+import Chatbot from "@/components/Chatbot";
+import { FaQuestion } from "react-icons/fa6";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useGetChatQuery } from "@/redux/services/chat/chatAction";
 
 const Page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -12,6 +18,21 @@ const Page = () => {
   const [selectedType, setSelectedType] = useState("Select a type");
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
+
+  const [click, setClick] = useState(false);
+  const [query, setQuery] = useState("Hi");
+
+  const dispatch = useAppDispatch();
+
+  const { data, error, isLoading } = useGetChatQuery({ query: query });
+
+ useEffect(() => {
+    console.log(data);
+ }, [data]);
+
+ useEffect(() => {
+  console.log("query: ",query);
+ }, [query]);
 
   const [job, setJob] = useState({
     id: 0,
@@ -45,10 +66,10 @@ const Page = () => {
       category: "IT", // replace with actual category
       desc: job.desc,
     };
-    console.log(job);  
+    console.log(job);
     // console.log(newJob);
     job_list.push(newJob);
-    localStorage.setItem('job_list', JSON.stringify(job_list));
+    localStorage.setItem("job_list", JSON.stringify(job_list));
     // console.log(job_list);
   };
 
@@ -57,7 +78,7 @@ const Page = () => {
       <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
         <div
           className="pl-10 pb-6 pr-10 hidden md:block md:-mr-20 lg:-mr-0"
-          style={{ width: "650px", height: "630px" }}
+          style={{ width: "640px", height: "630px" }}
         >
           <Image
             src="/landing-pic.png"
@@ -91,9 +112,9 @@ const Page = () => {
                       autoComplete="given-name"
                       value={job.title}
                       onChange={(e) => {
-                        console.log('event.target.value:', e.target.value); // Check the event object
+                        console.log("event.target.value:", e.target.value); // Check the event object
                         setJob({ ...job, title: e.target.value });
-                        console.log('job after update:', job); // Check the state update
+                        console.log("job after update:", job); // Check the state update
                       }}
                       required
                     />
@@ -384,6 +405,20 @@ const Page = () => {
           </div>
         </div>
       </div>
+      <div
+        className="flex items-start absolute right-[2rem] top-[39.9rem]"
+        onClick={() => setClick(!click)}
+      >
+        <div className="w-10 h-10 rounded-full">
+          <div className="flex items-center justify-center w-full h-full rounded-full bg-blue-600">
+            <FaQuestion size={15} className="text-white" />
+          </div>
+        </div>
+      </div>
+      {/* <div className="absolute right-[2rem] top-[39.9rem]"> */}
+      {isLoading && <div>Loading...</div>}
+      <Chatbot click={click} setQuery={setQuery} queryResponse={data?.data || "Hi, Its SyncFlow"} />
+      {/* </div> */}
     </div>
   );
 };

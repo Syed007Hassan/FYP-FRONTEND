@@ -8,12 +8,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   return (
     <div
       id="logo-sidebar"
-      className={`pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${
-        isOpen ? "translate-x-0" : "-translate-x-full"
-      } sm:translate-x-0`}
+      className={`pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0`}
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 bg-blue-800">
+      <div className="h-full px-3 py-4 bg-blue-700">
         <ul className="space-y-2 font-medium">
           <li>
             <a
@@ -72,7 +71,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
               <span className="flex-1 ml-3 whitespace-nowrap">Users </span>
             </a>
           </li>
-          <li>
+          {/* <li>
             <a
               href="#"
               className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -88,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
               </svg>
               <span className="flex-1 ml-3 whitespace-nowrap">Products</span>
             </a>
-          </li>
+          </li> */}
 
           <button
             id="toggleSidebarMobile"
@@ -98,9 +97,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
           >
             <svg
               id="toggleSidebarMobileHamburger"
-              className={`w-6 h-6 fill-current text-black ${
-                isOpen ? "hidden" : ""
-              }`}
+              className={`w-6 h-6 fill-current text-black ${isOpen ? "hidden" : ""
+                }`}
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -108,9 +106,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
             </svg>
             <svg
               id="toggleSidebarMobileClose"
-              className={`w-6 h-6 fill-current text-black ${
-                isOpen ? "" : "hidden"
-              }`}
+              className={`w-6 h-6 fill-current text-black ${isOpen ? "" : "hidden"
+                }`}
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >

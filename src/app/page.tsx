@@ -59,7 +59,7 @@ export default function Home() {
         <div className="grid grid-rows-1 grid-flow-col pt-16 lg:pl-16 lg:pr-16">
           <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Real-time visibility into each application's progress
+              Real-time visibility into each application&apos;s progress
             </p>
           </div>
           <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
@@ -134,7 +134,7 @@ export default function Home() {
                 Real-Time Application Tracking for Informed Decision-Making
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
-                Keeping abreast of each application's progress is made easy through our platform, providing live updates on their journey. This feature enhances transparency and ensures recruiters and stakeholders are well-informed at every stage of the hiring process.
+                Keeping abreast of each application&apos;s progress is made easy through our platform, providing live updates on their journey. This feature enhances transparency and ensures recruiters and stakeholders are well-informed at every stage of the hiring process.
               </p>
             </div>
           </div>

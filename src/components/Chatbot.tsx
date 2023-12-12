@@ -1,24 +1,54 @@
 import Image from "next/image";
 import "../../src/styles/chatbot.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useGetChatQuery } from "@/redux/services/chat/chatAction";
 
 interface ChatbotProps {
   click: boolean;
-  setQuery: (query: string) => void;
-  queryResponse: {
-    data: string;
-  } | string;
 }
 
-const Chatbot: React.FC<ChatbotProps> = ({
-  click,
-  setQuery,
-  queryResponse,
-}) => {
-  const [data, setData] = useState("");
+const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
+  const [query, setQuery] = useState("Hi");
+  const [input, setInput] = useState("");
+
+  const [displayedText, setDisplayedText] = useState("");
+
+  const dispatch = useAppDispatch();
+
+  const { data, error, isLoading, isFetching } = useGetChatQuery({
+    query: query,
+  });
+
+  useEffect(() => {
+    console.log(data);
+  } , [data])
+
+  useEffect(() => {
+    setDisplayedText("");
+    if (data?.data) {
+      const words = JSON.stringify(data?.data).split(" ");
+      let i = 0;
+
+      const intervalId = setInterval(() => {
+        if (i < words.length) {
+          setDisplayedText((prevText) => prevText + " " + words[i]);
+          i++;
+        } else {
+          clearInterval(intervalId);
+        }
+      }, 100); // Adjust the delay to suit your needs
+
+      return () => clearInterval(intervalId); // Clean up on unmount
+    }
+  }, [data]); // Add data as a dependency
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setDisplayedText("");
     console.log("submit");
-    setQuery(data);
+    setQuery(input);
+    setInput("");
     event.preventDefault();
     // Your code here
   };
@@ -32,9 +62,9 @@ const Chatbot: React.FC<ChatbotProps> = ({
       }`}
     >
       {/* Prompt Messages Container - Modify the height according to your need */}
-      <div className="flex w-3/12 flex-col absolute right-[2rem] top-[24rem]">
+      <div className="flex w-3/12 flex-col absolute right-[2rem] top-[24rem] ">
         {/* Prompt Messages */}
-        <div className="flex flex-col overflow-y-auto bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
+        <div className="flex flex-col overflow-y-auto rounded-[0.5rem] bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
           {/* <div className="flex flex-row px-4 py-8 sm:px-6">
             <Image
               className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
@@ -60,7 +90,7 @@ const Chatbot: React.FC<ChatbotProps> = ({
 
             <div className="flex w-full flex-col items-start lg:flex-row lg:justify-between">
               <p className="max-w-3xl">
-                <div>{JSON.stringify(queryResponse)}</div>
+                {isFetching ? "Loading..." : <div>{displayedText}</div>}
               </p>
               <div className="mt-4 flex flex-col gap-y-2 text-slate-500 lg:mt-0">
                 <button className="hover:text-blue-600">
@@ -150,8 +180,8 @@ const Chatbot: React.FC<ChatbotProps> = ({
             rows={1}
             className="mx-2 flex min-h-full w-full rounded-md border border-slate-300 bg-slate-50 p-2 text-base text-slate-900 placeholder-slate-400 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-50 dark:placeholder-slate-400 dark:focus:border-blue-600 dark:focus:ring-blue-600"
             placeholder="Enter your prompt"
-            value={data}
-            onChange={(e) => setData(e.target.value)}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           ></textarea>
           <div>
             <button

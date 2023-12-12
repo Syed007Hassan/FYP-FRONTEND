@@ -8,9 +8,6 @@ import image_1 from "../../../../public/job.png";
 import Chatbot from "@/components/Chatbot";
 import { FaQuestion } from "react-icons/fa6";
 
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useGetChatQuery } from "@/redux/services/chat/chatAction";
-
 const Page = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,19 +17,6 @@ const Page = () => {
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
 
   const [click, setClick] = useState(false);
-  const [query, setQuery] = useState("Hi");
-
-  const dispatch = useAppDispatch();
-
-  const { data, error, isLoading } = useGetChatQuery({ query: query });
-
- useEffect(() => {
-    console.log(data);
- }, [data]);
-
- useEffect(() => {
-  console.log("query: ",query);
- }, [query]);
 
   const [job, setJob] = useState({
     id: 0,
@@ -416,8 +400,8 @@ const Page = () => {
         </div>
       </div>
       {/* <div className="absolute right-[2rem] top-[39.9rem]"> */}
-      {isLoading && <div>Loading...</div>}
-      <Chatbot click={click} setQuery={setQuery} queryResponse={data?.data || "Hi, Its SyncFlow"} />
+      {/* {isFetching && <div>Loading...</div>} */}
+      <Chatbot click={click} />
       {/* </div> */}
     </div>
   );

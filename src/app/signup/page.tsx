@@ -42,7 +42,7 @@ export default function SignInSide() {
     const name = firstName + " " + lastName;
     const role = "employer";
     const designation = "HR";
-    const phone = parseInt(phoneNum);
+    const phone = phoneNum;
     const data = {
       name,
       email,
@@ -52,6 +52,8 @@ export default function SignInSide() {
       role,
       designation,
     };
+
+    console.log(data);
 
     if (password !== repeatPassword) {
       alert("Passwords do not match");

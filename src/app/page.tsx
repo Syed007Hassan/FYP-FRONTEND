@@ -1,12 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Images from "@/app/public/images/landing-pic.png";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { applicants } from "@/data/data";
 
 export default function Home() {
+
+  useEffect(() => {
+    localStorage.setItem("applicants", JSON.stringify(applicants));
+  }
+  , [])
   return (
     <div className=" min-h-screen justify-center">
       <Header />
@@ -16,15 +22,14 @@ export default function Home() {
           <header className="pr-20 pl-20">
             <h1 className=" text-blue-500 mb-4">SyncFlow recruitment</h1>
             <h1 className="pr-20 text-7xl font-semibold text-blue-900 my-8">
-              Software designed for everyone involved in hiring
+              Welcome to the Future of Hiring with SyncFlow
             </h1>
             <p className="text-lg text-gray-600">
-              SyncFlow is a modern hiring platform that helps teams source,
-              interview, and hire the best talent for their business.
+              Customize, Interact, Elevate: Transform Your Hiring Landscape Effectively with Our Intelligent Recruitment Platform.
             </p>
             {/* request a demo button */}
             <div className="flex pt-9">
-              <button className="bg-blue-800 text-white rounded-full py-3 px-6 font-semibold hover:bg-blue-600">
+              <button className="bg-blue-700 text-white rounded-full py-3 px-6 font-semibold hover:bg-blue-600">
                 Request a demo
               </button>
             </div>
@@ -48,23 +53,23 @@ export default function Home() {
       <div className="lg:pl-20 pb-10 pt-10 lg:pr-20 pl-32 pr-10">
         <div className="lg:pr-64 pr-10">
           <h1 className="text-5xl font-normal text-gray-800 my-8 lg:pl-20 lg:pr-64 pr-10">
-            Get the technology and know-how to be great at hiring so you can:
+            Unlock the Tools and Expertise to Elevate Your Recruitment Game and Make Smarter Decisions.
           </h1>
         </div>
         <div className="grid grid-rows-1 grid-flow-col pt-16 lg:pl-16 lg:pr-16">
           <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Source and nurture the right candidates
+              Real-time visibility into each application&apos;s progress
             </p>
           </div>
           <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Source and nurture the right candidates
+              Personalize your hiring journey with ease
             </p>
           </div>
           <div className=" flex justify-center border-solid border-blue-800 border-b-2 pt-12 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Source and nurture the right candidates
+              Make growth-focused decisions with analytics
             </p>
           </div>
         </div>
@@ -76,12 +81,12 @@ export default function Home() {
           </div>
           <div className="flex justify-center border-solid border-blue-800 border-r-2 pt-12 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Source and nurture the right candidates
+              Streamline early hiring stages for efficiency.
             </p>
           </div>
           <div className=" flex justify-center pt-12 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Source and nurture the right candidates
+              Minimize bias, ensure equality in assessments
             </p>
           </div>
         </div>
@@ -97,21 +102,19 @@ export default function Home() {
           <div className="lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4">
             <div className="w-full lg:w-1/2">
               <h1 className="text-3xl font-bold">
-                Find and engage top talent with ease
+                Effortless Custom Workflows for Strategic Hiring
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
-                In the midst of a bustling cityscape, the neon lights painted
-                the night in vibrant hues, casting an enchanting glow upon the
-                faces of passersby..
+                Crafting custom workflows is a breeze with our intuitive platform, empowering recruiters to seamlessly tailor the hiring process. This not only saves time but ensures alignment with the unique goals and objectives of your organization.
               </p>
             </div>
-            <div className="w-full lg:w-1/2">
+            <div className="pl-16 lg:w-1/2">
               <Image
-                src="/landing-pic.png"
+                src="/customized-workflow.png"
                 alt="Image Description 1"
                 className="w-full h-auto max-w-md"
-                width={500}
-                height={500}
+                width={200}
+                height={200}
               />
             </div>
           </div>
@@ -119,7 +122,7 @@ export default function Home() {
           <div className="lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4 pt-20">
             <div className="w-full lg:w-1/2">
               <Image
-                src="/landing-pic.png"
+                src="/recruiting1.png"
                 alt="Image Description 2"
                 className="w-full h-auto max-w-md"
                 width={500}
@@ -128,12 +131,10 @@ export default function Home() {
             </div>
             <div className="w-full lg:w-1/2">
               <h1 className="text-3xl font-bold">
-                Find and engage top talent with ease
+                Real-Time Application Tracking for Informed Decision-Making
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
-                In the midst of a bustling cityscape, the neon lights painted
-                the night in vibrant hues, casting an enchanting glow upon the
-                faces of passersby..
+                Keeping abreast of each application&apos;s progress is made easy through our platform, providing live updates on their journey. This feature enhances transparency and ensures recruiters and stakeholders are well-informed at every stage of the hiring process.
               </p>
             </div>
           </div>
@@ -141,17 +142,15 @@ export default function Home() {
           <div className="lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4 pt-20">
             <div className="w-full lg:w-1/2">
               <h1 className="text-3xl font-bold">
-                Find and engage top talent with ease
+                Data-Driven Decision-Making for Recruitment Success
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
-                In the midst of a bustling cityscape, the neon lights painted
-                the night in vibrant hues, casting an enchanting glow upon the
-                faces of passersby..
+                Our platform empowers users to make well-informed decisions by providing powerful analytics. This data-driven approach ensures recruiters have the insights needed to optimize their hiring strategies and enhance overall recruitment success.
               </p>
             </div>
             <div className="w-full lg:w-1/2">
               <Image
-                src="/landing-pic.png"
+                src="/dashboard.png"
                 alt="Image Description 3"
                 className="w-full h-auto max-w-md"
                 width={500}
@@ -166,7 +165,7 @@ export default function Home() {
           <div className="lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4 pt-20">
             <div className="w-full lg:w-1/2">
               <Image
-                src="/landing-pic.png"
+                src="/non-bias.png"
                 alt="Image Description 4"
                 className="w-full h-auto max-w-md"
                 width={500}
@@ -175,13 +174,11 @@ export default function Home() {
             </div>
             <div className="w-full lg:w-1/2">
               <h1 className="text-3xl font-bold">
-                Find and engage top talent with ease
+                Minimizing Bias in Candidate Selection Through Technology
               </h1>
 
               <p className="text-lg font-medium text-gray-800 my-4">
-                In the midst of a bustling cityscape, the neon lights painted
-                the night in vibrant hues, casting an enchanting glow upon the
-                faces of passersby..
+                SyncFlow employs a technology-driven approach to minimize bias in candidate assessments, ensuring a fair and objective selection process. This commitment fosters diversity and inclusivity, promoting an equitable hiring environment.
               </p>
             </div>
           </div>

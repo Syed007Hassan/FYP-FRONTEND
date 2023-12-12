@@ -1,4 +1,6 @@
 export const Backend_URL = "http://localhost:5000/api";
+export const FLASK_URL = "http://localhost:4000/api";
+
 
 export function parseJwt(jwt: string): any {
   const base64Url = jwt.split(".")[1];

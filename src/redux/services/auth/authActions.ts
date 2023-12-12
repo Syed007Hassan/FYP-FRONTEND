@@ -5,7 +5,7 @@ import { Backend_URL } from '@/lib/Constants';
 
 export const registerUser = createAsyncThunk<
   void,
-  { name: string; email: string; password: string, phone: number, companyName: string, role: string, designation: string },
+  { name: string; email: string; password: string, phone: string, companyName: string, role: string, designation: string },
   { rejectValue: string }
 >(
   "/auth/registerEmployer",

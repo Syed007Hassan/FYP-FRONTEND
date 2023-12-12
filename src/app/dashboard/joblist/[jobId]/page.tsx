@@ -61,28 +61,6 @@ const Page = () => {
   return (
     <div className="main-content">
       <div className="page-content">
-        {/* <div className="pt-28 lg:pt-44 pb-28 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500 dark:bg-neutral-900 bg-[url('/back.jpeg')] bg-center bg-cover relative">
-          <div className="container mx-auto">
-            <div className="grid">
-              <div className="col-span-12">
-                <div className="text-center text-white">
-                  <h3 className="mb-4 text-[26px]">Job Details</h3>
-                  <div className="page-next">
-                    <nav className="inline-block" aria-label="breadcrumb text-center">
-                      <ol className="flex flex-wrap justify-center text-sm font-medium uppercase">
-                        <li><Link href="/">Home</Link></li>
-                        <li><i className="bx bxs-chevron-right align-middle px-2.5"></i><Link href="javascript:void(0)">Company</Link></li>
-                        <li className="active" aria-current="page"><i className="bx bxs-chevron-right align-middle px-2.5"></i>Job Details </li>
-                      </ol>
-                    </nav>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div> */}
-
         <section className="py-16 px-16">
           <div className="container mx-auto">
             <div className="grid grid-cols-12 gap-y-10 lg:gap-10">
@@ -287,25 +265,6 @@ const Page = () => {
                       </div>
                     </div>
 
-                    {/* <div>
-                      {/* display workflow attributes here 
-                      <h5 className="mb-3 text-gray-900 dark:text-gray-50">
-                        Workflow
-                      </h5>
-                      <div>
-                      <ul className="mb-0 text-gray-500 dark:text-gray-300">
-                          {workflow?.stages.map((stage) => {
-                            return (
-                              <li key={stage.id} className="mb-2 text-gray-500 dark:text-gray-300">
-                                <i className="mr-2 uil uil-circle"></i>{" "}
-                                {stage.name} - {stage.category}
-                              </li>
-                            );
-                          })}
-                        </ul>
-
-                      </div>
-                    </div> */}
 
                     <div className="mt-4">
                       <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">

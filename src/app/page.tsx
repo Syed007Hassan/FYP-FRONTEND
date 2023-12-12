@@ -1,12 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Images from "@/app/public/images/landing-pic.png";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { applicants } from "@/data/data";
 
 export default function Home() {
+
+  useEffect(() => {
+    localStorage.setItem("applicants", JSON.stringify(applicants));
+  }
+  , [])
   return (
     <div className=" min-h-screen justify-center">
       <Header />

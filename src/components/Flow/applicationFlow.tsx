@@ -145,7 +145,7 @@ const ApplicationFlow = ({ applicantList }: Props) => {
 
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 bg-black opacity-50"/>
+          <div className="fixed inset-0 bg-black opacity-50" />
           <div
             id="default-modal"
             aria-hidden="true"
@@ -153,7 +153,10 @@ const ApplicationFlow = ({ applicantList }: Props) => {
             onClick={() => setIsModalOpen(false)}
             // style={{ top: "10rem", left: "25rem" }}
           >
-            <div className="relative p-4 w-full max-w-2xl max-h-full" style={{ top: "10rem", left: "25rem" }}>
+            <div
+              className="relative p-4 w-full max-w-2xl max-h-full"
+              style={{ top: "10rem", left: "25rem" }}
+            >
               {/* Modal content */}
               <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 {/* Modal header */}
@@ -202,29 +205,34 @@ const ApplicationFlow = ({ applicantList }: Props) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {applicantList.map((applicant) => (
-                        <tr
-                          key={applicant.id}
-                          className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-                        >
-                          <th
-                            scope="row"
-                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      {applicantList
+                        .filter(
+                          (applicant) =>
+                            parseInt(nodeData?.id || "0") === applicant?.stageId
+                        )
+                        .map((applicant) => (
+                          <tr
+                            key={applicant.id}
+                            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
-                            {applicant.id}
-                          </th>
-                          <td className="px-6 py-4">{applicant.name}</td>
-                          <td className="px-6 py-4">
-                            {" "}
-                            <a
-                              href="#"
-                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              View Application
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
+                              {applicant.id}
+                            </th>
+                            <td className="px-6 py-4">{applicant.name}</td>
+                            <td className="px-6 py-4">
+                              {" "}
+                              <a
+                                href="#"
+                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              >
+                                View Application
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

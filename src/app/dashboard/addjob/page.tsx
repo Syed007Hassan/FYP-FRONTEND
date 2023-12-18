@@ -1,6 +1,7 @@
 "use client";
 import React, { use } from "react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { job_list } from "@/data/data";
 import image_1 from "../../../../public/job.png";
@@ -9,6 +10,7 @@ import Chatbot from "@/components/Chatbot";
 import { FaQuestion } from "react-icons/fa6";
 
 const Page = () => {
+  const router = useRouter();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
@@ -33,8 +35,6 @@ const Page = () => {
   });
 
   const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log("submitted");
     const newJob = {
       id: Math.floor(Math.random() * 1000),
       companyId: 1,
@@ -50,11 +50,12 @@ const Page = () => {
       category: "IT", // replace with actual category
       desc: job.desc,
     };
-    console.log(job);
-    // console.log(newJob);
+
     job_list.push(newJob);
     localStorage.setItem("job_list", JSON.stringify(job_list));
-    // console.log(job_list);
+
+    router.push("/dashboard/joblist");
+
   };
 
   return (

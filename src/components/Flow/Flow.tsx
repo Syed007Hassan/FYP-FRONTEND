@@ -6,6 +6,7 @@ import styles from "./Flow.module.css";
 import "reactflow/dist/style.css";
 import { usePathname, useSearchParams } from "next/navigation";
 import { workflow } from "@/data/data";
+import { useRouter } from "next/navigation";
 
 import React, { useCallback } from "react";
 import ReactFlow, {
@@ -65,6 +66,7 @@ const defaultEdgeOptions = {
 };
 
 const App = () => {
+  const router = useRouter();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -98,16 +100,6 @@ const App = () => {
   };
 
   const handleSaveFlow = () => {
-    // use axios to send data
-
-    // try{
-    //   const res = axios.post('/api/save-flow', { nodes, edges });
-    // }
-    // catch(err){
-    //   console.log(err)
-    // }
-
-    // console.log(nodes , edges);
     const sequence = [];
 
     sequence.push(nodes[0].data.label);
@@ -152,6 +144,8 @@ const App = () => {
     console.log(workflow);
 
     localStorage.setItem('workflow', JSON.stringify(workflow));
+
+    router.push(`/dashboard/joblist/${jobId}`);
   };
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {

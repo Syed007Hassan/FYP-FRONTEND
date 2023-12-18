@@ -41,6 +41,7 @@ const Page = () => {
   }, []);
 
   const handleSubmit = (event: any) => {
+    event.preventDefault();
     const name = firstName + " " + lastName;
 
     const role = "employer";
@@ -50,7 +51,7 @@ const Page = () => {
       return;
     }
     const companyId = parseInt(companyIdTemp);
-    const phone = parseInt(phoneNum);
+    const phone = phoneNum;
     const data = {
       name,
       designation,

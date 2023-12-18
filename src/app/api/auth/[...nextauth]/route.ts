@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const response = await axios.post(
-            `${Backend_URL}/auth/loginEmployer`,
+            `${Backend_URL}/auth/loginRecruiter`,
             {
               email,
               password,

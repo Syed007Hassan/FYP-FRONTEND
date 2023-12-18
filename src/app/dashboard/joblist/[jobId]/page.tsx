@@ -2,6 +2,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import React from "react";
+import { MdAnalytics } from "react-icons/md";
 import Image from "next/image";
 import job_img from "../../../../../public/job.png";
 import Link from "next/link";
@@ -415,13 +416,22 @@ const Page = () => {
                       </li>
                     </ul>
 
-                    <div className="mt-8 space-y-2">
+                    <div className="mt-8 flex gap-5">
                       <Link
                         href="/dashboard/joblist/[jobId]/workflow"
                         as={`/dashboard/joblist/${job?.id}/workflow`}
-                        className="btn w-full py-3 px-24 bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                        className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
                       >
                         <i className="fas fa-bookmark"></i> Add Workflow
+                      </Link>
+
+                      <Link
+                        href="/dashboard/joblist/[jobId]/analytics"
+                        as={`/dashboard/joblist/${job?.id}/analytics`}
+                        className="btn text-center px-0 py-0 items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                        title="Job analytics"
+                      >
+                        <MdAnalytics style={{height: "3rem", width: "3rem"}}/>
                       </Link>
                     </div>
                   </div>

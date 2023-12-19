@@ -1,16 +1,16 @@
 "use client";
 import CustomNode from "./CustomNode";
-
 import styles from "./Flow.module.css";
-
 import "reactflow/dist/style.css";
 import { usePathname, useSearchParams } from "next/navigation";
 import { workflow } from "@/data/data";
 import { useRouter } from "next/navigation";
 
+
 import React, { useCallback } from "react";
 import ReactFlow, {
   ConnectionLineType,
+  BackgroundVariant,
   MiniMap,
   Controls,
   Background,
@@ -69,6 +69,7 @@ const App = () => {
   const router = useRouter();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -188,17 +189,22 @@ const App = () => {
           >
             <Controls />
             {/* <MiniMap /> */}
-            {/* <Background variant="dots" gap={12} size={1} /> */}
+            <Background
+              id="2"
+              gap={20}
+              color="#888"
+              variant={BackgroundVariant.Dots}
+            />
           </ReactFlow>
         </div>
 
-        <div className="flex flex-col gap-5 pt-3 pb-3 bg-yellow-50">
+        <div className="flex flex-col h-screen gap-5 pt-3 pb-3 bg-gray-300">
           <span className="flex justify-center pt-2 ">
             <h1 className="text-2xl font-bold">Add Stages</h1>
           </span>
           <span
-            className={`flex justify-center pt-4 pb-4 px-2 ${styles.stages}`}
-          >
+            className="flex justify-center pt-4 pb-4 px-2 mr-4 ml-4">
+
             <button
               onClick={handleSaveFlow}
               className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -227,7 +233,7 @@ const App = () => {
             </div>
           </span>
 
-          <div className="bg-yellow-300 pt-4 pb-4">
+          <div className=" pt-4 pb-4">
             <span className="flex justify-center">
               <h1 className="text-2xl font-bold">Add Custom Stages</h1>
             </span>
@@ -243,7 +249,7 @@ const App = () => {
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Enter Stage Name"
                 />
               </div>
               <div className="mb-4 flex gap-3">
@@ -292,7 +298,7 @@ const App = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 export default App;

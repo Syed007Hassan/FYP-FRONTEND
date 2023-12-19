@@ -9,6 +9,8 @@ import { userReducer } from "./services/Recruiter/recruiterSlice";
 import { employeeReducer } from "./services/Recruiter/recruiterSlice";
 import companyReducer from "./services/Company/companySlice";
 
+import sidebarReducer from './features/sidebarStateAction';
+
 export const store = configureStore({
   reducer: {
     authReducer,
@@ -18,6 +20,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,
+    sidebar: sidebarReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>

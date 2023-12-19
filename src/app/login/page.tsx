@@ -28,6 +28,7 @@ export default function SignInSide() {
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   const handleSubmit = async (event: any) => {
+    console.log(email, password);
     const result = await signIn("credentials", {
       email: email,
       password: password,

@@ -12,6 +12,8 @@ import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
 import { parseJwt } from "@/lib/Constants";
 
+import "../../../styles/sidebar.css";
+
 const Page = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,6 +27,8 @@ const Page = () => {
 
   const { success } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
+
+  const isSidebarOpen = useAppSelector(state => state.sidebar.sidebarState);
 
   const { data, error, isLoading } = useGetUserByEmailQuery({ email });
 
@@ -76,6 +80,8 @@ const Page = () => {
   return isLoading ? (
     <Loader />
   ) : (
+    <div className={`content overflow-hidden ${isSidebarOpen ? 'shifted' : ''}`}>
+
     <div className=" min-h-screen justify-center">
       <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
         <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
@@ -238,6 +244,7 @@ const Page = () => {
           />
         </div>
       </div>
+    </div>
     </div>
   );
 };

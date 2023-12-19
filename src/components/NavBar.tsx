@@ -13,6 +13,9 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { toggleSidebar } from '../redux/features/sidebarStateAction';
+
 interface HeaderProps {}
 
 const NavBar: React.FC<HeaderProps> = () => {
@@ -20,21 +23,30 @@ const NavBar: React.FC<HeaderProps> = () => {
   const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
-  const toggleSidebar = () => {
+  const dispatch = useAppDispatch();
+  const isSidebarOpen = useAppSelector(state => state.sidebar.sidebarState);
+
+  const handleToggleSidebar = () => {
     console.log("toggle");
-    setIsSidebarOpen(!isSidebarOpen);
+    // setIsSidebarOpen(!isSidebarOpen);
+    dispatch(toggleSidebar());
   };
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
+
+  useEffect(() => {
+    console.log("isSidebarOpen", isSidebarOpen);
+  } , [isSidebarOpen]);
+
   return (
     <nav className="overflow z-50 sticky top-0 left-0 bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
       <div className="container mx-auto flex justify-between bg-white items-center h-12">
         <div className="flex items-center">
-          <button className="p-2 z-30" onClick={toggleSidebar}>
+          <button className="p-2 z-30" onClick={handleToggleSidebar}>
             {isSidebarOpen ? (
               <FaTimes
                 style={{ width: "24px", height: "24px" }}

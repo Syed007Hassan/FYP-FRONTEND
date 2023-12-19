@@ -3,6 +3,7 @@ import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Backend_URL } from '@/lib/Constants';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ApiResponse } from '@/types/recruiter';
 
 type Recruiter = {
   data: {
@@ -16,6 +17,7 @@ type Recruiter = {
     companyId: number;
   };
 };
+
 
 export const createEmployee = createAsyncThunk<
   void,
@@ -91,7 +93,10 @@ export const userApi = createApi({
     getUserByEmail: builder.query<Recruiter, { email: string }>({
       query: ({ email }) => `findOneByEmail/${email}`,
     }),
+    getUsers: builder.query<ApiResponse, void>({
+      query: () => `findAll`,
+    }),
   }),
 });
 
-export const { useGetUserByEmailQuery } = userApi;
+export const { useGetUserByEmailQuery, useGetUsersQuery } = userApi;

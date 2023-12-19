@@ -5,7 +5,9 @@ import "reactflow/dist/style.css";
 import { usePathname, useSearchParams } from "next/navigation";
 import { workflow } from "@/data/data";
 import { useRouter } from "next/navigation";
-
+import { createStage } from "@/types/stage";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { addStage } from "@/redux/services/stage/stageAction";
 
 import React, { useCallback } from "react";
 import ReactFlow, {
@@ -70,6 +72,8 @@ const App = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
+  const dispatch = useAppDispatch();
+  const { success } = useAppSelector((state) => state.stageReducer);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -100,7 +104,8 @@ const App = () => {
     );
   };
 
-  const handleSaveFlow = () => {
+  const handleSaveFlow = (e: any) => {
+
     const sequence = [];
 
     sequence.push(nodes[0].data.label);
@@ -128,23 +133,22 @@ const App = () => {
     console.log(category);
 
     const data = {
-      id: parseInt(jobId),
-      companyId: 1,
       stages: sequence.map((name, index) => ({
-        id: Math.floor(Math.random() * 1000),
-        name: name,
+        stageName: name,
         category: category[index],
       })),
     };
 
-    console.log(jobId);
-    console.log(data);
+    // console.log(jobId);
+    console.log("data: ", data);
 
-    workflow.push(data);
+    dispatch(addStage({ jobId, stage: data }));
 
-    console.log(workflow);
+    // workflow.push(data);
 
-    localStorage.setItem('workflow', JSON.stringify(workflow));
+    // console.log("workflow: ",workflow);
+
+    // localStorage.setItem('workflow', JSON.stringify(workflow));
 
     router.push(`/dashboard/joblist/${jobId}`);
   };
@@ -202,9 +206,7 @@ const App = () => {
           <span className="flex justify-center pt-2 ">
             <h1 className="text-2xl font-bold">Add Stages</h1>
           </span>
-          <span
-            className="flex justify-center pt-4 pb-4 px-2 mr-4 ml-4">
-
+          <span className="flex justify-center pt-4 pb-4 px-2 mr-4 ml-4">
             <button
               onClick={handleSaveFlow}
               className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -298,7 +300,7 @@ const App = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 export default App;

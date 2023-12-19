@@ -17,6 +17,31 @@ export interface Job {
   desc: string;
 }
 
+export interface Jobs {
+  // image: StaticImageData;
+  jobTitle: string;
+  jobExperience: string;
+  jobQualification: string;
+  // company: string;
+  jobLocation: string;
+  jobSalary: string;
+  jobType: string;
+  jobUrgency: string;
+  jobCategory: string;
+  jobDescription: string;
+  jobStatus: string;
+}
+
+export type DecodedData = {
+  companyId: number;
+  email: string;
+  exp: number;
+  iat: number;
+  name: string;
+  recruiterId: number;
+  role: string;
+};
+
 export interface Stage {
   id: number;
   name: string;

@@ -1,0 +1,13 @@
+.content {
+  transition: transform 0.3s ease-in-out;
+}
+
+.shifted {
+  transform: translateX(100px) scale(0.9); /* Adjust these values based on your needs */
+  max-width: 90vw; /* viewport width */
+}
+
+.shifted-dashboard {
+  transform: translateX(200px) scale(0.9); /* Adjust these values based on your needs */
+  max-width: 90vw; /* viewport width */
+}

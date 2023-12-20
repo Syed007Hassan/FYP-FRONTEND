@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem("applicants", JSON.stringify(applicants));
   }
-  , [])
+    , [])
   return (
     <div className=" min-h-screen justify-center">
       <Header />
@@ -40,34 +40,34 @@ export default function Home() {
           style={{ width: "650px", height: "630px" }}
         >
           <Image
-            src="/landing-pic.png"
+            src="/workflow2.png"
             alt="Picture of the author"
             width={500}
-            height={500}
+            height={400}
             className="object-cover w-full h-full hidden lg:block"
           />
         </div>
       </div>
 
       {/* 2 container */}
-      <div className="lg:pl-20 pb-10 pt-10 lg:pr-20 pl-32 pr-10">
+
+      <div className="grid grid-rows-3 lg:pl-10 pt-20 p py-3 px-6 pl-32 bg-gray-300">
         <div className="lg:pr-64 pr-10">
-          <h1 className="text-5xl font-normal text-gray-800 my-8 lg:pl-20 lg:pr-64 pr-10">
-            Unlock the Tools and Expertise to Elevate Your Recruitment Game and Make Smarter Decisions.
-          </h1>
+          <h1 className="text-5xl font-semibold text-blue-900 my-6 lg:pl-20 lg:pr-64 px-6">
+            Elevate Recruitment with Smart Decision & Tools so you can get:  </h1>
         </div>
-        <div className="grid grid-rows-1 grid-flow-col pt-16 lg:pl-16 lg:pr-16">
-          <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
+        <div className="grid grid-rows-1 grid-flow-col pt-3 lg:pl-20 lg:pr-28">
+          <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-16 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
-              Real-time visibility into each application&apos;s progress
+              Real-time visibility for application progress.
             </p>
           </div>
-          <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pt-12 pb-12">
+          <div className="flex justify-center border-solid border-blue-800 border-r-2 border-b-2 pr-4 pt-16 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Personalize your hiring journey with ease
             </p>
           </div>
-          <div className=" flex justify-center border-solid border-blue-800 border-b-2 pt-12 pb-12">
+          <div className=" flex justify-center border-solid border-blue-800 border-b-2 pt-16 pb-12">
             <p className="text-lg font-medium text-gray-800 my-4 text-center">
               Make growth-focused decisions with analytics
             </p>
@@ -94,14 +94,16 @@ export default function Home() {
 
       {/* //  How it can work: */}
 
-      <div className="max-w-6xl mx-auto py-10 px-4 pt-20">
-        <h1 className="text-5xl font-normal text-gray-800 mb-8">
+      <div className="lg:pl-28 mx-auto px-6 pt-32">
+
+        <h1 className="font-semibold text-blue-900 text-5xl">
           How it can work:
         </h1>
-        <div className="lg:space-y-8 pt-20">
+
+        <div className="lg:space-y-8 pt-5">
           <div className="lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4">
             <div className="w-full lg:w-1/2">
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-3xl  ">
                 Effortless Custom Workflows for Strategic Hiring
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
@@ -130,7 +132,7 @@ export default function Home() {
               />
             </div>
             <div className="w-full lg:w-1/2">
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-3xl  ">
                 Real-Time Application Tracking for Informed Decision-Making
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
@@ -141,7 +143,7 @@ export default function Home() {
 
           <div className="lg:w-3/3 lg:pr-10 lg:flex items-center space-x-4 pt-20">
             <div className="w-full lg:w-1/2">
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-3xl">
                 Data-Driven Decision-Making for Recruitment Success
               </h1>
               <p className="text-lg font-medium text-gray-800 my-4">
@@ -173,7 +175,7 @@ export default function Home() {
               />
             </div>
             <div className="w-full lg:w-1/2">
-              <h1 className="text-3xl font-bold">
+              <h1 className="text-3xl  ">
                 Minimizing Bias in Candidate Selection Through Technology
               </h1>
 

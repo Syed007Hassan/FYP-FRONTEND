@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addAssignee } from './assigneeAction';
+import { addAssignee, resetSuccess } from './assigneeAction';
 
 const assigneeSlice = createSlice({
   name: 'assignee',
@@ -18,6 +18,9 @@ const assigneeSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.assignee = action.payload;
+    });
+    builder.addCase(resetSuccess.fulfilled, (state) => {
+      state.success = false;
     });
     // builder.addCase(addAssignee.rejected, (state, action) => {
     //   state.loading = false;

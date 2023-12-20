@@ -36,7 +36,7 @@ export const createEmployee = createAsyncThunk<
 
     //   console.log(name, email, password, phone, designation);
       await axios.post(
-        `${Backend_URL}/auth/registerCompanyEmployee?companyId=${companyId}`,
+        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}`,
         { name, email, password, phone, designation, role},
         config
       );
@@ -93,8 +93,8 @@ export const userApi = createApi({
     getUserByEmail: builder.query<Recruiter, { email: string }>({
       query: ({ email }) => `findOneByEmail/${email}`,
     }),
-    getUsers: builder.query<ApiResponse, void>({
-      query: () => `findAll`,
+    getUsers: builder.query<ApiResponse, {companyId: string}>({
+      query: ({companyId}) => `findByCompanyId/${companyId}`,
     }),
   }),
 });

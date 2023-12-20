@@ -8,31 +8,12 @@ import  Job  from "@/types/job"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetJobsQuery } from "@/redux/services/job/jobAction";
 import job_pic from "../../../../public/job.png";
-
+import { getSession } from "next-auth/react";
+import { parseJwt } from "@/lib/Constants";
 import "../../../styles/sidebar.css";
 
-// import { job_list } from "@/data/data";
 
 const Page = () => {
-  // interface Job {
-  //   id: number;
-  //   companyId: number;
-  //   image: {
-  //     src: string;
-  //     height: number;
-  //     width: number;
-  //   };
-  //   title: string;
-  //   experience: string;
-  //   salary: string;
-  //   qualification: string;
-  //   company: string;
-  //   location: string;
-  //   urgency: string;
-  //   desc: string;
-  //   type: string;
-  //   category: string;
-  // }
 
   const router = useRouter();
   const [jobList, setJobList] = useState<Job[]>([]);
@@ -40,17 +21,25 @@ const Page = () => {
   const dispatch = useAppDispatch();
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
+  const [decodedData, setDecodedData] = useState(null);
+  const [companyId, setCompanyId] = useState<string>("");
 
-  const { data, error, isLoading } = useGetJobsQuery();
+  const { data, error, isLoading } = useGetJobsQuery({id: companyId});
 
-  // useEffect(() => {
-  //   // Load jobs from local storage when component mounts
-  //   const savedJobs = localStorage.getItem("job_list");
-  //   if (savedJobs) {
-  //     setJobList(JSON.parse(savedJobs));
-  //   }
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      const session = await getSession();
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setCompanyId(decodedData?.companyId);
+    };
 
-  // }, []);
+    parseJwtFromSession();
+  }, []);
 
   useEffect(() => {
     console.log(data);
@@ -58,15 +47,6 @@ const Page = () => {
       setJobList(data?.data);
     }
   }, [data]);
-
-  // useEffect(() => {
-  //   console.log(jobList);
-  // }, [jobList]);
-
-  // useEffect(() => {
-  //   // Save jobs to local storage whenever it changes
-  //   localStorage.setItem('jobs', JSON.stringify(jobList));
-  // }, [jobList]);
 
   return (
     <div

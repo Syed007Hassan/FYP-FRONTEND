@@ -6,7 +6,11 @@ import styles from "./Flow.module.css";
 
 import "reactflow/dist/style.css";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Workflow } from "@/data/data";
+// import { Workflow } from "@/data/data";
+import { ApiResponse } from "@/types/stage";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useGetStageQuery } from "@/redux/services/stage/stageAction";
 
 import React, { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
@@ -41,9 +45,11 @@ type Props = {
 };
 
 const ApplicationFlow = ({ applicantList }: Props) => {
+  const dispatch = useAppDispatch();
+
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [workflow, setWorkflow] = React.useState<Workflow | null>(null);
+  const [workflow, setWorkflow] = React.useState<ApiResponse | null>(null);
   const [nodeData, setNodeData] = useState<{
     id: string;
     data: { label: string };
@@ -55,61 +61,55 @@ const ApplicationFlow = ({ applicantList }: Props) => {
   const pathParts = pathname.split("/");
   const jobId = pathParts[pathParts.length - 2] || "";
 
+  const { data, isLoading, isError } = useGetStageQuery({ id: jobId });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    if (data) {
+      setWorkflow(data || null);
+      console.log(data);
+    }
+  }, [data]);
+
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
-
-  useEffect(() => {
-    // fetch data from local storage
-    const data = localStorage.getItem("workflow");
-
-    // if data is not null
-    if (data) {
-      // parse data to JSON format
-      const jsonData = JSON.parse(data);
-
-      // set job list
-      jsonData.map((workflow: Workflow) => {
-        if (workflow?.id === parseInt(jobId)) {
-          setWorkflow(workflow);
-        }
-      });
-    }
-  }, []);
-
+  
   useEffect(() => {
     console.log(workflow);
     let x = 0;
     let y = 0;
 
-    workflow?.stages.map((stage, index) => {
-      setNodes((nodes) => [
-        ...nodes,
-        {
-          id: stage.id.toString(),
-          position: { x: (x = x), y: (y += 50) },
-          data: { label: stage?.name, category: stage?.category },
-        },
-      ]);
-
-      // If this is not the first stage, create an edge from the previous stage to this one
-      if (index > 0) {
-        setEdges((edges) => [
-          ...edges,
+    workflow?.data.map((data, index) => {
+      return data?.stages.map((stage, index) => {
+        setNodes((nodes) => [
+          ...nodes,
           {
-            id: "edge-" + workflow.stages[index - 1].id + "-" + stage.id,
-            source: workflow.stages[index - 1].id.toString(),
-            target: stage.id.toString(),
+            id: stage?.stageId.toString(),
+            position: { x: (x = x), y: (y += 50) },
+            data: { label: stage?.stageName, category: stage?.category },
           },
         ]);
-      }
+
+        // If this is not the first stage, create an edge from the previous stage to this one
+        if (index > 0) {
+          setEdges((edges) => [
+            ...edges,
+            {
+              id:
+                "edge-" + data.stages[index - 1].stageId + "-" + stage.stageId,
+              source: data.stages[index - 1].stageId.toString(),
+              target: stage.stageId.toString(),
+            },
+          ]);
+        }
+      });
     });
   }, [workflow, setNodes, setEdges]);
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Stage, Workflow, Assignee, newAssignee } from "@/types/assign";
+import { Stage, Workflow, Assignee, newAssignee, GetApiResponse } from "@/types/assign";
 
 type CreateStageArgs = {
     stageId: string;
@@ -21,15 +21,22 @@ export const addAssignee = createAsyncThunk(
     }
 );
 
-const assigneeApi = createApi({
+export const assigneeApi = createApi({
     reducerPath: "assigneeApi",
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000/api/assignee/",
+        baseUrl: "http://localhost:5000/api/workflow/",
     }),
     endpoints: (builder) => ({
-        getAssignee: builder.query<Stage, { id: string }>({
-            query: ({ id }) => `findByStageId/${id}`,
+        getAssignee: builder.query<GetApiResponse, { stageId: string, workflowId: string, trigger: number }>({
+            query: ({ stageId, workflowId }) => `findAssignedStage/${workflowId}/${stageId}`,
         }),
     }),
 });
+
+// change success value
+export const resetSuccess = createAsyncThunk("workflow/resetSuccess", async () => {
+    return false;
+});
+
+export const { useGetAssigneeQuery } = assigneeApi;

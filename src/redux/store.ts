@@ -6,6 +6,7 @@ import { companyApi } from "./services/Company/companyAction";
 import { chatApi } from "./services/chat/chatAction";
 import { JobApi } from "./services/job/jobAction";
 import { stageApi } from "./services/stage/stageAction";
+import { assigneeApi } from "./services/assignee/assigneeAction";
 
 import { userReducer } from "./services/Recruiter/recruiterSlice";
 import { employeeReducer } from "./services/Recruiter/recruiterSlice";
@@ -30,6 +31,7 @@ export const store = configureStore({
     [chatApi.reducerPath]: chatApi.reducer,
     [JobApi.reducerPath]: JobApi.reducer,
     [stageApi.reducerPath]: stageApi.reducer,
+    [assigneeApi.reducerPath]: assigneeApi.reducer,
     sidebar: sidebarReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
@@ -39,7 +41,8 @@ export const store = configureStore({
   .concat(companyApi.middleware)
   .concat(chatApi.middleware)
   .concat(JobApi.middleware)
-  .concat(stageApi.middleware),
+  .concat(stageApi.middleware)
+  .concat(assigneeApi.middleware),
 });
 
 setupListeners(store.dispatch);

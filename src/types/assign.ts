@@ -28,3 +28,13 @@ export type ApiResponse = {
   success: boolean;
   data: ResponseData;
 };
+
+export type ApiResponseData = {
+  stageAssigneeId: number;
+  assignees: Assignee[];
+};
+
+export type GetApiResponse = {
+  success: boolean;
+  data: ApiResponseData;
+};

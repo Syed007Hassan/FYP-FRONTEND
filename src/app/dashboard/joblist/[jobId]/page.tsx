@@ -27,10 +27,7 @@ import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import "../../../../styles/sidebar.css";
 
 const Page = () => {
-  const [jobList, setJobList] = useState<Job[]>([]);
   const [job, setJob] = useState<Job | null>(null);
-  const [JobResponse, setJobResponse] = useState<JobResponse | null>(null);
-  const [workflowList, setWorkflowList] = useState<Workflow[]>([]);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
   const colorClasses = [
     "bg-blue-100",
@@ -82,30 +79,6 @@ const Page = () => {
   useEffect(() => {
     console.log("job", job);
   }, [job]);
-
-  useEffect(() => {
-    // Load jobs from local storage when component mounts
-    const savedJobs = localStorage.getItem("job_list");
-
-    if (savedJobs) {
-      setJobList(JSON.parse(savedJobs));
-    }
-
-    const workflow = localStorage.getItem("workflow");
-
-    if (workflow) {
-      setWorkflowList(JSON.parse(workflow));
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   // Save jobs to local storage whenever it changes
-  //   //   localStorage.setItem('job_list', JSON.stringify(jobList));
-  //   setJob(jobList.find((job) => job?.id === jobId) || null);
-  //   setWorkflow(
-  //     workflowList.find((workflow) => workflow?.id === jobId) || null
-  //   );
-  // }, [jobList, jobId, workflowList]);
 
   return (
     <div

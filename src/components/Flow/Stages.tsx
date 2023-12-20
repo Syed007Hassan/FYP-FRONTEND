@@ -6,8 +6,9 @@ import { User } from "@/data/data";
 import { Dropdown } from "flowbite-react";
 // import { Assignee, assignee } from "@/data/data";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addAssignee } from "@/redux/services/assignee/assigneeAction";
+import { addAssignee, resetSuccess } from "@/redux/services/assignee/assigneeAction";
 import { useGetUsersQuery } from "@/redux/services/Recruiter/recruiterAction";
+import { useGetAssigneeQuery } from "@/redux/services/assignee/assigneeAction";
 import { Stage } from "@/types/stage";
 import { Assignee } from "@/types/assign";
 import Recruiter from "@/types/recruiter";
@@ -31,22 +32,23 @@ interface StagesProps {
 const Stages = ({ stage, index, workflowId }: StagesProps) => {
   const dispatch = useAppDispatch();
   const { success } = useAppSelector((state) => state.assigneeReducer);
-  const { data, error, isLoading } = useGetUsersQuery();
   const [assignee, setAssignee] = useState<Assignee[]>([]);
   const [employees, setEmployees] = useState<Recruiter[]>([]);
   const [decodedData, setDecodedData] = useState(null);
-  const [newAssignee, setNewAssignee] = useState<Assignee>({
-    recruiterId: 0,
-    name: "Hassan",
-  });
+  const [companyId, setCompanyId] = useState<string>("");
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem("assignee");
-  //   if (data) {
-  //     setAssignee(JSON.parse(data));
-  //   }
-  //   console.log(assignee);
-  // }, []);
+  const [trigger, setTrigger] = useState(0);
+
+  const { data, error, isLoading } = useGetUsersQuery({ companyId });
+  const {
+    data: assigneeData,
+    error: assigneeError,
+    isLoading: assigneeLoading,
+  } = useGetAssigneeQuery({
+    stageId: stage.stageId.toString(),
+    workflowId: workflowId.toString(),
+    trigger: trigger,
+  });
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
@@ -57,7 +59,7 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
       const jwt: string = session.toString();
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
-      // setCompanyId(decodedData?.companyId);
+      setCompanyId(decodedData?.companyId);
     };
 
     parseJwtFromSession();
@@ -69,6 +71,27 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
       setEmployees(data?.data);
     }
   }, [data]);
+
+  useEffect(() => {
+    // console.log("assigneeData", assigneeData);
+    setAssignee([]);
+    if (assigneeData) {
+      assigneeData?.data?.assignees.map((assignee) => {
+        setAssignee((prev) => [...prev, assignee]);
+      });
+    }
+  }, [assigneeData]);
+
+  useEffect(() => {
+    console.log("assignee", assignee);
+  }, [assignee]);
+
+  useEffect(() => {
+    dispatch(resetSuccess());
+    if (success) {
+      setTrigger((prev) => prev + 1);
+    }
+  }, [success, dispatch]);
 
   const handleClick = (
     userId: number,
@@ -86,22 +109,6 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
     };
 
     dispatch(addAssignee({ stageId, workflowId, assignees: data }));
-
-    // assignee.push(data);
-
-    // console.log(assignee);
-
-    // // add assignee to local storage
-    // const currentAssignee = JSON.parse(
-    //   localStorage.getItem("assignee") || "[]"
-    // );
-    // currentAssignee.push(newAssignee);
-    // localStorage.setItem("assignee", JSON.stringify(assignee));
-
-    // const temp = localStorage.getItem("assignee");
-    // if (temp) {
-    //   setAssignee(JSON.parse(temp));
-    // }
   };
 
   return (
@@ -137,16 +144,12 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
             ))}
           </Dropdown>
         </div>
-        {/* <div className="flex gap-1">
+        <div className="flex gap-1">
           {assignee &&
-            assignee
-              .filter(
-                (a) =>
-                  a.workflowId === workflowId && a.stageId === stage.stageId
-              )
-              .map((filteredAssignee) => filteredAssignee.userName)
-              .join(", ")}
-        </div> */}
+            assignee?.map((assignee) => (
+              <p key={assignee.recruiterId}>{assignee?.name}</p>
+            ))}
+        </div>
       </div>
     </div>
   );

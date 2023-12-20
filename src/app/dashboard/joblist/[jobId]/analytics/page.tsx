@@ -4,23 +4,25 @@ import { useState, useEffect } from "react";
 import { Job, Applicant, Workflow } from "@/data/data";
 import ApplicationFlow from "@/components/Flow/applicationFlow";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppSelector, useAppDispatch } from "@/redux/hooks";
+import { useGetStageQuery } from "@/redux/services/stage/stageAction";
+import { getSession } from "next-auth/react";
+import { parseJwt } from "@/lib/Constants";
+import { ApiResponse, Stage } from "@/types/stage";
 
 import "@/styles/sidebar.css";
-
-type Stage = {
-  id: number;
-  name: string;
-};
 
 const Page = () => {
   const [jobId, setJobId] = useState<string>("");
   const [jobList, setJobList] = useState<Job[]>([]);
   const [applicantList, setApplicantList] = useState<Applicant[]>([]);
-  const [workflow, setWorkflow] = useState<Workflow | null>(null);
+  const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
   const [stageList, setStageList] = useState<Stage[]>([]);
   const [job, setJob] = useState<Job | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [decodedData, setDecodedData] = useState(null);
+  const [companyId, setCompanyId] = useState<string>("");
+  // const [employees, setEmployees] = useState<Recruiter[]>([]);
 
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
   const toggleDropdown = (id: number) =>
@@ -33,6 +35,40 @@ const Page = () => {
   const jobIdParam = pathParts[pathParts.length - 2] || "";
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
+  const dispatch = useAppDispatch();
+  const { data, error } = useGetStageQuery({ id: jobIdParam });
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      const session = await getSession();
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setCompanyId(decodedData.companyId);
+    };
+
+    parseJwtFromSession();
+  }, []);
+
+  useEffect(() => {
+    setStageList([]);
+    if (data) {
+      setWorkflow(data);
+      console.log("workflow", data);
+      data?.data.map((stage, index) => {
+        stage?.stages.map((stage) => {
+          setStageList((stageList) => [...stageList, stage]);
+        });
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    console.log("stageList", stageList);
+  }, [stageList]);
 
   useEffect(() => {
     // fetch data from local storage
@@ -79,38 +115,6 @@ const Page = () => {
     setJob(jobList.find((job) => job.id === parseInt(jobId)) || null);
   }, [jobList, jobId]);
 
-  useEffect(() => {
-    // fetch data from local storage of workflow list
-    const data = localStorage.getItem("workflow");
-
-    // if data is not null
-    if (data) {
-      // parse data to JSON format
-      const jsonData = JSON.parse(data);
-
-      // set workflow list
-      jsonData.map((workflow: Workflow) => {
-        if (workflow?.id === parseInt(jobId)) {
-          setWorkflow(workflow);
-        }
-      });
-    }
-  }, [job, jobId]);
-
-  useEffect(() => {
-    // console.log(workflow);
-
-    setStageList([]);
-
-    // add stages name to stage list
-    workflow?.stages.map((stage) => {
-      setStageList((stageList) => [
-        ...stageList,
-        { id: stage.id, name: stage.name },
-      ]);
-    });
-  }, [workflow]);
-
   const handleDelete = (id: number) => {
     // console.log(id);
     const newApplicantList = applicantList.filter((applicant) => {
@@ -138,7 +142,7 @@ const Page = () => {
 
     // change stage id of applicant
 
-    applicant.stageId = stage.id;
+    applicant.stageId = stage?.stageId;
 
     localStorage.setItem("applicants", JSON.stringify(applicantList));
   };
@@ -210,8 +214,8 @@ const Page = () => {
                       className="font-medium rounded-lg text-sm text-center inline-flex items-center"
                       type="button"
                     >
-                      {stageList.find((stage) => stage.id === applicant.stageId)
-                        ?.name || "Select stage"}
+                      {stageList.find((stage) => stage?.stageId === applicant.stageId)
+                        ?.stageName || "Select stage"}
                       <svg
                         className="w-2.5 h-2.5 ms-3"
                         aria-hidden="true"
@@ -241,13 +245,13 @@ const Page = () => {
                         aria-labelledby="dropdownDefaultButton"
                       >
                         {stageList.map((stage) => (
-                          <li key={stage.id}>
+                          <li key={stage?.stageId}>
                             <button
                               onClick={() => handleStageClick(stage, applicant)}
                               className="flex w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
                               type="button"
                             >
-                              {stage.name}
+                              {stage?.stageName}
                             </button>
                           </li>
                         ))}

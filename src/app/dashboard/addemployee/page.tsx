@@ -30,6 +30,7 @@ const Page = () => {
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
 
   useEffect(() => {
+    setCompanyIdTemp("");
     const parseJwtFromSession = async () => {
       const session = await getSession();
       if (!session) {
@@ -43,6 +44,10 @@ const Page = () => {
 
     parseJwtFromSession();
   }, []);
+
+  useEffect(() => {
+    console.log("decoded data", decodedData);
+  }, [decodedData]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();

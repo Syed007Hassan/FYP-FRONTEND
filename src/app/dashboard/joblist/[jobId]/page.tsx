@@ -2,6 +2,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import React from "react";
+import { MdAnalytics } from "react-icons/md";
 import Image from "next/image";
 import job_img from "../../../../../public/job.png";
 import Link from "next/link";
@@ -17,6 +18,10 @@ import {
 import Stages from "@/components/Flow/Stages";
 import { Job, Workflow, Stage } from "@/data/data";
 
+import { useAppSelector } from "@/redux/hooks";
+
+import "../../../../styles/sidebar.css";
+
 const Page = () => {
   const [jobList, setJobList] = useState<Job[]>([]);
   const [job, setJob] = useState<Job | null>(null);
@@ -29,6 +34,8 @@ const Page = () => {
     "bg-yellow-100",
     "bg-purple-100",
   ];
+
+  const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -59,6 +66,8 @@ const Page = () => {
   }, [jobList, jobId, workflowList]);
 
   return (
+    <div className={`content overflow-hidden ${isSidebarOpen ? 'shifted-dashboard' : ''}`}>
+
     <div className="main-content">
       <div className="page-content">
         <section className="py-16 px-16">
@@ -415,13 +424,22 @@ const Page = () => {
                       </li>
                     </ul>
 
-                    <div className="mt-8 space-y-2">
+                    <div className="mt-8 flex gap-5">
                       <Link
                         href="/dashboard/joblist/[jobId]/workflow"
                         as={`/dashboard/joblist/${job?.id}/workflow`}
-                        className="btn w-full py-3 px-24 bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                        className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
                       >
                         <i className="fas fa-bookmark"></i> Add Workflow
+                      </Link>
+
+                      <Link
+                        href="/dashboard/joblist/[jobId]/analytics"
+                        as={`/dashboard/joblist/${job?.id}/analytics`}
+                        className="btn text-center px-0 py-0 items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                        title="Job analytics"
+                      >
+                        <MdAnalytics style={{height: "3rem", width: "3rem"}}/>
                       </Link>
                     </div>
                   </div>
@@ -455,6 +473,7 @@ const Page = () => {
         </section>
         <section className="py-16 px-16"></section>
       </div>
+    </div>
     </div>
   );
 };

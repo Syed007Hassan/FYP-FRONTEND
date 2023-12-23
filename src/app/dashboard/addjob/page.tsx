@@ -5,9 +5,14 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { job_list } from "@/data/data";
 import image_1 from "../../../../public/job.png";
+import { Jobs, DecodedData } from "@/data/data";
 
 import Chatbot from "@/components/Chatbot";
 import { FaQuestion } from "react-icons/fa6";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { createJob, resetSuccess } from "@/redux/services/job/jobAction";
+import { getSession } from "next-auth/react";
+import { parseJwt } from "@/lib/Constants";
 
 const Page = () => {
   const router = useRouter();
@@ -17,6 +22,10 @@ const Page = () => {
   const [selectedType, setSelectedType] = useState("Select a type");
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
+
+  const dispatch = useAppDispatch();
+  const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
+  const { success } = useAppSelector((state) => state.jobReducer);
 
   const [click, setClick] = useState(false);
 
@@ -34,7 +43,34 @@ const Page = () => {
     desc: "",
   });
 
+  const [decodedData, setDecodedData] = useState<DecodedData>();
+  const [companyId, setCompanyId] = useState<string>("");
+  const [recruiterId, setRecruiterId] = useState<string>("");
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      const session = await getSession();
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      console.log("decodedData:", decodedData);
+    };
+
+    parseJwtFromSession();
+  }, []);
+
+  useEffect(() => {
+    if (decodedData) {
+      setCompanyId(decodedData?.companyId.toString() || "");
+      setRecruiterId(decodedData?.recruiterId.toString() || "");
+    }
+  }, [decodedData]);
+
   const handleSubmit = (e: any) => {
+    e.preventDefault();
     const newJob = {
       id: Math.floor(Math.random() * 1000),
       companyId: 1,
@@ -54,9 +90,33 @@ const Page = () => {
     job_list.push(newJob);
     localStorage.setItem("job_list", JSON.stringify(job_list));
 
-    router.push("/dashboard/joblist");
+    // router.push("/dashboard/joblist");
 
+    const temp_job = {
+      // image: StaticImageData;
+      jobTitle: job.title,
+      jobExperience: job.experience,
+      jobQualification: job.qualification,
+      // company: string;
+      jobLocation: job.location,
+      jobSalary: job.salary,
+      jobType: selectedType,
+      jobUrgency: job.urgency,
+      jobCategory: selectedCategory,
+      jobDescription: job.desc,
+      jobStatus: "Active",
+    };
+
+    dispatch(createJob({ companyId, recruiterId, job: temp_job }));
   };
+
+  useEffect(() => {
+    console.log("success:", success);
+    if (success) {
+      dispatch(resetSuccess());
+      router.push("/dashboard/joblist");
+    }
+  }, [success, router]);
 
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">

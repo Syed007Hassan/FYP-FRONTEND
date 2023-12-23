@@ -17,6 +17,31 @@ export interface Job {
   desc: string;
 }
 
+export interface Jobs {
+  // image: StaticImageData;
+  jobTitle: string;
+  jobExperience: string;
+  jobQualification: string;
+  // company: string;
+  jobLocation: string;
+  jobSalary: string;
+  jobType: string;
+  jobUrgency: string;
+  jobCategory: string;
+  jobDescription: string;
+  jobStatus: string;
+}
+
+export type DecodedData = {
+  companyId: number;
+  email: string;
+  exp: number;
+  iat: number;
+  name: string;
+  recruiterId: number;
+  role: string;
+};
+
 export interface Stage {
   id: number;
   name: string;
@@ -124,7 +149,7 @@ export const assignee: Assignee[] = [
 export const applicants: Applicant[] = [
   {
     id: 1,
-    jobId: 1,
+    jobId: 12,
     companyId: 1,
     userId: 1,
     name: "Aliyan Iqbal",
@@ -133,7 +158,7 @@ export const applicants: Applicant[] = [
   },
   {
     id: 2,
-    jobId: 1,
+    jobId: 12,
     companyId: 1,
     userId: 2,
     name: "Rafay Farrukh",
@@ -142,7 +167,7 @@ export const applicants: Applicant[] = [
   },
   {
     id: 3,
-    jobId: 1,
+    jobId: 12,
     companyId: 1,
     userId: 3,
     name: "Furqan Fazal",
@@ -151,7 +176,7 @@ export const applicants: Applicant[] = [
   },
   {
     id: 4,
-    jobId: 1,
+    jobId: 12,
     companyId: 1,
     userId: 4,
     name: "Harris Rauf",
@@ -160,7 +185,7 @@ export const applicants: Applicant[] = [
   },
   {
     id: 5,
-    jobId: 1,
+    jobId: 12,
     companyId: 1,
     userId: 5,
     name: "Babar Azam",

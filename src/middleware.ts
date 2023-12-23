@@ -16,7 +16,7 @@ export async function middleware(req: any) {
     if (!session) {
       session = token;
     }
-    // console.log("session: ", session);
+    console.log("session: ", JSON.stringify(session));
 
     return NextResponse.redirect(new URL("/demo", req.url));
   }

@@ -17,6 +17,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "next-auth/react";
 import styles from "./login.module.css";
 import Header from "@/components/Header";
+import axios from "axios";
+import { Backend_URL } from "@/lib/Constants";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -56,6 +58,12 @@ export default function SignInSide() {
     } else {
       isCheck!.setAttribute("type", "password");
     }
+  };
+
+  const handleOauth = async (event: any) => {
+    event.preventDefault();
+
+    window.location.href = `${Backend_URL}/auth/google/callback`;
   };
 
   return (
@@ -221,6 +229,9 @@ export default function SignInSide() {
                     </a>
                   </p>
                 </div>
+                <button onClick={handleOauth} type="submit">
+                  continue with google
+                </button>
               </Box>
             </Box>
           </Grid>

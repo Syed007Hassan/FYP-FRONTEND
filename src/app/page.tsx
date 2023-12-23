@@ -20,7 +20,7 @@ export default function Home() {
       <div className="grid grid-rows-1 grid-flow-col">
         <div className="pt-6 pr-20 pl-10 pb-6">
           <header className="pr-20 pl-20">
-            <h1 className=" text-blue-500 mb-4">SyncFlow recruitment</h1>
+
             <h1 className="pr-20 text-7xl font-semibold text-blue-900 my-8">
               Welcome to the Future of Hiring with SyncFlow
             </h1>
@@ -36,7 +36,7 @@ export default function Home() {
           </header>
         </div>
         <div
-          className="pl-10 pb-6 pr-10 flex"
+          className="pl-10 mb-16 pr-10 flex"
           style={{ width: "650px", height: "630px" }}
         >
           <Image
@@ -218,29 +218,29 @@ export default function Home() {
           </ol>
         </div>
         <div
-          className="pt-6 lg:pl-10 flex pr-10 pb-6"
-          style={{ width: "780px", height: "500px" }}
+          className="pt-6 lg:pl-10 flex pr-20 pb-6"
+          style={{ width: "700px", height: "500px" }}
         >
           <Image
-            src="/recruiter.png"
-            alt="Picture of the author"
-            width={200}
-            height={200}
-            className="object-cover w-full h-full"
-          />
-        </div>
-      </div>
-      <div className="pt-32 lg:grid lg:grid-rows-1 lg:grid-flow-col pb-10 lg:pb-0 bg-gray-300">
-        <div className=" flex" style={{ width: "780px", height: "500px" }}>
-          <Image
-            src="/appl.png"
+            src="/2.png"
             alt="Picture of the author"
             width={500}
             height={500}
             className="object-cover w-full h-full"
           />
         </div>
-        <div className="lg:pr-20 lg:pl-10">
+      </div>
+      <div className="pt-32 lg:grid lg:grid-rows-1 pl-20 lg:grid-flow-col pb-10 lg:pb-0 bg-gray-300">
+        <div className=" flex" style={{ width: "500px", height: "400px" }}>
+          <Image
+            src="/Job Vacancy.png"
+            alt="Picture of the author"
+            width={300}
+            height={300}
+            className="object-cover w-full h-full"
+          />
+        </div>
+        <div className="lg:pr-20 lg:pl-10 pb-28">
           <header className="lg:pr-20 lg:pl-20 pr-10 pl-10">
             <h1 className="font-bold text-blue-900 text-5xl pb-10">
               SyncFlow Applicant

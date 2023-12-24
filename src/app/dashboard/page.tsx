@@ -9,6 +9,7 @@ import LineChart from "@/components/lineChart";
 import StepAreaChart from "@/components/stepAreaChart";
 import AreaChart from "@/components/areaChart";
 import { useAppSelector } from "@/redux/hooks";
+import { getCookies } from "cookies-next";
 
 import "../../styles/sidebar.css";
 
@@ -18,8 +19,13 @@ const DashboardPage = () => {
   const verifyToken = async () => {
     try {
       const session = await getSession();
+      console.log(JSON.stringify(session) + "testing session");
 
-      if (!session) {
+      //get cookie from browser that has name session
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const cookies = getCookies();
+
+      if (session == null) {
         throw new Error("Invalid session");
       }
 

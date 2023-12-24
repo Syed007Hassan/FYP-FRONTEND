@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "next-auth/react";
-
 export { default } from "next-auth/middleware";
 
 // export const config = { matcher: ["/dashboard/:path*"] };
@@ -9,20 +8,31 @@ export async function middleware(req: any) {
   let session = (await getSession()) as any;
 
   if (req.nextUrl.pathname.startsWith("/oauth")) {
-    //console.log("req: ", req.nextUrl);
     const token: string = req.nextUrl.searchParams.get("token");
-    console.log("token: ", token);
 
     if (!session) {
       session = token;
     }
-    console.log("session: ", JSON.stringify(session));
 
-    return NextResponse.redirect(new URL("/demo", req.url));
+    // Redirect to dashboard and set the cookie on the redirect response
+    const response = NextResponse.redirect(new URL("/dashboard", req.url));
+    response.cookies.set({
+      name: "session",
+      value: session,
+      path: "/dashboard",
+    });
+
+    return response;
   }
 
-  if (req.nextUrl.pathname.startsWith("/dashboard") && !session) {
-    return NextResponse.redirect(new URL("/login", req.url));
+  if (req.nextUrl.pathname.startsWith("/dashboard")) {
+    const cookie = req.cookies.get("session");
+    console.log("cookie: in dashboard ", cookie);
+    session = cookie;
+
+    if (!cookie) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   return NextResponse.next();

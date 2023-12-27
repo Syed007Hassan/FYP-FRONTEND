@@ -30,7 +30,7 @@ const DashboardPage = () => {
       }
 
       const jwt: string = session.toString();
-      console.log(jwt);
+
       const result = await axios.get(Backend_URL + "/auth/validateToken", {
         headers: {
           Authorization: `Bearer ${jwt}`,

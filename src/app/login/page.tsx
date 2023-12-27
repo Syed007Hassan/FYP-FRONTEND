@@ -38,6 +38,8 @@ export default function SignInSide() {
       callbackUrl: "/dashboard",
     });
 
+    console.log(JSON.stringify(result) + "result in login");
+
     if (result === null) {
       setResult(true);
       setAlertMessage("User Logged In Successfully!");

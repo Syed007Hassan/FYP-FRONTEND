@@ -8,9 +8,13 @@ import BarChart from "@/components/barChart";
 import LineChart from "@/components/lineChart";
 import StepAreaChart from "@/components/stepAreaChart";
 import AreaChart from "@/components/areaChart";
+import { useAppSelector } from "@/redux/hooks";
+
+import "../../styles/sidebar.css";
 
 const DashboardPage = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const isSidebarOpen = useAppSelector(state => state.sidebar.sidebarState);
   const verifyToken = async () => {
     try {
       const session = await getSession();
@@ -60,31 +64,34 @@ const DashboardPage = () => {
   };
 
   return (
-    <div className="ml-7 w-full pt-10 sticky">
-      <div className="pr-30 mb-4 h-50 w-full  pt-4 bg-white border border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-        <LineChart />
-      </div>
+    <div className={`content overflow-x-hidden ${isSidebarOpen ? 'shifted-dashboard' : ''}`}>
 
-      <div
-        className="h-50  flex pt-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-        style={{ height: "98%" }}
-      >
-        <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-          <div className="pl-2 w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-            <BarChart />
-          </div>
-
-          <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-            <AreaChart />
-          </div>
-
-          <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-            <StepAreaChart />
-
+      <div className=" w-full pt-10 sticky">
+        <div className="pr-30 mb-4 h-50 w-full  pt-4 bg-white border border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+          <LineChart />
+        </div>
+  
+        <div
+          className="h-50  flex pt-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+          style={{ height: "98%" }}
+        >
+          <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
+            <div className="pl-2 w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
+              <BarChart />
+            </div>
+  
+            <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
+              <AreaChart />
+            </div>
+  
+            <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
+              <StepAreaChart />
+  
+            </div>
           </div>
         </div>
       </div>
     </div>
-  );
+    );
 };
 export default DashboardPage;

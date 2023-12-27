@@ -1,17 +1,33 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { job_list } from "@/data/data";
-import image_1 from "../../../../public/job.png"; 
+import image_1 from "../../../../public/job.png";
+import { Jobs, DecodedData } from "@/data/data";
+
+import Chatbot from "@/components/Chatbot";
+import { FaQuestion } from "react-icons/fa6";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { createJob, resetSuccess } from "@/redux/services/job/jobAction";
+import { getSession } from "next-auth/react";
+import { parseJwt } from "@/lib/Constants";
 
 const Page = () => {
+  const router = useRouter();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Select a type");
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
+
+  const dispatch = useAppDispatch();
+  const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
+  const { success } = useAppSelector((state) => state.jobReducer);
+
+  const [click, setClick] = useState(false);
 
   const [job, setJob] = useState({
     id: 0,
@@ -27,9 +43,34 @@ const Page = () => {
     desc: "",
   });
 
+  const [decodedData, setDecodedData] = useState<DecodedData>();
+  const [companyId, setCompanyId] = useState<string>("");
+  const [recruiterId, setRecruiterId] = useState<string>("");
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      const session = await getSession();
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      console.log("decodedData:", decodedData);
+    };
+
+    parseJwtFromSession();
+  }, []);
+
+  useEffect(() => {
+    if (decodedData) {
+      setCompanyId(decodedData?.companyId ? decodedData.companyId.toString() : "");
+      setRecruiterId(decodedData?.recruiterId ? decodedData.recruiterId.toString() : "");
+    }
+  }, [decodedData]);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log("submitted");
     const newJob = {
       id: Math.floor(Math.random() * 1000),
       companyId: 1,
@@ -45,22 +86,47 @@ const Page = () => {
       category: "IT", // replace with actual category
       desc: job.desc,
     };
-    console.log(job);  
-    // console.log(newJob);
+
     job_list.push(newJob);
-    localStorage.setItem('job_list', JSON.stringify(job_list));
-    // console.log(job_list);
+    localStorage.setItem("job_list", JSON.stringify(job_list));
+
+    // router.push("/dashboard/joblist");
+
+    const temp_job = {
+      // image: StaticImageData;
+      jobTitle: job.title,
+      jobExperience: job.experience,
+      jobQualification: job.qualification,
+      // company: string;
+      jobLocation: job.location,
+      jobSalary: job.salary,
+      jobType: selectedType,
+      jobUrgency: job.urgency,
+      jobCategory: selectedCategory,
+      jobDescription: job.desc,
+      jobStatus: "Active",
+    };
+
+    dispatch(createJob({ companyId, recruiterId, job: temp_job }));
   };
+
+  useEffect(() => {
+    console.log("success:", success);
+    if (success) {
+      dispatch(resetSuccess());
+      router.push("/dashboard/joblist");
+    }
+  }, [success, router]);
 
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">
       <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
         <div
-          className="pl-10 pb-6 pr-10 hidden md:block md:-mr-20 lg:-mr-0"
-          style={{ width: "650px", height: "630px" }}
+          className="pl-10 pt-16 pb-6 pr-10 hidden md:block md:-mr-20 lg:-mr-0"
+          style={{ width: "580px", height: "560px" }}
         >
           <Image
-            src="/landing-pic.png"
+            src="/applicant.png"
             alt="Picture of the author"
             width={500}
             height={500}
@@ -68,9 +134,9 @@ const Page = () => {
             priority
           />
         </div>
-        <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
+        <div className="pt-16 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
           <div className="pr-2 pl-2">
-            <h1 className=" text-blue-500 mb-4">SyncFlow Recruitment</h1>
+
             <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
 
             <form className="mt-8 space-y-6">
@@ -91,9 +157,9 @@ const Page = () => {
                       autoComplete="given-name"
                       value={job.title}
                       onChange={(e) => {
-                        console.log('event.target.value:', e.target.value); // Check the event object
+                        console.log("event.target.value:", e.target.value); // Check the event object
                         setJob({ ...job, title: e.target.value });
-                        console.log('job after update:', job); // Check the state update
+                        console.log("job after update:", job); // Check the state update
                       }}
                       required
                     />
@@ -131,9 +197,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        typeDropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${typeDropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -270,9 +335,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        dropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${dropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -281,33 +345,34 @@ const Page = () => {
                         <li
                           onClick={() => {
                             setDropdownOpen(false);
-                            setSelectedCategory("Category 1");
+                            setSelectedCategory("Permanent");
                           }}
                         >
                           <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Category 1
+                            Permanent
                           </p>
                         </li>
                         <li
                           onClick={() => {
                             setDropdownOpen(false);
-                            setSelectedCategory("Category 2");
+                            setSelectedCategory("Contract");
                           }}
                         >
                           <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Category 2
+                            Contract
                           </p>
                         </li>
                         <li
                           onClick={() => {
                             setDropdownOpen(false);
-                            setSelectedCategory("Category 3");
+                            setSelectedCategory("Internship");
                           }}
                         >
                           <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Category 3
+                            Internship
                           </p>
                         </li>
+
                         {/* Add more options as needed */}
                       </ul>
                     </div>
@@ -384,6 +449,20 @@ const Page = () => {
           </div>
         </div>
       </div>
+      <div
+        className="flex items-start absolute right-[2rem] top-[39.9rem]"
+        onClick={() => setClick(!click)}
+      >
+        <div className="w-10 h-10 rounded-full">
+          <div className="flex items-center justify-center w-full h-full rounded-full bg-blue-600">
+            <FaQuestion size={15} className="text-white" />
+          </div>
+        </div>
+      </div>
+      {/* <div className="absolute right-[2rem] top-[39.9rem]"> */}
+      {/* {isFetching && <div>Loading...</div>} */}
+      <Chatbot click={click} />
+      {/* </div> */}
     </div>
   );
 };

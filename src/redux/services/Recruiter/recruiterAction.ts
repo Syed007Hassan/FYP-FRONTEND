@@ -3,6 +3,7 @@ import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Backend_URL } from '@/lib/Constants';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ApiResponse } from '@/types/recruiter';
 
 type Recruiter = {
   data: {
@@ -17,12 +18,13 @@ type Recruiter = {
   };
 };
 
+
 export const createEmployee = createAsyncThunk<
   void,
-  { name: string, designation: string, phone: number, email: string; password: string, role: string, companyId: number },
+  { name: string, designation: string, phone: string, email: string; password: string, role: string, companyId: number },
   { rejectValue: string }
 >(
-  "/employer/create",
+  "/auth/registerCompanyEmployee",
   async ({ name, email, password, phone, designation, role, companyId }, { rejectWithValue }) => {
     
     try {
@@ -34,8 +36,8 @@ export const createEmployee = createAsyncThunk<
 
     //   console.log(name, email, password, phone, designation);
       await axios.post(
-        `${Backend_URL}/employer/create`,
-        { name, email, password, phone, designation, role, companyId },
+        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}`,
+        { name, email, password, phone, designation, role},
         config
       );
     } catch (error: any) {
@@ -54,7 +56,7 @@ export const updateUser = createAsyncThunk<
   { name: string; email: string; password: string, phone: number, designation: string },
   { rejectValue: string }
 >(
-  "/employer/updateRecruiter",
+  "/recruiter/updateRecruiter",
   async ({ name, email, password, phone, designation }, { rejectWithValue }) => {
     
     try {
@@ -66,7 +68,7 @@ export const updateUser = createAsyncThunk<
 
       console.log(name, email, password, phone, designation);
       await axios.patch(
-        `${Backend_URL}/employer/updateRecruiter`,
+        `${Backend_URL}/recruiter/updateRecruiter`,
         { name, email, password, phone, designation },
         config
       );
@@ -85,13 +87,16 @@ export const userApi = createApi({
   reducerPath: "userApi",
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/employer/",
+    baseUrl: "http://localhost:5000/api/recruiter/",
   }),
   endpoints: (builder) => ({
     getUserByEmail: builder.query<Recruiter, { email: string }>({
       query: ({ email }) => `findOneByEmail/${email}`,
     }),
+    getUsers: builder.query<ApiResponse, {companyId: string}>({
+      query: ({companyId}) => `findByCompanyId/${companyId}`,
+    }),
   }),
 });
 
-export const { useGetUserByEmailQuery } = userApi;
+export const { useGetUserByEmailQuery, useGetUsersQuery } = userApi;

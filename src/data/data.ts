@@ -17,6 +17,31 @@ export interface Job {
   desc: string;
 }
 
+export interface Jobs {
+  // image: StaticImageData;
+  jobTitle: string;
+  jobExperience: string;
+  jobQualification: string;
+  // company: string;
+  jobLocation: string;
+  jobSalary: string;
+  jobType: string;
+  jobUrgency: string;
+  jobCategory: string;
+  jobDescription: string;
+  jobStatus: string;
+}
+
+export type DecodedData = {
+  companyId: number;
+  email: string;
+  exp: number;
+  iat: number;
+  name: string;
+  recruiterId: number;
+  role: string;
+};
+
 export interface Stage {
   id: number;
   name: string;
@@ -40,6 +65,16 @@ export interface Assignee {
   stageId: number;
   userName: string;
   workflowId: number;
+}
+
+export interface Applicant {
+  id: number;
+  jobId: number;
+  companyId: number;
+  userId: number;
+  name: string;
+  status: string;
+  stageId: number;
 }
 
 export const job_list: Job[] = [
@@ -109,4 +144,61 @@ export const assignee: Assignee[] = [
     stageId: 100,
     workflowId: 100,
   }
+];
+
+export const applicants: Applicant[] = [
+  {
+    id: 1,
+    jobId: 12,
+    companyId: 1,
+    userId: 1,
+    name: "Aliyan Iqbal",
+    status: "Applied",
+    stageId: 1,
+  },
+  {
+    id: 2,
+    jobId: 12,
+    companyId: 1,
+    userId: 2,
+    name: "Rafay Farrukh",
+    status: "Applied",
+    stageId: 1,
+  },
+  {
+    id: 3,
+    jobId: 12,
+    companyId: 1,
+    userId: 3,
+    name: "Furqan Fazal",
+    status: "Applied",
+    stageId: 1,
+  },
+  {
+    id: 4,
+    jobId: 12,
+    companyId: 1,
+    userId: 4,
+    name: "Harris Rauf",
+    status: "Applied",
+    stageId: 1,
+  },
+  {
+    id: 5,
+    jobId: 12,
+    companyId: 1,
+    userId: 5,
+    name: "Babar Azam",
+    status: "Applied",
+    stageId: 1,
+  },
+  {
+    id: 6,
+    jobId: 10,
+    companyId: 1,
+    userId: 6,
+    name: "Babar Azam",
+    status: "Applied",
+    stageId: 1,
+  },
 ];

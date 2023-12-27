@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import styles from "./login.module.css";
 import Header from "@/components/Header";
 
@@ -28,17 +28,25 @@ export default function SignInSide() {
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
   const handleSubmit = async (event: any) => {
-    const result = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: true,
-      callbackUrl: "/dashboard",
-    });
+    console.log(email, password);
+    try {
+      const result = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: true,
+        callbackUrl: "/dashboard",
+      });
 
-    if (result === null) {
-      setResult(true);
-      setAlertMessage("User Logged In Successfully!");
-    } else {
+      const session = await getSession();
+
+      if (session) {
+        setResult(true);
+        setAlertMessage("User Logged In Successfully!");
+      } else {
+        setResult(false);
+        setAlertMessage("User Not Logged In!");
+      }
+    } catch (error) {
       setResult(false);
       setAlertMessage("User Not Logged In!");
     }

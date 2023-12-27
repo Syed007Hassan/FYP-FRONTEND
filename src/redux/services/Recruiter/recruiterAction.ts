@@ -56,7 +56,7 @@ export const updateUser = createAsyncThunk<
   { name: string; email: string; password: string, phone: number, designation: string },
   { rejectValue: string }
 >(
-  "/employer/updateRecruiter",
+  "/recruiter/updateRecruiter",
   async ({ name, email, password, phone, designation }, { rejectWithValue }) => {
     
     try {
@@ -68,7 +68,7 @@ export const updateUser = createAsyncThunk<
 
       console.log(name, email, password, phone, designation);
       await axios.patch(
-        `${Backend_URL}/employer/updateRecruiter`,
+        `${Backend_URL}/recruiter/updateRecruiter`,
         { name, email, password, phone, designation },
         config
       );

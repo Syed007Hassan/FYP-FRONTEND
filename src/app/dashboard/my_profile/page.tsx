@@ -6,7 +6,7 @@ import { useGetUserByEmailQuery } from "@/redux/services/Recruiter/recruiterActi
 import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateUser } from "@/redux/services/Recruiter/recruiterAction";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 // import Alert from "@/components/Alert";
 import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
@@ -15,6 +15,7 @@ import { parseJwt } from "@/lib/Constants";
 import "../../../styles/sidebar.css";
 
 const Page = () => {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [designation, setDesignation] = useState("");
@@ -28,7 +29,7 @@ const Page = () => {
   const { success } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
-  const isSidebarOpen = useAppSelector(state => state.sidebar.sidebarState);
+  const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
 
   const { data, error, isLoading } = useGetUserByEmailQuery({ email });
 
@@ -57,6 +58,7 @@ const Page = () => {
   }, [data]);
 
   const handleSubmit = (event: any) => {
+    event.preventDefault();
     if (password !== repeatPassword) {
       setPasswordMatch(false);
       event.preventDefault();
@@ -73,15 +75,24 @@ const Page = () => {
       datas.email = datas.email.toLowerCase();
       console.log(datas);
       dispatch(updateUser(datas));
-      // redirect("/dashboard");
     }
   };
+
+  useEffect(() => {
+    console.log("useEffect triggered", { success });
+
+    if (success) {
+      console.log("success is true, pushing to /dashboard");
+      router.push("/dashboard");
+    }
+  }, [success, router]);
 
   return isLoading ? (
     <Loader />
   ) : (
-    <div className={`content overflow-hidden ${isSidebarOpen ? 'shifted' : ''}`}>
-
+    <div
+      className={`content overflow-hidden ${isSidebarOpen ? "shifted" : ""}`}
+    >
       <div className=" min-h-screen justify-center">
         <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
           <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">

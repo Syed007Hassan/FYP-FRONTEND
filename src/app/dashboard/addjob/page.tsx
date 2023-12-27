@@ -64,8 +64,8 @@ const Page = () => {
 
   useEffect(() => {
     if (decodedData) {
-      setCompanyId(decodedData?.companyId.toString() || "");
-      setRecruiterId(decodedData?.recruiterId.toString() || "");
+      setCompanyId(decodedData?.companyId ? decodedData.companyId.toString() : "");
+      setRecruiterId(decodedData?.recruiterId ? decodedData.recruiterId.toString() : "");
     }
   }, [decodedData]);
 
@@ -122,11 +122,11 @@ const Page = () => {
     <div className="min-h-screen justify-center overflow-x-hidden">
       <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
         <div
-          className="pl-10 pb-6 pr-10 hidden md:block md:-mr-20 lg:-mr-0"
-          style={{ width: "640px", height: "630px" }}
+          className="pl-10 pt-16 pb-6 pr-10 hidden md:block md:-mr-20 lg:-mr-0"
+          style={{ width: "580px", height: "560px" }}
         >
           <Image
-            src="/landing-pic.png"
+            src="/applicant.png"
             alt="Picture of the author"
             width={500}
             height={500}
@@ -134,9 +134,9 @@ const Page = () => {
             priority
           />
         </div>
-        <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
+        <div className="pt-16 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
           <div className="pr-2 pl-2">
-            <h1 className=" text-blue-500 mb-4">SyncFlow Recruitment</h1>
+
             <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
 
             <form className="mt-8 space-y-6">
@@ -197,9 +197,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        typeDropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${typeDropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -336,9 +335,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        dropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${dropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -347,33 +345,34 @@ const Page = () => {
                         <li
                           onClick={() => {
                             setDropdownOpen(false);
-                            setSelectedCategory("Category 1");
+                            setSelectedCategory("Permanent");
                           }}
                         >
                           <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Category 1
+                            Permanent
                           </p>
                         </li>
                         <li
                           onClick={() => {
                             setDropdownOpen(false);
-                            setSelectedCategory("Category 2");
+                            setSelectedCategory("Contract");
                           }}
                         >
                           <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Category 2
+                            Contract
                           </p>
                         </li>
                         <li
                           onClick={() => {
                             setDropdownOpen(false);
-                            setSelectedCategory("Category 3");
+                            setSelectedCategory("Internship");
                           }}
                         >
                           <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Category 3
+                            Internship
                           </p>
                         </li>
+
                         {/* Add more options as needed */}
                       </ul>
                     </div>

@@ -5,7 +5,7 @@ const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 const LineChart = () => {
   const options = {
     chart: {
-      id: "sales-chart",
+      id: "Months",
       toolbar: {
         show: false,
       },
@@ -24,7 +24,7 @@ const LineChart = () => {
     },
     yaxis: {
       title: {
-        text: "Sales (in USD)",
+        text: "Hirings",
       },
     },
     colors: ["#00BFFF", "#FFA500"],

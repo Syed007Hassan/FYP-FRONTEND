@@ -1,10 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import { FaFacebookF, FaLinkedinIn, FaGoogle, FaTwitter } from 'react-icons/fa';
 
 export default function Footer() {
   return (
 
-    <div className="bg-blue-900 pt-20 pb-20 pl-32 pr-32">
+    <div className="bg-blue-900 pt-20 pb-20 pl-32 pr-32 rounded-t-3xl">
       <div className="container mx-auto">
         <div className="grid grid-cols-12 gap-10">
           <div className="col-span-12 xl:col-span-4">
@@ -14,26 +15,26 @@ export default function Footer() {
                 It is a long established fact that a reader will be of a page reader will be of at its layout.
               </p>
               <p className="mt-3 text-white dark:text-gray-50 font-bold">Follow Us on:</p>
-              <div className="mt-5">
+              < div className="mt-5">
                 <ul className="flex gap-3">
-                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 border rounded-full cursor-pointer border-gray-200/50 hover:text-gray-50 hover:bg-violet-500 hover:border-transparent">
+                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 cursor-pointer">
                     <a href="#">
-                      <i className="uil uil-facebook-f"></i>
+                      <FaFacebookF />
                     </a>
                   </li>
-                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 border rounded-full cursor-pointer border-gray-200/50 hover:text-gray-50 hover:bg-sky-500 hover:border-transparent">
+                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300  cursor-pointer">
                     <a href="#">
-                      <i className="uil uil-linkedin-alt"></i>
+                      <FaLinkedinIn />
                     </a>
                   </li>
-                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 border rounded-full cursor-pointer border-gray-200/50 hover:text-gray-50 hover:bg-red-500 hover:border-transparent">
+                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 cursor-pointer">
                     <a href="#">
-                      <i className="uil uil-google"></i>
+                      <FaGoogle />
                     </a>
                   </li>
-                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 border rounded-full cursor-pointer border-gray-200/50 hover:text-gray-50 hover:bg-blue-500 hover:border-transparent">
+                  <li className="w-8 h-8 leading-loose text-center text-gray-200 transition-all duration-300 cursor-pointer">
                     <a href="#">
-                      <i className="uil uil-twitter"></i>
+                      <FaTwitter />
                     </a>
                   </li>
                 </ul>
@@ -174,7 +175,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
 
   )
 }

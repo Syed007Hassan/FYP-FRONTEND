@@ -97,7 +97,7 @@ export default function Home() {
       <div className="lg:pl-28 mx-auto px-6 pt-32">
 
         <h1 className="font-bold text-blue-900 text-5xl">
-          How it can work:
+          How it can works
         </h1>
 
         <div className="lg:space-y-8 pt-5 mb-24">

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Pagination from "@/components/pagination";
 
 import { useRouter } from "next/navigation";
-import  Job  from "@/types/job"
+import Job from "@/types/job"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetJobsQuery } from "@/redux/services/job/jobAction";
 import job_pic from "../../../../public/job.png";
@@ -24,7 +24,7 @@ const Page = () => {
   const [decodedData, setDecodedData] = useState(null);
   const [companyId, setCompanyId] = useState<string>("");
 
-  const { data, error, isLoading } = useGetJobsQuery({id: companyId});
+  const { data, error, isLoading } = useGetJobsQuery({ id: companyId });
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
@@ -64,7 +64,7 @@ const Page = () => {
                   </h1>
                   <a
                     href="/dashboard/addjob"
-                    className="pr-6 mr-12 py-2.5 px-5 mb-2 text-sm mt-10 font-medium text-black focus:outline-none bg-gray-300 rounded border border-black hover:bg-gray-blue-300 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    className="pr-6 mr-12 py-2.5 px-5 mb-2 text-sm mt-10 text-white font-bold bg-blue-600  rounded border"
                   >
                     Add New Job
                   </a>

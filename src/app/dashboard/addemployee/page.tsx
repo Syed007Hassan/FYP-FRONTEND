@@ -84,8 +84,8 @@ const Page = () => {
         <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
           <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
             <div className="pr-2 pl-2">
-              <h1 className=" text-blue-500 mb-4">Syncflow recruitment</h1>
-              <h1 className="text-4xl text-blue-900 pt-20">Add Employee</h1>
+
+              <h1 className="text-4xl text-blue-900 pt-10">Add Employee</h1>
               {!passwordMatch && (
                 <Alert severity="error">Passwords do not match</Alert>
               )}

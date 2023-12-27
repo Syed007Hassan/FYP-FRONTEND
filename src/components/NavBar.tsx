@@ -16,7 +16,7 @@ import {
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { toggleSidebar } from '../redux/features/sidebarStateAction';
 
-interface HeaderProps {}
+interface HeaderProps { }
 
 const NavBar: React.FC<HeaderProps> = () => {
   const [sticky, setSticky] = useState<boolean>(false);
@@ -40,7 +40,7 @@ const NavBar: React.FC<HeaderProps> = () => {
 
   useEffect(() => {
     console.log("isSidebarOpen", isSidebarOpen);
-  } , [isSidebarOpen]);
+  }, [isSidebarOpen]);
 
   return (
     <nav className="overflow z-50 sticky top-0 left-0 bg-white shadow-lg bg-white-900  p-4 lg:p-6 transition-all duration-300 ease-in-out text-blue">
@@ -112,18 +112,8 @@ const NavBar: React.FC<HeaderProps> = () => {
               </button>
             </div>
           </Link>
-          <Link href="#">
-            <div className="flex items-center justify-center w-8 h-8">
-              <button title="Briefcase">
-                <FaBriefcase size={25} />
-              </button>
-            </div>
-          </Link>
-          <div className="flex items-center justify-center w-8 h-8 cursor-pointer">
-            <button title="Search">
-              <FaSearch size={25} />
-            </button>
-          </div>
+
+
         </div>
       </div>
       {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} />}

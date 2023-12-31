@@ -2,21 +2,22 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn, getSession } from "next-auth/react";
 import styles from "./login.module.css";
 import Header from "@/components/Header";
+import axios from "axios";
+import { Backend_URL } from "@/lib/Constants";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { loginUser, resetReject } from "@/redux/services/auth/authActions";
+import { RootState } from "@/redux/store";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -26,26 +27,50 @@ export default function SignInSide() {
   const [password, setPassword] = useState("");
   const [result, setResult] = useState(false);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const Router = useRouter();
+  const dispatch = useAppDispatch();
+  const { loading, userInfo, error, success, reject } = useAppSelector(
+    (state: RootState) => state.authReducer
+  );
 
   const handleSubmit = async (event: any) => {
     console.log(email, password);
     try {
-      const result = await signIn("credentials", {
-        email: email,
-        password: password,
-        redirect: true,
-        callbackUrl: "/dashboard",
-      });
+      // const result = await signIn("credentials", {
+      //   email: email,
+      //   password: password,
+      //   redirect: true,
+      //   callbackUrl: "/dashboard",
+      // });
 
-      const session = await getSession();
+      // apply axios here
+      // const result = await axios.post(`${Backend_URL}/auth/loginRecruiter`, {
+      //   email: email,
+      //   password: password,
+      //   role: "employer",
+      // });
 
-      if (session) {
-        setResult(true);
-        setAlertMessage("User Logged In Successfully!");
-      } else {
-        setResult(false);
-        setAlertMessage("User Not Logged In!");
-      }
+      dispatch(
+        loginUser({ email: email, password: password, role: "employer" })
+      );
+
+      // console.log(result?.data?.data?.jwt);
+
+      // Cookies.set('token', result?.data?.data?.jwt, { expires: 7 });
+      // console.log(Cookies.get('token'));
+
+      // const session = await getSession();
+      // console.log("session: ",session);
+
+      // Router.push('/recruiter');
+
+      // if (session) {
+      //   setResult(true);
+      //   setAlertMessage("User Logged In Successfully!");
+      // } else {
+      //   setResult(false);
+      //   setAlertMessage("User Not Logged In!");
+      // }
     } catch (error) {
       setResult(false);
       setAlertMessage("User Not Logged In!");
@@ -55,6 +80,29 @@ export default function SignInSide() {
       setAlertMessage(null);
     }, 2000);
   };
+
+  const handleOauth = async (event: any) => {
+    event.preventDefault();
+
+    window.location.href = `${Backend_URL}/auth/google/callback`;
+  };
+
+  useEffect(() => {
+    console.log("userInfo", userInfo);
+    if (userInfo?.success) {
+      setAlertMessage("User Logged In Successfully!");
+      console.log("userInfo", userInfo);
+      Cookies.set("token", userInfo?.data?.jwt, { expires: 7 });
+      Router.push("/recruiter");
+    }
+  }, [userInfo, dispatch, Router]);
+
+  useEffect(() => {
+    if (reject) {
+      setAlertMessage("User Not Logged In!");
+      dispatch(resetReject());
+    }
+  }, [reject, dispatch]);
 
   const showPassword = () => {
     var isCheck = document.getElementById("password");
@@ -214,6 +262,16 @@ export default function SignInSide() {
                     onClick={handleSubmit}
                   >
                     Sign In ➔
+                  </button>
+                </div>
+
+                <div className="mb-4 mt-3">
+                  <button
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleOauth}
+                  >
+                    Sign In With Google ➔
                   </button>
                 </div>
 

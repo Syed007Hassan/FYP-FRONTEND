@@ -3,7 +3,12 @@ export const FLASK_URL = "http://localhost:4000/api";
 
 
 export function parseJwt(jwt: string): any {
-  const base64Url = jwt.split(".")[1];
+  const parts = jwt.split(".");
+  if (parts.length < 2) {
+    return null; // or throw an error
+  }
+
+  const base64Url = parts[1];
   const base64 = base64Url.replace("-", "+").replace("_", "/");
-  return JSON.parse(window.atob(base64));
+  return JSON.parse(Buffer.from(base64, 'base64').toString('binary'));
 }

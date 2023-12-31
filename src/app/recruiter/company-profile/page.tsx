@@ -11,6 +11,7 @@ import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { parseJwt } from "@/lib/Constants";
+import Cookies from 'js-cookie';
 
 import "../../../styles/sidebar.css";
 
@@ -33,7 +34,7 @@ const Page = () => {
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      const session = Cookies.get('token');
       if (!session) {
         throw new Error("Invalid session");
       }
@@ -76,8 +77,8 @@ const Page = () => {
     console.log('useEffect triggered', { success });
   
     if (success) {
-      console.log('success is true, pushing to /dashboard');
-      router.push("/dashboard");
+      console.log('success is true, pushing to /recruiter');
+      router.push("/recruiter");
     }
   }, [success, router]);
 

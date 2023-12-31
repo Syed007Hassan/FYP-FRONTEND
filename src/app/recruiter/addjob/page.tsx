@@ -1,11 +1,11 @@
 "use client";
-import React, { use } from "react";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { job_list } from "@/data/data";
 import image_1 from "../../../../public/job.png";
-import { Jobs, DecodedData } from "@/data/data";
+import { DecodedData } from "@/data/data";
 
 import Chatbot from "@/components/Chatbot";
 import { FaQuestion } from "react-icons/fa6";
@@ -13,14 +13,14 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createJob, resetSuccess } from "@/redux/services/job/jobAction";
 import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
+import Cookies from "js-cookie";
 
 const Page = () => {
   const router = useRouter();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Select a type");
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
 
   const dispatch = useAppDispatch();
@@ -49,7 +49,7 @@ const Page = () => {
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      const session = Cookies.get("token");
       if (!session) {
         throw new Error("Invalid session");
       }
@@ -114,7 +114,7 @@ const Page = () => {
     console.log("success:", success);
     if (success) {
       dispatch(resetSuccess());
-      router.push("/dashboard/joblist");
+      router.push("/recruiter/joblist");
     }
   }, [success, router]);
 

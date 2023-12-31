@@ -11,13 +11,13 @@ export function middleware(req: NextRequest) {
   const tokenFromOauth = req.cookies.get("token");
 
   let tokenData;
-  // console.log("token: ", token);
+
   if (token) {
     tokenData = parseJwt(token.toString());
   }
 
   if (tokenFromOauth) {
-    tokenData = parseJwt(tokenFromOauth.toString());
+    tokenData = parseJwt(tokenFromOauth.value.toString());
   }
 
   if (
@@ -33,7 +33,7 @@ export function middleware(req: NextRequest) {
     const oAuthToken = req.nextUrl.searchParams.get("token") || "";
 
     if (oAuthToken.length > 0) {
-      console.log("token in oauth: ", JSON.stringify(oAuthToken));
+      // console.log("token in oauth: ", JSON.stringify(oAuthToken));
 
       const response = NextResponse.next();
 
@@ -49,17 +49,19 @@ export function middleware(req: NextRequest) {
 
   // role based auth
   if (
-    token &&
-    req.nextUrl.pathname.startsWith("/recruiter") &&
-    tokenData.role === "employer"
+    token ||
+    (tokenFromOauth &&
+      req.nextUrl.pathname.startsWith("/recruiter") &&
+      tokenData.role === "employer")
   ) {
     return NextResponse.next();
   }
 
   if (
-    token &&
-    req.nextUrl.pathname.startsWith("/recruiter") &&
-    tokenData.role !== "employer"
+    token ||
+    (tokenFromOauth &&
+      req.nextUrl.pathname.startsWith("/recruiter") &&
+      tokenData.role !== "employer")
   ) {
     return NextResponse.rewrite(new URL("/login", req.url));
   }

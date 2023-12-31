@@ -13,7 +13,7 @@ import styles from "./login.module.css";
 import Header from "@/components/Header";
 import axios from "axios";
 import { Backend_URL } from "@/lib/Constants";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { loginUser, resetReject } from "@/redux/services/auth/authActions";
@@ -29,7 +29,7 @@ export default function SignInSide() {
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const Router = useRouter();
   const dispatch = useAppDispatch();
-    const { loading, userInfo, error, success, reject } = useAppSelector(
+  const { loading, userInfo, error, success, reject } = useAppSelector(
     (state: RootState) => state.authReducer
   );
 
@@ -50,11 +50,13 @@ export default function SignInSide() {
       //   role: "employer",
       // });
 
-      dispatch(loginUser({email: email, password: password, role: "employer"}));
+      dispatch(
+        loginUser({ email: email, password: password, role: "employer" })
+      );
 
       // console.log(result?.data?.data?.jwt);
 
-      // Cookies.set('token', result?.data?.data?.jwt, { expires: 7 }); 
+      // Cookies.set('token', result?.data?.data?.jwt, { expires: 7 });
       // console.log(Cookies.get('token'));
 
       // const session = await getSession();
@@ -79,22 +81,27 @@ export default function SignInSide() {
     }, 2000);
   };
 
+  const handleOauth = async (event: any) => {
+    event.preventDefault();
+
+    window.location.href = `${Backend_URL}/auth/google/callback`;
+  };
+
   useEffect(() => {
-    console.log('userInfo', userInfo);
+    console.log("userInfo", userInfo);
     if (userInfo?.success) {
       setAlertMessage("User Logged In Successfully!");
-      console.log('userInfo', userInfo);
-      Cookies.set('token', userInfo?.data?.jwt, { expires: 7 });
-      Router.push('/recruiter');
+      console.log("userInfo", userInfo);
+      Cookies.set("token", userInfo?.data?.jwt, { expires: 7 });
+      Router.push("/recruiter");
     }
   }, [userInfo, dispatch, Router]);
 
   useEffect(() => {
-  
     if (reject) {
       setAlertMessage("User Not Logged In!");
-      dispatch(resetReject());  
-    } 
+      dispatch(resetReject());
+    }
   }, [reject, dispatch]);
 
   const showPassword = () => {
@@ -255,6 +262,16 @@ export default function SignInSide() {
                     onClick={handleSubmit}
                   >
                     Sign In ➔
+                  </button>
+                </div>
+
+                <div className="mb-4 mt-3">
+                  <button
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleOauth}
+                  >
+                    Sign In With Google ➔
                   </button>
                 </div>
 

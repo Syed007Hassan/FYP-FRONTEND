@@ -61,8 +61,6 @@ export function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith("/recruiter") &&
     tokenData.role !== "employer"
   ) {
-    // console.log("tokenRole: ", tokenData.role);
-    // Cookies.remove("token");
     return NextResponse.rewrite(new URL("/login", req.url));
   }
 

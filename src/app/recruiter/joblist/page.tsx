@@ -10,6 +10,7 @@ import { useGetJobsQuery } from "@/redux/services/job/jobAction";
 import job_pic from "../../../../public/job.png";
 import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
+import Cookies from "js-cookie";
 import "../../../styles/sidebar.css";
 
 
@@ -28,7 +29,7 @@ const Page = () => {
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      const session = Cookies.get("token");
       if (!session) {
         throw new Error("Invalid session");
       }
@@ -63,7 +64,7 @@ const Page = () => {
                     All Jobs
                   </h1>
                   <a
-                    href="/dashboard/addjob"
+                    href="/recruiter/addjob"
                     className="pr-6 mr-12 py-2.5 px-5 mb-2 text-sm mt-10 text-white font-bold bg-blue-600  rounded border"
                   >
                     Add New Job
@@ -120,7 +121,7 @@ const Page = () => {
               <div className="grid grid-cols-1 gap-y-5">
                 {jobList?.map((job) => (
                   <div
-                    onClick={() => router.push(`/dashboard/joblist/${job?.jobId}`)}
+                    onClick={() => router.push(`/recruiter/joblist/${job?.jobId}`)}
                     className="p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900"
                     key={job?.jobId}
                   >

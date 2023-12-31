@@ -34,3 +34,43 @@ export const registerUser = createAsyncThunk<
     }
   }
 );
+
+export const loginUser = createAsyncThunk<
+  void,
+  { email: string; password: string; role: string },
+  { rejectValue: string }
+>(
+  "/auth/loginRecruiter",
+  async ({ email, password, role }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.post(
+        `${Backend_URL}/auth/loginRecruiter`,
+        { email, password, role },
+        config
+      );
+
+      return response.data;
+    } catch (error: any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const resetSuccess = createAsyncThunk("login/resetSuccess", async () => {
+  return false;
+});
+
+export const resetReject = createAsyncThunk("login/resetReject", async () => {
+  return false;
+});

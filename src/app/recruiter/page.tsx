@@ -9,12 +9,13 @@ import LineChart from "@/components/lineChart";
 import StepAreaChart from "@/components/stepAreaChart";
 import AreaChart from "@/components/areaChart";
 import { useAppSelector } from "@/redux/hooks";
+import { RootState } from "@/redux/store";
 
 import "../../styles/sidebar.css";
 
-const DashboardPage = () => {
+const RecruiterPage = () => {
   // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const isSidebarOpen = useAppSelector(state => state.sidebar.sidebarState);
+  const isSidebarOpen = useAppSelector((state: RootState) => state.sidebar.sidebarState);
   const verifyToken = async () => {
     try {
       const session = await getSession();
@@ -94,4 +95,4 @@ const DashboardPage = () => {
     </div>
     );
 };
-export default DashboardPage;
+export default RecruiterPage;

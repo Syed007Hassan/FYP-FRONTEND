@@ -15,7 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { registerUser } from "@/redux/services/auth/authActions";
+import { registerUser, resetSuccess } from "@/redux/services/auth/authActions";
 import { redirect } from "next/navigation";
 import Header from "@/components/Header";
 import { useRouter } from "next/navigation";
@@ -66,9 +66,10 @@ export default function SignInSide() {
 
   useEffect(() => {
     if (success) {
+      dispatch(resetSuccess());
       router.push("/login");
     }
-  }, [router, success, userInfo]);
+  }, [router, success, dispatch]);
 
   return (
     <div>

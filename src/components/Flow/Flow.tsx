@@ -150,7 +150,7 @@ const App = () => {
 
     // localStorage.setItem('workflow', JSON.stringify(workflow));
 
-    router.push(`/dashboard/joblist/${jobId}`);
+    router.push(`/recruiter/joblist/${jobId}`);
   };
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {

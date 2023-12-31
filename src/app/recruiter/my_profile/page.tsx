@@ -1,18 +1,22 @@
 "use client";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useGetUserByEmailQuery } from "@/redux/services/Recruiter/recruiterAction";
 import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { createEmployee } from "@/redux/services/Recruiter/recruiterAction";
-// import Alert from '@/components/Alert';
+import { updateUser } from "@/redux/services/Recruiter/recruiterAction";
+import { useRouter } from "next/navigation";
+// import Alert from "@/components/Alert";
 import Alert from "@mui/material/Alert";
-import { redirect } from "next/navigation";
+import Loader from "@/components/Loader";
 import { parseJwt } from "@/lib/Constants";
+import Cookies from 'js-cookie';
 
 import "../../../styles/sidebar.css";
 
 const Page = () => {
+  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [designation, setDesignation] = useState("");
@@ -21,62 +25,73 @@ const Page = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [decodedData, setDecodedData] = useState(null);
-  const [companyIdTemp, setCompanyIdTemp] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
 
-  const { success } = useAppSelector((state) => state.employeeReducer);
+  const { success } = useAppSelector((state) => state.userReducer);
   const dispatch = useAppDispatch();
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
 
+  const { data, error, isLoading } = useGetUserByEmailQuery({ email });
+
   useEffect(() => {
-    setCompanyIdTemp("");
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      // const session = await getSession();
+      const session = Cookies.get("token");
       if (!session) {
         throw new Error("Invalid session");
       }
       const jwt: string = session.toString();
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
-      setCompanyIdTemp(decodedData.companyId.toString() || "");
+      setEmail(decodedData?.email || "");
     };
 
     parseJwtFromSession();
   }, []);
 
   useEffect(() => {
-    console.log("decoded data", decodedData);
-  }, [decodedData]);
+    const firstName = data?.data?.name?.split(" ")[0];
+    const lastName = data?.data?.name?.split(" ")[1];
+    setFirstName(firstName || "");
+    setLastName(lastName || "");
+    setDesignation(data?.data?.designation || "");
+    setPhone(data?.data?.phone?.toString() || "");
+  }, [data]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const name = firstName + " " + lastName;
-
-    const role = "employer";
-
     if (password !== repeatPassword) {
       setPasswordMatch(false);
-      return;
+      event.preventDefault();
+    } else {
+      const name = firstName + " " + lastName;
+      const phone = parseInt(phoneNum);
+      const datas = {
+        name,
+        email,
+        password,
+        phone,
+        designation,
+      };
+      datas.email = datas.email.toLowerCase();
+      console.log(datas);
+      dispatch(updateUser(datas));
     }
-    const companyId = parseInt(companyIdTemp);
-    const phone = phoneNum;
-    const data = {
-      name,
-      designation,
-      role,
-      phone,
-      email,
-      password,
-      companyId,
-    };
-    console.log(data);
-    dispatch(createEmployee(data));
-    console.log(success);
-    // redirect("/dashboard");
   };
 
-  return (
+  useEffect(() => {
+    console.log("useEffect triggered", { success });
+
+    if (success) {
+      console.log("success is true, pushing to /recruiter");
+      router.push("/recruiter");
+    }
+  }, [success, router]);
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div
       className={`content overflow-hidden ${isSidebarOpen ? "shifted" : ""}`}
     >
@@ -84,21 +99,20 @@ const Page = () => {
         <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
           <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
             <div className="pr-2 pl-2">
-
-              <h1 className="text-4xl text-blue-900 pt-10">Add Employee</h1>
-              {!passwordMatch && (
+              <h1 className="text-4xl text-blue-900 pt-20">My Profile</h1>
+              {passwordMatch === false && (
                 <Alert severity="error">Passwords do not match</Alert>
               )}
               {success && (
-                <Alert severity="success">Employee Added Successfully</Alert>
+                <Alert severity="success">Profile updated successfully</Alert>
               )}
-              <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                <div className="rounded-md shadow-sm -space-y-px">
+              <form className="mt-8" onSubmit={handleSubmit}>
+                <div className="rounded-md shadow-sm">
                   <div className="grid grid-rows-1 grid-flow-col">
                     <div className="pr-4">
                       <label
                         htmlFor="firstName"
-                        className="block text-sm mb-2 font-bold text-gray-900 dark:text-white"
+                        className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
                       >
                         First name
                       </label>
@@ -106,7 +120,7 @@ const Page = () => {
                         type="text"
                         id="firstName"
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                        placeholder="John"
+                        value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         required
                       />
@@ -114,7 +128,7 @@ const Page = () => {
                     <div className="pl-4">
                       <label
                         htmlFor="lastName"
-                        className="block text-sm mb-2 font-bold text-gray-900 dark:text-white"
+                        className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
                       >
                         Last name
                       </label>
@@ -122,7 +136,7 @@ const Page = () => {
                         type="text"
                         id="lastName"
                         className="w-full  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                        placeholder="Doe"
+                        value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         required
                       />
@@ -139,6 +153,7 @@ const Page = () => {
                       <input
                         type="text"
                         id="designation"
+                        value={designation}
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                         onChange={(e) => setDesignation(e.target.value)}
                         required
@@ -152,8 +167,9 @@ const Page = () => {
                         Phone Number
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         id="phone"
+                        value={phoneNum}
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                         onChange={(e) => setPhone(e.target.value)}
                         required
@@ -163,29 +179,31 @@ const Page = () => {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm mb-2 font-bold text-gray-900 dark:text-white"
+                      className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
                     >
                       Email address
                     </label>
                     <input
                       type="email"
                       id="email"
+                      value={email}
                       className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       placeholder="john.doe@company.com"
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      disabled={true}
                     />
                   </div>
                   <div className="grid grid-rows-1 grid-flow-col pt-10">
-                    {/* password and repeat password fields */}
                     <div className="pr-4">
                       <label
                         htmlFor="password"
-                        className="block text-sm mb-2 font-bold text-gray-900 dark:text-white"
+                        className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
                       >
                         Password
                       </label>
                       <input
+                        value={password}
                         type="password"
                         id="password"
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
@@ -196,11 +214,12 @@ const Page = () => {
                     <div className="pl-4">
                       <label
                         htmlFor="repeat_password"
-                        className="block text-sm mb-2 font-bold text-gray-900 dark:text-white"
+                        className="mb-2 block text-sm font-bold text-gray-900 dark:text-white"
                       >
                         Repeat password
                       </label>
                       <input
+                        value={repeatPassword}
                         type="password"
                         id="password"
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
@@ -210,34 +229,31 @@ const Page = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  >
-                    Add Employee
-                  </button>
+                <div className="grid grid-rows-1 grid-flow-col pt-4">
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      className=" flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    >
+                      Update
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
           </div>
-          <div className="bg-white shadow-lg ml-10 pr-20 p-6 hidden md:block lg:-mr-0">
-            <h2 className="text-2xl font-bold mb-4 text-center text-gray-800 uppercase tracking-wide pt-10">
-              Guidelines
-            </h2>
-            <ul className="list-disc list-inside mb-4 pt-10">
-              <li className="font-bold pt-4">
-                Add Employee to give them access to the portal
-              </li>
-
-              <li className="font-bold pt-4">
-                Employees will have their personalized dashboards
-              </li>
-
-              <li className="font-bold pt-4">
-                Employees can be assigned to perform specific workflow tasks
-              </li>
-            </ul>
+          <div
+            className="pl-10 pb-6 pr-10 pt-20 hidden md:block md:-mr-20 lg:-mr-0"
+            style={{ width: "650px", height: "600px" }}
+          >
+            <Image
+              src="/my-profile.png"
+              alt="Picture of the author"
+              width={500}
+              height={500}
+              className="object-cover md:w-25 md:h-25 lg:w-full lg:h-full"
+              priority
+            />
           </div>
         </div>
       </div>

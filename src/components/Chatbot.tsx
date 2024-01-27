@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetChatQuery } from "@/redux/services/chat/chatAction";
+import { FcGoogle } from "react-icons/fc";
+import bardIcon from "../../public/google-bard-icon.svg";
 
 interface ChatbotProps {
   click: boolean;
@@ -23,7 +25,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
 
   useEffect(() => {
     console.log(data);
-  } , [data])
+  }, [data]);
 
   useEffect(() => {
     setDisplayedText("");
@@ -81,11 +83,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
 
           <div className="flex bg-slate-100 px-4 py-8 dark:bg-slate-900 sm:px-6 chatbot h-[11.5rem]">
             <Image
-              className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-              src="https://dummyimage.com/256x256/354ea1/ffffff&text=G"
-              alt="User Image"
-              width={256}
-              height={256}
+              className="mr-2 flex h-8 w-10 sm:mr-4 items-center align-middle justify-center"
+              src={bardIcon}
+              alt="Bard Icon"
+              width={30}
+              height={10}
             />
 
             <div className="flex w-full flex-col items-start lg:flex-row lg:justify-between">

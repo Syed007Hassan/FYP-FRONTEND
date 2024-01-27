@@ -446,16 +446,16 @@ const Page = () => {
 
                       <div className="mt-8 flex gap-5">
                         <Link
-                          href="/dashboard/joblist/[jobId]/workflow"
-                          as={`/dashboard/joblist/${job?.jobId}/workflow`}
+                          href="/recruiter/joblist/[jobId]/workflow"
+                          as={`/recruiter/joblist/${job?.jobId}/workflow`}
                           className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
                         >
                           <i className="fas fa-bookmark"></i> Add Workflow
                         </Link>
 
                         <Link
-                          href="/dashboard/joblist/[jobId]/analytics"
-                          as={`/dashboard/joblist/${job?.jobId}/analytics`}
+                          href="/recruiter/joblist/[jobId]/analytics"
+                          as={`/recruiter/joblist/${job?.jobId}/analytics`}
                           className="btn text-center px-0 py-0 items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
                           title="Job analytics"
                         >

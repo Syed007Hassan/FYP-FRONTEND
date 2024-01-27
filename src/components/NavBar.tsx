@@ -80,7 +80,7 @@ const NavBar: React.FC<HeaderProps> = () => {
                 <ul>
                   <li>
                     <a
-                      href="/dashboard/my_profile"
+                      href="/recruiter/my_profile"
                       className="sticky block px-4 py-2 hover:bg-gray-200 text-blue-500"
                     >
                       Your Profile
@@ -88,7 +88,7 @@ const NavBar: React.FC<HeaderProps> = () => {
                   </li>
                   <li>
                     <a
-                      href="/api/auth/signout"
+                      href="/signout"
                       className="block px-4 py-2 hover:bg-gray-200 text-blue-500"
                     >
                       Logout
@@ -98,14 +98,14 @@ const NavBar: React.FC<HeaderProps> = () => {
               </div>
             )}
           </div>
-          <Link href="/dashboard/addemployee">
+          <Link href="/recruiter/addemployee">
             <div className="flex items-center justify-center w-8 h-8">
               <button title="Add Employee">
                 <FaUserPlus size={25} />
               </button>
             </div>
           </Link>
-          <Link href="/dashboard/company-profile">
+          <Link href="/recruiter/company-profile">
             <div className="flex items-center justify-center w-8 h-8">
               <button title="Company Profile">
                 <FaBuilding size={25} />

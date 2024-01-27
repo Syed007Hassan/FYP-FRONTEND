@@ -6,12 +6,12 @@ import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetCompanyQuery } from "@/redux/services/Company/companyAction";
 import { updateCompany } from "@/redux/services/Company/companyAction";
-import { redirect } from "next/navigation";
 // import Alert from '@/components/Alert';
 import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { parseJwt } from "@/lib/Constants";
+import Cookies from 'js-cookie';
 
 import "../../../styles/sidebar.css";
 
@@ -34,7 +34,7 @@ const Page = () => {
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      const session = Cookies.get('token');
       if (!session) {
         throw new Error("Invalid session");
       }
@@ -56,7 +56,7 @@ const Page = () => {
   }, [data]);
 
   const handleSubmit = (event: any) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     const companyPhone = parseInt(companyPhoneNum);
     const datas = {
@@ -72,6 +72,15 @@ const Page = () => {
     dispatch(updateCompany(datas));
     // router.push("/dashboard");
   };
+
+  useEffect(() => {
+    console.log('useEffect triggered', { success });
+  
+    if (success) {
+      console.log('success is true, pushing to /recruiter');
+      router.push("/recruiter");
+    }
+  }, [success, router]);
 
   const handleClick = (event: any) => {
     setCompanyName(data?.data?.companyName || "");

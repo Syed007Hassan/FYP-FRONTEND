@@ -39,7 +39,7 @@ export const chatApi = createApi({
   }),
   endpoints: (builder) => ({
     getChat: builder.query<Chat, { query: string }>({
-      query: ({ query }) => `getData/${query}`,
+      query: ({ query }) => `getJobDescription/${query}`,
     }),
   }),
 });

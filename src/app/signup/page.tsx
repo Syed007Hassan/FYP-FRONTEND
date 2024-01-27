@@ -2,21 +2,15 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import { Backend_URL } from "@/lib/Constants";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { registerUser } from "@/redux/services/auth/authActions";
-import { redirect } from "next/navigation";
+import { registerUser, resetSuccess } from "@/redux/services/auth/authActions";
 import Header from "@/components/Header";
 import { useRouter } from "next/navigation";
 
@@ -64,11 +58,18 @@ export default function SignInSide() {
     console.log(success + "here is success");
   };
 
+  const handleOauth = async (event: any) => {
+    event.preventDefault();
+
+    window.location.href = `${Backend_URL}/auth/google/callback`;
+  };
+
   useEffect(() => {
     if (success) {
+      dispatch(resetSuccess());
       router.push("/login");
     }
-  }, [router, success, userInfo]);
+  }, [router, success, dispatch]);
 
   return (
     <div>
@@ -282,6 +283,16 @@ export default function SignInSide() {
                     onClick={handleSubmit}
                   >
                     Sign Up ➔
+                  </button>
+                </div>
+
+                <div>
+                  <button
+                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
+                    type="button"
+                    onClick={handleOauth}
+                  >
+                    Sign Up With Google ➔
                   </button>
                 </div>
 

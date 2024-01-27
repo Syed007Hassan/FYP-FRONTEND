@@ -9,6 +9,7 @@ import { useGetStageQuery } from "@/redux/services/stage/stageAction";
 import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
 import { ApiResponse, Stage } from "@/types/stage";
+import Cookies from "js-cookie";
 
 import "@/styles/sidebar.css";
 
@@ -40,7 +41,7 @@ const Page = () => {
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      const session = Cookies.get("token");
       if (!session) {
         throw new Error("Invalid session");
       }

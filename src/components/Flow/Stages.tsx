@@ -14,6 +14,7 @@ import { Assignee } from "@/types/assign";
 import Recruiter from "@/types/recruiter";
 import { parseJwt } from "@/lib/Constants";
 import { getSession } from "next-auth/react";
+import Cookies from "js-cookie";
 
 const colorClasses = [
   "bg-blue-100",
@@ -52,7 +53,7 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = await getSession();
+      const session = Cookies.get("token");
       if (!session) {
         throw new Error("Invalid session");
       }

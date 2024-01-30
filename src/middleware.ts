@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import cookie from "cookie";
 // import Cookies from "cookies";
 import { parseJwt } from "@/lib/Constants";
-import Cookies from "cookies";
+// import Cookies from "cookies";
 // import Cookies from "js-cookie";
 
 export function middleware(req: NextRequest) {

@@ -15,6 +15,9 @@ import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 const Page = () => {
   const router = useRouter();
 
@@ -46,6 +49,7 @@ const Page = () => {
   const [decodedData, setDecodedData] = useState<DecodedData>();
   const [companyId, setCompanyId] = useState<string>("");
   const [recruiterId, setRecruiterId] = useState<string>("");
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
@@ -64,8 +68,12 @@ const Page = () => {
 
   useEffect(() => {
     if (decodedData) {
-      setCompanyId(decodedData?.companyId ? decodedData.companyId.toString() : "");
-      setRecruiterId(decodedData?.recruiterId ? decodedData.recruiterId.toString() : "");
+      setCompanyId(
+        decodedData?.companyId ? decodedData.companyId.toString() : ""
+      );
+      setRecruiterId(
+        decodedData?.recruiterId ? decodedData.recruiterId.toString() : ""
+      );
     }
   }, [decodedData]);
 
@@ -136,7 +144,6 @@ const Page = () => {
         </div>
         <div className="pt-16 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
           <div className="pr-2 pl-2">
-
             <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
 
             <form className="mt-8 space-y-6">
@@ -197,8 +204,9 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${typeDropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${
+                        typeDropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -335,8 +343,9 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${dropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${
+                        dropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -425,7 +434,7 @@ const Page = () => {
                   >
                     Job Description
                   </label>
-                  <textarea
+                  {/* <textarea
                     id="jobDescription"
                     className="mb-3 w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                     // value={companyEmail}
@@ -433,6 +442,13 @@ const Page = () => {
                       setJob({ ...job, desc: e.target.value });
                     }}
                     required
+                  /> */}
+                  <ReactQuill
+                    theme="snow"
+                    value={job.desc}
+                    onChange={(content) => {
+                      setJob({ ...job, desc: content });
+                    }}
                   />
                 </div>
               </div>

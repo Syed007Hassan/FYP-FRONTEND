@@ -1,6 +1,7 @@
 import Image from "next/image";
 import "../../src/styles/chatbot.css";
 import { useEffect, useState } from "react";
+import Markdown from 'react-markdown'
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetChatQuery } from "@/redux/services/chat/chatAction";
@@ -23,6 +24,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
     query: query,
   });
 
+  const markdown = "## **Job Description: HTML Developer**\n\n**Headline:** **From Wireframes to Websites: Build the Frontend Foundation (HTML Developer)**\n\n**Opening:**\n\nDo you dream in code and turn mockups into magic? We're seeking a skilled and passionate HTML Developer to join our team and translate stunning designs into pixel-perfect realities. If you love the challenge of converting wireframes into user-friendly interfaces, and have the expertise to craft clean, semantic HTML5 that sings across browsers, then we want you on board!\n\n**Responsibilities:**\n\n* **Turn design dreams into digital realities:** Bring UI/UX mockups to life with meticulous HTML5 code, ensuring adherence to brand guidelines and web accessibility best practices.\n* **Collaboration is key:** Work closely with designers and developers to bridge the gap between design and functionality, creating a seamless user experience.\n* **Code with clarity and purpose:** Craft clean, well-organized, and semantic HTML5 code that adheres to web accessibility standards and promotes maintainability.\n* **Master of the markup:** Stay ahead of the curve by keeping your HTML and web development skills sharp, exploring new technologies and best practices.\n* **Pixel-perfect precision:** Test and debug code across various browsers and devices to guarantee optimal performance and a flawless user experience.\n\n**Bonus Points:**\n\n* Experience with CSS preprocessors like Sass or LESS.\n* Familiarity with front-end frameworks like React or Angular.\n* A passion for responsive design and cross-browser compatibility.\n* Excellent communication and collaboration skills.\n\n**What We Offer:**\n\n* The opportunity to work on cutting-edge projects that make a real impact.\n* A collaborative and supportive work environment where your skills will be valued.\n* Competitive salary and benefits package.\n* Opportunities for professional growth and development.\n* The chance to be part of a team that's passionate about creating exceptional online experiences.\n\n**Ready to code your next masterpiece?**\n\nSend us your resume and let's chat about how you can help us build something truly special!\n\n**Remember:** Customize this template to reflect your company culture, brand voice, and specific technical requirements. Be sure to highlight the unique perks and benefits you offer to attract top-notch HTML talent!\n\nI hope this helps you craft the perfect job description for your next HTML Developer!\n\n"
+
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -30,19 +33,21 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
   useEffect(() => {
     setDisplayedText("");
     if (data?.data) {
-      const words = JSON.stringify(data?.data).split(" ");
-      let i = 0;
+      // const words = JSON.stringify(data?.data).split(" ");
+      // let i = 0;
 
-      const intervalId = setInterval(() => {
-        if (i < words.length) {
-          setDisplayedText((prevText) => prevText + " " + words[i]);
-          i++;
-        } else {
-          clearInterval(intervalId);
-        }
-      }, 100); // Adjust the delay to suit your needs
+      // const intervalId = setInterval(() => {
+      //   if (i < words.length) {
+      //     setDisplayedText((prevText) => prevText + " " + words[i]);
+      //     i++;
+      //   } else {
+      //     clearInterval(intervalId);
+      //   }
+      // }, 100); // Adjust the delay to suit your needs
 
-      return () => clearInterval(intervalId); // Clean up on unmount
+      // return () => clearInterval(intervalId); // Clean up on unmount
+
+      setDisplayedText(data?.data.toString() || '');
     }
   }, [data]); // Add data as a dependency
 
@@ -92,7 +97,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
 
             <div className="flex w-full flex-col items-start lg:flex-row lg:justify-between">
               <p className="max-w-3xl">
-                {isFetching ? "Loading..." : <div>{displayedText}</div>}
+                {isFetching ? "Loading..." : <div><Markdown>{displayedText}</Markdown></div>}
               </p>
               <div className="mt-4 flex flex-col gap-y-2 text-slate-500 lg:mt-0">
                 <button className="hover:text-blue-600">

@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import LoginModal from "./loginModal";
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -141,35 +140,38 @@ const Header = () => {
                 </button>
               </div>
               <div className="p-4 md:p-5">
-                {/* <p className="text-gray-500 dark:text-gray-400 mb-4">Are you Hiring?</p> */}
+
                 <ul className="space-y-4 mb-4">
-                  {/* {['Recruiter', 'Applicant'].map((job, index) => ( */}
+
                   <li>
                     <p className="text-gray-500 dark:text-gray-400 mb-4">Are you Hiring?</p>
 
                     <label className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
-                      <div className="block">
-                        <div className="w-full text-lg font-semibold">Recruiter</div>
+                      <a href="/login">
+                        <div className="block">
+                          <div className="w-full text-lg font-semibold">Recruiter</div>
 
-                      </div>
-
+                        </div>
+                      </a>
                       <svg className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" /></svg>
                     </label>
                     <p className="mt-6 text-gray-500 dark:text-gray-400 mb-4">Are you looking for a new role?</p>
                     <label className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
-                      <div className="block">
-                        <div className="w-full text-lg font-semibold">Applicant</div>
+                      <a href="/loginApplicant">
+                        <div className="block">
+                          <div className="w-full text-lg font-semibold">Applicant</div>
 
-                      </div>
+                        </div>
+                      </a>
                       <svg className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9" /></svg>
                     </label>
 
                   </li>
 
                 </ul>
-                <button className="text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Next step
-                </button>
+                {/* <button className="text-white inline-flex w-full justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"> */}
+                {/* Next step
+                </button> */}
               </div>
             </div>
           </div>

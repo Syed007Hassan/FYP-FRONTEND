@@ -16,7 +16,7 @@ import { Backend_URL } from "@/lib/Constants";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { loginUser, resetReject } from "@/redux/services/auth/authActions";
+import { loginApplicant, resetReject } from "@/redux/services/auth/authActions";
 import { RootState } from "@/redux/store";
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -51,7 +51,7 @@ export default function SignInSide() {
       // });
 
       dispatch(
-        loginUser({ email: email, password: password, role: "employer" })
+        loginApplicant({ email: email, password: password, role: "employee" })
       );
 
       // console.log(result?.data?.data?.jwt);

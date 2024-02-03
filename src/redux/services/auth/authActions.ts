@@ -67,6 +67,70 @@ export const loginUser = createAsyncThunk<
   }
 );
 
+export const registerApplicant = createAsyncThunk<
+  void,
+  { name: string; email: string; password: string, role: string},
+  { rejectValue: string }
+>(
+  "/auth/registerApplicant",
+  async ({ name, email, password, role }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      // console.log(name, email, password, phone, companyName, role);
+
+      await axios.post(
+        `${Backend_URL}/auth/registerApplicant`,
+        { name, email, password, role},
+        config
+      );
+    } catch (error: any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const loginApplicant = createAsyncThunk<
+  void,
+  { email: string; password: string; role: string },
+  { rejectValue: string }
+>(
+  "/auth/loginApplicant",
+  async ({ email, password, role }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await axios.post(
+        `${Backend_URL}/auth/loginApplicant`,
+        { email, password, role },
+        config
+      );
+
+      return response.data;
+    } catch (error: any) {
+      // return custom error message from backend if present
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
 export const resetSuccess = createAsyncThunk("login/resetSuccess", async () => {
   return false;
 });

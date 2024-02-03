@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Backend_URL } from "@/lib/Constants";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { registerUser, resetSuccess } from "@/redux/services/auth/authActions";
+import { registerApplicant, resetSuccess } from "@/redux/services/auth/authActions";
 import Header from "@/components/Header";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +20,6 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phoneNum, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -33,16 +32,12 @@ export default function SignInSide() {
 
   const handleSubmit = (event: any) => {
     const name = firstName + " " + lastName;
-    const role = "employer";
-    const designation = "HR";
-    const phone = phoneNum;
+    const role = "employee";
     const data = {
       name,
       email,
       password,
-      phone,
       role,
-      designation,
     };
 
     console.log(data);
@@ -52,7 +47,7 @@ export default function SignInSide() {
     }
 
     data.email = data.email.toLowerCase();
-    // dispatch(registerUser(data));
+    dispatch(registerApplicant(data));
     console.log(success + "here is success");
   };
 
@@ -189,22 +184,6 @@ export default function SignInSide() {
                       required={true}
                     />
                   </div>
-                </div>
-
-                <div className="mb-4">
-                  <label
-                    htmlFor="phone"
-                    className="mb-1 block text-sm font-bold text-gray-900 dark:text-white"
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    id="phone"
-                    className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                    onChange={(e) => setPhone(e.target.value)}
-                    required={true}
-                  />
                 </div>
 
                 <div className="mb-4">

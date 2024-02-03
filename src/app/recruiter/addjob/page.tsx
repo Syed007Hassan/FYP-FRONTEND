@@ -14,9 +14,10 @@ import { createJob, resetSuccess } from "@/redux/services/job/jobAction";
 import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
+import dynamic from "next/dynamic";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+// import "react-quill/dist/quill.snow.css";
 
 const Page = () => {
   const router = useRouter();

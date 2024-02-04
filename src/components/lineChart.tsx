@@ -44,7 +44,6 @@ const LineChart = () => {
   return (
     <>
       <ApexChart type="area" options={options} series={series} height={400} width={1500} />
-
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { registerUser, loginUser, resetSuccess, resetReject } from "./authActions";
+import { registerUser, loginUser, resetSuccess, resetReject, registerApplicant, loginApplicant } from "./authActions";
 
 interface UserInfo {
   data: any; // Replace `any` with the actual type of `data`
@@ -63,6 +63,34 @@ const authSlice = createSlice({
       })
       .addCase(resetSuccess.fulfilled, (state) => {
         state.success = false;
+      })
+      .addCase(registerApplicant.pending.toString(), (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerApplicant.fulfilled.toString(), (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.userInfo = action.payload;
+        state.success = true;
+      })
+      .addCase(registerApplicant.rejected.toString(), (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.reject = true;
+        state.error = action.payload;
+      })
+      .addCase(loginApplicant.pending.toString(), (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginApplicant.fulfilled.toString(), (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.userInfo = action.payload;
+        state.success = true;
+      })
+      .addCase(loginApplicant.rejected.toString(), (state, action: PayloadAction<string>) => {
+        state.loading = false;
+        state.reject = true;
+        state.error = action.payload;
       });
   },
 });

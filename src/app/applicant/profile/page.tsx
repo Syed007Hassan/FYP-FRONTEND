@@ -7,7 +7,7 @@ import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaSkype } from 'react-icons/fa'
 import ApplicantHeader from '@/components/applicant/applicantHeader';
 import EducationDetails from '@/components/applicant/profileComponents/educatonDetails';
 
-const page = () => {
+const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -296,5 +296,5 @@ const page = () => {
   )
 }
 
-export default page;
+export default Profile;
 

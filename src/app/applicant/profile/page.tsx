@@ -11,40 +11,24 @@ const page = () => {
       <div className="page-content">
 
         <section className="pt-44 pb-28 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500 dark:bg-neutral-900  bg-center bg-cover relative" >
-          <div className="container mx-auto">
+          {/* <div className="container mx-auto">
             <div className="grid">
               <div className="col-span-12">
                 <div className="text-center text-black">
                   <h3 className="mb-4 text-[26px]">Candidate Details</h3>
                   <div className="page-next">
                     <nav className="inline-block" aria-label="breadcrumb text-center">
-                      {/* <ol className="flex justify-center text-sm font-medium uppercase">
-                        <li>
-                          <Link href="/">
-                            Home
-                          </Link>
-                        </li>
-                        <li>
-                          <i className="bx bxs-chevron-right align-middle px-2.5"></i>
-                          <Link href="/pages">
-                            Pages
-                          </Link>
-                        </li>
-                        <li className="active" aria-current="page">
-                          <i className="bx bxs-chevron-right align-middle px-2.5"></i>
-                          Candidate Details
-                        </li>
-                      </ol> */}
+                     
                     </nav>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/*  add image here from public folder */}
 
 
-          <Image
+          {/* <Image
             src="/job.png"
             alt="Shape"
             layout="fill" // This will make the image take the full width and height of its parent
@@ -59,12 +43,12 @@ const page = () => {
             width={500} // replace with actual width
             height={300} // replace with actual height
             className="absolute hidden bg-cover -bottom-0 dark:block"
-          />
+          /> */}
 
         </section>
 
 
-        <section className="py-20">
+        <section className="pt-10">
           <div className="container mx-auto">
             <div className="grid grid-cols-12 gap-y-10 lg:gap-10">
               <div className="pl-40 col-span-12 lg:col-span-4">

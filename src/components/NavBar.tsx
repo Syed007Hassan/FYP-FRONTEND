@@ -7,10 +7,8 @@ import {
   FaUser,
   FaUserPlus,
   FaBuilding,
-  FaBriefcase,
   FaBars,
   FaTimes,
-  FaSearch,
 } from "react-icons/fa";
 
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
@@ -19,18 +17,13 @@ import { toggleSidebar } from '../redux/features/sidebarStateAction';
 interface HeaderProps { }
 
 const NavBar: React.FC<HeaderProps> = () => {
-  const [sticky, setSticky] = useState<boolean>(false);
-  const [isMobileView, setIsMobileView] = useState<boolean>(false);
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState(false);
-  // const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector(state => state.sidebar.sidebarState);
 
   const handleToggleSidebar = () => {
     console.log("toggle");
-    // setIsSidebarOpen(!isSidebarOpen);
     dispatch(toggleSidebar());
   };
 

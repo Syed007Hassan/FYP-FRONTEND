@@ -81,8 +81,6 @@ export const registerApplicant = createAsyncThunk<
         },
       };
 
-      // console.log(name, email, password, phone, companyName, role);
-
       await axios.post(
         `${Backend_URL}/auth/registerApplicant`,
         { name, email, password, role},

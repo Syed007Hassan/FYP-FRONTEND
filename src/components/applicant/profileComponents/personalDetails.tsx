@@ -1,9 +1,18 @@
 import { Dropdown } from "flowbite-react";
+import React, { useState } from "react";
 
 interface PersonalDetailsProps {
   firstName: string;
   lastName: string;
   dob: string;
+  setPhone: (value: string) => void;
+  phone: string;
+  gender: string;
+  isDropdownOpen: boolean;
+  setIsDropdownOpen: (value: boolean) => void;
+  desc: string;
+  setDesc: (value: string) => void;
+  setGender: (value: string) => void;
   setFirstName: (value: string) => void;
   setLastName: (value: string) => void;
   setDob: (value: string) => void;
@@ -14,6 +23,14 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
   firstName,
   lastName,
   dob,
+  phone,
+  gender,
+  isDropdownOpen,
+  setIsDropdownOpen,
+  desc,
+  setDesc,
+  setGender,
+  setPhone,
   setFirstName,
   setLastName,
   setDob,
@@ -25,96 +42,162 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
         <div className="w-1/2">
           <label
             htmlFor="firstName"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 pb-2"
           >
             First Name
           </label>
           <input
-            id="firstName"
-            name="firstName"
             type="text"
-            placeholder="Ehtesham"
-            value={firstName}
+            id="firstName"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+            placeholder="E.g. John"
             onChange={(e) => setFirstName(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
         <div className="w-1/2">
           <label
             htmlFor="lastName"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 pb-2"
           >
             Last Name
           </label>
           <input
-            id="lastName"
-            name="lastName"
-            placeholder="Zafar"
             type="text"
-            value={lastName}
+            id="lastName"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+            placeholder="E.g. Doe"
             onChange={(e) => setLastName(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
       </div>
       <div className="pb-4">
-        <label htmlFor="phone">Phone Number</label>
+        <label
+          htmlFor="phone"
+          className="block text-sm font-medium text-gray-700 pb-2"
+        >
+          Phone
+        </label>
         <input
+          type="text"
           id="phone"
-          name="phone"
-          placeholder="+923001234567"
-          type="tel"
-          className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+          className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+          placeholder="E.g. 1234567890"
+          onChange={(e) => setPhone(e.target.value)}
+          required
         />
       </div>
       <div className="flex justify-between pb-4">
         <div className="w-1/2 pr-2">
           <label
             htmlFor="dob"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm pb-2 font-medium text-gray-700"
           >
             Date of Birth
           </label>
           <input
             type="date"
             id="dob"
-            name="dob"
-            value={dob}
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             onChange={(e) => setDob(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
         <div className="w-1/2 pl-2">
           <label
             htmlFor="gender"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm pb-2 font-medium text-gray-700"
           >
             Gender
           </label>
-          <Dropdown label="select gender" inline>
-            <Dropdown.Item onClick={() => alert("Dashboard!")}>
-              Male
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => alert("Settings!")}>
-              Female
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => alert("Earnings!")}>
-              Other
-            </Dropdown.Item>
-          </Dropdown>
+          <button
+            id="dropdownDefaultButton"
+            data-dropdown-toggle="dropdown"
+            className="text-white bg-blue-900 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {gender}
+            <svg
+              className="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          <div
+            id="dropdown"
+            className={`${
+              isDropdownOpen ? "block" : "hidden"
+            } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
+          >
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownDefaultButton"
+            >
+              <li onClick={() => {
+                setGender("male")
+                setIsDropdownOpen(false);
+              }}>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  male
+                </a>
+              </li>
+              <li onClick={() => {
+                setGender("female")
+                setIsDropdownOpen(false);
+              }}>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  female
+                </a>
+              </li>
+              <li onClick={() => {
+                setGender("other")
+                setIsDropdownOpen(false);
+              }}>
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  other
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-      <label htmlFor="desc">Description</label>
+      <label
+        htmlFor="desc"
+        className="block text-sm font-medium text-gray-700 pb-2"
+      >
+        Description
+      </label>
       <textarea
         id="desc"
-        name="desc"
+        className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
         placeholder="Write something about yourself"
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-      />
+      ></textarea>
       <button
         type="button"
         onClick={nextStep}
-        className="mt-4 px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-800"
+        className="mt-4 px-10 py-2 bg-blue-900 text-white rounded hover:bg-blue-800"
       >
         Next
       </button>

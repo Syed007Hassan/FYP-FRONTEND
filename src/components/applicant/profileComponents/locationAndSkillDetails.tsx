@@ -92,45 +92,62 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
     <div>
       <div className="flex justify-between pb-4">
         <div className="w-1/2 pr-2">
-          <label htmlFor="country">Country</label>
+          <label
+            htmlFor="country"
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
+            Country
+          </label>
           <input
-            id="country"
-            name="country"
             type="text"
+            id="country"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             placeholder="Pakistan"
-            value={country}
             onChange={(e) => setCountry(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
         <div className="w-1/2 pl-2">
-          <label htmlFor="city">City</label>
+          <label
+            htmlFor="city"
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
+            City
+          </label>
           <input
-            id="city"
-            name="city"
-            placeholder="Islamabad"
             type="text"
-            value={city}
+            id="city"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+            placeholder="Islamabad"
             onChange={(e) => setCity(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
       </div>
       <div className="pb-4">
-        <label htmlFor="area">Area</label>
+        <label
+          htmlFor="area"
+          className="block text-sm pb-2 font-medium text-gray-700"
+        >
+          Area
+        </label>
         <input
-          id="area"
-          name="area"
-          placeholder="G-11/2"
           type="text"
-          value={area}
+          id="area"
+          className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+          placeholder="G-9/1"
           onChange={(e) => setArea(e.target.value)}
-          className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+          required
         />
       </div>
 
       <div>
-        <label htmlFor="skills">Skills</label>
+        <label
+          htmlFor="skills"
+          className="block text-sm pb-2 font-medium text-gray-700"
+        >
+          Skills
+        </label>
         <ReactTags
           id="skills"
           tags={tags}
@@ -147,13 +164,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
 
       <button
         onClick={prevStep}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+        className="mt-4 px-7 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
       >
         Previous
       </button>
       <button
         onClick={nextStep}
-        className="bg-blue-900 text-white px-4 py-2 rounded"
+        className="bg-blue-900 text-white px-10 py-2 rounded"
       >
         Next
       </button>

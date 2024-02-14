@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -10,6 +10,7 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem("applicants", JSON.stringify(applicants));
   }, []);
+
   return (
     <div className=" min-h-screen justify-center">
       <Header />

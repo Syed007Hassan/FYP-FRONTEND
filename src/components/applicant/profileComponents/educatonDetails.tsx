@@ -3,6 +3,10 @@ interface EducationProps {
   institute: string;
   startDate: string;
   endDate: string;
+  degreeName: string;
+  isDropdownOpen: boolean;
+  setIsDropdownOpen: (value: boolean) => void;
+  setDegreeName: (value: string) => void;
   setDegreeTitle: (value: string) => void;
   setInstitute: (value: string) => void;
   setStartDate: (value: string) => void;
@@ -16,6 +20,10 @@ const EducationDetails: React.FC<EducationProps> = ({
   institute,
   startDate,
   endDate,
+  degreeName,
+  isDropdownOpen,
+  setIsDropdownOpen,
+  setDegreeName,
   setDegreeTitle,
   setInstitute,
   setStartDate,
@@ -25,67 +33,178 @@ const EducationDetails: React.FC<EducationProps> = ({
 }) => {
   return (
     <div>
-      <div className="pb-4">
-        <label htmlFor="degreeTitle">Degree Title</label>
-        <input
-          id="degreeTitle"
-          name="degreeTitle"
-          type="text"
-          placeholder="BS Computer Science"
-          value={degreeTitle}
-          onChange={(e) => setDegreeTitle(e.target.value)}
-          className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
-        />
+      <div className="flex space-x-4 pb-4">
+        <div className="flex-1">
+          <label
+            htmlFor="degreeTitle"
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
+            Degree Title
+          </label>
+          <button
+            id="dropdownDefaultButton"
+            data-dropdown-toggle="dropdown"
+            className="text-white bg-blue-900 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {degreeTitle ? degreeTitle : "Select Degree"}
+            <svg
+              className="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                strokeWidth="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          <div
+            id="dropdown"
+            className={`${
+              isDropdownOpen ? "block" : "hidden"
+            } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
+          >
+            <ul
+              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownDefaultButton"
+            >
+              <li
+                onClick={() => {
+                  setDegreeTitle("BS");
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  BS
+                </a>
+              </li>
+              <li
+                onClick={() => {
+                  setDegreeTitle("MS");
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  MS
+                </a>
+              </li>
+              <li
+                onClick={() => {
+                  setDegreeTitle("PhD");
+                  setIsDropdownOpen(false);
+                }}
+              >
+                <a
+                  href="#"
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  PhD
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex-1">
+          <label
+            htmlFor="degreeName"
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
+            Degree Name
+          </label>
+          <input
+            type="text"
+            id="degreeName"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+            placeholder="Computer Science"
+            onChange={(e) => setDegreeName(e.target.value)}
+            required
+          />
+        </div>
       </div>
       <div className="pb-4">
-        <label htmlFor="institute">Institute</label>
+        <label
+          htmlFor="institute"
+          className="block text-sm pb-2 font-medium text-gray-700"
+        >
+          Institute
+        </label>
         <input
-          id="institute"
-          name="institute"
-          placeholder="FAST"
           type="text"
-          value={institute}
+          id="institute"
+          className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+          placeholder="FAST-NUCES"
           onChange={(e) => setInstitute(e.target.value)}
-          className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+          required
         />
       </div>
       <div className="flex space-x-4 pb-4">
         <div className="w-1/2">
-          <label htmlFor="startDate">Start Date</label>
+          <label
+            htmlFor="startDate"
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
+            Start Date
+          </label>
           <input
-            id="startDate"
-            name="startDate"
             type="date"
-            value={startDate}
+            id="startDate"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+            // placeholder="FAST-NUCES"
             onChange={(e) => setStartDate(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
         <div className="w-1/2">
-          <label htmlFor="endDate">End Date</label>
+          <label
+            htmlFor="endDate"
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
+            End Date
+          </label>
           <input
-            id="endDate"
-            name="endDate"
             type="date"
-            value={endDate}
+            id="endDate"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+            // placeholder="E.g. 1234567890"
             onChange={(e) => setEndDate(e.target.value)}
-            className="mt-1 block w-full h-9 rounded-md border-gray-300 shadow-sm"
+            required
           />
         </div>
       </div>
       <button
         type="button"
         onClick={prevStep}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+        className="mt-4 px-7 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
       >
         Previous
       </button>
       <button
         type="button"
         onClick={nextStep}
-        className="mt-4 px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-800"
+        className="mt-4 px-10 py-2 bg-blue-900 text-white rounded hover:bg-blue-800 mr-2"
       >
         Next
+      </button>
+      <button
+        type="button"
+        onClick={nextStep}
+        className="mt-4 px-7 py-2 bg-blue-900 text-white rounded hover:bg-blue-800"
+      >
+        Add More
       </button>
     </div>
   );

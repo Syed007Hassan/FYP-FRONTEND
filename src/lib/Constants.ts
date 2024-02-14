@@ -3,8 +3,6 @@ export const Backend_URL = process.env
 export const FLASK_URL = process.env
   .NEXT_PUBLIC_BACKEND_FLASK_URL_DEV as string;
 
-console.log("Backend_URL: ", Backend_URL);
-
 export function parseJwt(jwt: string): any {
   const parts = jwt.split(".");
   if (parts.length < 2) {

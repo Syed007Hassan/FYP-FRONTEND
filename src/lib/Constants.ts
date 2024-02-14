@@ -1,6 +1,9 @@
-export const Backend_URL = "http://localhost:5000/api";
-export const FLASK_URL = "http://localhost:4000/api";
+export const Backend_URL = process.env
+  .NEXT_PUBLIC_BACKEND_NEST_URL_DEV as string;
+export const FLASK_URL = process.env
+  .NEXT_PUBLIC_BACKEND_FLASK_URL_DEV as string;
 
+console.log("Backend_URL: ", Backend_URL);
 
 export function parseJwt(jwt: string): any {
   const parts = jwt.split(".");
@@ -10,5 +13,5 @@ export function parseJwt(jwt: string): any {
 
   const base64Url = parts[1];
   const base64 = base64Url.replace("-", "+").replace("_", "/");
-  return JSON.parse(Buffer.from(base64, 'base64').toString('binary'));
+  return JSON.parse(Buffer.from(base64, "base64").toString("binary"));
 }

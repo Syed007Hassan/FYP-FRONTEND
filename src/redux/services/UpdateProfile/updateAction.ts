@@ -38,7 +38,7 @@ export const updateApplicantDetails: any = createAsyncThunk(
   async (applicantDetails: ApplicantDetails, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${Backend_URL}/api/user/createApplicantDetails/${applicantDetails.data.id}`,
+        `${Backend_URL}/api/user/createApplicantDetails/${applicantDetails}`,
         applicantDetails
       );
       return response.data;
@@ -60,7 +60,7 @@ export const updateApi = createApi({
   endpoints: (builder) => ({
     updateApplicantDetails: builder.mutation<any, ApplicantDetails>({
       query: (details) => ({
-        url: `createApplicantDetails/${details.data.id}`,
+        url: `createApplicantDetails/${details}`,
         method: "POST",
         body: details,
       }),

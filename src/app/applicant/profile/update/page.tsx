@@ -78,16 +78,16 @@ const UpdateProfile = () => {
     console.log(email)
 
   }, [email])
-  const handleSubmit = (e: any) => {
-    //  event.preventDefault();
-    const ApplicantId = parseInt(applicantIdTemp);
-    const temp_data = {
-      dob,
+  // const handleSubmit = (e: any) => {
+  //   //  event.preventDefault();
+  //   const ApplicantId = parseInt(applicantIdTemp);
+  //   const temp_data = {
+  //     dob,
 
-    }
+  //   }
 
 
-  }
+  // }
 
   return (
     <div className="bg-gray-100 font-inter bg-image">
@@ -98,7 +98,7 @@ const UpdateProfile = () => {
         <form
           className="p-6 rounded shadow-md w-full max-w-md"
           style={{ backgroundColor: "rgba(242, 242, 242, 0.3)" }}
-          onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         >
           {step === 0 && (
             <>

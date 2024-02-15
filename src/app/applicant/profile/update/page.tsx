@@ -4,6 +4,7 @@ import personalDetails from "@/components/applicant/profileComponents/personalDe
 import EducationDetails from "@/components/applicant/profileComponents/educatonDetails";
 import locationAndSkillDetails from "@/components/applicant/profileComponents/locationAndSkillDetails";
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
+import UploadResume from "@/components/applicant/profileComponents/uploadResume";
 import "../../../../styles/applicant.css";
 import { updateApplicantDetails } from "@/redux/services/UpdateProfile/updateAction";
 import { updateApi } from "@/redux/services/UpdateProfile/updateAction";
@@ -20,10 +21,14 @@ const UpdateProfile = () => {
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState("");
   const [desc, setDesc] = useState("");
+  const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("select gender");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // education attributes
   const [institute, setInstitute] = useState("");
   const [degreeTitle, setDegreeTitle] = useState("");
+  const [degreeName, setDegreeName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -90,13 +95,13 @@ const UpdateProfile = () => {
   // }
 
   return (
-    <div className="bg-gray-100 font-inter bg-image">
-      <h1 className="text-4xl font-bold text-center text-blue-900">
+    <div className="font-sans">
+      {/* <h1 className="text-4xl font-bold text-center text-blue-900">
         Profile Setup
-      </h1>
+      </h1> */}
       <div className="flex justify-center items-center min-h-screen">
         <form
-          className="p-6 rounded shadow-md w-full max-w-md"
+          className="p-6 rounded shadow-md w-full max-w-md bg-gray-300"
           style={{ backgroundColor: "rgba(242, 242, 242, 0.3)" }}
         // onSubmit={handleSubmit}
         >
@@ -109,6 +114,14 @@ const UpdateProfile = () => {
                 firstName,
                 lastName,
                 dob,
+                phone,
+                gender,
+                isDropdownOpen,
+                setIsDropdownOpen,
+                desc,
+                setDesc,
+                setGender,
+                setPhone,
                 setFirstName,
                 setLastName,
                 setDob,
@@ -126,6 +139,10 @@ const UpdateProfile = () => {
                 institute,
                 startDate,
                 endDate,
+                degreeName,
+                isDropdownOpen,
+                setIsDropdownOpen,
+                setDegreeName,
                 setDegreeTitle,
                 setInstitute,
                 setStartDate,
@@ -173,6 +190,14 @@ const UpdateProfile = () => {
                 nextStep,
                 prevStep,
               })}
+            </>
+          )}
+          {step === 4 && (
+            <>
+              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+                Upload Resume
+              </h1>
+              {UploadResume({ reallocation, setReallocation, nextStep, prevStep})}
             </>
           )}
         </form>

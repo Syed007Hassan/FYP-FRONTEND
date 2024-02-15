@@ -15,8 +15,10 @@ import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
+import { FaLocationCrosshairs } from "react-icons/fa6";
+import Location from "@/types/location";
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 // import "react-quill/dist/quill.snow.css";
 
 const Page = () => {
@@ -26,6 +28,7 @@ const Page = () => {
   const [typeDropdownOpen, setTypeDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("Select a type");
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
+  const [add, setAdd] = useState<Location>();
 
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
@@ -126,6 +129,37 @@ const Page = () => {
       router.push("/recruiter/joblist");
     }
   }, [success, router]);
+
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const { latitude, longitude } = pos.coords;
+        console.log(latitude, longitude);
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => setAdd(data.address));
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  };
+
+  useEffect(() => {
+    setJob({
+      ...job,
+      location:
+        add?.neighbourhood +
+          ", " +
+          add?.city_district +
+          ", " +
+          add?.city +
+          ", " +
+          add?.state +
+          ", " +
+          add?.country || "",
+    });
+  }, [add, job]);
 
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">
@@ -394,18 +428,25 @@ const Page = () => {
                     >
                       Location
                     </label>
-                    <input
-                      type="text"
-                      id="location"
-                      placeholder="Bachelors"
-                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                      autoComplete="given-name"
-                      // value="companyName"
-                      onChange={(e) => {
-                        setJob({ ...job, location: e.target.value });
-                      }}
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        id="location"
+                        placeholder="Bachelors"
+                        className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
+                        autoComplete="given-name"
+                        value={add ? job.location : undefined}
+                        onChange={(e) => {
+                          setJob({ ...job, location: e.target.value });
+                        }}
+                        required
+                      />
+                      <FaLocationCrosshairs
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+                        onClick={getCurrentLocation}
+                        title="Get current location"
+                      />
+                    </div>
                   </div>
                   <div className="">
                     <label

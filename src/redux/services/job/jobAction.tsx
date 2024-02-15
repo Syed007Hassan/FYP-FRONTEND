@@ -2,8 +2,9 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { JobResponse, SingleJobResponse  } from "@/types/job";
+import { JobResponse, SingleJobResponse } from "@/types/job";
 import { Jobs } from "@/data/data";
+
 
 type CreateJobArgs = {
   companyId: string;
@@ -32,11 +33,11 @@ export const JobApi = createApi({
     baseUrl: "http://localhost:5000/api/job/",
   }),
   endpoints: (builder) => ({
-    getJob: builder.query<SingleJobResponse, {jobId: string}>({
-      query: ({jobId}) => `findOneByJobId/${jobId}`,
+    getJob: builder.query<SingleJobResponse, { jobId: string }>({
+      query: ({ jobId }) => `findOneByJobId/${jobId}`,
     }),
-    getJobs: builder.query<JobResponse, {id: string}>({
-      query: ({id}) => `findOneByCompanyId/${id}`,
+    getJobs: builder.query<JobResponse, { id: string }>({
+      query: ({ id }) => `findOneByCompanyId/${id}`,
     }),
   }),
 });

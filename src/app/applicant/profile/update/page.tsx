@@ -5,10 +5,16 @@ import EducationDetails from "@/components/applicant/profileComponents/educatonD
 import locationAndSkillDetails from "@/components/applicant/profileComponents/locationAndSkillDetails";
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import "../../../../styles/applicant.css";
+import { updateApplicantDetails } from "@/redux/services/UpdateProfile/updateAction";
+import { updateApi } from "@/redux/services/UpdateProfile/updateAction";
+import Cookies from 'js-cookie';
+import { parseJwt } from "@/lib/Constants";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 const UpdateProfile = () => {
   const [step, setStep] = useState(0);
 
+  const dispatch = useAppDispatch();
   // personal detail attributes
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -36,6 +42,9 @@ const UpdateProfile = () => {
   const [expStartDate, setExpStartDate] = useState("");
   const [expEndDate, setExpEndDate] = useState("");
   const [reallocation, setReallocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [decodedData, setDecodedData] = useState(null);
+  const [applicantIdTemp, setApplicantIdTemp] = useState(null);
 
   const prevStep = () => {
     setStep((prevStep) => prevStep - 1); // Decrement step by 1
@@ -48,6 +57,37 @@ const UpdateProfile = () => {
   useEffect(() => {
     console.log(dob);
   }, [dob]);
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      // const session = await getSession();
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setEmail(decodedData?.email || "");
+      setApplicantIdTemp(decodedData.applicantId || "");
+    };
+    parseJwtFromSession();
+
+  }, []);
+
+  useEffect(() => {
+    console.log(email)
+
+  }, [email])
+  const handleSubmit = (e: any) => {
+    //  event.preventDefault();
+    const ApplicantId = parseInt(applicantIdTemp);
+    const temp_data = {
+      dob,
+
+    }
+
+
+  }
 
   return (
     <div className="bg-gray-100 font-inter bg-image">
@@ -58,6 +98,7 @@ const UpdateProfile = () => {
         <form
           className="p-6 rounded shadow-md w-full max-w-md"
           style={{ backgroundColor: "rgba(242, 242, 242, 0.3)" }}
+          onSubmit={handleSubmit}
         >
           {step === 0 && (
             <>

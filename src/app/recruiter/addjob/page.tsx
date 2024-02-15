@@ -16,10 +16,11 @@ import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { FaLocationCrosshairs } from "react-icons/fa6";
-import Location from "@/types/location";
+import Location from "@/types/location"
+import { JobLocation } from "@/types/job";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-// import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.snow.css";
 
 const Page = () => {
   const router = useRouter();
@@ -29,6 +30,9 @@ const Page = () => {
   const [selectedType, setSelectedType] = useState("Select a type");
   const [selectedCategory, setSelectedCategory] = useState("Select a category");
   const [add, setAdd] = useState<Location>();
+  const [location, setLocation] = useState<JobLocation>();
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
 
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
@@ -45,7 +49,14 @@ const Page = () => {
     salary: "",
     qualification: "",
     company: "",
-    location: "",
+    location: 
+      {
+        area: "",
+        city: "",
+        country: "",
+        latitude: "",
+        longitude: "",
+      },
     urgency: "",
     desc: "",
   });
@@ -83,24 +94,27 @@ const Page = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const newJob = {
-      id: Math.floor(Math.random() * 1000),
-      companyId: 1,
-      image: image_1,
-      title: job.title,
-      experience: job.experience,
-      qualification: job.qualification,
-      company: "SyncFlow",
-      location: job.location,
-      salary: job.salary,
-      type: "Full Time", // replace with actual type
-      urgency: job.urgency,
-      category: "IT", // replace with actual category
-      desc: job.desc,
-    };
 
-    job_list.push(newJob);
-    localStorage.setItem("job_list", JSON.stringify(job_list));
+    console .log("job:", job);
+
+    // const newJob = {
+    //   id: Math.floor(Math.random() * 1000),
+    //   companyId: 1,
+    //   image: image_1,
+    //   title: job.title,
+    //   experience: job.experience,
+    //   qualification: job.qualification,
+    //   company: "SyncFlow",
+    //   location: location,
+    //   salary: job.salary,
+    //   type: "Full Time", // replace with actual type
+    //   urgency: job.urgency,
+    //   category: "IT", // replace with actual category
+    //   desc: job.desc,
+    // };
+
+    // job_list.push(newJob);
+    // localStorage.setItem("job_list", JSON.stringify(job_list));
 
     // router.push("/dashboard/joblist");
 
@@ -133,7 +147,9 @@ const Page = () => {
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
-        const { latitude, longitude } = pos.coords;
+        // const { latitude, longitude } = pos.coords;
+        setLatitude(pos.coords.latitude.toString());
+        setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
         fetch(url)
@@ -146,20 +162,18 @@ const Page = () => {
   };
 
   useEffect(() => {
-    setJob({
-      ...job,
-      location:
-        add?.neighbourhood +
-          ", " +
-          add?.city_district +
-          ", " +
-          add?.city +
-          ", " +
-          add?.state +
-          ", " +
-          add?.country || "",
-    });
-  }, [add, job]);
+    if (add) {
+      const { country, city, town } = add;
+      const location = {
+        area: town,
+        city: city,
+        country: country,
+        latitude: latitude,
+        longitude: longitude,
+      };
+      setJob({ ...job, location: location });
+    }
+  }, [add, latitude, longitude, job]);
 
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">
@@ -197,11 +211,8 @@ const Page = () => {
                       placeholder="Enter job title"
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="given-name"
-                      value={job.title}
                       onChange={(e) => {
-                        console.log("event.target.value:", e.target.value); // Check the event object
                         setJob({ ...job, title: e.target.value });
-                        console.log("job after update:", job); // Check the state update
                       }}
                       required
                     />
@@ -435,10 +446,10 @@ const Page = () => {
                         placeholder="Bachelors"
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
                         autoComplete="given-name"
-                        value={add ? job.location : undefined}
-                        onChange={(e) => {
-                          setJob({ ...job, location: e.target.value });
-                        }}
+                        value={add ? job.location.area : undefined}
+                        // onChange={(e) => {
+                        //   setJob({ ...job, location: e.target.value });
+                        // }}
                         required
                       />
                       <FaLocationCrosshairs
@@ -487,7 +498,6 @@ const Page = () => {
                   /> */}
                   <ReactQuill
                     theme="snow"
-                    value={job.desc}
                     onChange={(content) => {
                       setJob({ ...job, desc: content });
                     }}

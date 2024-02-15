@@ -6,8 +6,8 @@ import locationAndSkillDetails from "@/components/applicant/profileComponents/lo
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
 import "../../../../styles/applicant.css";
-import { updateApplicantDetails } from "@/redux/services/UpdateProfile/updateAction";
-import { updateApi } from "@/redux/services/UpdateProfile/updateAction";
+import { updateApplicantDetails } from "@/redux/services/Applicant/applicantAction";
+import { updateApi } from "@/redux/services/Applicant/applicantAction";
 import Cookies from 'js-cookie';
 import { parseJwt } from "@/lib/Constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -49,7 +49,7 @@ const UpdateProfile = () => {
   const [reallocation, setReallocation] = useState("");
   const [email, setEmail] = useState("");
   const [decodedData, setDecodedData] = useState(null);
-  const [applicantIdTemp, setApplicantIdTemp] = useState(null);
+  const [applicantIdTemp, setApplicantIdTemp] = useState("");
 
   const prevStep = () => {
     setStep((prevStep) => prevStep - 1); // Decrement step by 1
@@ -73,18 +73,20 @@ const UpdateProfile = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
-      setApplicantIdTemp(decodedData.applicantId.toString() || "");
+      setApplicantIdTemp(decodedData.id.toString() || "");
     };;
     parseJwtFromSession();
 
   }, []);
 
-  useEffect(() => {
-    console.log(email)
-  }, [email])
+  // useEffect(() => {
+  //   console.log(email);
+  //   console.log(applicantIdTemp);
+  // }, [email, applicantIdTemp])
+
   const handleSubmit = (e: any) => {
-    //  event.preventDefault();
-    const applicantId = applicantIdTemp;
+     e.preventDefault();
+    const id = applicantIdTemp;
     const temp_data = {
       dob,
       gender,
@@ -119,7 +121,8 @@ const UpdateProfile = () => {
       languages: "",
     };
     console.log(temp_data);
-    dispatch(updateApplicantDetails(applicantId, temp_data))
+    console.log("id: ",id);
+    dispatch(updateApplicantDetails({id, temp_data}))
 
   }
 

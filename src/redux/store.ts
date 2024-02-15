@@ -6,19 +6,18 @@ import { companyApi } from "./services/Company/companyAction";
 import { chatApi } from "./services/chat/chatAction";
 import { JobApi } from "./services/job/jobAction";
 import { stageApi } from "./services/stage/stageAction";
-import { updateApi } from "./services/UpdateProfile/updateAction";
+import { updateApi } from "./services/Applicant/applicantAction";
 import { assigneeApi } from "./services/assignee/assigneeAction";
 
 import { userReducer } from "./services/Recruiter/recruiterSlice";
 import { employeeReducer } from "./services/Recruiter/recruiterSlice";
 import companyReducer from "./services/Company/companySlice";
 import jobReducer from "./services/job/jobSlice";
-import { updateProfileReducer } from "./services/UpdateProfile/updateSlice";
+import applicantReducer from "./services/Applicant/applicantSlice";
 import stageReducer from "./services/stage/stageSlice";
 import assigneeReducer from "./services/assignee/assigneeSlice";
 
 import sidebarReducer from "./features/sidebarStateAction";
-
 export const store = configureStore({
   reducer: {
     authReducer,
@@ -26,9 +25,9 @@ export const store = configureStore({
     employeeReducer,
     companyReducer,
     jobReducer,
-    UpdateProfileReducer: updateProfileReducer,
     stageReducer,
     assigneeReducer,
+    applicantReducer,
     [userApi.reducerPath]: userApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,

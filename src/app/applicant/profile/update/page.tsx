@@ -73,37 +73,63 @@ const UpdateProfile = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
-      setApplicantIdTemp(decodedData.applicantId || "");
-    };
+      setApplicantIdTemp(decodedData.applicantId.toString() || "");
+    };;
     parseJwtFromSession();
 
   }, []);
 
   useEffect(() => {
     console.log(email)
-
   }, [email])
-  // const handleSubmit = (e: any) => {
-  //   //  event.preventDefault();
-  //   const ApplicantId = parseInt(applicantIdTemp);
-  //   const temp_data = {
-  //     dob,
+  const handleSubmit = (e: any) => {
+    //  event.preventDefault();
+    const applicantId = applicantIdTemp;
+    const temp_data = {
+      dob,
+      gender,
+      aboutMe: desc,
+      education: [
+        {
+          degree: degreeName,
+          institution: institute,
+          startDate,
+          endDate,
+        },
+      ],
+      skills: tags.map((tag) => tag.text),
+      location: {
+        area,
+        city,
+        country,
+        latitude: "0",
+        longitude: "0",
+      },
+      experience: [
+        {
+          company,
+          title: position,
+          startDate: expStartDate,
+          endDate: expEndDate,
+          description: "",
+        },
+      ],
+      relocation: reallocation,
+      resume: "",
+      languages: "",
+    };
+    console.log(temp_data);
+    dispatch(updateApplicantDetails(applicantId, temp_data))
 
-  //   }
-
-
-  // }
+  }
 
   return (
     <div className="font-sans">
-      {/* <h1 className="text-4xl font-bold text-center text-blue-900">
-        Profile Setup
-      </h1> */}
       <div className="flex justify-center items-center min-h-screen">
         <form
           className="p-6 rounded shadow-md w-full max-w-md bg-gray-300"
           style={{ backgroundColor: "rgba(242, 242, 242, 0.3)" }}
-        // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           {step === 0 && (
             <>
@@ -197,7 +223,7 @@ const UpdateProfile = () => {
               <h1 className="text-2xl text-blue-900 font-bold pb-4">
                 Upload Resume
               </h1>
-              {UploadResume({ reallocation, setReallocation, nextStep, prevStep})}
+              {UploadResume({ reallocation, setReallocation, nextStep, prevStep })}
             </>
           )}
         </form>
@@ -205,5 +231,6 @@ const UpdateProfile = () => {
     </div>
   );
 };
+
 
 export default UpdateProfile;

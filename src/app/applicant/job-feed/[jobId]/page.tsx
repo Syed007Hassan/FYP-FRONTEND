@@ -247,7 +247,7 @@ const Page = () => {
                                 Location
                               </h6>
                               <p className="text-gray-500 dark:text-gray-300">
-                                {job && job?.jobLocation}
+                                {job && job?.jobLocation?.area},{" "}
                               </p>
                             </div>
                           </div>

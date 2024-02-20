@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Backend_URL } from "@/lib/Constants";
+import { ApplicantDetailsApiResponse } from "@/types/applicant";
 
 type ApplicantDetails = {
   dob: string;
@@ -58,21 +59,34 @@ export const resetSuccess = createAsyncThunk("/resetSuccess", async () => {
   return false;
 });
 
-export const updateApi = createApi({
-  reducerPath: "updateApi",
+// export const updateApi = createApi({
+//   reducerPath: "updateApi",
+//   refetchOnFocus: true,
+//   baseQuery: fetchBaseQuery({
+//     baseUrl: "http://localhost:5000/api/user/",
+//   }),
+//   endpoints: (builder) => ({
+//     updateApplicantDetails: builder.mutation<any, ApplicantDetails>({
+//       query: (details) => ({
+//         url: `createApplicantDetails/${details}`,
+//         method: "POST",
+//         body: details,
+//       }),
+//     }),
+//   }),
+// });
+
+export const ApplicantDetailApi = createApi({
+  reducerPath: "ApplicantDetailApi",
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/user/",
+    baseUrl: `${Backend_URL}/user/`,
   }),
   endpoints: (builder) => ({
-    updateApplicantDetails: builder.mutation<any, ApplicantDetails>({
-      query: (details) => ({
-        url: `createApplicantDetails/${details}`,
-        method: "POST",
-        body: details,
-      }),
+    getApplicantDetails: builder.query<ApplicantDetailsApiResponse, { id: string }>({
+      query: ({ id }) => `findApplicantDetails/${id}`,
     }),
   }),
 });
 
-export const { useUpdateApplicantDetailsMutation } = updateApi;
+export const { useGetApplicantDetailsQuery } = ApplicantDetailApi;

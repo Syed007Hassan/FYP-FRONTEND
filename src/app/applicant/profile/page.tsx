@@ -5,17 +5,58 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaSkype } from 'react-icons/fa';
 import ApplicantHeader from '@/components/applicant/applicantHeader';
-import EducationDetails from '@/components/applicant/profileComponents/educatonDetails';
-
+import EducationDetails from '@/components/applicant/profileUpdate/educatonDetails';
+import ExperienceDetails from '@/components/applicant/profileUpdate/experienceDetails';
+import { useAppDispatch } from '@/redux/hooks';
+import PersonalDetails from '@/components/applicant/profileUpdate/contactDetails';
 const Profile = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentModal, setCurrentModal] = useState(null);
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const dispatch = useAppDispatch();
+  // personal detail attributes
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [dob, setDob] = useState("");
+  const [desc, setDesc] = useState("");
+  const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("select gender");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [address, setAddress] = useState("");
+
+  // education attributes
+  const [institute, setInstitute] = useState("");
+  const [degreeTitle, setDegreeTitle] = useState("");
+  const [degreeName, setDegreeName] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  // location attributes
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [area, setArea] = useState("");
+
+  // skills attributes
+  type Tags = { id: string; text: string }[];
+  const [tags, setTags] = useState<Tags>([]);
+
+  // experience attributes
+  const [company, setCompany] = useState("");
+  const [position, setPosition] = useState("");
+  const [expStartDate, setExpStartDate] = useState("");
+  const [expEndDate, setExpEndDate] = useState("");
+  const [reallocation, setReallocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [decodedData, setDecodedData] = useState(null);
+  const [applicantIdTemp, setApplicantIdTemp] = useState(null);
+
+  const openModal = (modalId: any) => {
+    console.log('Modal ID:', modalId); // Check the received modal ID
+    setCurrentModal(modalId); // Update the state
   };
 
+  // Function to close the modal
   const closeModal = () => {
-    setIsModalOpen(false);
+    setCurrentModal(null);
   };
   return (
 
@@ -100,12 +141,15 @@ const Profile = () => {
                     </li>
                   </ul>
                   <div className="mt-6">
-                    <a className="btn text-center py-2 items-center justify-center flex bg-red-500 border-transparent text-black-500 hover:-translate-y-1.5 dark:bg-yellow-500/30" >
+
+                    <button className="btn text-center ml-2 py-2 px-20 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700" >
                       Download CV
-                    </a>
+                    </button>
+
+
 
                   </div>
-                  <ul className="flex items-center justify-between mt-0">
+                  {/* <ul className="flex items-center justify-between mt-0">
                     <li className="text-yellow-500 text-16">
                       <i className="mdi mdi-star"></i>
                       <i className="mdi mdi-star"></i>
@@ -114,14 +158,29 @@ const Profile = () => {
                       <i className="mdi mdi-star-half-full"></i>
                     </li>
                     <div className="border border-gray-100/50 rounded h-8 w-8 text-center leading-[2.4] text-gray-500 hover:bg-red-500 hover:text-white transition-all duration-500 ease-out hover:border-transparent dark:border-neutral-600">
-                      <a href="javascript:void(0)"><i className="text-lg uil uil-heart-alt"></i></a>
+                      {/* <a href="javascript:void(0)"><i className="text-lg uil uil-heart-alt"></i></a> */}
+                  {/* <button onClick={() => handleButtonClick()} className="border border-gray-100/50 rounded h-8 w-8 text-center leading-[2.4] text-gray-500 hover:bg-red-500 hover:text-white transition-all duration-500 ease-out hover:border-transparent dark:border-neutral-600">
+                        <i className="text-lg uil uil-heart-alt"></i>
+                      </button> 
+
                     </div>
-                  </ul>
+                  </ul> */}
                 </div>
 
 
                 <div className="p-5">
-                  <h6 className="mb-3 font-semibold text-gray-900 text-17 dark:text-gray-50">Contact Details</h6>
+                  <div className='relative justify-between flex mt-4'>
+                    <h6 className="mb-3 font-semibold text-gray-900 text-17 dark:text-gray-50">Contact Details</h6>
+                    <button
+                      className=" text-blue-700"
+                      data-modal-target="education" data-modal-toggle="education"
+                      onClick={() => openModal('contact')}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+                  </div>
                   <ul>
                     <li>
                       <div className="flex items-center mt-4">
@@ -186,17 +245,21 @@ const Profile = () => {
                 <div className="pt-5 ">
                   <div className='relative justify-between flex mt-4'>
                     <h6 className="mb-0 text-gray-900 font-semibold text-17 fw-bold dark:text-gray-50">Education</h6>
-                    <Link href="/educationDetails">
-                      <button className=" text-violet-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                      </button>
-                    </Link>
+
+                    <button
+                      className=" text-blue-700"
+                      data-modal-target="education" data-modal-toggle="education"
+                      onClick={() => openModal('education')}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+
                   </div>
 
                   <div className="relative flex mt-4">
-                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-violet-500 text-white rounded-full font-medium">1</div>
+                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-blue-700 text-white rounded-full font-medium">1</div>
                     <div className="space-y-6 ltr:ml-4 rtl:mr-4">
                       <div>
                         <h6 className="mb-1 text-gray-900 text-16  dark:text-gray-50">BCA - Bachelor of Computer Applications</h6>
@@ -205,7 +268,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="relative flex mt-8">
-                    <div className="h-8 w-8 text-center ml-3 mr-3 leading-[2.2] bg-violet-500 text-white rounded-full font-medium">2</div>
+                    <div className="h-8 w-8 text-center ml-3 mr-3 leading-[2.2] bg-blue-700 text-white rounded-full font-medium">2</div>
                     <div className="space-y-6 ltr:ml-4 rtl:mr-4">
                       <div>
                         <h6 className="mb-1 text-gray-900 text-16 dark:text-gray-50">MCA - Master of Computer Application</h6>
@@ -214,7 +277,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="flex mt-8">
-                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-violet-500 text-white rounded-full font-medium">3</div>
+                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-blue-700 text-white rounded-full font-medium">3</div>
                     <div className="space-y-6 ltr:ml-4 rtl:mr-4">
                       <div>
                         <h6 className="mb-1 text-gray-900 text-16 dark:text-gray-50">Design Communication Visual</h6>
@@ -226,15 +289,18 @@ const Profile = () => {
                 <div className="pt-10">
                   <div className='relative justify-between flex mt-4'>
                     <h6 className="mb-0 text-gray-900 font-semibold text-17 fw-bold dark:text-gray-50">Experience</h6>
-                    <Link href="/experienceDetails">
-                      <button className=" text-violet-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                      </button>
-                    </Link>
+
+                    <button className="text-blue-700"
+                      data-modal-target="experience" data-modal-toggle="experience"
+                      onClick={() => openModal('experience')}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                    </button>
+
                   </div> <div className="relative flex mt-4">
-                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-violet-500 text-white rounded-full font-medium">1</div>
+                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-blue-700 text-white rounded-full font-medium">1</div>
                     <div className="space-y-6 ltr:ml-4 rtl:mr-4">
                       <div>
                         <h6 className="mb-1 text-gray-900 text-16 dark:text-gray-50">Web Design & Development Team Leader</h6>
@@ -243,7 +309,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="flex mt-8">
-                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-violet-500 text-white rounded-full font-medium">2</div>
+                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-blue-700 text-white rounded-full font-medium">2</div>
                     <div className="space-y-6 ltr:ml-4 rtl:mr-4">
                       <div>
                         <h6 className="mb-1 text-gray-900 text-16 dark:text-gray-50">Project Manager</h6>
@@ -252,7 +318,7 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="flex mt-8">
-                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-violet-500 text-white rounded-full font-medium">3</div>
+                    <div className="h-8 w-8 ml-3 mr-3 text-center leading-[2.2] bg-blue-700 text-white rounded-full font-medium">3</div>
                     <div className="space-y-6 ltr:ml-4 rtl:mr-4">
                       <div>
                         <h6 className="mb-1 text-gray-900 text-16 dark:text-gray-50">Project Manager</h6>
@@ -267,13 +333,13 @@ const Profile = () => {
         </div>
 
       </div >
-      {isModalOpen && (
+      {currentModal === 'education' && (
         <div id="select-modal" tabIndex={-1} aria-hidden="true" className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full">
           <div className="relative p-4 w-full max-w-md max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Login
+                  Education Details
                 </h3>
                 <button type="button" onClick={closeModal} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="select-modal">
                   <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -284,7 +350,95 @@ const Profile = () => {
               </div>
 
               <div className="p-4 md:p-5">
-                {/* <EducationDetails /> */}
+
+                <>
+                  {EducationDetails({
+                    degreeTitle,
+                    institute,
+                    startDate,
+                    endDate,
+                    degreeName,
+                    isDropdownOpen,
+                    setIsDropdownOpen,
+                    setDegreeName,
+                    setDegreeTitle,
+                    setInstitute,
+                    setStartDate,
+                    setEndDate
+                  })}
+                </>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+      {currentModal === 'experience' && (
+        <div id="exp-modal" tabIndex={-1} aria-hidden="true" className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full">
+          <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Experience Details
+                </h3>
+                <button type="button" onClick={closeModal} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="select-modal">
+                  <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+
+              <div className="p-4 md:p-5">
+
+                <>
+                  {ExperienceDetails({
+                    company,
+                    position,
+                    expStartDate,
+                    expEndDate,
+                    reallocation,
+                    setCompany,
+                    setPosition,
+                    setExpStartDate,
+                    setExpEndDate,
+                    setReallocation,
+                  })}
+                </>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {currentModal === 'contact' && (
+        <div id="select-modal" tabIndex={-1} aria-hidden="true" className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full">
+          <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Contact Details
+                </h3>
+                <button type="button" onClick={closeModal} className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="select-modal">
+                  <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+
+              <div className="p-4 md:p-5">
+                <>
+                  {PersonalDetails({
+                    email,
+                    address,
+                    phone,
+                    setEmail,
+                    setAddress,
+                    setPhone
+                  })}
+                </>
               </div>
             </div>
           </div>

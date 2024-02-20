@@ -11,6 +11,8 @@ import { updateApi } from "@/redux/services/UpdateProfile/updateAction";
 import Cookies from 'js-cookie';
 import { parseJwt } from "@/lib/Constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import ApplicantHeader from "@/components/applicant/applicantHeader";
+
 
 const UpdateProfile = () => {
   const [step, setStep] = useState(0);
@@ -125,6 +127,7 @@ const UpdateProfile = () => {
 
   return (
     <div className="font-sans">
+      < ApplicantHeader />
       <div className="flex justify-center items-center min-h-screen">
         <form
           className="p-6 rounded shadow-md w-full max-w-md bg-gray-300"
@@ -133,7 +136,7 @@ const UpdateProfile = () => {
         >
           {step === 0 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Personal Details
               </h1>
               {personalDetails({
@@ -157,7 +160,7 @@ const UpdateProfile = () => {
           )}
           {step === 1 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Education Details
               </h1>
               {EducationDetails({
@@ -180,7 +183,7 @@ const UpdateProfile = () => {
           )}
           {step === 2 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Location & Skills
               </h1>
               {locationAndSkillDetails({
@@ -199,7 +202,7 @@ const UpdateProfile = () => {
           )}
           {step === 3 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Experience Details
               </h1>
               {experienceDetails({
@@ -220,7 +223,7 @@ const UpdateProfile = () => {
           )}
           {step === 4 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Upload Resume
               </h1>
               {UploadResume({ reallocation, setReallocation, nextStep, prevStep })}

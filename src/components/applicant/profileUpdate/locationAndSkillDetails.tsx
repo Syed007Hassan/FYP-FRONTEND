@@ -11,8 +11,7 @@ interface LocationAndSkillDetailsProps {
   setCountry: (value: string) => void;
   setCity: (value: string) => void;
   setArea: (value: string) => void;
-  nextStep: () => void;
-  prevStep: () => void;
+  setSubmit: (value: object) => void;
 }
 
 const SKILLS = [
@@ -63,8 +62,8 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
   setCountry,
   setCity,
   setArea,
-  nextStep,
-  prevStep,
+  setSubmit
+
 }) => {
   const handleDelete = (i: number) => {
     setTags(tags.filter((tag, index) => index !== i));
@@ -162,17 +161,12 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
         />
       </div>
 
+
       <button
-        onClick={prevStep}
-        className="mt-4 px-7 py-2 bg-blue-700 text-white rounded mr-2"
-      >
-        Previous
-      </button>
-      <button
-        onClick={nextStep}
+        onClick={setSubmit}
         className="bg-blue-700 text-white px-10 py-2 rounded"
       >
-        Next
+        Submit
       </button>
     </div>
   );

@@ -11,8 +11,8 @@ interface EducationProps {
   setInstitute: (value: string) => void;
   setStartDate: (value: string) => void;
   setEndDate: (value: string) => void;
-  nextStep: () => void;
-  prevStep: () => void;
+  // setSubmit: (value: object) => void;
+
 }
 
 const EducationDetails: React.FC<EducationProps> = ({
@@ -28,8 +28,7 @@ const EducationDetails: React.FC<EducationProps> = ({
   setInstitute,
   setStartDate,
   setEndDate,
-  nextStep,
-  prevStep,
+
 }) => {
   return (
     <div>
@@ -184,27 +183,15 @@ const EducationDetails: React.FC<EducationProps> = ({
           />
         </div>
       </div>
+
       <button
         type="button"
-        onClick={prevStep}
-        className="mt-4 px-7 py-2 bg-blue-700 text-white rounded mr-2"
-      >
-        Previous
-      </button>
-      <button
-        type="button"
-        onClick={nextStep}
+        // onClick={setSubmit}
         className="mt-4 px-10 py-2 bg-blue-700 text-white rounded mr-2"
       >
-        Next
+        Submit
       </button>
-      <button
-        type="button"
-        onClick={nextStep}
-        className="mt-4 px-7 py-2 bg-blue-700 text-white rounded"
-      >
-        Add More
-      </button>
+
     </div>
   );
 };

@@ -153,8 +153,9 @@ const Page = () => {
         console.log(latitude, longitude);
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
         fetch(url)
-          .then((res) => res.json())
-          .then((data) => setAdd(data.address));
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error));
       });
     } else {
       console.log("Geolocation is not supported by this browser.");

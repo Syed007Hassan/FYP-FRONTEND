@@ -33,37 +33,6 @@ const JobFeed = () => {
 
   // search variables
   const [jobTitle, setJobTitle] = useState("");
-  const [jobCountry, setJobCountry] = useState("");
-  const [jobCategory, setJobCategory] = useState("");
-  const [jobType, setJobType] = useState("");
-  const [pastDate, setPastDate] = useState<Date | null>(null);
-  const [experience, setExperience] = useState("");
-  const [nearby, setNearby] = useState(false);
-
-  useEffect(() => {
-    const parseJwtFromSession = async () => {
-      // const session = await getSession();
-      const session = Cookies.get("token");
-      if (!session) {
-        throw new Error("Invalid session");
-      }
-      const jwt: string = session.toString();
-      const decodedData = parseJwt(jwt);
-      setDecodedData(decodedData);
-      setEmail(decodedData?.email || "");
-      setApplicantId(decodedData.id.toString() || "");
-    };;
-    parseJwtFromSession();
-
-  }, []);
-
-  useEffect(() => {
-    if (applicantDetailsData) {
-      console.log(applicantDetailsData);
-    }
-    setApplicantDetails(applicantDetailsData?.data);
-  }, [applicantDetailsData, applicantDetailsError, applicantDetailsLoading]);
-
 
   useEffect(() => {
     if (data) {
@@ -73,85 +42,17 @@ const JobFeed = () => {
   }, [data, error, isLoading]);
 
   useEffect(() => {
-    let filteredJobs = allJobs;
-
     if (jobTitle) {
       filteredJobs = filteredJobs.filter(
         (job) =>
           job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase()) ||
           job.company.companyName.toLowerCase().includes(jobTitle.toLowerCase())
       );
+      setFilteredJobs(filteredJobs);
+    } else {
+      setFilteredJobs(allJobs);
     }
-
-    if (jobCountry) {
-      filteredJobs = filteredJobs.filter((job) =>
-        job.jobLocation.country.toLowerCase().includes(jobCountry.toLowerCase())
-      );
-    }
-
-    if (jobCategory) {
-      filteredJobs = filteredJobs.filter((job) =>
-        job.jobCategory.toLowerCase().includes(jobCategory.toLowerCase())
-      );
-    }
-
-    if (jobType) {
-      filteredJobs = filteredJobs.filter(
-        (job) =>
-          job.jobType.toLowerCase().includes(jobType.toLowerCase()) ||
-          job.jobCategory.toLowerCase().includes(jobType.toLowerCase())
-      );
-    }
-
-    if (experience) {
-      filteredJobs = filteredJobs.filter((job) =>
-        job.jobExperience.toLowerCase().includes(experience.toLowerCase())
-      );
-    }
-
-    if (pastDate) {
-      const hoursAgo =
-        (new Date().getTime() - pastDate.getTime()) / 1000 / 60 / 60;
-      const selectedDate = getPastDate(hoursAgo);
-      filteredJobs = filteredJobs.filter((job) => {
-        const jobDate = new Date(job.jobCreatedAt);
-        return jobDate.getTime() > selectedDate.getTime();
-      });
-    }
-
-    if (nearby) {
-      filteredJobs = filteredJobs.filter((job) => {
-        const jobLocation = job.jobLocation.area;
-        const applicantLocation = applicantDetails?.location.area;
-        if (jobLocation && applicantLocation) {
-          return (
-            jobLocation.toLowerCase() === applicantLocation.toLowerCase() ||
-            job.jobLocation.city.toLowerCase() ===
-              applicantDetails?.location.city.toLowerCase()
-          );
-        }
-        return false;
-      });
-    }
-
-    setFilteredJobs(filteredJobs);
-  }, [allJobs, jobTitle, jobCountry, jobCategory, jobType, pastDate, experience, nearby, applicantDetails]);
-
-  const handleReset = () => {
-    setJobTitle("");
-    setJobCountry("");
-    setJobCategory("");
-    setJobType("");
-    setPastDate(null);
-    setExperience("");
-    setNearby(false);
-  };
-
-  function getPastDate(hours: number) {
-    const date = new Date();
-    date.setHours(date.getHours() - hours);
-    return date;
-  }
+  }, [allJobs, jobTitle]);
 
   return (
     <>
@@ -193,15 +94,9 @@ const JobFeed = () => {
                                   data-trigger
                                   name="choices-single-location"
                                   id="choices-single-location"
-                                  value={jobCountry}
-                                  onChange={(e) => {
-                                    setJobCountry(e.target.value);
-                                  }}
                                 >
-                                  <option value="Afghanistan">
-                                    Afghanistan
-                                  </option>
-                                  <option value="Åland Islands">
+                                  <option value="AF">Afghanistan</option>
+                                  <option value="AX">
                                     &Aring;land Islands
                                   </option>
                                   <option value="Albania">Albania</option>
@@ -282,34 +177,22 @@ const JobFeed = () => {
                                   <option value="Cook Islands">
                                     Cook Islands
                                   </option>
-                                  <option value="Costa Rica">Costa Rica</option>
-                                  <option value="Côte d'Ivoire">
-                                    C&ocirc;te d&apos;Ivoire
-                                  </option>
-                                  <option value="Croatia">Croatia</option>
-                                  <option value="Cuba">Cuba</option>
-                                  <option value="Cyprus">Cyprus</option>
-                                  <option value="Czech Republic">
-                                    Czech Republic
-                                  </option>
-                                  <option value="Denmark">Denmark</option>
-                                  <option value="Djibouti">Djibouti</option>
-                                  <option value="Dominica">Dominica</option>
-                                  <option value="Dominican Republic">
-                                    Dominican Republic
-                                  </option>
-                                  <option value="Ecuador">Ecuador</option>
-                                  <option value="Egypt">Egypt</option>
-                                  <option value="El Salvador">
-                                    El Salvador
-                                  </option>
-                                  <option value="Equatorial Guinea">
-                                    Equatorial Guinea
-                                  </option>
-                                  <option value="Eritrea">Eritrea</option>
-                                  <option value="Estonia">Estonia</option>
-                                  <option value="Ethiopia">Ethiopia</option>
-                                  <option value="Falkland Islands (Malvinas)">
+                                  <option value="HR">Croatia</option>
+                                  <option value="CU">Cuba</option>
+                                  <option value="CY">Cyprus</option>
+                                  <option value="CZ">Czech Republic</option>
+                                  <option value="DK">Denmark</option>
+                                  <option value="DJ">Djibouti</option>
+                                  <option value="DM">Dominica</option>
+                                  <option value="DO">Dominican Republic</option>
+                                  <option value="EC">Ecuador</option>
+                                  <option value="EG">Egypt</option>
+                                  <option value="SV">El Salvador</option>
+                                  <option value="GQ">Equatorial Guinea</option>
+                                  <option value="ER">Eritrea</option>
+                                  <option value="EE">Estonia</option>
+                                  <option value="ET">Ethiopia</option>
+                                  <option value="FK">
                                     Falkland Islands (Malvinas)
                                   </option>
                                   <option value="Faroe Islands">

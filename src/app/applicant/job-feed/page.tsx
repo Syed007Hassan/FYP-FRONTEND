@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import {
-  FaMapMarkerAlt,
-  FaRegClock,
-  FaChevronDown,
-} from "react-icons/fa";
+import { FaMapMarkerAlt, FaRegClock, FaChevronDown } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import ApplicantHeader from "@/components/applicant/applicantHeader";
+import { useGetAllJobsQuery } from "@/redux/services/job/jobAction";
+import Job from "@/types/job";
 
 const JobFeed = () => {
   const [isLocationOpen, setIsLocationOpen] = useState(true);
@@ -17,16 +15,26 @@ const JobFeed = () => {
   const [isJobTypeOpen, setIsJobTypeOpen] = useState(true);
   const [isDateOpen, setIsDateOpen] = useState(true);
   const [isTagsOpen, setIsTagsOpen] = useState(true);
+  const [allJobs, setAllJobs] = useState<Job[]>([]);
 
+  const { data, error, isLoading } = useGetAllJobsQuery();
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+    setAllJobs(data?.data || []);
+  }, [data, error, isLoading]);
 
   return (
     <div>
       <ApplicantHeader />
       <div className=" px-5 md:px-24 lg:px-44">
-
         <div className="">
           <section className="py-10">
-            <h1 className="text-2xl font-bold font-inter text-violet-600 py-6">SyncFlow | Job Feed</h1>
+            <h1 className="text-2xl font-bold font-inter text-violet-600 py-6">
+              SyncFlow | Job Feed
+            </h1>
             <div className="container mx-auto">
               <div className="grid grid-cols-12 gap-y-10 lg:gap-10">
                 <div className="col-span-12 xl:col-span-9">
@@ -98,12 +106,16 @@ const JobFeed = () => {
                               <option value="CA">Canada</option>
                               <option value="CV">Cape Verde</option>
                               <option value="KY">Cayman Islands</option>
-                              <option value="CF">Central African Republic</option>
+                              <option value="CF">
+                                Central African Republic
+                              </option>
                               <option value="TD">Chad</option>
                               <option value="CL">Chile</option>
                               <option value="CN">China</option>
                               <option value="CX">Christmas Island</option>
-                              <option value="CC">Cocos (Keeling) Islands</option>
+                              <option value="CC">
+                                Cocos (Keeling) Islands
+                              </option>
                               <option value="CO">Colombia</option>
                               <option value="KM">Comoros</option>
                               <option value="CG">Congo</option>
@@ -112,7 +124,9 @@ const JobFeed = () => {
                               </option>
                               <option value="CK">Cook Islands</option>
                               <option value="CR">Costa Rica</option>
-                              <option value="CI">C&ocirc;te d{"'"}Ivoire</option>
+                              <option value="CI">
+                                C&ocirc;te d{"'"}Ivoire
+                              </option>
                               <option value="HR">Croatia</option>
                               <option value="CU">Cuba</option>
                               <option value="CY">Cyprus</option>
@@ -240,7 +254,9 @@ const JobFeed = () => {
                               <option value="NG">Nigeria</option>
                               <option value="NU">Niue</option>
                               <option value="NF">Norfolk Island</option>
-                              <option value="MP">Northern Mariana Islands</option>
+                              <option value="MP">
+                                Northern Mariana Islands
+                              </option>
                               <option value="NO">Norway</option>
                               <option value="OM">Oman</option>
                               <option value="PK">Pakistan</option>
@@ -262,7 +278,9 @@ const JobFeed = () => {
                               <option value="RO">Romania</option>
                               <option value="RU">Russian Federation</option>
                               <option value="RW">Rwanda</option>
-                              <option value="BL">Saint Barth&eacute;lemy</option>
+                              <option value="BL">
+                                Saint Barth&eacute;lemy
+                              </option>
                               <option value="SH">
                                 Saint Helena, Ascension and Tristan da Cunha
                               </option>
@@ -319,7 +337,9 @@ const JobFeed = () => {
                               <option value="TN">Tunisia</option>
                               <option value="TR">Turkey</option>
                               <option value="TM">Turkmenistan</option>
-                              <option value="TC">Turks and Caicos Islands</option>
+                              <option value="TC">
+                                Turks and Caicos Islands
+                              </option>
                               <option value="TV">Tuvalu</option>
                               <option value="UG">Uganda</option>
                               <option value="UA">Ukraine</option>
@@ -336,7 +356,9 @@ const JobFeed = () => {
                                 Venezuela, Bolivarian Republic of
                               </option>
                               <option value="VN">Viet Nam</option>
-                              <option value="VG">Virgin Islands, British</option>
+                              <option value="VG">
+                                Virgin Islands, British
+                              </option>
                               <option value="VI">Virgin Islands, U.S.</option>
                               <option value="WF">Wallis and Futuna</option>
                               <option value="EH">Western Sahara</option>
@@ -460,6 +482,116 @@ const JobFeed = () => {
                     </ul>
                   </div>
                   <div className="mt-14">
+                    {allJobs &&
+                      allJobs.map((job) => {
+                        return (
+                          <div
+                            key={job?.jobId}
+                            className="relative mt-4 overflow-hidden transition-all duration-500 ease-in-out bg-white border rounded-md border-gray-100 group hover:border-violet-500 dark:bg-neutral-900 dark:border-neutral-600 transform transition-transform hover:-translate-y-1"
+                          >
+                            <div className="w-28 absolute top-0 left-[-3rem] transform -rotate-45 bg-violet-500 p-6 text-center dark:bg-violet-500">
+                              <a
+                                href="javascript:void(0)"
+                                className="text-2xl text-white align-middle"
+                              >
+                                <i className="mdi mdi-star"></i>
+                              </a>
+                            </div>
+                            <div className="p-4">
+                              <div className="grid items-center grid-cols-12">
+                                <div className="col-span-12 lg:col-span-2">
+                                  <div className="mb-4 text-center mb-md-0">
+                                    <a href="company-details.html">
+                                      <Image
+                                        src="/assets/images/featured-job/img-01.png"
+                                        alt="Description of Image"
+                                        width={50} // replace with actual width
+                                        height={50} // replace with actual height
+                                        className="mx-auto rounded-3"
+                                      />
+                                    </a>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                                <div className="col-span-12 lg:col-span-3">
+                                  <div className="mb-2 mb-md-0">
+                                    <h5 className="mb-1 fs-18">
+                                      <a
+                                        href="job-details.html"
+                                        className="text-gray-900 dark:text-gray-50 font-bold text-xl"
+                                      >
+                                        {job?.jobTitle}
+                                      </a>
+                                    </h5>
+                                    <p className="mb-0 text-gray-500 fs-14 dark:text-gray-300">
+                                      {job?.company?.companyName}
+                                    </p>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                                <div className="col-span-12 lg:col-span-3">
+                                  <div className="mb-2 lg:flex lg:gap-1 items-center">
+                                    <div className="flex-shrink-0">
+                                      <FaMapMarkerAlt className="text-violet-500 dark:text-gray-300" />{" "}
+                                    </div>
+                                    <p className="mb-0 text-gray-500 dark:text-gray-300">
+                                      {job?.jobLocation?.area} ,{" "}
+                                      {job?.jobLocation?.city} ,{" "}
+                                      {job?.jobLocation?.country}
+                                    </p>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                                <div className="col-span-12 lg:col-span-2">
+                                  <div>
+                                    <p className="mb-0 text-gray-500 dark:text-gray-300 lg:flex lg:gap-1 items-center">
+                                      <FaRegClock className="text-violet-500 dark:text-gray-300" />{" "}
+                                      {job.jobCreatedAt}
+                                    </p>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                                <div className="col-span-12 lg:col-span-2">
+                                  <div className="flex flex-wrap gap-1.5">
+                                    <span className="bg-green-500/20 text-green-500 text-13 px-2 py-0.5 font-medium rounded">
+                                      {job?.jobType}
+                                    </span>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                              </div>
+                              {/* <!--end row--> */}
+                            </div>
+                            <div className="px-4 py-3 bg-gray-100 dark:bg-gray-700">
+                              <div className="grid grid-cols-12">
+                                <div className="col-span-12 lg:col-span-6">
+                                  <div>
+                                    <p className="mb-0 text-gray-500 dark:text-gray-300">
+                                      <span className="font-medium text-gray-900 dark:text-white">
+                                        Experience :
+                                      </span>{" "}
+                                      {job?.jobExperience}
+                                    </p>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                                <div className="col-span-12 mt-2 lg:col-span-6 lg:mt-0">
+                                  <div className="flex justify-end text-right lg:text-right dark:text-white">
+                                    <a
+                                      href="#applyNow"
+                                      className="flex items-center"
+                                    >
+                                      Apply Now <MdKeyboardDoubleArrowRight />
+                                    </a>
+                                  </div>
+                                </div>
+                                {/* <!--end col--> */}
+                              </div>
+                              {/* <!--end row--> */}
+                            </div>
+                          </div>
+                        );
+                      })}
                     <div className="relative mt-4 overflow-hidden transition-all duration-500 ease-in-out bg-white border rounded-md border-gray-100 group hover:border-violet-500 dark:bg-neutral-900 dark:border-neutral-600 transform transition-transform hover:-translate-y-1">
                       <div className="w-28 absolute top-0 left-[-3rem] transform -rotate-45 bg-violet-500 p-6 text-center dark:bg-violet-500">
                         <a
@@ -1221,8 +1353,9 @@ const JobFeed = () => {
                                 Location
                               </span>
                               <FaChevronDown
-                                className={`text-xl ${isLocationOpen ? "rotate-180" : ""
-                                  } text-gray-400 dark:text-gray-50 transition-all duration-300`}
+                                className={`text-xl ${
+                                  isLocationOpen ? "rotate-180" : ""
+                                } text-gray-400 dark:text-gray-50 transition-all duration-300`}
                               />
                             </h6>
                           </div>
@@ -1281,8 +1414,9 @@ const JobFeed = () => {
                                 Work Experience
                               </span>
                               <FaChevronDown
-                                className={`text-xl ${isWorkExpOpen ? "rotate-180" : ""
-                                  } text-gray-400 dark:text-gray-50 transition-all duration-300`}
+                                className={`text-xl ${
+                                  isWorkExpOpen ? "rotate-180" : ""
+                                } text-gray-400 dark:text-gray-50 transition-all duration-300`}
                               />
                             </h6>
                           </div>
@@ -1348,8 +1482,9 @@ const JobFeed = () => {
                                 Type of Employment
                               </span>
                               <FaChevronDown
-                                className={`text-xl ${isJobTypeOpen ? "rotate-180" : ""
-                                  } text-gray-400 dark:text-gray-50 transition-all duration-300`}
+                                className={`text-xl ${
+                                  isJobTypeOpen ? "rotate-180" : ""
+                                } text-gray-400 dark:text-gray-50 transition-all duration-300`}
                               />
                             </h6>
                           </div>
@@ -1419,8 +1554,9 @@ const JobFeed = () => {
                                 Date Posted
                               </span>
                               <FaChevronDown
-                                className={`text-xl ${isDateOpen ? "rotate-180" : ""
-                                  } text-gray-400 dark:text-gray-50 transition-all duration-300`}
+                                className={`text-xl ${
+                                  isDateOpen ? "rotate-180" : ""
+                                } text-gray-400 dark:text-gray-50 transition-all duration-300`}
                               />
                             </h6>
                           </div>
@@ -1490,8 +1626,9 @@ const JobFeed = () => {
                                 Tags Cloud
                               </span>
                               <FaChevronDown
-                                className={`text-xl ${isTagsOpen ? "rotate-180" : ""
-                                  } text-gray-400 dark:text-gray-50 transition-all duration-300`}
+                                className={`text-xl ${
+                                  isTagsOpen ? "rotate-180" : ""
+                                } text-gray-400 dark:text-gray-50 transition-all duration-300`}
                               />
                             </h6>
                           </div>
@@ -1536,8 +1673,7 @@ const JobFeed = () => {
         </div>
       </div>
     </div>
-
-  )
+  );
 };
 
 export default JobFeed;

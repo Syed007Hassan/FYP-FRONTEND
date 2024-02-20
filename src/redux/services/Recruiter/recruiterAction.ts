@@ -1,9 +1,9 @@
 // authActions.js
-import axios from 'axios'
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { Backend_URL } from '@/lib/Constants';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse } from '@/types/recruiter';
+import { ApiResponse } from "@/types/recruiter";
 
 type Recruiter = {
   data: {
@@ -18,15 +18,24 @@ type Recruiter = {
   };
 };
 
-
 export const createEmployee = createAsyncThunk<
   void,
-  { name: string, designation: string, phone: string, email: string; password: string, role: string, companyId: number },
+  {
+    name: string;
+    designation: string;
+    phone: string;
+    email: string;
+    password: string;
+    role: string;
+    companyId: number;
+  },
   { rejectValue: string }
 >(
   "/auth/registerCompanyEmployee",
-  async ({ name, email, password, phone, designation, role, companyId }, { rejectWithValue }) => {
-    
+  async (
+    { name, email, password, phone, designation, role, companyId },
+    { rejectWithValue }
+  ) => {
     try {
       const config = {
         headers: {
@@ -34,10 +43,10 @@ export const createEmployee = createAsyncThunk<
         },
       };
 
-    //   console.log(name, email, password, phone, designation);
+      //   console.log(name, email, password, phone, designation);
       await axios.post(
         `${Backend_URL}/auth/registerCompanyEmployee/${companyId}`,
-        { name, email, password, phone, designation, role},
+        { name, email, password, phone, designation, role },
         config
       );
     } catch (error: any) {
@@ -53,12 +62,20 @@ export const createEmployee = createAsyncThunk<
 
 export const updateUser = createAsyncThunk<
   void,
-  { name: string; email: string; password: string, phone: number, designation: string },
+  {
+    name: string;
+    email: string;
+    password: string;
+    phone: number;
+    designation: string;
+  },
   { rejectValue: string }
 >(
   "/recruiter/updateRecruiter",
-  async ({ name, email, password, phone, designation }, { rejectWithValue }) => {
-    
+  async (
+    { name, email, password, phone, designation },
+    { rejectWithValue }
+  ) => {
     try {
       const config = {
         headers: {
@@ -93,8 +110,8 @@ export const userApi = createApi({
     getUserByEmail: builder.query<Recruiter, { email: string }>({
       query: ({ email }) => `findOneByEmail/${email}`,
     }),
-    getUsers: builder.query<ApiResponse, {companyId: string}>({
-      query: ({companyId}) => `findByCompanyId/${companyId}`,
+    getUsers: builder.query<ApiResponse, { companyId: string }>({
+      query: ({ companyId }) => `findByCompanyId/${companyId}`,
     }),
   }),
 });

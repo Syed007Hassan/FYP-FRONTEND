@@ -51,6 +51,10 @@ const Page = () => {
   }, []);
 
   useEffect(() => {
+    console.log(decodedData);
+  }, [decodedData]);
+
+  useEffect(() => {
     const firstName = data?.data?.name?.split(" ")[0];
     const lastName = data?.data?.name?.split(" ")[1];
     setFirstName(firstName || "");

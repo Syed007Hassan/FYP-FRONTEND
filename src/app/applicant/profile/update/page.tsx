@@ -6,10 +6,18 @@ import locationAndSkillDetails from "@/components/applicant/profileComponents/lo
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
 import "../../../../styles/applicant.css";
+import { updateApplicantDetails } from "@/redux/services/Applicant/applicantAction";
+import { updateApi } from "@/redux/services/Applicant/applicantAction";
+import Cookies from 'js-cookie';
+import { parseJwt } from "@/lib/Constants";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import ApplicantHeader from "@/components/applicant/applicantHeader";
+
 
 const UpdateProfile = () => {
   const [step, setStep] = useState(0);
 
+  const dispatch = useAppDispatch();
   // personal detail attributes
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -41,6 +49,9 @@ const UpdateProfile = () => {
   const [expStartDate, setExpStartDate] = useState("");
   const [expEndDate, setExpEndDate] = useState("");
   const [reallocation, setReallocation] = useState("");
+  const [email, setEmail] = useState("");
+  const [decodedData, setDecodedData] = useState(null);
+  const [applicantIdTemp, setApplicantIdTemp] = useState("");
 
   const prevStep = () => {
     setStep((prevStep) => prevStep - 1); // Decrement step by 1
@@ -53,20 +64,82 @@ const UpdateProfile = () => {
   useEffect(() => {
     console.log(dob);
   }, [dob]);
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      // const session = await getSession();
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setEmail(decodedData?.email || "");
+      setApplicantIdTemp(decodedData.id.toString() || "");
+    };;
+    parseJwtFromSession();
+
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(email);
+  //   console.log(applicantIdTemp);
+  // }, [email, applicantIdTemp])
+
+  const handleSubmit = (e: any) => {
+     e.preventDefault();
+    const id = applicantIdTemp;
+    const temp_data = {
+      dob,
+      gender,
+      aboutMe: desc,
+      education: [
+        {
+          degree: degreeName,
+          institution: institute,
+          startDate,
+          endDate,
+        },
+      ],
+      skills: tags.map((tag) => tag.text),
+      location: {
+        area,
+        city,
+        country,
+        latitude: "0",
+        longitude: "0",
+      },
+      experience: [
+        {
+          company,
+          title: position,
+          startDate: expStartDate,
+          endDate: expEndDate,
+          description: "",
+        },
+      ],
+      relocation: reallocation,
+      resume: "",
+      languages: "",
+    };
+    console.log(temp_data);
+    console.log("id: ",id);
+    dispatch(updateApplicantDetails({id, temp_data}))
+
+  }
 
   return (
     <div className="font-sans">
-      {/* <h1 className="text-4xl font-bold text-center text-blue-900">
-        Profile Setup
-      </h1> */}
+      < ApplicantHeader />
       <div className="flex justify-center items-center min-h-screen">
         <form
           className="p-6 rounded shadow-md w-full max-w-md bg-gray-300"
           style={{ backgroundColor: "rgba(242, 242, 242, 0.3)" }}
+          onSubmit={handleSubmit}
         >
           {step === 0 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Personal Details
               </h1>
               {personalDetails({
@@ -90,7 +163,7 @@ const UpdateProfile = () => {
           )}
           {step === 1 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Education Details
               </h1>
               {EducationDetails({
@@ -113,7 +186,7 @@ const UpdateProfile = () => {
           )}
           {step === 2 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Location & Skills
               </h1>
               {locationAndSkillDetails({
@@ -132,7 +205,7 @@ const UpdateProfile = () => {
           )}
           {step === 3 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Experience Details
               </h1>
               {experienceDetails({
@@ -153,10 +226,10 @@ const UpdateProfile = () => {
           )}
           {step === 4 && (
             <>
-              <h1 className="text-2xl text-blue-900 font-bold pb-4">
+              <h1 className="text-2xl text-blue-700 font-bold pb-4">
                 Upload Resume
               </h1>
-              {UploadResume({ reallocation, setReallocation, nextStep, prevStep})}
+              {UploadResume({ reallocation, setReallocation, nextStep, prevStep })}
             </>
           )}
         </form>
@@ -164,5 +237,6 @@ const UpdateProfile = () => {
     </div>
   );
 };
+
 
 export default UpdateProfile;

@@ -9,19 +9,22 @@ interface ExperienceDetailsProps {
   setExpStartDate: (value: string) => void;
   setExpEndDate: (value: string) => void;
   setReallocation: (value: string) => void;
-  nextStep: () => void;
-  prevStep: () => void;
+  // setSubmit: (value: object) => void;
 }
 
 const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
-
+  company,
+  position,
+  expStartDate,
+  expEndDate,
+  reallocation,
   setCompany,
   setPosition,
   setExpStartDate,
   setExpEndDate,
   setReallocation,
-  nextStep,
-  prevStep,
+  // setSubmit
+
 }) => {
   return (
     <div>
@@ -93,25 +96,13 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
           />
         </div>
       </div>
-      <button
-        onClick={prevStep}
-        className="mt-4 px-7 py-2 bg-blue-700 text-white rounded hover:bg-blue-600 mr-2"
-      >
-        Previous
-      </button>
-      <button
-        type="button"
-        className="bg-blue-700 text-white px-10 py-2 rounded mr-2"
-        onClick={nextStep}
-      >
-        Next
-      </button>
+
       <button
         type="button"
         className="bg-blue-700 text-white px-7 py-2 rounded"
-        onClick={nextStep}
+      // onClick={setSubmit}
       >
-        Add More
+        Submit
       </button>
     </div>
   );

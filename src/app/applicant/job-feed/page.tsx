@@ -33,10 +33,7 @@ const JobFeed = () => {
 
   // search variables
   const [jobTitle, setJobTitle] = useState("");
-<<<<<<< HEAD
-=======
   const [jobCountry, setJobCountry] = useState("");
-<<<<<<< HEAD
   const [jobCategory, setJobCategory] = useState("");
   const [jobType, setJobType] = useState("");
   const [pastDate, setPastDate] = useState<Date | null>(null);
@@ -67,10 +64,6 @@ const JobFeed = () => {
     setApplicantDetails(applicantDetailsData?.data);
   }, [applicantDetailsData, applicantDetailsError, applicantDetailsLoading]);
 
-=======
->>>>>>> 13a6e6682957ac8bf8d991f0dc0ee08935548862
->>>>>>> 1c63ddcc92ea1e3df6e174190c1c90cd72586dd6
-
   useEffect(() => {
     if (data) {
       console.log(data);
@@ -79,25 +72,16 @@ const JobFeed = () => {
   }, [data, error, isLoading]);
 
   useEffect(() => {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
     let filteredJobs = allJobs;
-=======
-
     if (!jobTitle && !jobCountry) {
       setFilteredJobs(allJobs);
     }
->>>>>>> 13a6e6682957ac8bf8d991f0dc0ee08935548862
-
->>>>>>> 1c63ddcc92ea1e3df6e174190c1c90cd72586dd6
     if (jobTitle) {
       filteredJobs = filteredJobs.filter(
         (job) =>
           job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase()) ||
           job.company.companyName.toLowerCase().includes(jobTitle.toLowerCase())
       );
-<<<<<<< HEAD
     }
 
     if (jobCountry) {
@@ -169,26 +153,6 @@ const JobFeed = () => {
     date.setHours(date.getHours() - hours);
     return date;
   }
-=======
-      setFilteredJobs(filteredJobs);
-    } else {
-      setFilteredJobs(allJobs);
-    }
-<<<<<<< HEAD
-  }, [allJobs, jobTitle]);
-=======
-
-    if (jobCountry) {
-      const filteredJobs = allJobs.filter(
-        (job) =>
-          job.jobLocation.country.toLowerCase().includes(jobCountry.toLowerCase())
-      );
-      setFilteredJobs(filteredJobs);
-    }
-
-  }, [allJobs, jobTitle, jobCountry]);
->>>>>>> 13a6e6682957ac8bf8d991f0dc0ee08935548862
->>>>>>> 1c63ddcc92ea1e3df6e174190c1c90cd72586dd6
 
   return (
     <>
@@ -230,17 +194,10 @@ const JobFeed = () => {
                                   data-trigger
                                   name="choices-single-location"
                                   id="choices-single-location"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
                                   value={jobCountry}
                                   onChange={(e) => {
                                     setJobCountry(e.target.value);
                                   }}
-=======
-                                  onChange={(e) => { setJobCountry(e.target.value) }}
->>>>>>> 13a6e6682957ac8bf8d991f0dc0ee08935548862
->>>>>>> 1c63ddcc92ea1e3df6e174190c1c90cd72586dd6
                                 >
                                   <option value="AF">Afghanistan</option>
                                   <option value="AX">
@@ -324,7 +281,6 @@ const JobFeed = () => {
                                   <option value="Cook Islands">
                                     Cook Islands
                                   </option>
-<<<<<<< HEAD
                                   <option value="HR">Croatia</option>
                                   <option value="CU">Cuba</option>
                                   <option value="CY">Cyprus</option>
@@ -340,14 +296,8 @@ const JobFeed = () => {
                                   <option value="ER">Eritrea</option>
                                   <option value="EE">Estonia</option>
                                   <option value="ET">Ethiopia</option>
-                                  <option value="FK">
-=======
                                   <option value="Costa Rica">Costa Rica</option>
-<<<<<<< HEAD
-                                  <option value="Côte d'Ivoire">
-=======
                                   <option value="Côte d&apos;Ivoire">
->>>>>>> 13a6e6682957ac8bf8d991f0dc0ee08935548862
                                     C&ocirc;te d&apos;Ivoire
                                   </option>
                                   <option value="Croatia">Croatia</option>
@@ -374,7 +324,6 @@ const JobFeed = () => {
                                   <option value="Estonia">Estonia</option>
                                   <option value="Ethiopia">Ethiopia</option>
                                   <option value="Falkland Islands (Malvinas)">
->>>>>>> 1c63ddcc92ea1e3df6e174190c1c90cd72586dd6
                                     Falkland Islands (Malvinas)
                                   </option>
                                   <option value="Faroe Islands">

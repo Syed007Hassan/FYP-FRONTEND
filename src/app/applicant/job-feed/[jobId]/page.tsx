@@ -247,13 +247,10 @@ const Page = () => {
                                 Location
                               </h6>
                               <p className="text-gray-500 dark:text-gray-300">
-<<<<<<< HEAD
                                 {job && job?.jobLocation?.area},{" "}
-=======
                                 {job && job?.jobLocation.area},{" "}
                                 {job && job?.jobLocation.city},{" "}
                                 {job && job?.jobLocation.country}
->>>>>>> 13a6e6682957ac8bf8d991f0dc0ee08935548862
                               </p>
                             </div>
                           </div>

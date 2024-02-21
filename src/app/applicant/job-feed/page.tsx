@@ -9,6 +9,11 @@ import ApplicantHeader from "@/components/applicant/applicantHeader";
 import { useGetAllJobsQuery } from "@/redux/services/job/jobAction";
 import Job from "@/types/job";
 import Loader from "@/components/Loader";
+import ApplicantDetails from "@/types/applicant";
+// import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applicantAction";
+import { parseJwt } from "@/lib/Constants";
+import Cookies from "js-cookie";
 
 const JobFeed = () => {
   const [isLocationOpen, setIsLocationOpen] = useState(true);
@@ -18,12 +23,46 @@ const JobFeed = () => {
   const [isTagsOpen, setIsTagsOpen] = useState(true);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+  const [applicantDetails, setApplicantDetails] = useState<ApplicantDetails>();
+  const [email, setEmail] = useState("");
+  const [decodedData, setDecodedData] = useState<any>();
+  const [applicantId, setApplicantId] = useState("");
 
   const { data, error, isLoading } = useGetAllJobsQuery();
+  const { data: applicantDetailsData, error: applicantDetailsError, isLoading: applicantDetailsLoading } = useGetApplicantDetailsQuery({ id: applicantId});
 
   // search variables
   const [jobTitle, setJobTitle] = useState("");
   const [jobCountry, setJobCountry] = useState("");
+  const [jobCategory, setJobCategory] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [pastDate, setPastDate] = useState<Date | null>(null);
+  const [experience, setExperience] = useState("");
+  const [nearby, setNearby] = useState(false);
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      // const session = await getSession();
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setEmail(decodedData?.email || "");
+      setApplicantId(decodedData.id.toString() || "");
+    };;
+    parseJwtFromSession();
+
+  }, []);
+
+  useEffect(() => {
+    if (applicantDetailsData) {
+      console.log(applicantDetailsData);
+    }
+    setApplicantDetails(applicantDetailsData?.data);
+  }, [applicantDetailsData, applicantDetailsError, applicantDetailsLoading]);
 
   useEffect(() => {
     if (data) {
@@ -33,29 +72,87 @@ const JobFeed = () => {
   }, [data, error, isLoading]);
 
   useEffect(() => {
-
+    let filteredJobs = allJobs;
     if (!jobTitle && !jobCountry) {
       setFilteredJobs(allJobs);
     }
-
     if (jobTitle) {
-      const filteredJobs = allJobs.filter(
+      filteredJobs = filteredJobs.filter(
         (job) =>
           job.jobTitle.toLowerCase().includes(jobTitle.toLowerCase()) ||
           job.company.companyName.toLowerCase().includes(jobTitle.toLowerCase())
       );
-      setFilteredJobs(filteredJobs);
     }
 
     if (jobCountry) {
-      const filteredJobs = allJobs.filter(
-        (job) =>
-          job.jobLocation.country.toLowerCase().includes(jobCountry.toLowerCase())
+      filteredJobs = filteredJobs.filter((job) =>
+        job.jobLocation.country.toLowerCase().includes(jobCountry.toLowerCase())
       );
-      setFilteredJobs(filteredJobs);
     }
 
-  }, [allJobs, jobTitle, jobCountry]);
+    if (jobCategory) {
+      filteredJobs = filteredJobs.filter((job) =>
+        job.jobCategory.toLowerCase().includes(jobCategory.toLowerCase())
+      );
+    }
+
+    if (jobType) {
+      filteredJobs = filteredJobs.filter(
+        (job) =>
+          job.jobType.toLowerCase().includes(jobType.toLowerCase()) ||
+          job.jobCategory.toLowerCase().includes(jobType.toLowerCase())
+      );
+    }
+
+    if (experience) {
+      filteredJobs = filteredJobs.filter((job) =>
+        job.jobExperience.toLowerCase().includes(experience.toLowerCase())
+      );
+    }
+
+    if (pastDate) {
+      const hoursAgo =
+        (new Date().getTime() - pastDate.getTime()) / 1000 / 60 / 60;
+      const selectedDate = getPastDate(hoursAgo);
+      filteredJobs = filteredJobs.filter((job) => {
+        const jobDate = new Date(job.jobCreatedAt);
+        return jobDate.getTime() > selectedDate.getTime();
+      });
+    }
+
+    if (nearby) {
+      filteredJobs = filteredJobs.filter((job) => {
+        const jobLocation = job.jobLocation.area;
+        const applicantLocation = applicantDetails?.location.area;
+        if (jobLocation && applicantLocation) {
+          return (
+            jobLocation.toLowerCase() === applicantLocation.toLowerCase() ||
+            job.jobLocation.city.toLowerCase() ===
+              applicantDetails?.location.city.toLowerCase()
+          );
+        }
+        return false;
+      });
+    }
+
+    setFilteredJobs(filteredJobs);
+  }, [allJobs, jobTitle, jobCountry, jobCategory, jobType, pastDate, experience, nearby, applicantDetails]);
+
+  const handleReset = () => {
+    setJobTitle("");
+    setJobCountry("");
+    setJobCategory("");
+    setJobType("");
+    setPastDate(null);
+    setExperience("");
+    setNearby(false);
+  };
+
+  function getPastDate(hours: number) {
+    const date = new Date();
+    date.setHours(date.getHours() - hours);
+    return date;
+  }
 
   return (
     <>
@@ -84,6 +181,7 @@ const JobFeed = () => {
                                   className="w-full pl-10 py-2 pr-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:text-gray-100 dark:bg-gray-800 dark:placeholder-gray-600"
                                   placeholder="Job, company..."
                                   onChange={(e) => setJobTitle(e.target.value)}
+                                  value={jobTitle}
                                 />
                               </div>
                             </div>
@@ -96,12 +194,13 @@ const JobFeed = () => {
                                   data-trigger
                                   name="choices-single-location"
                                   id="choices-single-location"
-                                  onChange={(e) => { setJobCountry(e.target.value) }}
+                                  value={jobCountry}
+                                  onChange={(e) => {
+                                    setJobCountry(e.target.value);
+                                  }}
                                 >
-                                  <option value="Afghanistan">
-                                    Afghanistan
-                                  </option>
-                                  <option value="Åland Islands">
+                                  <option value="AF">Afghanistan</option>
+                                  <option value="AX">
                                     &Aring;land Islands
                                   </option>
                                   <option value="Albania">Albania</option>
@@ -182,6 +281,21 @@ const JobFeed = () => {
                                   <option value="Cook Islands">
                                     Cook Islands
                                   </option>
+                                  <option value="HR">Croatia</option>
+                                  <option value="CU">Cuba</option>
+                                  <option value="CY">Cyprus</option>
+                                  <option value="CZ">Czech Republic</option>
+                                  <option value="DK">Denmark</option>
+                                  <option value="DJ">Djibouti</option>
+                                  <option value="DM">Dominica</option>
+                                  <option value="DO">Dominican Republic</option>
+                                  <option value="EC">Ecuador</option>
+                                  <option value="EG">Egypt</option>
+                                  <option value="SV">El Salvador</option>
+                                  <option value="GQ">Equatorial Guinea</option>
+                                  <option value="ER">Eritrea</option>
+                                  <option value="EE">Estonia</option>
+                                  <option value="ET">Ethiopia</option>
                                   <option value="Costa Rica">Costa Rica</option>
                                   <option value="Côte d&apos;Ivoire">
                                     C&ocirc;te d&apos;Ivoire
@@ -522,6 +636,9 @@ const JobFeed = () => {
                                   data-trigger
                                   name="choices-single-categories"
                                   id="choices-single-categories"
+                                  onChange={(e) => {
+                                    setJobCategory(e.target.value);
+                                  }}
                                 >
                                   <option value="4">Accounting</option>
                                   <option value="1">IT & Software</option>
@@ -533,10 +650,20 @@ const JobFeed = () => {
                             {/* <!--end col--> */}
                             <div className="col-span-12 xl:col-span-3 flex items-center">
                               <button
-                                type="submit"
+                                type="button"
                                 className="w-full py-2 px-4 border border-transparent text-white rounded-md shadow-sm bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:bg-gray-800"
+                                onClick={() => setNearby(true)}
                               >
-                                <i className="uil uil-filter"></i> Filter
+                                <i className="uil uil-filter"></i> Nearby
+                              </button>
+                            </div>
+                            <div className="col-span-12 xl:col-span-3 flex items-center">
+                              <button
+                                type="button"
+                                className="w-full py-2 px-4 border border-transparent text-white rounded-md shadow-sm bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:bg-gray-800"
+                                onClick={handleReset}
+                              >
+                                <i className="uil uil-filter"></i> Reset
                               </button>
                             </div>
                             {/* <!--end col--> */}
@@ -880,51 +1007,65 @@ const JobFeed = () => {
                               {isWorkExpOpen && (
                                 <div className="accordion-body block transition-all duration-300">
                                   <div className="p-5">
-                                    <div className="mt-2">
+                                  <div className="mt-2">
                                       <input
-                                        className="rounded cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                        type="checkbox"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        className=" cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
+                                        type="radio"
+                                        value="no experience"
+                                        id="exp1"
+                                        name="exp"
+                                        onClick={(e) =>
+                                          setExperience(
+                                            (e.target as HTMLInputElement).value
+                                          )
+                                        }
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label
+                                        className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
+                                        htmlFor="exp1"
+                                      >
                                         No experience
                                       </label>
                                     </div>
                                     <div className="mt-2">
                                       <input
-                                        className="rounded cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                        checked
-                                        type="checkbox"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
+                                        type="radio"
+                                        value="0 - 3 years"
+                                        id="exp2"
+                                        name="exp"
+                                        onClick={e => setExperience((e.target as HTMLInputElement).value)}
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300" htmlFor="exp2">
                                         0-3 years
                                       </label>
                                     </div>
                                     <div className="mt-2">
                                       <input
-                                        className="rounded cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                        type="checkbox"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
+                                        type="radio"
+                                        value="3 - 6 years"
+                                        id="exp3"
+                                        name="exp"
+                                        onClick={e => setExperience((e.target as HTMLInputElement).value)}
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300" htmlFor="exp3">
                                         3-6 years
                                       </label>
                                     </div>
                                     <div className="mt-2">
                                       <input
-                                        className="rounded cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                        type="checkbox"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
+                                        type="radio"
+                                        value="more than 6 years"
+                                        id="exp4"
+                                        name="exp"
+                                        onClick={e => setExperience((e.target as HTMLInputElement).value)}
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300" htmlFor="exp4">
                                         More than 6 years
                                       </label>
-                                    </div>
+                                      </div>
                                   </div>
                                 </div>
                               )}
@@ -952,12 +1093,20 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        checked
-                                        value=""
+                                        // checked
+                                        value="Freelance"
                                         id="flexCheckChecked1"
                                         name="jobType"
+                                        onClick={(e) =>
+                                          setJobType(
+                                            (e.target as HTMLInputElement).value
+                                          )
+                                        }
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label
+                                        className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
+                                        htmlFor="flexCheckChecked1"
+                                      >
                                         Freelance
                                       </label>
                                     </div>
@@ -965,11 +1114,19 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        value="full time"
+                                        id="flexCheckChecked2"
                                         name="jobType"
+                                        onClick={(e) =>
+                                          setJobType(
+                                            (e.target as HTMLInputElement).value
+                                          )
+                                        }
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label
+                                        className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
+                                        htmlFor="flexCheckChecked2"
+                                      >
                                         Full Time
                                       </label>
                                     </div>
@@ -977,11 +1134,19 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        value="part time"
+                                        id="flexCheckChecked3"
                                         name="jobType"
+                                        onClick={(e) =>
+                                          setJobType(
+                                            (e.target as HTMLInputElement).value
+                                          )
+                                        }
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label
+                                        className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
+                                        htmlFor="flexCheckChecked3"
+                                      >
                                         Part Time
                                       </label>
                                     </div>
@@ -989,11 +1154,19 @@ const JobFeed = () => {
                                       <input
                                         className=" cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        value="internship"
+                                        id="flexCheckChecked4"
                                         name="jobType"
+                                        onClick={(e) =>
+                                          setJobType(
+                                            (e.target as HTMLInputElement).value
+                                          )
+                                        }
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label
+                                        className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
+                                        htmlFor="flexCheckChecked4"
+                                      >
                                         Internship
                                       </label>
                                     </div>
@@ -1024,10 +1197,13 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        checked
+                                        // checked
                                         value=""
                                         id="flexCheckChecked1"
                                         name="datePosted"
+                                        onChange={(e) => {
+                                          setPastDate(null);
+                                        }}
                                       />
                                       <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
                                         All
@@ -1037,11 +1213,18 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        value=""
+                                        value="1"
                                         id="flexCheckChecked1"
                                         name="datePosted"
+                                        onChange={(e) => {
+                                          const hours = parseInt(
+                                            e.target.value
+                                          );
+                                          const pastDate = getPastDate(hours);
+                                          setPastDate(pastDate);
+                                        }}
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300" htmlFor="flexCheckChecked1">
                                         Last Hour
                                       </label>
                                     </div>
@@ -1049,11 +1232,18 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        value="24"
+                                        id="flexCheckChecked2"
                                         name="datePosted"
+                                        onChange={(e) => {
+                                          const hours = parseInt(
+                                            e.target.value
+                                          );
+                                          const pastDate = getPastDate(hours);
+                                          setPastDate(pastDate);
+                                        }}
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300" htmlFor="flexCheckChecked2">
                                         Last 24 Hours
                                       </label>
                                     </div>
@@ -1061,11 +1251,18 @@ const JobFeed = () => {
                                       <input
                                         className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
                                         type="radio"
-                                        value=""
-                                        id="flexCheckChecked1"
+                                        value="168"
+                                        id="flexCheckChecked3"
                                         name="datePosted"
+                                        onChange={(e) => {
+                                          const hours = parseInt(
+                                            e.target.value
+                                          );
+                                          const pastDate = getPastDate(hours);
+                                          setPastDate(pastDate);
+                                        }}
                                       />
-                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300">
+                                      <label className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300" htmlFor="flexCheckChecked3">
                                         Last 7 Days
                                       </label>
                                     </div>
@@ -1080,7 +1277,7 @@ const JobFeed = () => {
                               >
                                 <h6 className="flex gap-10 justify-between px-4 py-2 font-medium text-left bg-violet-300 dark:bg-gray-700 rounded">
                                   <span className="text-gray-900 dark:text-gray-50">
-                                    Tags Cloud
+                                    Skills
                                   </span>
                                   <FaChevronDown
                                     className={`text-xl ${

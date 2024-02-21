@@ -7,7 +7,6 @@ import experienceDetails from "@/components/applicant/profileComponents/experien
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
 import "../../../../styles/applicant.css";
 import { updateApplicantDetails } from "@/redux/services/Applicant/applicantAction";
-import { updateApi } from "@/redux/services/Applicant/applicantAction";
 import Cookies from 'js-cookie';
 import { parseJwt } from "@/lib/Constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";

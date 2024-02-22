@@ -192,6 +192,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
         id="desc"
         className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
         placeholder="Write something about yourself"
+        onChange={(e) => setDesc(e.target.value)}
       ></textarea>
       <button
         type="button"

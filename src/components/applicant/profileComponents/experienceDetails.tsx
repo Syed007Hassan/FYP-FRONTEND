@@ -1,9 +1,15 @@
+import React from "react";
+import { useState } from "react";
+import { Experience } from "@/types/applicant";
+
 interface ExperienceDetailsProps {
   company: string;
   position: string;
   expStartDate: string;
   expEndDate: string;
   reallocation: string;
+  experience: Experience[];
+  setExperience: (value: Experience[]) => void;
   setCompany: (value: string) => void;
   setPosition: (value: string) => void;
   setExpStartDate: (value: string) => void;
@@ -14,15 +20,37 @@ interface ExperienceDetailsProps {
 }
 
 const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
-
+  company,
+  position,
+  expStartDate,
+  expEndDate,
+  reallocation,
   setCompany,
   setPosition,
   setExpStartDate,
   setExpEndDate,
   setReallocation,
+  experience,
+  setExperience,
   nextStep,
   prevStep,
 }) => {
+  const handleAddMore = () => {
+    setExperience([
+      ...experience,
+      {
+        company: company,
+        title: position,
+        startDate: expStartDate,
+        endDate: expEndDate,
+        description: "",
+      },
+    ]);
+    setCompany("");
+    setPosition("");
+    setExpStartDate("");
+    setExpEndDate("");
+  };
   return (
     <div>
       <div className="flex space-x-4">
@@ -38,6 +66,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             id="company"
             className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             placeholder="Google"
+            value={company}
             onChange={(e) => setCompany(e.target.value)}
             required
           />
@@ -54,6 +83,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             id="position"
             className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             placeholder="Computer Science"
+            value={position}
             onChange={(e) => setPosition(e.target.value)}
             required
           />
@@ -72,6 +102,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             id="expStartDate"
             className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             // placeholder="Computer Science"
+            value={expStartDate}
             onChange={(e) => setExpStartDate(e.target.value)}
             required
           />
@@ -88,10 +119,22 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
             id="expEndDate"
             className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             // placeholder="Computer Science"
+            value={expEndDate}
             onChange={(e) => setExpEndDate(e.target.value)}
             required
           />
         </div>
+      </div>
+      <div>
+        {experience.map((exp, index) => (
+          <div key={index}>
+            <p>Education: {index}</p>
+            <p>Company: {exp.company}</p>
+            <p>Title: {exp.title}</p>
+            <p>Date: {exp.startDate} - {exp.endDate}</p>
+            <hr />
+          </div>
+        ))}
       </div>
       <button
         onClick={prevStep}
@@ -109,7 +152,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       <button
         type="button"
         className="bg-blue-700 text-white px-7 py-2 rounded"
-        onClick={nextStep}
+        onClick={handleAddMore}
       >
         Add More
       </button>

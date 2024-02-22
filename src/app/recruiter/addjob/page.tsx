@@ -154,7 +154,7 @@ const Page = () => {
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
         fetch(url)
           .then(response => response.json())
-          .then(data => console.log(data))
+          .then(data => setAdd(data.address))
           .catch(error => console.error('Error:', error));
       });
     } else {

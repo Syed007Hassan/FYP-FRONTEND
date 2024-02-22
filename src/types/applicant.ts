@@ -1,11 +1,11 @@
-interface Education {
+export interface Education {
   degree: string;
   endDate: string;
   startDate: string;
   institution: string;
 }
 
-interface Location {
+export interface Location {
   area: string;
   city: string;
   country: string;
@@ -13,7 +13,7 @@ interface Location {
   longitude: string;
 }
 
-interface Experience {
+export interface Experience {
   title: string;
   company: string;
   endDate: string;
@@ -21,7 +21,7 @@ interface Experience {
   description: string;
 }
 
-interface Applicant {
+export interface Applicant {
   id: number;
   name: string;
   email: string;
@@ -29,7 +29,7 @@ interface Applicant {
   role: string;
 }
 
-interface ApplicantDetails {
+export interface ApplicantDetails {
   applicantDetailsId: number;
   dob: string;
   gender: string;
@@ -42,6 +42,19 @@ interface ApplicantDetails {
   resume: string;
   languages: string;
   applicant: Applicant;
+}
+
+export interface CreateApplicantDetails {
+  dob: string;
+  gender: string;
+  aboutMe: string;
+  education: Education[];
+  skills: string[];
+  location: Location;
+  experience: Experience[];
+  relocation: boolean;
+  resume: string;
+  languages: string;
 }
 
 export interface ApplicantDetailsApiResponse {

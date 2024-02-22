@@ -1,5 +1,6 @@
 import image from "../../public/job.png";
 import { StaticImageData } from "next/image";
+import { JobLocation } from "@/types/job";
 
 export interface Job {
   id: number;
@@ -23,7 +24,7 @@ export interface Jobs {
   jobExperience: string;
   jobQualification: string;
   // company: string;
-  jobLocation: string;
+  jobLocation: JobLocation;
   jobSalary: string;
   jobType: string;
   jobUrgency: string;

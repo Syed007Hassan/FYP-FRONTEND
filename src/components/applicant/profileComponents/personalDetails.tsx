@@ -114,7 +114,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"
-            className="text-white bg-blue-900 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
@@ -138,9 +138,8 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
 
           <div
             id="dropdown"
-            className={`${
-              isDropdownOpen ? "block" : "hidden"
-            } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
+            className={`${isDropdownOpen ? "block" : "hidden"
+              } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
           >
             <ul
               className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -193,11 +192,12 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
         id="desc"
         className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
         placeholder="Write something about yourself"
+        onChange={(e) => setDesc(e.target.value)}
       ></textarea>
       <button
         type="button"
         onClick={nextStep}
-        className="mt-4 px-10 py-2 bg-blue-900 text-white rounded hover:bg-blue-800"
+        className="mt-4 px-10 py-2 bg-blue-700 text-white rounded"
       >
         Next
       </button>

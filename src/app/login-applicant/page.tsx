@@ -93,7 +93,7 @@ export default function SignInSide() {
       setAlertMessage("User Logged In Successfully!");
       console.log("userInfo", userInfo);
       Cookies.set("token", userInfo?.data?.jwt, { expires: 7 });
-      Router.push("/recruiter");
+      Router.push("/applicant");
     }
   }, [userInfo, dispatch, Router]);
 
@@ -121,8 +121,9 @@ export default function SignInSide() {
       <div className="relative">
         {!result && (
           <div
-            className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${!alertMessage && "opacity-0"
-              }`}
+            className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${
+              !alertMessage && "opacity-0"
+            }`}
             role="alert"
           >
             <p className="text-base font-semibold text-gray-900 dark:text-white">

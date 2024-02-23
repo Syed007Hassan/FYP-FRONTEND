@@ -1,12 +1,18 @@
 import React from "react";
 import { WithContext as ReactTags } from "react-tag-input";
 import { useState } from "react";
-
+import COUNTRIES from "@/data/countries";
+import CreatableSelect from "react-select/creatable";
+import { FaLocationCrosshairs } from "react-icons/fa6";
 interface LocationAndSkillDetailsProps {
   country: string;
   city: string;
   area: string;
   tags: { id: string; text: string }[];
+  latitude: string;
+  longitude: string;
+  setLatitude: (value: string) => void;
+  setLongitude: (value: string) => void;
   setTags: (value: { id: string; text: string }[]) => void;
   setCountry: (value: string) => void;
   setCity: (value: string) => void;
@@ -59,6 +65,10 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
   city,
   area,
   tags,
+  latitude,
+  longitude,
+  setLatitude,
+  setLongitude,
   setTags,
   setCountry,
   setCity,
@@ -88,6 +98,29 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
     console.log("The tag at index " + index + " was clicked");
   };
 
+  const getCurrentLocation = async () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        setLatitude(pos.coords.latitude.toString());
+        setLongitude(pos.coords.longitude.toString());
+        console.log(latitude, longitude);
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          setCountry(data.address.country);
+          setCity(data.address.city);
+          setArea(data.address.neighbourhood);
+          console.log(data);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between pb-4">
@@ -98,13 +131,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           >
             Country
           </label>
-          <input
-            type="text"
-            id="country"
-            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-            placeholder="Pakistan"
-            onChange={(e) => setCountry(e.target.value)}
-            required
+          <CreatableSelect
+            options={COUNTRIES.map((country) => {
+              return { value: country.name, label: country.name };
+            })}
+            // isClearable
+            // onChange={(e) => setCountry(e?.value as string)}
+            // value={{ value: country, label: country }}
           />
         </div>
         <div className="w-1/2 pl-2">
@@ -119,7 +152,7 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
             id="city"
             className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             placeholder="Islamabad"
-            onChange={(e) => setCity(e.target.value)}
+            // onChange={(e) => setCity(e.target.value)}
             required
           />
         </div>
@@ -136,8 +169,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           id="area"
           className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
           placeholder="G-9/1"
-          onChange={(e) => setArea(e.target.value)}
+          // onChange={(e) => setArea(e.target.value)}
           required
+        />
+        <FaLocationCrosshairs
+          className="absolute right-[38%] top-[64%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+          onClick={getCurrentLocation}
+          title="Get current location"
         />
       </div>
 

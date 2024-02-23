@@ -84,8 +84,9 @@ const Page = () => {
 
   return (
     <div
-      className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
-        }`}
+      className={`content overflow-hidden ${
+        isSidebarOpen ? "shifted-dashboard" : ""
+      }`}
     >
       <div className="main-content">
         <ApplicantHeader />
@@ -111,7 +112,6 @@ const Page = () => {
                             <h5 className="mb-1 text-gray-900 dark:text-gray-50 font-bold text-xl">
                               {job && job?.jobTitle}
                             </h5>
-
                           </div>
                         </div>
                       </div>
@@ -247,7 +247,10 @@ const Page = () => {
                                 Location
                               </h6>
                               <p className="text-gray-500 dark:text-gray-300">
-                                {job && job?.jobLocation}
+                                {job && job?.jobLocation?.area},{" "}
+                                {job && job?.jobLocation.area},{" "}
+                                {job && job?.jobLocation.city},{" "}
+                                {job && job?.jobLocation.country}
                               </p>
                             </div>
                           </div>

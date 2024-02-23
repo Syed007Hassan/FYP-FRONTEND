@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import { parseJwt } from "@/lib/Constants";
 import ApplicantDetails from "@/types/applicant";
 import Loader from "@/components/Loader";
+import AboutInfo from "@/components/applicant/profileUpdate/aboutInfo";
 
 const Profile = () => {
   const [currentModal, setCurrentModal] = useState(null);
@@ -48,6 +49,7 @@ const Profile = () => {
   // skills attributes
   type Tags = { id: string; text: string }[];
   const [tags, setTags] = useState<Tags>([]);
+  const [skills, setSkills] = useState("");
 
   // experience attributes
   const [company, setCompany] = useState("");
@@ -156,7 +158,7 @@ const Profile = () => {
                             type="file"
                             id="upload"
                             style={{ display: "none" }}
-                            // onChange={(e) => handleFileUpload(e)}
+                          // onChange={(e) => handleFileUpload(e)}
                           />
                         </div>
                         <h6 className="mt-2 mb-0 text-lg text-gray-900 dark:text-gray-50">
@@ -172,18 +174,7 @@ const Profile = () => {
                         Profile Overview
                       </h6>
                       <ul className="space-y-4">
-                        {/* <li>
-                          <div className="flex">
-                            <label className="text-gray-900 w-[118px] font-medium dark:text-gray-50">
-                              Qualification
-                            </label>
-                            <div>
-                              <p className="mb-0 text-gray-500 dark:text-gray-300">
-                                Associate Degree
-                              </p>
-                            </div>
-                          </div>
-                        </li> */}
+
                         <li>
                           <div className="flex">
                             <label className="text-gray-900 w-[118px] font-medium dark:text-gray-50">
@@ -225,26 +216,17 @@ const Profile = () => {
                         <li></li>
                       </ul>
                       <div className="mt-6">
-                        <button className="btn text-center ml-2 py-2 px-20 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700">
+                        <button className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700">
+                          Upload CV
+                        </button>
+                      </div>
+                      <div className="mt-6">
+                        <button className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700">
                           Download CV
                         </button>
                       </div>
-                      {/* <ul className="flex items-center justify-between mt-0">
-                    <li className="text-yellow-500 text-16">
-                      <i className="mdi mdi-star"></i>
-                      <i className="mdi mdi-star"></i>
-                      <i className="mdi mdi-star"></i>
-                      <i className="mdi mdi-star"></i>
-                      <i className="mdi mdi-star-half-full"></i>
-                    </li>
-                    <div className="border border-gray-100/50 rounded h-8 w-8 text-center leading-[2.4] text-gray-500 hover:bg-red-500 hover:text-white transition-all duration-500 ease-out hover:border-transparent dark:border-neutral-600">
-                      {/* <a href="javascript:void(0)"><i className="text-lg uil uil-heart-alt"></i></a> */}
-                      {/* <button onClick={() => handleButtonClick()} className="border border-gray-100/50 rounded h-8 w-8 text-center leading-[2.4] text-gray-500 hover:bg-red-500 hover:text-white transition-all duration-500 ease-out hover:border-transparent dark:border-neutral-600">
-                        <i className="text-lg uil uil-heart-alt"></i>
-                      </button> 
 
-                    </div>
-                  </ul> */}
+
                     </div>
 
                     <div className="p-5">
@@ -330,9 +312,32 @@ const Profile = () => {
                 <div className="pr-40 col-span-12 lg:col-span-8">
                   <div className="p-6 border-4 rounded border-gray-100/50 dark:border-neutral-600">
                     <div>
-                      <h6 className="mb-3 font-semibold text-gray-900 text-17 dark:text-gray-50">
-                        About Me
-                      </h6>
+                      <div className="relative justify-between flex mt-4">
+                        <h6 className="mb-3 font-semibold text-gray-900 text-17 dark:text-gray-50">
+                          About Me
+                        </h6>
+                        <button
+                          className=" text-blue-700"
+                          data-modal-target="education"
+                          data-modal-toggle="education"
+                          onClick={() => openModal("aboutinfo")}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            className="h-6 w-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                       <p className="mb-2 text-gray-500 dark:text-gray-300">
                         {applicantDetails?.aboutMe}
                       </p>
@@ -455,6 +460,61 @@ const Profile = () => {
               </div>
             </div>
           </div>
+          {currentModal === "aboutinfo" && (
+            <div
+              id="exp-modal"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full"
+            >
+              <div className="relative p-4 w-full max-w-md max-h-full">
+                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                  <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      About Info and Professional Skills
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                      data-modal-toggle="select-modal"
+                    >
+                      <svg
+                        className="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                      </svg>
+                      <span className="sr-only">Close modal</span>
+                    </button>
+                  </div>
+
+                  <div className="p-4 md:p-5">
+
+                    <>
+                      {
+                        AboutInfo({
+                          desc,
+                          setDesc,
+                          tags,
+                          setTags,
+                        })
+                      }
+                    </>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {currentModal === "education" && (
             <div
               id="select-modal"

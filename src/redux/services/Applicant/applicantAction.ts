@@ -30,23 +30,6 @@ export const resetSuccess = createAsyncThunk("/resetSuccess", async () => {
   return false;
 });
 
-// export const updateApi = createApi({
-//   reducerPath: "updateApi",
-//   refetchOnFocus: true,
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "http://localhost:5000/api/user/",
-//   }),
-//   endpoints: (builder) => ({
-//     updateApplicantDetails: builder.mutation<any, ApplicantDetails>({
-//       query: (details) => ({
-//         url: `createApplicantDetails/${details}`,
-//         method: "POST",
-//         body: details,
-//       }),
-//     }),
-//   }),
-// });
-
 export const ApplicantDetailApi = createApi({
   reducerPath: "ApplicantDetailApi",
   refetchOnFocus: true,

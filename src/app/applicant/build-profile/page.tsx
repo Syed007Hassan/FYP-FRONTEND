@@ -5,7 +5,7 @@ import EducationDetails from "@/components/applicant/profileComponents/educatonD
 import locationAndSkillDetails from "@/components/applicant/profileComponents/locationAndSkillDetails";
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
-import "../../../../styles/applicant.css";
+import "../../../../src/styles/applicant.css";
 import { updateApplicantDetails } from "@/redux/services/Applicant/applicantAction";
 import Cookies from "js-cookie";
 import { parseJwt } from "@/lib/Constants";
@@ -66,9 +66,6 @@ const UpdateProfile = () => {
     setStep((prevStep) => prevStep + 1); // Increment step by 1
   };
 
-  useEffect(() => {
-    console.log(dob);
-  }, [dob]);
   useEffect(() => {
     const parseJwtFromSession = async () => {
       // const session = await getSession();

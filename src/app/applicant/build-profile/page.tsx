@@ -42,6 +42,8 @@ const UpdateProfile = () => {
   const [area, setArea] = useState("");
   const [latitude, setLatitude] = useState("0");
   const [longitude, setLongitude] = useState("0");
+  const [tempCountry, setTempCountry] = useState("");
+  const [tempCity, setTempCity] = useState("");
 
   // skills attributes
   type Tags = { id: string; text: string }[];
@@ -208,6 +210,8 @@ const UpdateProfile = () => {
                 tags,
                 latitude,
                 longitude,
+                tempCountry,
+                setTempCountry,
                 setLatitude,
                 setLongitude,
                 setTags,

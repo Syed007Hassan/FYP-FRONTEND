@@ -11,6 +11,8 @@ interface LocationAndSkillDetailsProps {
   tags: { id: string; text: string }[];
   latitude: string;
   longitude: string;
+  tempCountry: string;
+  setTempCountry: (value: string) => void;
   setLatitude: (value: string) => void;
   setLongitude: (value: string) => void;
   setTags: (value: { id: string; text: string }[]) => void;
@@ -67,6 +69,8 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
   tags,
   latitude,
   longitude,
+  tempCountry,
+  setTempCountry,
   setLatitude,
   setLongitude,
   setTags,
@@ -132,12 +136,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
             Country
           </label>
           <CreatableSelect
-            options={COUNTRIES.map((country) => {
-              return { value: country.name, label: country.name };
-            })}
-            // isClearable
-            // onChange={(e) => setCountry(e?.value as string)}
-            // value={{ value: country, label: country }}
+            options={Object.entries(COUNTRIES).map(([country]) => ({
+              value: country,
+              label: country,
+            }))}
+            onChange={(e) => {
+              setTempCountry(e?.value || "");
+            }}
           />
         </div>
         <div className="w-1/2 pl-2">
@@ -147,13 +152,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           >
             City
           </label>
-          <input
-            type="text"
-            id="city"
-            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-            placeholder="Islamabad"
-            // onChange={(e) => setCity(e.target.value)}
-            required
+          <CreatableSelect
+            options={Object.entries(COUNTRIES)
+              .filter(([country, city]) => country === tempCountry)
+              .map(([country, city]) => ({
+                value: city,
+                label: city,
+              }))}
           />
         </div>
       </div>

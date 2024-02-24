@@ -93,7 +93,7 @@ export default function SignInSide() {
       setAlertMessage("User Logged In Successfully!");
       console.log("userInfo", userInfo);
       Cookies.set("token", userInfo?.data?.jwt, { expires: 7 });
-      Router.push("/recruiter");
+      Router.push("/applicant");
     }
   }, [userInfo, dispatch, Router]);
 

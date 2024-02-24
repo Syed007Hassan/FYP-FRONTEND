@@ -75,3 +75,10 @@ export const ApplicationApi = createApi({
     }),
   }),
 });
+
+export const {
+  useGetApplicationsByJobIdQuery,
+  useGetApplicationsByApplicantIdQuery,
+  useGetApplicationByJobIdAndApplicantIdQuery,
+  useGetAllApplicationsQuery,
+} = ApplicationApi;

@@ -8,13 +8,37 @@ type CreateApplicationArgs = {
   applicantId: string;
 };
 
+type UpdateApplicationStageArgs = {
+  jobId: string;
+  applicationId: string;
+  stageId: string;
+};
+
 export const createApplication = createAsyncThunk(
   "application/createApplication",
   async ({ jobId, applicantId }: CreateApplicationArgs) => {
-    const response = await axios.post(
-      `${Backend_URL}/application/createApplication/${jobId}/${applicantId}`
-    );
-    return response.data;
+    try {
+      const response = await axios.post(
+        `${Backend_URL}/application/createApplication/${jobId}/${applicantId}`
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
+export const updateApplicationStage = createAsyncThunk(
+  "application/updateApplicationStage",
+  async ({ jobId, applicationId, stageId }: UpdateApplicationStageArgs) => {
+    try {
+      const response = await axios.patch(
+        `${Backend_URL}/application/updateApplicationStage/${jobId}/${applicationId}/${stageId}`
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
   }
 );
 
@@ -45,6 +69,9 @@ export const ApplicationApi = createApi({
     >({
       query: ({ jobId, applicantId }) =>
         `/application/findByJobIdAndApplicantId/${jobId}/${applicantId}`,
+    }),
+    getAllApplications: builder.query<any, void>({
+      query: () => `/application/findAll`,
     }),
   }),
 });

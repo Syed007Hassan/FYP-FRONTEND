@@ -16,8 +16,10 @@ import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
 import { getDistanceFromLatLonInKm } from "@/lib/extra";
 import COUNTRIES from "@/data/countries";
+import Pagination from "@mui/material/Pagination";
 
 const JobFeed = () => {
+  // state
   const [isLocationOpen, setIsLocationOpen] = useState(true);
   const [isWorkExpOpen, setIsWorkExpOpen] = useState(true);
   const [isJobTypeOpen, setIsJobTypeOpen] = useState(true);
@@ -30,6 +32,13 @@ const JobFeed = () => {
   const [decodedData, setDecodedData] = useState<any>();
   const [applicantId, setApplicantId] = useState("");
 
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage, setJobsPerPage] = useState(10);
+
+  const onPageChange = (page: number) => setCurrentPage(page);
+
+  // redux
   const { data, error, isLoading } = useGetAllJobsQuery();
   const {
     data: applicantDetailsData,
@@ -90,12 +99,11 @@ const JobFeed = () => {
   }, [data, error, isLoading]);
 
   useEffect(() => {
-    
     let filteredJobs = allJobs.map((job) => {
-      const [date] = job?.jobCreatedAt?.split('T');
+      const [date] = job?.jobCreatedAt?.split("T");
       return { ...job, jobCreatedAt: date };
     });
-    
+
     if (jobTitle) {
       filteredJobs = filteredJobs.filter(
         (job) =>
@@ -189,7 +197,12 @@ const JobFeed = () => {
       });
     }
 
-    setFilteredJobs(filteredJobs);
+    // Apply pagination
+    const indexOfLastJob = currentPage * jobsPerPage;
+    const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+    const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+
+    setFilteredJobs(currentJobs);
   }, [
     allJobs,
     calcDistance,
@@ -204,6 +217,8 @@ const JobFeed = () => {
     search,
     distValue,
     jobCity,
+    currentPage,
+    jobsPerPage,
   ]);
 
   useEffect(() => {
@@ -240,7 +255,7 @@ const JobFeed = () => {
         <div>
           <ApplicantHeader />
           <div className=" px-5 md:px-24 lg:px-44">
-            <div className="">
+            <div className="font-inter">
               <section className="py-10">
                 <h1 className="text-2xl font-bold font-inter text-violet-600 py-6">
                   SyncFlow | Job Feed
@@ -334,7 +349,7 @@ const JobFeed = () => {
                           {/* <!--end grid--> */}
                         </form>
                       </div>
-                      <div className="mt-8">
+                      {/* <div className="mt-8">
                         <h6 className="mb-4 text-gray-900 dark:text-gray-50 font-bold">
                           Popular
                         </h6>
@@ -415,7 +430,7 @@ const JobFeed = () => {
                             </div>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       <div className="mt-14">
                         {filteredJobs &&
                           filteredJobs.map((job) => {
@@ -502,8 +517,8 @@ const JobFeed = () => {
                                     <div className="col-span-12 lg:col-span-6">
                                       <div>
                                         <p className="mb-0 text-gray-500 dark:text-gray-300">
-                                          <span className="font-medium text-gray-900 dark:text-white">
-                                            Experience :
+                                          <span className="font-bold text-gray-900 dark:text-white">
+                                            Experience:
                                           </span>{" "}
                                           {job?.jobExperience}
                                         </p>
@@ -514,9 +529,9 @@ const JobFeed = () => {
                                       <div className="flex justify-end text-right lg:text-right dark:text-white">
                                         <a
                                           href="#applyNow"
-                                          className="flex items-center"
+                                          className="flex items-center "
                                         >
-                                          Apply Now{" "}
+                                          Apply Now
                                           <MdKeyboardDoubleArrowRight />
                                         </a>
                                       </div>
@@ -529,59 +544,13 @@ const JobFeed = () => {
                             );
                           })}
                       </div>
-
-                      <div className="grid grid-cols-12">
-                        <div className="col-span-12">
-                          <ul className="flex justify-center gap-2 mt-8">
-                            <li className="w-12 h-12 text-center border rounded-full cursor-default border-gray-100/50 dark:border-gray-100/20">
-                              <a
-                                className="cursor-auto"
-                                href="javascript:void(0)"
-                                tabIndex={-1}
-                              >
-                                <i className="mdi mdi-chevron-double-left text-16 leading-[2.8] dark:text-white"></i>
-                              </a>
-                            </li>
-                            <li className="w-12 h-12 text-center text-white border border-transparent rounded-full cursor-pointer group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                              <a
-                                className="text-16 leading-[2.8]"
-                                href="javascript:void(0)"
-                              >
-                                1
-                              </a>
-                            </li>
-                            <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                              <a
-                                className="text-16 leading-[2.8]"
-                                href="javascript:void(0)"
-                              >
-                                2
-                              </a>
-                            </li>
-                            <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                              <a
-                                className="text-16 leading-[2.8]"
-                                href="javascript:void(0)"
-                              >
-                                3
-                              </a>
-                            </li>
-                            <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                              <a
-                                className="text-16 leading-[2.8]"
-                                href="javascript:void(0)"
-                              >
-                                4
-                              </a>
-                            </li>
-                            <li className="w-12 h-12 text-center text-gray-900 transition-all duration-300 border rounded-full cursor-pointer border-gray-100/50 hover:bg-gray-100/30 focus:bg-gray-100/30 dark:border-gray-100/20 dark:text-gray-50 dark:hover:bg-gray-500/20">
-                              <a href="javascript:void(0)" tabIndex={-1}>
-                                <i className="mdi mdi-chevron-double-right text-16 leading-[2.8]"></i>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        {/* <!--end col--> */}
+                      <div className="flex justify-center mt-9">
+                        <Pagination
+                          count={10}
+                          defaultPage={1}
+                          onChange={(event, page) => onPageChange(page)}
+                          size="large"
+                        />
                       </div>
                     </div>
                     <div className="container mx-auto px-4 py-8">

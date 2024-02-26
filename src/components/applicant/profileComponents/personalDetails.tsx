@@ -128,8 +128,8 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth="2"
                 d="m1 1 4 4 4-4"
               />

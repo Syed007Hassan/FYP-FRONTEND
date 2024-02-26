@@ -36,14 +36,13 @@ const EducationDetails: React.FC<EducationProps> = ({
         <div className="flex-1">
           <label
             htmlFor="degreeTitle"
-            className="block text-sm pb-2 font-medium text-gray-700"
-          >
+            className="block text-sm pb-2 font-medium text-gray-700"   >
             Degree Title
           </label>
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"
-            className="text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="w-full border rounded p-2 bg-blue-700 transition text-white duration-300 ease-in-out hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
@@ -57,8 +56,8 @@ const EducationDetails: React.FC<EducationProps> = ({
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth="2"
                 d="m1 1 4 4 4-4"
               />

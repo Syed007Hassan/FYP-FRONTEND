@@ -22,7 +22,7 @@ const UploadResume: React.FC<UploadResumeProps> = ({
         >
           Ready for Reallocation
         </label>
-        <div className="mt-1 block flex gap-x-4">
+        <div className="mt-1 flex gap-x-6">
           <label>
             <input
               id="reallocation"
@@ -50,16 +50,18 @@ const UploadResume: React.FC<UploadResumeProps> = ({
       <div className="pb-4">
         <label
           htmlFor="resume"
-          className="block text-sm pb-2 font-medium text-gray-700"
+          className="mt-6 block text-sm pb-2 font-medium text-gray-700"
         >
           Resume
         </label>
+
         <input
-          type="file"
+          className="block w-full mb-5 text-xs text-blue-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-blue-700 dark:border-gray-600 dark:placeholder-gray-400"
           id="resume"
-          className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+          type="file"
           required
         />
+
       </div>
       <button
         onClick={prevStep}
@@ -70,7 +72,6 @@ const UploadResume: React.FC<UploadResumeProps> = ({
       <button
         type="submit"
         className="bg-blue-900 text-white px-10 py-2 rounded mr-2"
-        // onClick={nextStep}
       >
         Submit
       </button>

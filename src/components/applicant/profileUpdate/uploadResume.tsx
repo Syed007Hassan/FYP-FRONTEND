@@ -20,7 +20,7 @@ const UploadResume: React.FC<UploadResumeProps> = ({
         >
           Ready for Reallocation
         </label>
-        <div className="mt-1 block flex gap-x-4">
+        <div className="mt-1 flex gap-x-4">
           <label>
             <input
               id="reallocation"

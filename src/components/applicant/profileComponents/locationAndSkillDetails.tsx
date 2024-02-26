@@ -108,7 +108,7 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
         setLatitude(pos.coords.latitude.toString());
         setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        const url = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}';
         try {
           const response = await fetch(url);
           const data = await response.json();

@@ -10,6 +10,11 @@ type updateApplicantDetailsArgs = {
   temp_data: CreateApplicantDetails;
 };
 
+type uploadProfileImageArgs = {
+  id: string;
+  image: File;
+};
+
 export const updateApplicantDetails: any = createAsyncThunk(
   "user/updateApplicantDetails",
   async ({id, temp_data}: updateApplicantDetailsArgs) => {
@@ -26,6 +31,24 @@ export const updateApplicantDetails: any = createAsyncThunk(
     }
   }
 );
+
+export const uploadProfileImage: any = createAsyncThunk(
+  "user/uploadProfileImage",
+  async ({id, image}: uploadProfileImageArgs) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", image);
+      const response = await axios.post(
+        `${Backend_URL}/upload/${id}/profilePicture`,
+        formData
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
 export const resetSuccess = createAsyncThunk("/resetSuccess", async () => {
   return false;
 });

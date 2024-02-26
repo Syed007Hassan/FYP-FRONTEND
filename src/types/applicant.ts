@@ -33,6 +33,7 @@ export interface ApplicantDetails {
   applicantDetailsId: number;
   dob: string;
   gender: string;
+  profilePicture: string;
   aboutMe: string;
   education: Education[];
   skills: string[];

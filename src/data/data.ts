@@ -31,6 +31,7 @@ export interface Jobs {
   jobCategory: string;
   jobDescription: string;
   jobStatus: string;
+  jobSkills: string[];
 }
 
 export type DecodedData = {

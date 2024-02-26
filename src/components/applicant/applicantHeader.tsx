@@ -67,11 +67,11 @@ const ApplicantHeader: React.FC<HeaderProps> = () => {
           >
             <FaUser size={23} />
             {dropdownVisible && (
-              <div className="mr-16 absolute mt-7 ml-40 z-50 top-0 w-48 bg-white border rounded-lg shadow-md">
+              <div className="mr-20 absolute mt-9 z-50 top-0 w-32 bg-white border rounded-lg shadow-md">
                 <ul>
                   <li>
                     <a
-                      href="/recruiter/my_profile"
+                      href="/applicant/profile"
                       className="sticky block px-4 py-2 hover:bg-gray-200 text-blue-500"
                     >
                       Your Profile

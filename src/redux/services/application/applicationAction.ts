@@ -63,10 +63,7 @@ export const ApplicationApi = createApi({
       query: ({ applicantId }) =>
         `/application/findByApplicantId/${applicantId}`,
     }),
-    getApplicationByJobIdAndApplicantId: builder.query<
-      any,
-      { jobId: string; applicantId: string }
-    >({
+    getApplicationByJobIdAndApplicantId: builder.query<any, { jobId: string; applicantId: string }>({
       query: ({ jobId, applicantId }) =>
         `/application/findByJobIdAndApplicantId/${jobId}/${applicantId}`,
     }),

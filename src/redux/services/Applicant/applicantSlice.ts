@@ -1,11 +1,19 @@
 // updateSlice.tsx
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { updateApplicantDetails, resetSuccess } from "./applicantAction";
+import {
+  updateApplicantDetails,
+  resetSuccess,
+  uploadProfileImage,
+  updateEducationDetails,
+  updateExperienceDetails,
+  updateSkillsAndAboutMe,
+  updateProfileDetails,
+} from "./applicantAction";
 
 const applicantSlice = createSlice({
   name: "update",
   initialState: {
-    job: null,
+    data: null,
     loading: false,
     error: null,
     success: false,
@@ -19,10 +27,55 @@ const applicantSlice = createSlice({
     builder.addCase(updateApplicantDetails.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
-      state.job = action.payload;
+      state.data = action.payload;
     });
     builder.addCase(resetSuccess.fulfilled, (state) => {
       state.success = false;
+    });
+    builder.addCase(uploadProfileImage.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(uploadProfileImage.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
+    });
+    builder.addCase(updateEducationDetails.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateEducationDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
+    });
+    builder.addCase(updateExperienceDetails.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateExperienceDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
+    });
+    builder.addCase(updateSkillsAndAboutMe.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateSkillsAndAboutMe.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
+    });
+    builder.addCase(updateProfileDetails.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateProfileDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
     });
     builder.addDefaultCase((state, action) => {
       state.success = false;

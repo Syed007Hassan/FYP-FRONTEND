@@ -154,11 +154,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           </label>
           <CreatableSelect
             options={Object.entries(COUNTRIES)
-              .filter(([country, city]) => country === tempCountry)
-              .map(([country, city]) => ({
-                value: city,
-                label: city,
-              }))}
+              .filter(([country, cities]) => country === tempCountry)
+              .flatMap(([country, cities]) =>
+                cities.map((city) => ({
+                  value: city,
+                  label: city,
+                }))
+              )}
           />
         </div>
       </div>
@@ -176,6 +178,7 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           placeholder="G-9/1"
           // onChange={(e) => setArea(e.target.value)}
           required
+          value={`${area}, ${city}, ${country}`}
         />
         <FaLocationCrosshairs
           className="absolute right-[38%] top-[64%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"

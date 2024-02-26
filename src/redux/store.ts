@@ -8,6 +8,7 @@ import { JobApi } from "./services/job/jobAction";
 import { stageApi } from "./services/stage/stageAction";
 import { assigneeApi } from "./services/assignee/assigneeAction";
 import { ApplicantDetailApi } from "./services/Applicant/applicantAction";
+import { ApplicationApi } from "./services/application/applicationAction";
 
 import { userReducer } from "./services/Recruiter/recruiterSlice";
 import { employeeReducer } from "./services/Recruiter/recruiterSlice";
@@ -16,6 +17,7 @@ import jobReducer from "./services/job/jobSlice";
 import applicantReducer from "./services/Applicant/applicantSlice";
 import stageReducer from "./services/stage/stageSlice";
 import assigneeReducer from "./services/assignee/assigneeSlice";
+import applicationReducer from "./services/application/applicationSlice";
 
 import sidebarReducer from "./features/sidebarStateAction";
 export const store = configureStore({
@@ -28,6 +30,7 @@ export const store = configureStore({
     stageReducer,
     assigneeReducer,
     applicantReducer,
+    applicationReducer,
     [userApi.reducerPath]: userApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,
@@ -35,6 +38,7 @@ export const store = configureStore({
     [stageApi.reducerPath]: stageApi.reducer,
     [assigneeApi.reducerPath]: assigneeApi.reducer,
     [ApplicantDetailApi.reducerPath]: ApplicantDetailApi.reducer,
+    [ApplicationApi.reducerPath]: ApplicationApi.reducer,
     sidebar: sidebarReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
@@ -46,7 +50,8 @@ export const store = configureStore({
       .concat(JobApi.middleware)
       .concat(stageApi.middleware)
       .concat(assigneeApi.middleware)
-      .concat(ApplicantDetailApi.middleware),
+      .concat(ApplicantDetailApi.middleware)
+      .concat(ApplicationApi.middleware),
 });
 
 setupListeners(store.dispatch);

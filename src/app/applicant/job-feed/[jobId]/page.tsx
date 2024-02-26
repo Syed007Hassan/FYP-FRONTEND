@@ -174,7 +174,7 @@ const Page = () => {
             isSidebarOpen ? "shifted-dashboard" : ""
           }`}
         >
-          <div className="main-content">
+          <div className="main-content font-inter">
             <div className="page-content">
               <div className="relative">
                 {success && (
@@ -268,10 +268,10 @@ const Page = () => {
                             <div className="col-span-12 lg:col-span-3">
                               <div className="p-4 border rounded border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
-                                  Position
+                                  Company
                                 </p>
                                 <p className="font-medium text-gray-900 dark:text-gray-50">
-                                  {/* {job?.position} */}
+                                  {job?.company?.companyName}
                                 </p>
                               </div>
                             </div>
@@ -288,7 +288,7 @@ const Page = () => {
                           </div>
 
                           <div className="mt-5">
-                            <h5 className="mb-3 text-gray-900 dark:text-gray-50">
+                            <h5 className="mb-3 text-gray-900 dark:text-gray-50 font-bold">
                               Job Description
                             </h5>
                             <div>

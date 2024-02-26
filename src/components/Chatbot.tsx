@@ -69,7 +69,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
       }`}
     >
       {/* Prompt Messages Container - Modify the height according to your need */}
-      <div className="flex w-3/12 flex-col absolute right-[2rem] top-[24rem] ">
+      <div className="flex w-3/12 flex-col absolute right-[5rem] top-[35rem] ">
         {/* Prompt Messages */}
         <div className="flex flex-col overflow-y-auto rounded-[0.5rem] bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
           {/* <div className="flex flex-row px-4 py-8 sm:px-6">

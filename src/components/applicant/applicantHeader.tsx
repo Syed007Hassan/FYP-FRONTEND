@@ -71,7 +71,7 @@ const ApplicantHeader: React.FC<HeaderProps> = () => {
                 <ul>
                   <li>
                     <a
-                      href="/recruiter/my_profile"
+                      href="/applicant/profile"
                       className="sticky block px-4 py-2 hover:bg-gray-200 text-blue-500"
                     >
                       Your Profile

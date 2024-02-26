@@ -231,8 +231,8 @@ const EducationDetails: React.FC<EducationProps> = ({
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 strokeWidth="2"
                 d="m1 1 4 4 4-4"
               />
@@ -241,9 +241,8 @@ const EducationDetails: React.FC<EducationProps> = ({
 
           <div
             id="dropdown"
-            className={`${
-              isDropdownOpen ? "block" : "hidden"
-            } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
+            className={`${isDropdownOpen ? "block" : "hidden"
+              } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
           >
             <ul
               className="py-2 text-sm text-gray-700 dark:text-gray-200"

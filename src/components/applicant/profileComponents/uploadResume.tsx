@@ -72,7 +72,6 @@ const UploadResume: React.FC<UploadResumeProps> = ({
       <button
         type="submit"
         className="bg-blue-900 text-white px-10 py-2 rounded mr-2"
-      // onClick={nextStep}
       >
         Submit
       </button>

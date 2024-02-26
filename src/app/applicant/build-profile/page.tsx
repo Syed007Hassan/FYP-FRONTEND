@@ -158,7 +158,7 @@ const UpdateProfile = () => {
     if (success) {
       console.log("success");
     }
-    // dispatch(uploadResume({ id, resume: resume }));
+    dispatch(uploadResume({ id, resume: resume }));
 
   };
 

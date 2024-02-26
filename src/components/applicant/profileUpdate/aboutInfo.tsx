@@ -4,37 +4,16 @@ import { useState } from "react";
 import COUNTRIES from "@/data/countries";
 import CreatableSelect from "react-select/creatable";
 import { FaLocationCrosshairs } from "react-icons/fa6";
+import SKILLS from "@/data/skills";
 interface AboutInfoProps {
 
   tags: { id: string; text: string }[];
   desc: string;
   setDesc: (value: string) => void;
   setTags: (value: { id: string; text: string }[]) => void;
+  setUpdateAboutButton: (value: boolean) => void;
 
 }
-
-const SKILLS = [
-  "React",
-  "Angular",
-  "Vue",
-  "Node",
-  "Express",
-  "Django",
-  "Flask",
-  "Laravel",
-  "Spring",
-  "Hibernate",
-  "Django Rest Framework",
-  "Flask Restful",
-  "Laravel Sanctum",
-  "Spring Boot",
-  "Spring Security",
-  "Spring Data JPA",
-  "Spring Data MongoDB",
-  "Spring Data Redis",
-  "Spring Cloud",
-  "Spring Cloud Netflix",
-];
 
 const suggestions = SKILLS.map((country) => {
   return {
@@ -58,6 +37,7 @@ const AboutInfo: React.FC<AboutInfoProps> = ({
   desc,
   setTags,
   setDesc,
+  setUpdateAboutButton,
 }) => {
   const handleDelete = (i: number) => {
     setTags(tags.filter((tag, index) => index !== i));
@@ -117,9 +97,11 @@ const AboutInfo: React.FC<AboutInfoProps> = ({
               delimiters={delimiters}
               handleTagClick={handleTagClick}
               placeholder="Add a skill"
-              classNames={{
-                tag: 'ReactTags__tag border text-white bg-blue-400 rounded mb-2 mr-2 px-2 py-2',
-              }}
+              inputFieldPosition="top"
+              autocomplete
+              // classNames={{
+              //   tag: 'ReactTags__tag border text-white bg-blue-400 rounded mb-2 mr-2 px-2 py-2',
+              // }}
             />
           </div>
 
@@ -128,7 +110,7 @@ const AboutInfo: React.FC<AboutInfoProps> = ({
 
       <button
         type="button"
-        // onClick={setSubmit}
+        onClick={() => setUpdateAboutButton(true)}
         className="mt-4 px-10 py-2 bg-blue-700 text-white rounded"
       >
         Submit

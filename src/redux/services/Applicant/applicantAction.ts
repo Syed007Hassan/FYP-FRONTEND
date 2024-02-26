@@ -3,7 +3,7 @@ import axios from "axios";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Backend_URL } from "@/lib/Constants";
 import { ApplicantDetailsApiResponse } from "@/types/applicant";
-import { CreateApplicantDetails, Education, Experience, Contact } from "@/types/applicant";
+import { CreateApplicantDetails, Education, Experience, Contact, AboutInfoData } from "@/types/applicant";
 
 type updateApplicantDetailsArgs = {
   id: string;
@@ -18,6 +18,11 @@ type updateEducationDetailsArgs = {
 type updateExperienceDetailsArgs = {
   id: string;
   experience: Experience[];
+};
+
+type updateAboutInfoArgs = {
+  id: string;
+  temp_data: AboutInfoData;
 };
 
 type uploadProfileImageArgs = {
@@ -146,6 +151,21 @@ export const updateProfileDetails: any = createAsyncThunk(
       const response = await axios.patch(
         `${Backend_URL}/user/updateContactDetails/${id}`,
         contact
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
+export const updateAboutInfo = createAsyncThunk(
+  "user/updateAboutInfo",
+  async ({id, temp_data}: updateAboutInfoArgs) => {
+    try {
+      const response = await axios.patch(
+        `${Backend_URL}/user/updateSkillDetails/${id}`,
+        temp_data
       );
       return response.data;
     } catch (err: any) {

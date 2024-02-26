@@ -15,7 +15,7 @@ import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applican
 import PersonalDetails from "@/components/applicant/profileUpdate/contactDetails";
 import Cookies from "js-cookie";
 import { parseJwt } from "@/lib/Constants";
-import ApplicantDetails from "@/types/applicant";
+import ApplicantDetails, { AboutInfoData } from "@/types/applicant";
 import Loader from "@/components/Loader";
 import AboutInfo from "@/components/applicant/profileUpdate/aboutInfo";
 import {
@@ -24,6 +24,8 @@ import {
   updateExperienceDetails,
   updateSkillsAndAboutMe,
   updateProfileDetails,
+  updateAboutInfo,
+  uploadResume,
 } from "@/redux/services/Applicant/applicantAction";
 import { Education, Experience, Contact } from "@/types/applicant";
 
@@ -75,10 +77,12 @@ const Profile = () => {
   const [updateEducation, setUpdateEducation] = useState<Education[]>([]);
   const [updateExperience, setUpdateExperience] = useState<Experience[]>([]);
   const [updateContact, setUpdateContact] = useState<Contact>();
+  const [updateAbout, setUpdateAbout] = useState<AboutInfoData>();
   const [updateEdButton, setUpdateEdButton] = useState(false);
   const [updateExpButton, setUpdateExpButton] = useState(false);
   const [updateContactButton, setUpdateContactButton] = useState(false);
   const [clickLocation, setClickLocation] = useState(false);
+  const [updateAboutButton, setUpdateAboutButton] = useState(false);
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
   const {
@@ -278,6 +282,36 @@ const Profile = () => {
     updateContact,
   ]);
 
+  useEffect(() => {
+    if (updateAboutButton === true && applicantDetails) {
+      let temp_about = {
+        aboutMe: desc,
+        skills: tags.map((tag) => tag.text),
+      };
+      setUpdateAbout(temp_about || {});
+    }
+  }, [updateAboutButton]);
+
+  useEffect(() => {
+    if (updateAboutButton === true && updateAbout) {
+      dispatch(
+        updateAboutInfo({
+          id: applicantIdTemp,
+          temp_data: updateAbout,
+        })
+      );
+      setUpdateAboutButton(false);
+    }
+    setCurrentModal(null);
+  }, [updateAboutButton, dispatch, applicantIdTemp, updateAbout]);
+
+  const handleUploadResume = (event: any) => {
+    console.log("Resume:", event.target.files[0]);
+    dispatch(
+      uploadResume({ id: applicantIdTemp, resume: event.target.files[0] })
+    );
+  };
+
   return (
     <>
       {isLoading ? (
@@ -400,12 +434,25 @@ const Profile = () => {
                           <li></li>
                         </ul>
                         <div className="mt-6">
-                          <button className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700">
+                          <label className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700">
                             Upload CV
-                          </button>
+                            <input
+                              type="file"
+                              style={{ display: "none" }}
+                              onChange={handleUploadResume}
+                            />
+                          </label>
                         </div>
                         <div className="mt-6">
-                          <button className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700">
+                          <button
+                            className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700"
+                            onClick={() =>
+                              window.open(
+                                applicantDetails?.resume,
+                                "_blank"
+                              )
+                            }
+                          >
                             Download CV
                           </button>
                         </div>
@@ -692,6 +739,7 @@ const Profile = () => {
                           setDesc,
                           tags,
                           setTags,
+                          setUpdateAboutButton,
                         })}
                       </>
                     </div>

@@ -108,7 +108,7 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
         setLatitude(pos.coords.latitude.toString());
         setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
-         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
         try {
           const response = await fetch(url);
           const data = await response.json();
@@ -154,11 +154,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           </label>
           <CreatableSelect
             options={Object.entries(COUNTRIES)
-              .filter(([country, city]) => country === tempCountry)
-              .map(([country, city]) => ({
-                value: city,
-                label: city,
-              }))}
+              .filter(([country, cities]) => country === tempCountry)
+              .flatMap(([country, cities]) =>
+                cities.map((city) => ({
+                  value: city,
+                  label: city,
+                }))
+              )}
           />
         </div>
       </div>
@@ -179,7 +181,7 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           value={`${area}, ${city}, ${country}`}
         />
         <FaLocationCrosshairs
-          className="absolute right-[38%] top-[62.5%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+          className="absolute right-[38%] top-[64%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
           onClick={getCurrentLocation}
           title="Get current location"
         />

@@ -34,6 +34,11 @@ export interface Applicant {
   role: string;
 }
 
+export interface AboutInfoData {
+  aboutMe: string;
+  skills: string[];
+}
+
 export interface ApplicantDetails {
   applicantDetailsId: number;
   dob: string;

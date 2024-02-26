@@ -54,7 +54,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
           />
         </div>
         <FaLocationCrosshairs
-          className="absolute right-[38%] top-[64%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+          className="absolute right-[10%] top-[42%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
           onClick={() => setClickLocation(true)}
           title="Get current location"
         />

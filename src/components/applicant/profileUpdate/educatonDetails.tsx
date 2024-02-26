@@ -1,3 +1,7 @@
+import React from "react";
+import CreatableSelect from "react-select/creatable";
+import degree from "@/data/degree";
+
 interface EducationProps {
   degreeTitle: string;
   institute: string;
@@ -126,13 +130,15 @@ const EducationDetails: React.FC<EducationProps> = ({
           >
             Degree Name
           </label>
-          <input
-            type="text"
-            id="degreeName"
-            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-            placeholder="Computer Science"
-            onChange={(e) => setDegreeName(e.target.value)}
-            required
+          <CreatableSelect
+            options={degree}
+            // isClearable
+            onChange={(newValue) => {
+              if (newValue) {
+                setDegreeName(newValue.value);
+              }
+            }}
+            value={degreeName ? { value: degreeName, label: degreeName } : null}
           />
         </div>
       </div>

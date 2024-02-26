@@ -6,7 +6,7 @@ import locationAndSkillDetails from "@/components/applicant/profileComponents/lo
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
 import "../../../../src/styles/applicant.css";
-import { updateApplicantDetails } from "@/redux/services/Applicant/applicantAction";
+import { updateApplicantDetails, uploadResume } from "@/redux/services/Applicant/applicantAction";
 import Cookies from "js-cookie";
 import { parseJwt } from "@/lib/Constants";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -59,6 +59,7 @@ const UpdateProfile = () => {
   const [decodedData, setDecodedData] = useState(null);
   const [applicantIdTemp, setApplicantIdTemp] = useState("");
   const [experience, setExperience] = useState<Experience[]>([]);
+  const [resume, setResume] = useState<File | null>(null);
 
   // modal attributes
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -117,20 +118,20 @@ const UpdateProfile = () => {
     const temp_relocation = reallocation === "yes" ? true : false;
     // check all the variables are set
 
-    if (
-      !dob ||
-      !education ||
-      !experience ||
-      !tags ||
-      !firstName ||
-      !lastName ||
-      !phone ||
-      !reallocation ||
-      !desc
-    ) {
-      alert("Please fill all the fields");
-      return;
-    }
+    // if (
+    //   !dob ||
+    //   !education ||
+    //   !experience ||
+    //   !tags ||
+    //   !firstName ||
+    //   !lastName ||
+    //   !phone ||
+    //   !reallocation ||
+    //   !desc
+    // ) {
+    //   alert("Please fill all the fields");
+    //   return;
+    // }
     const temp_data = {
       dob,
       gender,
@@ -146,6 +147,8 @@ const UpdateProfile = () => {
       },
       experience: experience,
       relocation: temp_relocation,
+      phoneNo: phone,
+      profilePicture: "adas",
       resume: "adas",
       languages: "adas",
     };
@@ -155,12 +158,12 @@ const UpdateProfile = () => {
     if (success) {
       console.log("success");
     }
+    dispatch(uploadResume({ id, resume: resume }));
 
   };
 
   return (
     <div className="font-sans" >
-      <ApplicantHeader />
       <div className="flex justify-center items-center min-h-screen">
         <form
           className="p-6 rounded shadow-md w-full max-w-md bg-gray-300"
@@ -272,6 +275,7 @@ const UpdateProfile = () => {
               {UploadResume({
                 reallocation,
                 setReallocation,
+                setResume,
                 nextStep,
                 prevStep,
               })}

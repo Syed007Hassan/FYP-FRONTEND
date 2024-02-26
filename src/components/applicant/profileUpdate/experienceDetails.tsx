@@ -4,6 +4,7 @@ interface ExperienceDetailsProps {
   expStartDate: string;
   expEndDate: string;
   reallocation: string;
+  setUpdateExpButton: (value: boolean) => void;
   setCompany: (value: string) => void;
   setPosition: (value: string) => void;
   setExpStartDate: (value: string) => void;
@@ -18,6 +19,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
   expStartDate,
   expEndDate,
   reallocation,
+  setUpdateExpButton,
   setCompany,
   setPosition,
   setExpStartDate,
@@ -100,7 +102,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
       <button
         type="button"
         className="bg-blue-700 text-white px-7 py-2 rounded"
-      // onClick={setSubmit}
+        onClick={() => setUpdateExpButton(true)}
       >
         Submit
       </button>

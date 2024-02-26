@@ -5,6 +5,7 @@ interface EducationProps {
   endDate: string;
   degreeName: string;
   isDropdownOpen: boolean;
+  setUpdateEdButton: (value: boolean) => void;
   setIsDropdownOpen: (value: boolean) => void;
   setDegreeName: (value: string) => void;
   setDegreeTitle: (value: string) => void;
@@ -12,7 +13,6 @@ interface EducationProps {
   setStartDate: (value: string) => void;
   setEndDate: (value: string) => void;
   // setSubmit: (value: object) => void;
-
 }
 
 const EducationDetails: React.FC<EducationProps> = ({
@@ -22,13 +22,13 @@ const EducationDetails: React.FC<EducationProps> = ({
   endDate,
   degreeName,
   isDropdownOpen,
+  setUpdateEdButton,
   setIsDropdownOpen,
   setDegreeName,
   setDegreeTitle,
   setInstitute,
   setStartDate,
   setEndDate,
-
 }) => {
   return (
     <div>
@@ -36,7 +36,8 @@ const EducationDetails: React.FC<EducationProps> = ({
         <div className="flex-1">
           <label
             htmlFor="degreeTitle"
-            className="block text-sm pb-2 font-medium text-gray-700"   >
+            className="block text-sm pb-2 font-medium text-gray-700"
+          >
             Degree Title
           </label>
           <button
@@ -46,28 +47,31 @@ const EducationDetails: React.FC<EducationProps> = ({
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            {degreeTitle ? degreeTitle : "Select Degree"}
-            <svg
-              className="w-2.5 h-2.5 ms-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
+            <div className="flex items-center justify-between">
+              {degreeTitle ? degreeTitle : "Select Degree"}
+              <svg
+                className="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </div>
           </button>
 
           <div
             id="dropdown"
-            className={`${isDropdownOpen ? "block" : "hidden"
-              } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
+            className={`${
+              isDropdownOpen ? "block" : "hidden"
+            } origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5`}
           >
             <ul
               className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -185,12 +189,11 @@ const EducationDetails: React.FC<EducationProps> = ({
 
       <button
         type="button"
-        // onClick={setSubmit}
+        onClick={() => setUpdateEdButton(true)}
         className="mt-4 px-10 py-2 bg-blue-700 text-white rounded mr-2"
       >
         Submit
       </button>
-
     </div>
   );
 };

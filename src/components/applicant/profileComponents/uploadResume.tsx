@@ -5,6 +5,7 @@ interface UploadResumeProps {
   prevStep: () => void;
   reallocation: string;
   setReallocation: (value: string) => void;
+  setResume: (value: File | null) => void;
 }
 
 const UploadResume: React.FC<UploadResumeProps> = ({
@@ -12,6 +13,7 @@ const UploadResume: React.FC<UploadResumeProps> = ({
   prevStep,
   reallocation,
   setReallocation,
+  setResume,
 }) => {
   return (
     <div>
@@ -59,9 +61,14 @@ const UploadResume: React.FC<UploadResumeProps> = ({
           className="block w-full mb-5 text-xs text-blue-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-blue-700 dark:border-gray-600 dark:placeholder-gray-400"
           id="resume"
           type="file"
+          onChange={(e) => {
+            const target = e.target as HTMLInputElement;
+            if (target.files && target.files.length > 0) {
+              setResume(target.files[0]);
+            }
+          }}
           required
         />
-
       </div>
       <button
         onClick={prevStep}

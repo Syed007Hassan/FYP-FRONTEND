@@ -21,6 +21,11 @@ export interface Experience {
   description: string;
 }
 
+export interface Contact {
+  location: Location;
+  phoneNo: string;
+}
+
 export interface Applicant {
   id: number;
   name: string;
@@ -43,6 +48,7 @@ export interface ApplicantDetails {
   resume: string;
   languages: string;
   applicant: Applicant;
+  phoneNo: string;
 }
 
 export interface CreateApplicantDetails {
@@ -56,6 +62,8 @@ export interface CreateApplicantDetails {
   relocation: boolean;
   resume: string;
   languages: string;
+  profilePicture: string;
+  phoneNo: string;
 }
 
 export interface ApplicantDetailsApiResponse {

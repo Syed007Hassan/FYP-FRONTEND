@@ -190,108 +190,12 @@ const Page = () => {
                           Job Description
                         </h5>
                         <div>
-                          <p className="mb-0 text-gray-500 dark:text-gray-300">
-                            {job && job?.jobDescription}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-5">
-                        <h5 className="mb-3 text-gray-900 dark:text-gray-50">
-                          Responsibilities
-                        </h5>
-                        <div>
-                          <p className="mb-3 text-gray-500 dark:text-gray-300">
-                            As a Product Designer, you will work within a
-                            Product Delivery Team fused with UX, engineering,
-                            product and data talent.
-                          </p>
-
-                          <ul className="mb-0 text-gray-500 dark:text-gray-300">
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Have sound
-                              knowledge of commercial activities.
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Build
-                              next-generation web applications with a focus on
-                              the client side
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Work on
-                              multiple projects at once, and consistently meet
-                              draft deadlines
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> have
-                              already graduated or are currently in any year of
-                              study
-                            </li>
-                            <li className="text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Revise the
-                              work of previous designers to create a unified
-                              aesthetic for our brand materials
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="mt-5">
-                        <h5 className="mb-3 text-gray-900 dark:text-gray-50">
-                          Qualification
-                        </h5>
-                        <div>
-                          <ul className="mb-0 text-gray-500 dark:text-gray-300">
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> B.C.A /
-                              M.C.A under National University course complete.
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> 3 or more
-                              years of professional design experience
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> have
-                              already graduated or are currently in any year of
-                              study{" "}
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Advanced
-                              degree or equivalent experience in graphic and web
-                              design
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="mt-5">
-                        <h5 className="mb-3 text-gray-900 dark:text-gray-50">
-                          Skill & Experience
-                        </h5>
-                        <div>
-                          <ul className="mb-0 text-gray-500 dark:text-gray-300">
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i>{" "}
-                              Understanding of key Design Principal
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i>{" "}
-                              Proficiency With HTML, CSS, Tailwind
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Wordpress:
-                              1 year (Required){" "}
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> Experience
-                              designing and developing responsive design
-                              websites{" "}
-                            </li>
-                            <li className="mb-2 text-gray-500 dark:text-gray-300">
-                              <i className="mr-2 uil uil-circle"></i> web
-                              designing: 1 year (Preferred){" "}
-                            </li>
-                          </ul>
+                          <p
+                            className="mb-0 text-gray-500 dark:text-gray-300"
+                            dangerouslySetInnerHTML={{
+                              __html: job?.jobDescription || "",
+                            }}
+                          />
                         </div>
                       </div>
 
@@ -369,7 +273,7 @@ const Page = () => {
                                 Location
                               </h6>
                               <p className="text-gray-500 dark:text-gray-300">
-                                {job && job?.jobLocation}
+                                {job && job?.jobLocation?.area} ,{job && job?.jobLocation?.city}
                               </p>
                             </div>
                           </div>

@@ -7,7 +7,7 @@ type Job = {
   jobDescription: string;
   jobType: string;
   jobCategory: string;
-  jobLocation: string;
+  jobLocation: JobLocation;
   jobSalary: string;
   jobStatus: string;
   jobQualification: string;
@@ -16,7 +16,17 @@ type Job = {
   jobCreatedAt: string;
   company: Company;
   recruiter: Recruiter;
+  jobSkills: string[];
+  restrictedLocationRange: string;
 };
+
+export interface JobLocation {
+  area: string;
+  city: string;
+  country: string;
+  latitude: string;
+  longitude: string;
+}
 
 export type JobResponse = {
   success: boolean;

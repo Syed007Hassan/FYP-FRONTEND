@@ -1,7 +1,51 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+/* @import "react-quill/dist/quill.snow.css"; */
 
 body {
   font-family: 'Segoe UI Symbol',  sans-serif; 
+}
+
+/* Global.css */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(185, 185, 187);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #89898a;
+}
+
+.ReactTags__selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ReactTags__tag {
+  background: #f1f1f1;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.ReactTags__tagInputField {
+  outline: gray;
+  border-radius: 5px;
+  padding: 5px;
+  width: 100%;
+  font-size: 16px;
 }

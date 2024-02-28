@@ -10,12 +10,16 @@ import StepAreaChart from "@/components/stepAreaChart";
 import AreaChart from "@/components/areaChart";
 import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
+import RecruiterGraphs from "@/components/recruiterDashboard/recruiterGraphs";
+import RecruiterStats from "@/components/applicant/charts/applicantStats";
 
 import "../../styles/sidebar.css";
 
 const RecruiterPage = () => {
   // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const isSidebarOpen = useAppSelector((state: RootState) => state.sidebar.sidebarState);
+  const isSidebarOpen = useAppSelector(
+    (state: RootState) => state.sidebar.sidebarState
+  );
   const verifyToken = async () => {
     try {
       const session = await getSession();
@@ -65,34 +69,26 @@ const RecruiterPage = () => {
   };
 
   return (
-    <div className={`content overflow-x-hidden ${isSidebarOpen ? 'shifted-dashboard' : ''}`}>
-
-      <div className=" w-full pt-10 sticky">
-        <div className="pr-30 mb-4 h-50 w-full  pt-4 bg-white border border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-          <LineChart />
-        </div>
-  
-        <div
-          className="h-50  flex pt-3 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-          style={{ height: "98%" }}
-        >
-          <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-4 mb-4 justify-items-center">
-            <div className="pl-2 w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-              <BarChart />
-            </div>
-  
-            <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-              <AreaChart />
-            </div>
-  
-            <div className="w-full h-50 bg-white border justify-items-center border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-hidden">
-              <StepAreaChart />
-  
-            </div>
-          </div>
-        </div>
+    <div
+      className={`content overflow-x-hidden ${
+        isSidebarOpen ? "shifted-dashboard" : ""
+      }`}
+    >
+      {" "}
+      <div className="bg-gray-200 container items-center  px-4 py-4">
+        <h2 className="pl-10 text-4xl font-bold text-blue-700">
+          Recruiter Dashboard
+        </h2>
+        <RecruiterStats />
       </div>
+      <div
+        className=" bg-gray-200 pb-20 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+        style={{ height: "10%" }}
+      >
+        <RecruiterGraphs />
+      </div>
+       
     </div>
-    );
+  );
 };
 export default RecruiterPage;

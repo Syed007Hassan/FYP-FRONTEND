@@ -25,7 +25,8 @@ export const assigneeApi = createApi({
     reducerPath: "assigneeApi",
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000/api/workflow/",
+        // baseUrl: "http://localhost:5000/api/workflow/",
+        baseUrl: `${Backend_URL}/workflow/`,
     }),
     endpoints: (builder) => ({
         getAssignee: builder.query<GetApiResponse, { stageId: string, workflowId: string, trigger: number }>({

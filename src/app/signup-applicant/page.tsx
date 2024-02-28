@@ -60,7 +60,7 @@ export default function SignInSide() {
   useEffect(() => {
     if (success) {
       dispatch(resetSuccess());
-      router.push("/login");
+      router.push("/login-applicant");
     }
   }, [router, success, dispatch]);
 

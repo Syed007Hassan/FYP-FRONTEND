@@ -16,6 +16,8 @@ type Job = {
   jobCreatedAt: string;
   company: Company;
   recruiter: Recruiter;
+  jobSkills: string[];
+  restrictedLocationRange: string;
 };
 
 export interface JobLocation {

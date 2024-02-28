@@ -30,7 +30,8 @@ export const JobApi = createApi({
   reducerPath: "jobApi",
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/job/",
+    // baseUrl: "http://localhost:5000/api/job/",
+    baseUrl: `${Backend_URL}/job/`,
   }),
   endpoints: (builder) => ({
     getJob: builder.query<SingleJobResponse, { jobId: string }>({

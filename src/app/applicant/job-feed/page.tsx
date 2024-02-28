@@ -103,8 +103,33 @@ const JobFeed = () => {
     if (data) {
       console.log(data);
     }
-    setAllJobs(data?.data || []);
-  }, [data, error, isLoading]);
+    // setAllJobs(data?.data || []);
+    setAllJobs(
+      (data?.data || []).filter((job: Job) => {
+        if (job?.restrictedLocationRange) {
+          const jobRestriction = job?.restrictedLocationRange;
+          const applicantLocation = applicantDetails?.location;
+          const jobLocation = job?.jobLocation;
+          if (jobRestriction && applicantLocation && jobLocation) {
+            const lat1 = parseFloat(jobLocation.latitude);
+            const lon1 = parseFloat(jobLocation.longitude);
+            const lat2 = parseFloat(applicantLocation.latitude);
+            const lon2 = parseFloat(applicantLocation.longitude);
+            // console.log(
+            //   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2),
+            //   jobRestriction
+            // );
+            return (
+              getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) <=
+              parseFloat(jobRestriction)
+            );
+          }
+        } else {
+          return job;
+        }
+      })
+    );
+  }, [data, error, isLoading, applicantDetails]);
 
   useEffect(() => {
     let filteredJobs = allJobs.map((job) => {
@@ -272,7 +297,7 @@ const JobFeed = () => {
               }`}
             >
               <div className="font-inter">
-              <section className={`${isSidebarOpen ? '' : 'py-10'}`}>
+                <section className={`${isSidebarOpen ? "" : "py-10"}`}>
                   <h1 className="text-2xl font-bold font-inter text-violet-600 py-6">
                     SyncFlow | Job Feed
                   </h1>

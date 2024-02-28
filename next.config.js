@@ -4,7 +4,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ['syncflowbucket.s3.amazonaws.com'],
+    domains: ["syncflow-bucket.s3.amazonaws.com"],
   },
 };
 

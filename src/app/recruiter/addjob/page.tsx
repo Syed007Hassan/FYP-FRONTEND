@@ -38,7 +38,12 @@ const KeyCodes = {
   SPACE: 32,
 };
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.TAB, KeyCodes.SPACE];
+const delimiters = [
+  KeyCodes.comma,
+  KeyCodes.enter,
+  KeyCodes.TAB,
+  KeyCodes.SPACE,
+];
 
 type Tag = { id: string; text: string };
 
@@ -53,6 +58,9 @@ const Page = () => {
   const [location, setLocation] = useState<JobLocation>();
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [restrictedRange, setRestrictedRange] = useState("");
+  const [restrictedDropdownOpen, setRestrictedDropdownOpen] = useState(false);
+  const [clickRestricted, setClickRestricted] = useState(false);
 
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
@@ -159,6 +167,7 @@ const Page = () => {
       jobDescription: job.desc,
       jobStatus: "Active",
       jobSkills: tags.map((tag) => tag.text),
+      restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };
 
     dispatch(createJob({ companyId, recruiterId, job: temp_job }));
@@ -553,7 +562,8 @@ const Page = () => {
                     }}
                   />
                 </div>
-                <div>
+                <div className="flex justify-between">
+                  <div className="w-72">
                     <label
                       htmlFor="skills"
                       className="block text-sm pb-2 font-medium text-gray-700"
@@ -574,6 +584,99 @@ const Page = () => {
                       inline
                     />
                   </div>
+                  <div className="">
+                    <label
+                      htmlFor="jobCategory"
+                      className="mb-2 font-bold block text-sm text-gray-900 dark:text-white"
+                    >
+                      Area Restriction
+                    </label>
+                    <button
+                      id="dropdownDefaultButton"
+                      data-dropdown-toggle="dropdown"
+                      className="w-full text-black bg-white border-black gap-12 text-center inline-flex items-center justify-between min-w-fit border rounded pl-2 pr-2 pt-1 pb-1 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      type="button"
+                      onClick={() =>
+                        setRestrictedDropdownOpen(!restrictedDropdownOpen)
+                      }
+                    >
+                      {clickRestricted ? "Yes" : "No"}
+                      <svg
+                        className="w-2.5 h-2.5"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 10 6"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m1 1 4 4 4-4"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      id="dropdown"
+                      className={`z-10 ${
+                        restrictedDropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                    >
+                      <ul
+                        className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownDefaultButton"
+                      >
+                        <li
+                          onClick={() => {
+                            setRestrictedDropdownOpen(false);
+                            setClickRestricted(true);
+                          }}
+                        >
+                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Yes
+                          </p>
+                        </li>
+                        <li
+                          onClick={() => {
+                            setRestrictedDropdownOpen(false);
+                            setClickRestricted(false);
+                          }}
+                        >
+                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            No
+                          </p>
+                        </li>
+
+                        {/* Add more options as needed */}
+                      </ul>
+                    </div>
+                  </div>
+                  {clickRestricted && (
+                    <div className="">
+                      <label
+                        htmlFor="location"
+                        className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
+                      >
+                        Restricted Range (in km)
+                      </label>
+                      <input
+                        type="number"
+                        id="location"
+                        placeholder="5km"
+                        className="w-full min-w-fit border rounded pl-2 pr-2 pt-1 pb-1 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                        autoComplete="given-name"
+                        min={0}
+                        max={100}
+                        // value="companyName"
+                        onChange={(e) => {
+                          setRestrictedRange(e.target.value);
+                        }}
+                        required
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="flex justify-end">
                 <button

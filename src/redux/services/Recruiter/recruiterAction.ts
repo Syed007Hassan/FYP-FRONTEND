@@ -104,7 +104,8 @@ export const userApi = createApi({
   reducerPath: "userApi",
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/recruiter/",
+    // baseUrl: "http://localhost:5000/api/recruiter/",
+    baseUrl: `${Backend_URL}/recruiter/`,
   }),
   endpoints: (builder) => ({
     getUserByEmail: builder.query<Recruiter, { email: string }>({

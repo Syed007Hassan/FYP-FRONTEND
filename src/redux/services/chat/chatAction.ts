@@ -35,7 +35,8 @@ export const chatApi = createApi({
   reducerPath: "chatApi",
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api/",
+    // baseUrl: "http://localhost:4000/api/",
+    baseUrl: `${FLASK_URL}/`,
   }),
   endpoints: (builder) => ({
     getChat: builder.query<Chat, { query: string }>({

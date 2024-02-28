@@ -18,6 +18,9 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { loginApplicant, resetReject } from "@/redux/services/auth/authActions";
 import { RootState } from "@/redux/store";
+import { parseJwt } from "@/lib/Constants";
+import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applicantAction";
+import { routeModule } from "next/dist/build/templates/app-page";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -27,11 +30,19 @@ export default function SignInSide() {
   const [password, setPassword] = useState("");
   const [result, setResult] = useState(false);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [decodedData, setDecodedData] = useState<any>({});
+  const [applicantId, setApplicantId] = useState<string>("");
   const Router = useRouter();
   const dispatch = useAppDispatch();
   const { loading, userInfo, error, success, reject } = useAppSelector(
     (state: RootState) => state.authReducer
   );
+
+  const {
+    data,
+    error: getApplicantError,
+    isLoading,
+  } = useGetApplicantDetailsQuery({ id: applicantId });
 
   const handleSubmit = async (event: any) => {
     console.log(email, password);
@@ -87,15 +98,46 @@ export default function SignInSide() {
     window.location.href = `${Backend_URL}/auth/google/callback`;
   };
 
+  const parseJwtFromSession = async () => {
+    // const session = await getSession();
+    const session = Cookies.get("token");
+    if (!session) {
+      throw new Error("Invalid session");
+    }
+    const jwt: string = session.toString();
+    const decodedData = parseJwt(jwt);
+    setDecodedData(decodedData);
+    setApplicantId(decodedData.id.toString() || "");
+  };
+
   useEffect(() => {
     console.log("userInfo", userInfo);
+
     if (userInfo?.success) {
       setAlertMessage("User Logged In Successfully!");
+
       console.log("userInfo", userInfo);
       Cookies.set("token", userInfo?.data?.jwt, { expires: 7 });
-      Router.push("/applicant");
+
+      parseJwtFromSession();
+
+      // if(data){
+      //   console.log("data", data);
+      //   Router.push("/applicant");
+      // } else {
+      //   Router.push("/applicant/build-profile");
+      // }
     }
   }, [userInfo, dispatch, Router]);
+
+  useEffect(() => {
+    if (data?.success === true) {
+      console.log("data", data);
+      Router.push("/applicant");
+    } else if (data?.success === false) {
+      Router.push("/applicant/build-profile");
+    }
+  }, [data, Router]);
 
   useEffect(() => {
     if (reject) {
@@ -121,8 +163,9 @@ export default function SignInSide() {
       <div className="relative">
         {!result && (
           <div
-            className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${!alertMessage && "opacity-0"
-              }`}
+            className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${
+              !alertMessage && "opacity-0"
+            }`}
             role="alert"
           >
             <p className="text-base font-semibold text-gray-900 dark:text-white">

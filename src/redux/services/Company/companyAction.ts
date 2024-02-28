@@ -51,7 +51,8 @@ export const companyApi = createApi({
   reducerPath: "companyApi",
   refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/company/",
+    // baseUrl: "http://localhost:5000/api/company/",
+    baseUrl: `${Backend_URL}/company/`,
   }),
   endpoints: (builder) => ({
     getCompany: builder.query<Company, { id: number }>({

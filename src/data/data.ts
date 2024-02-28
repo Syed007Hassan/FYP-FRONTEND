@@ -32,6 +32,7 @@ export interface Jobs {
   jobDescription: string;
   jobStatus: string;
   jobSkills: string[];
+  restrictedLocationRange: string;
 }
 
 export type DecodedData = {

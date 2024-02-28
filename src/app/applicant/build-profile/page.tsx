@@ -13,9 +13,12 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ApplicantHeader from "@/components/applicant/applicantHeader";
 import Alert from "@/components/Alert";
 import { Education, Experience } from "@/types/applicant";
+import { useRouter } from "next/navigation";
 
 const UpdateProfile = () => {
   const [step, setStep] = useState(0);
+
+  const Router = useRouter();
 
   const dispatch = useAppDispatch();
   const { success } = useAppSelector((state) => state.applicantReducer);
@@ -161,6 +164,13 @@ const UpdateProfile = () => {
     dispatch(uploadResume({ id, resume: resume }));
 
   };
+
+  useEffect(() => {
+    if (success) {
+      console.log("success");
+      Router.push("/applicant/");
+    }
+  }, [success, Router]);
 
   return (
     <div className="font-sans" >

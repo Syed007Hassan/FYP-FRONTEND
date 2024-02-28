@@ -334,8 +334,10 @@ const Profile = () => {
                             <div className="relative inline-block">
                               <Image
                                 src={
-                                  applicantDetails?.profilePicture ||
-                                  "/user.png"
+                                  applicantDetails?.profilePicture &&
+                                  applicantDetails?.profilePicture !== "adas"
+                                    ? applicantDetails?.profilePicture
+                                    : "/user.png"
                                 }
                                 alt="User"
                                 width={100}
@@ -447,10 +449,7 @@ const Profile = () => {
                           <button
                             className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700"
                             onClick={() =>
-                              window.open(
-                                applicantDetails?.resume,
-                                "_blank"
-                              )
+                              window.open(applicantDetails?.resume, "_blank")
                             }
                           >
                             Download CV

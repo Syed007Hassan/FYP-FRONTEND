@@ -1,6 +1,6 @@
 import React from "react";
 import { WithContext as ReactTags } from "react-tag-input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import COUNTRIES from "@/data/countries";
 import CreatableSelect from "react-select/creatable";
 import { FaLocationCrosshairs } from "react-icons/fa6";
@@ -102,23 +102,13 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
     console.log("The tag at index " + index + " was clicked");
   };
 
-  const getCurrentLocation = async () => {
+  const getLatAndLong = async () => {
+    console.log("Getting current location");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (pos) => {
         setLatitude(pos.coords.latitude.toString());
         setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          setCountry(data.address.country);
-          setCity(data.address.city);
-          setArea(data.address.neighbourhood);
-          console.log(data);
-        } catch (error) {
-          console.error("Error:", error);
-        }
       });
     } else {
       console.log("Geolocation is not supported by this browser.");
@@ -171,20 +161,22 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
         >
           Area
         </label>
-        <input
-          type="text"
-          id="area"
-          className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-          placeholder="G-9/1"
-          // onChange={(e) => setArea(e.target.value)}
-          required
-          value={`${area}, ${city}, ${country}`}
-        />
-        <FaLocationCrosshairs
-          className="absolute right-[38%] top-[64%] transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
-          onClick={getCurrentLocation}
-          title="Get current location"
-        />
+        <div className="relative w-full">
+          <input
+            type="text"
+            id="area"
+            className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-16"
+            placeholder="G-9/1"
+            // onChange={(e) => setArea(e.target.value)}
+            required
+            value={area && city && country ? `${area}, ${city}, ${country}` : ""}
+          />
+          <FaLocationCrosshairs
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+            onClick={getLatAndLong}
+            title="Get current location"
+          />
+        </div>
       </div>
 
       <div>

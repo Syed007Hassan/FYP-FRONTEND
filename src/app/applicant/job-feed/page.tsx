@@ -115,10 +115,11 @@ const JobFeed = () => {
             const lon1 = parseFloat(jobLocation.longitude);
             const lat2 = parseFloat(applicantLocation.latitude);
             const lon2 = parseFloat(applicantLocation.longitude);
-            // console.log(
-            //   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2),
-            //   jobRestriction
-            // );
+            console.log(
+              getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2),
+              jobRestriction
+            );
+            console.log("job Name", job?.jobTitle);
             return (
               getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) <=
               parseFloat(jobRestriction)
@@ -194,14 +195,15 @@ const JobFeed = () => {
     }
 
     if (nearby) {
+      const applicantLatitude = parseFloat(applicantDetails?.location?.latitude || "0");
+      const applicantLongitude = parseFloat(applicantDetails?.location?.longitude || "0");
+
       filteredJobs = filteredJobs.filter((job) => {
-        const jobLocation = job.jobLocation.area;
-        const applicantLocation = applicantDetails?.location.area;
-        if (jobLocation && applicantLocation) {
+        const jobLatitude = parseFloat(job?.jobLocation?.latitude || "0");
+        const jobLongitude = parseFloat(job?.jobLocation?.longitude || "0");
+        if (jobLatitude && jobLongitude && applicantLatitude && applicantLongitude) {
           return (
-            jobLocation.toLowerCase() === applicantLocation.toLowerCase() ||
-            job.jobLocation.city.toLowerCase() ===
-              applicantDetails?.location.city.toLowerCase()
+            jobLatitude === applicantLatitude && jobLongitude === applicantLongitude
           );
         }
         return false;
@@ -685,7 +687,7 @@ const JobFeed = () => {
                                           id="steps-range"
                                           type="range"
                                           min="0"
-                                          max="10"
+                                          max="30"
                                           defaultValue="0"
                                           step="0.5"
                                           onChange={(e) =>

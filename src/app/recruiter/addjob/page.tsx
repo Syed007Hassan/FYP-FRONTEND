@@ -192,17 +192,23 @@ const Page = () => {
         setLatitude(pos.coords.latitude.toString());
         setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        fetch(url)
-          .then((response) => response.json())
-          .then((data) => setAdd(data.address))
-          .catch((error) => console.error("Error:", error));
       });
       setClickLocation(true);
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
   };
+
+  useEffect(() => {
+    const getCurrentLocation = async () => {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => setAdd(data.address))
+        .catch((error) => console.error("Error:", error));
+    };
+    getCurrentLocation();
+  }, [latitude, longitude]);
 
   useEffect(() => {
     if (add) {
@@ -483,31 +489,30 @@ const Page = () => {
                       Location
                     </label>
                     <div className="relative">
-                      <input
-                        type="text"
-                        id="location"
-                        placeholder="Bachelors"
-                        className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
-                        autoComplete="given-name"
-                        value={
-                          add
-                            ? job.location.area +
-                              ", " +
-                              job?.location?.city +
-                              ", " +
-                              job?.location?.country
-                            : undefined
-                        }
-                        // onChange={(e) => {
-                        //   setJob({ ...job, location: e.target.value });
-                        // }}
-                        required
-                      />
-                      <FaLocationCrosshairs
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
-                        onClick={getCurrentLocation}
-                        title="Get current location"
-                      />
+                      <div className="relative w-full">
+                        <input
+                          type="text"
+                          id="location"
+                          placeholder="Bachelors"
+                          className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
+                          autoComplete="given-name"
+                          value={
+                            add
+                              ? job.location.area +
+                                ", " +
+                                job?.location?.city +
+                                ", " +
+                                job?.location?.country
+                              : undefined
+                          }
+                          required
+                        />
+                        <FaLocationCrosshairs
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+                          onClick={getCurrentLocation}
+                          title="Get current location"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="">

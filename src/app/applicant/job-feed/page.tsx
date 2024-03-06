@@ -290,6 +290,7 @@ const JobFeed = () => {
             isSidebarOpen ? "shifted-dashboard" : ""
           }`}
         >
+          {/* if no filtered jobs availabe then display no job available */}
           <div>
             <div
               className={`px-5 md:px-24 lg:px-44 ${
@@ -475,121 +476,126 @@ const JobFeed = () => {
                         </ul>
                       </div> */}
                         <div className="mt-14">
-                          {filteredJobs &&
-                            filteredJobs.map((job) => {
-                              return (
-                                <div
-                                  key={job?.jobId}
-                                  className="relative mt-4 overflow-hidden duration-500 ease-in-out bg-white border rounded-md border-gray-100 group hover:border-violet-500 dark:bg-neutral-900 dark:border-neutral-600 transform transition-transform hover:-translate-y-1"
-                                >
-                                  <div className="w-28 absolute top-0 left-[-3rem] transform -rotate-45 bg-violet-500 p-6 text-center dark:bg-violet-500">
-                                    <a
-                                      href="javascript:void(0)"
-                                      className="text-2xl text-white align-middle"
-                                    >
-                                      <i className="mdi mdi-star"></i>
-                                    </a>
-                                  </div>
-                                  <div className="p-4">
-                                    <div className="grid items-center grid-cols-12">
-                                      <div className="col-span-12 lg:col-span-2">
-                                        <div className="mb-4 text-center mb-md-0">
-                                          <a href="company-details.html">
-                                            <Image
-                                              src="/assets/images/featured-job/img-01.png"
-                                              alt="Description of Image"
-                                              width={50} // replace with actual width
-                                              height={50} // replace with actual height
-                                              className="mx-auto rounded-3"
-                                            />
-                                          </a>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                      <div className="col-span-12 lg:col-span-3">
-                                        <div className="mb-2 mb-md-0">
-                                          <h5 className="mb-1 fs-18">
-                                            <a
-                                              href="job-details.html"
-                                              className="text-gray-900 dark:text-gray-50 font-bold text-xl"
-                                            >
-                                              {job?.jobTitle}
-                                            </a>
-                                          </h5>
-                                          <p className="mb-0 text-gray-500 fs-14 dark:text-gray-300">
-                                            {job?.company?.companyName}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                      <div className="col-span-12 lg:col-span-3">
-                                        <div className="mb-2 lg:flex lg:gap-1 items-center">
-                                          <div className="flex-shrink-0">
-                                            <FaMapMarkerAlt className="text-violet-500 dark:text-gray-300" />{" "}
-                                          </div>
-                                          <p className="mb-0 text-gray-500 dark:text-gray-300">
-                                            {job?.jobLocation?.area} ,{" "}
-                                            {job?.jobLocation?.city} ,{" "}
-                                            {job?.jobLocation?.country}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                      <div className="col-span-12 lg:col-span-2">
-                                        <div>
-                                          <p className="mb-0 text-gray-500 dark:text-gray-300 lg:flex lg:gap-1 items-center">
-                                            <FaRegClock className="text-violet-500 dark:text-gray-300" />{" "}
-                                            {job.jobCreatedAt}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                      <div className="col-span-12 lg:col-span-2">
-                                        <div className="flex flex-wrap gap-1.5">
-                                          <span className="bg-green-500/20 text-green-500 text-13 px-2 py-0.5 font-medium rounded">
-                                            {job?.jobType}
-                                          </span>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                    </div>
-                                    {/* <!--end row--> */}
-                                  </div>
-                                  <div className="px-4 py-3 bg-gray-100 dark:bg-gray-700">
-                                    <div className="grid grid-cols-12">
-                                      <div className="col-span-12 lg:col-span-6">
-                                        <div>
-                                          <p className="mb-0 text-gray-500 dark:text-gray-300">
-                                            <span className="font-bold text-gray-900 dark:text-white">
-                                              Experience:
-                                            </span>{" "}
-                                            {job?.jobExperience}
-                                          </p>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                      <div className="col-span-12 mt-2 lg:col-span-6 lg:mt-0">
-                                        <div className="flex justify-end text-right lg:text-right dark:text-white">
-                                          <a
-                                            onClick={() => {
-                                              router.push(
-                                                `/applicant/job-feed/${job?.jobId}`
-                                              );
-                                            }}
-                                            className="flex items-center hover:cursor-pointer"
-                                          >
-                                            Apply Now
-                                            <MdKeyboardDoubleArrowRight />
-                                          </a>
-                                        </div>
-                                      </div>
-                                      {/* <!--end col--> */}
-                                    </div>
-                                    {/* <!--end row--> */}
-                                  </div>
+                          {filteredJobs && filteredJobs.length === 0 ? (
+                            <div className="flex justify-center items-center h-screen">
+                              <h1 className="text-2xl font-bold font-inter text-violet-600 py-6">
+                                No Jobs Available
+                              </h1>
+                            </div>
+                          ) : (
+                            filteredJobs.map((job) => (
+                              <div
+                                key={job?.jobId}
+                                className="relative mt-4 overflow-hidden duration-500 ease-in-out bg-white border rounded-md border-gray-100 group hover:border-violet-500 dark:bg-neutral-900 dark:border-neutral-600 transform transition-transform hover:-translate-y-1"
+                              >
+                                <div className="w-28 absolute top-0 left-[-3rem] transform -rotate-45 bg-violet-500 p-6 text-center dark:bg-violet-500">
+                                  <a
+                                    href="javascript:void(0)"
+                                    className="text-2xl text-white align-middle"
+                                  >
+                                    <i className="mdi mdi-star"></i>
+                                  </a>
                                 </div>
-                              );
-                            })}
+                                <div className="p-4">
+                                  <div className="grid items-center grid-cols-12">
+                                    <div className="col-span-12 lg:col-span-2">
+                                      <div className="mb-4 text-center mb-md-0">
+                                        <a href="company-details.html">
+                                          <Image
+                                            src="/assets/images/featured-job/img-01.png"
+                                            alt="Description of Image"
+                                            width={50} // replace with actual width
+                                            height={50} // replace with actual height
+                                            className="mx-auto rounded-3"
+                                          />
+                                        </a>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                    <div className="col-span-12 lg:col-span-3">
+                                      <div className="mb-2 mb-md-0">
+                                        <h5 className="mb-1 fs-18">
+                                          <a
+                                            href="job-details.html"
+                                            className="text-gray-900 dark:text-gray-50 font-bold text-xl"
+                                          >
+                                            {job?.jobTitle}
+                                          </a>
+                                        </h5>
+                                        <p className="mb-0 text-gray-500 fs-14 dark:text-gray-300">
+                                          {job?.company?.companyName}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                    <div className="col-span-12 lg:col-span-3">
+                                      <div className="mb-2 lg:flex lg:gap-1 items-center">
+                                        <div className="flex-shrink-0">
+                                          <FaMapMarkerAlt className="text-violet-500 dark:text-gray-300" />{" "}
+                                        </div>
+                                        <p className="mb-0 text-gray-500 dark:text-gray-300">
+                                          {job?.jobLocation?.area} ,{" "}
+                                          {job?.jobLocation?.city} ,{" "}
+                                          {job?.jobLocation?.country}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                    <div className="col-span-12 lg:col-span-2">
+                                      <div>
+                                        <p className="mb-0 text-gray-500 dark:text-gray-300 lg:flex lg:gap-1 items-center">
+                                          <FaRegClock className="text-violet-500 dark:text-gray-300" />{" "}
+                                          {job.jobCreatedAt}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                    <div className="col-span-12 lg:col-span-2">
+                                      <div className="flex flex-wrap gap-1.5">
+                                        <span className="bg-green-500/20 text-green-500 text-13 px-2 py-0.5 font-medium rounded">
+                                          {job?.jobType}
+                                        </span>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                  </div>
+                                  {/* <!--end row--> */}
+                                </div>
+                                <div className="px-4 py-3 bg-gray-100 dark:bg-gray-700">
+                                  <div className="grid grid-cols-12">
+                                    <div className="col-span-12 lg:col-span-6">
+                                      <div>
+                                        <p className="mb-0 text-gray-500 dark:text-gray-300">
+                                          <span className="font-bold text-gray-900 dark:text-white">
+                                            Experience:
+                                          </span>{" "}
+                                          {job?.jobExperience}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                    <div className="col-span-12 mt-2 lg:col-span-6 lg:mt-0">
+                                      <div className="flex justify-end text-right lg:text-right dark:text-white">
+                                        <a
+                                          onClick={() => {
+                                            router.push(
+                                              `/applicant/job-feed/${job?.jobId}`
+                                            );
+                                          }}
+                                          className="flex items-center hover:cursor-pointer"
+                                        >
+                                          Apply Now
+                                          <MdKeyboardDoubleArrowRight />
+                                        </a>
+                                      </div>
+                                    </div>
+                                    {/* <!--end col--> */}
+                                  </div>
+                                  {/* <!--end row--> */}
+                                </div>
+                              </div>
+                            ))
+                          )}
                         </div>
                         <div className="flex justify-center mt-9">
                           <Pagination

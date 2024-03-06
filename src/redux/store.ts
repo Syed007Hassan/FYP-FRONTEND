@@ -18,6 +18,7 @@ import applicantReducer from "./services/Applicant/applicantSlice";
 import stageReducer from "./services/stage/stageSlice";
 import assigneeReducer from "./services/assignee/assigneeSlice";
 import applicationReducer from "./services/application/applicationSlice";
+import { uploadCVReducer, uploadReducer} from "./services/upload/uploadSlice";
 
 import sidebarReducer from "./features/sidebarStateAction";
 export const store = configureStore({
@@ -31,6 +32,8 @@ export const store = configureStore({
     assigneeReducer,
     applicantReducer,
     applicationReducer,
+    uploadReducer,
+    uploadCVReducer,
     [userApi.reducerPath]: userApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,

@@ -11,7 +11,7 @@ const Signout = () => {
 
   useEffect(() => {
     Cookies.remove('token');
-    Router.push('/login');
+    Router.push('/');
   }, []);
 
   return <div>Signing out...</div>;

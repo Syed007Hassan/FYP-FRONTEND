@@ -127,6 +127,8 @@ export default function SignInSide() {
       // } else {
       //   Router.push("/applicant/build-profile");
       // }
+    } else if (userInfo?.success === false) {
+      setAlertMessage("User Not Logged In!");
     }
   }, [userInfo, dispatch, Router]);
 

@@ -20,6 +20,7 @@ import Location from "@/types/location";
 import { JobLocation } from "@/types/job";
 import { WithContext as ReactTags } from "react-tag-input";
 import SKILLS from "@/data/skills";
+import { Job } from "@/types/job";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -61,10 +62,18 @@ const Page = () => {
   const [restrictedRange, setRestrictedRange] = useState("");
   const [restrictedDropdownOpen, setRestrictedDropdownOpen] = useState(false);
   const [clickRestricted, setClickRestricted] = useState(false);
+  // const [dispatchSuccess, setDispatchSuccess] = useState(false);
+
+  type StateData = {
+    success: boolean;
+    job: Job | null;
+  };
 
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
-  const { success } = useAppSelector((state) => state.jobReducer);
+  const { success, job: addResponse } = useAppSelector(
+    (state) => state.jobReducer
+  );
 
   const [click, setClick] = useState(false);
 
@@ -145,7 +154,7 @@ const Page = () => {
     }
   }, [decodedData]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (clickLocation === false) {
@@ -170,20 +179,28 @@ const Page = () => {
       restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };
 
-    dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+    try {
+      await dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+      // setDispatchSuccess(true);
+    } catch (error) {
+      console.error("Error:", error);
+      // handle error here
+    }
   };
 
-  useEffect(() => {
-    console.log("job:", job.desc);
-  }, [job]);
+  // useEffect(() => {
+  //   console.log(job);
+  // }, [job]);
 
   useEffect(() => {
-    console.log("success:", success);
-    if (success) {
-      dispatch(resetSuccess());
+    // console.log("dispatchSuccess:", dispatchSuccess);
+    if (success === true) {
+      console.log("success:", success);
+      console.log("Hello");
+      // console.log("dispatchSuccessd:", dispatchSuccess);
       router.push("/recruiter/joblist");
     }
-  }, [success, router]);
+  }, [router, dispatch, success]);
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
@@ -192,17 +209,23 @@ const Page = () => {
         setLatitude(pos.coords.latitude.toString());
         setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        fetch(url)
-          .then((response) => response.json())
-          .then((data) => setAdd(data.address))
-          .catch((error) => console.error("Error:", error));
       });
       setClickLocation(true);
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
   };
+
+  useEffect(() => {
+    const getCurrentLocation = async () => {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => setAdd(data.address))
+        .catch((error) => console.error("Error:", error));
+    };
+    getCurrentLocation();
+  }, [latitude, longitude]);
 
   useEffect(() => {
     if (add) {
@@ -483,31 +506,30 @@ const Page = () => {
                       Location
                     </label>
                     <div className="relative">
-                      <input
-                        type="text"
-                        id="location"
-                        placeholder="Bachelors"
-                        className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
-                        autoComplete="given-name"
-                        value={
-                          add
-                            ? job.location.area +
-                              ", " +
-                              job?.location?.city +
-                              ", " +
-                              job?.location?.country
-                            : undefined
-                        }
-                        // onChange={(e) => {
-                        //   setJob({ ...job, location: e.target.value });
-                        // }}
-                        required
-                      />
-                      <FaLocationCrosshairs
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
-                        onClick={getCurrentLocation}
-                        title="Get current location"
-                      />
+                      <div className="relative w-full">
+                        <input
+                          type="text"
+                          id="location"
+                          placeholder="Bachelors"
+                          className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
+                          autoComplete="given-name"
+                          value={
+                            add
+                              ? job.location.area +
+                                ", " +
+                                job?.location?.city +
+                                ", " +
+                                job?.location?.country
+                              : undefined
+                          }
+                          required
+                        />
+                        <FaLocationCrosshairs
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
+                          onClick={getCurrentLocation}
+                          title="Get current location"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="">

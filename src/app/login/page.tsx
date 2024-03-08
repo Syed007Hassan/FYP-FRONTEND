@@ -94,6 +94,8 @@ export default function SignInSide() {
       console.log("userInfo", userInfo);
       Cookies.set("token", userInfo?.data?.jwt, { expires: 7 });
       Router.push("/recruiter");
+    } else if (userInfo?.success === false) {
+      setAlertMessage("User Not Logged In!");
     }
   }, [userInfo, dispatch, Router]);
 

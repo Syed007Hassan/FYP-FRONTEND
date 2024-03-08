@@ -18,6 +18,7 @@ import COUNTRIES from "@/data/countries";
 import Pagination from "@mui/material/Pagination";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
+import Link from "next/link";
 
 import "../../../styles/sidebar.css";
 
@@ -195,15 +196,25 @@ const JobFeed = () => {
     }
 
     if (nearby) {
-      const applicantLatitude = parseFloat(applicantDetails?.location?.latitude || "0");
-      const applicantLongitude = parseFloat(applicantDetails?.location?.longitude || "0");
+      const applicantLatitude = parseFloat(
+        applicantDetails?.location?.latitude || "0"
+      );
+      const applicantLongitude = parseFloat(
+        applicantDetails?.location?.longitude || "0"
+      );
 
       filteredJobs = filteredJobs.filter((job) => {
         const jobLatitude = parseFloat(job?.jobLocation?.latitude || "0");
         const jobLongitude = parseFloat(job?.jobLocation?.longitude || "0");
-        if (jobLatitude && jobLongitude && applicantLatitude && applicantLongitude) {
+        if (
+          jobLatitude &&
+          jobLongitude &&
+          applicantLatitude &&
+          applicantLongitude
+        ) {
           return (
-            jobLatitude === applicantLatitude && jobLongitude === applicantLongitude
+            jobLatitude === applicantLatitude &&
+            jobLongitude === applicantLongitude
           );
         }
         return false;
@@ -502,7 +513,10 @@ const JobFeed = () => {
                                   <div className="grid items-center grid-cols-12">
                                     <div className="col-span-12 lg:col-span-2">
                                       <div className="mb-4 text-center mb-md-0">
-                                        <a href="company-details.html">
+                                        <Link 
+                                          href="/applicant/job-feed/[jobId]"
+                                          as={`/applicant/job-feed/${job?.jobId}`}
+                                        >
                                           <Image
                                             src="/assets/images/featured-job/img-01.png"
                                             alt="Description of Image"
@@ -510,19 +524,19 @@ const JobFeed = () => {
                                             height={50} // replace with actual height
                                             className="mx-auto rounded-3"
                                           />
-                                        </a>
+                                        </Link>
                                       </div>
                                     </div>
                                     {/* <!--end col--> */}
                                     <div className="col-span-12 lg:col-span-3">
                                       <div className="mb-2 mb-md-0">
-                                        <h5 className="mb-1 fs-18">
-                                          <a
-                                            href="job-details.html"
-                                            className="text-gray-900 dark:text-gray-50 font-bold text-xl"
+                                        <h5 className="mb-1 fs-18 font-semibold">
+                                          <Link
+                                            href="/applicant/job-feed/[jobId]"
+                                            as={`/applicant/job-feed/${job?.jobId}`}
                                           >
                                             {job?.jobTitle}
-                                          </a>
+                                          </Link>
                                         </h5>
                                         <p className="mb-0 text-gray-500 fs-14 dark:text-gray-300">
                                           {job?.company?.companyName}
@@ -584,7 +598,7 @@ const JobFeed = () => {
                                               `/applicant/job-feed/${job?.jobId}`
                                             );
                                           }}
-                                          className="flex items-center hover:cursor-pointer"
+                                          className="flex items-center hover:cursor-pointer font-semibold text-violet-500 dark:text-violet-500 hover:text-violet-600 dark:hover:text-violet-600 transition-all duration-300"
                                         >
                                           Apply Now
                                           <MdKeyboardDoubleArrowRight />

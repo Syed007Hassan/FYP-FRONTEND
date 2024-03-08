@@ -1,7 +1,7 @@
 import Company from "./company";
 import Recruiter from "./recruiter";
 
-type Job = {
+export type Job = {
   jobId: number;
   jobTitle: string;
   jobDescription: string;
@@ -32,6 +32,11 @@ export type JobResponse = {
   success: boolean;
   data: Job[];
 };
+
+export type addJobResponse = {
+  success: boolean;
+  data: Job;
+}
 
 export type SingleJobResponse = {
   success: boolean;

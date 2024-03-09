@@ -32,7 +32,6 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
   setClickLocation,
   setUpdateContactButton,
 }) => {
-
   return (
     <div>
       <div className="pb-4">
@@ -46,7 +45,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
           <input
             type="text"
             id="address"
-            value={`${area}, ${city}, ${country}`}
+            value={area && city && country ? `${area}, ${city}, ${country}` : ""}
             placeholder="enter your address here"
             className="w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
             // onChange={(e) => setAddress(e.target.value)}

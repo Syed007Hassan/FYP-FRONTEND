@@ -146,7 +146,7 @@ export default function SignInSide() {
 
               <div className="mt-1">
                 <h1 className="font-bold text-2xl mb-1">
-                  Sign Up as a Recruiter
+                  Sign Up as a Applicant
                 </h1>
               </div>
 

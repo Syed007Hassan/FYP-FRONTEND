@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   updateApplicantDetails,
   resetSuccess,
-  uploadProfileImage,
   updateEducationDetails,
   updateExperienceDetails,
   updateSkillsAndAboutMe,
@@ -31,15 +30,6 @@ const applicantSlice = createSlice({
     });
     builder.addCase(resetSuccess.fulfilled, (state) => {
       state.success = false;
-    });
-    builder.addCase(uploadProfileImage.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-    });
-    builder.addCase(uploadProfileImage.fulfilled, (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.data = action.payload;
     });
     builder.addCase(updateEducationDetails.pending, (state) => {
       state.loading = true;

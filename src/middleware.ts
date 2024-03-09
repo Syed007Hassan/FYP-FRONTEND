@@ -24,6 +24,20 @@ export function middleware(req: NextRequest) {
     tokenData = parseJwt(tokenFromOauth.value.toString());
   }
 
+  // if signout
+  if (req.nextUrl.pathname.startsWith("/signout")) {
+    console.log("signout");
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    const response = NextResponse.next();
+    response.cookies.set({
+      name: "token",
+      value: "",
+      maxAge: -1, // this will delete the cookie
+    });
+    return NextResponse.redirect(url.toString());
+  }
+
   // if no token and trying to access recruiter page
 
   if (
@@ -103,6 +117,18 @@ export function middleware(req: NextRequest) {
   ) {
     return NextResponse.next();
   }
+
+  //   const res: NextResponse = NextResponse.next();
+
+  //     // add the CORS headers to the response
+  //     res.headers.append('Access-Control-Allow-Origin', '*') // replace this your actual origin
+  //     res.headers.append('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
+  //     res.headers.append(
+  //         'Access-Control-Allow-Headers',
+  //         'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  //     )
+
+  // return res;
 
   return NextResponse.next();
 }

@@ -127,6 +127,8 @@ export default function SignInSide() {
       // } else {
       //   Router.push("/applicant/build-profile");
       // }
+    } else if (userInfo?.success === false) {
+      setAlertMessage("User Not Logged In!");
     }
   }, [userInfo, dispatch, Router]);
 
@@ -321,7 +323,7 @@ export default function SignInSide() {
                   <p>
                     Don&apos;t have an account?{" "}
                     <a
-                      href="/signup"
+                      href="/signup-applicant"
                       className="text-blue-500 hover:text-blue-700"
                     >
                       Sign up

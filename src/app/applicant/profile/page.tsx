@@ -19,15 +19,18 @@ import ApplicantDetails, { AboutInfoData } from "@/types/applicant";
 import Loader from "@/components/Loader";
 import AboutInfo from "@/components/applicant/profileUpdate/aboutInfo";
 import {
-  uploadProfileImage,
   updateEducationDetails,
   updateExperienceDetails,
   updateSkillsAndAboutMe,
   updateProfileDetails,
   updateAboutInfo,
-  uploadResume,
 } from "@/redux/services/Applicant/applicantAction";
+import {
+  uploadProfileImage,
+  uploadResume,
+} from "@/redux/services/upload/uploadAction";
 import { Education, Experience, Contact } from "@/types/applicant";
+import UploadData from "@/types/uplaod";
 
 const Profile = () => {
   const [currentModal, setCurrentModal] = useState(null);
@@ -91,6 +94,30 @@ const Profile = () => {
     data: ApplicantData,
     success,
   } = useAppSelector((state) => state.applicantReducer);
+
+  const {
+    loading: uploadLoading,
+    error: uploadError,
+    data: uploadData,
+    success: uploadSuccess,
+  } = useAppSelector((state) => state.uploadReducer) as {
+    loading: boolean;
+    error: Error | null;
+    data: UploadData | null;
+    success: boolean;
+  };
+
+  const {
+    loading: uploadCVLoading,
+    error: uploadCVError,
+    data: uploadCVData,
+    success: uploadCVSuccess,
+  } = useAppSelector((state) => state.uploadCVReducer) as {
+    loading: boolean;
+    error: Error | null;
+    data: UploadData | null;
+    success: boolean;
+  };
 
   const [applicantDetails, setApplicantDetails] = useState<ApplicantDetails>();
 
@@ -218,34 +245,46 @@ const Profile = () => {
 
   useEffect(() => {
     if (clickLocation === true && applicantDetails) {
-      getCurrentLocation();
+      getLatAndLong();
       setClickLocation(false);
     }
   }, [clickLocation, applicantDetails]);
 
-  const getCurrentLocation = async () => {
+  const getLatAndLong = async () => {
     console.log("Getting current location");
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (pos) => {
         setLatitude(pos.coords.latitude.toString());
         setLongitude(pos.coords.longitude.toString());
         console.log(latitude, longitude);
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          setCountry(data.address.country);
-          setCity(data.address.city);
-          setArea(data.address.neighbourhood);
-          console.log(data);
-        } catch (error) {
-          console.error("Error:", error);
-        }
       });
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
   };
+
+  // useEffect(() => {
+  //   if (uploadData) {
+  //     console.log("Upload Data:", uploadData);
+  //   }
+  // }, [uploadData]);
+
+  useEffect(() => {
+    const getCurrentLocation = async () => {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setCountry(data.address.country);
+        setCity(data.address.city);
+        setArea(data.address.neighbourhood);
+        console.log(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    getCurrentLocation();
+  }, [latitude, longitude]);
 
   useEffect(() => {
     if (updateContactButton === true && applicantDetails) {
@@ -334,8 +373,11 @@ const Profile = () => {
                             <div className="relative inline-block">
                               <Image
                                 src={
-                                  applicantDetails?.profilePicture &&
-                                  applicantDetails?.profilePicture !== "adas"
+                                  uploadData?.data?.Location
+                                    ? uploadData?.data?.Location
+                                    : applicantDetails?.profilePicture &&
+                                      applicantDetails?.profilePicture !==
+                                        "adas"
                                     ? applicantDetails?.profilePicture
                                     : "/user.png"
                                 }
@@ -448,9 +490,16 @@ const Profile = () => {
                         <div className="mt-6">
                           <button
                             className="btn text-center ml-2 py-2 px-4 w-64 font-medium text-white items-center justify-center flex bg-blue-800 hover:bg-blue-700"
-                            onClick={() =>
-                              window.open(applicantDetails?.resume, "_blank")
-                            }
+                            onClick={() => {
+                              if (uploadCVData?.data?.Location) {
+                                window.open(
+                                  uploadCVData?.data?.Location,
+                                  "_blank"
+                                );
+                              } else {
+                                window.open(applicantDetails?.resume, "_blank");
+                              }
+                            }}
                           >
                             Download CV
                           </button>

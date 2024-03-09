@@ -24,6 +24,20 @@ export function middleware(req: NextRequest) {
     tokenData = parseJwt(tokenFromOauth.value.toString());
   }
 
+  // if signout
+  if (req.nextUrl.pathname.startsWith("/signout")) {
+    console.log("signout");
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    const response = NextResponse.next();
+    response.cookies.set({
+      name: "token",
+      value: "",
+      maxAge: -1, // this will delete the cookie
+    });
+    return NextResponse.redirect(url.toString());
+  }
+
   // if no token and trying to access recruiter page
 
   if (

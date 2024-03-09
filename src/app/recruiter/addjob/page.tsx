@@ -20,6 +20,7 @@ import Location from "@/types/location";
 import { JobLocation } from "@/types/job";
 import { WithContext as ReactTags } from "react-tag-input";
 import SKILLS from "@/data/skills";
+import { Job } from "@/types/job";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -61,10 +62,18 @@ const Page = () => {
   const [restrictedRange, setRestrictedRange] = useState("");
   const [restrictedDropdownOpen, setRestrictedDropdownOpen] = useState(false);
   const [clickRestricted, setClickRestricted] = useState(false);
+  // const [dispatchSuccess, setDispatchSuccess] = useState(false);
+
+  type StateData = {
+    success: boolean;
+    job: Job | null;
+  };
 
   const dispatch = useAppDispatch();
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
-  const { success } = useAppSelector((state) => state.jobReducer);
+  const { success, job: addResponse } = useAppSelector(
+    (state) => state.jobReducer
+  );
 
   const [click, setClick] = useState(false);
 
@@ -145,7 +154,7 @@ const Page = () => {
     }
   }, [decodedData]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (clickLocation === false) {
@@ -170,20 +179,28 @@ const Page = () => {
       restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };
 
-    dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+    try {
+      await dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+      // setDispatchSuccess(true);
+    } catch (error) {
+      console.error("Error:", error);
+      // handle error here
+    }
   };
 
-  useEffect(() => {
-    console.log("job:", job.desc);
-  }, [job]);
+  // useEffect(() => {
+  //   console.log(job);
+  // }, [job]);
 
   useEffect(() => {
-    console.log("success:", success);
-    if (success) {
-      dispatch(resetSuccess());
+    // console.log("dispatchSuccess:", dispatchSuccess);
+    if (success === true) {
+      console.log("success:", success);
+      console.log("Hello");
+      // console.log("dispatchSuccessd:", dispatchSuccess);
       router.push("/recruiter/joblist");
     }
-  }, [success, router]);
+  }, [router, dispatch, success]);
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {

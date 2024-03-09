@@ -52,7 +52,7 @@ const ApplicantSidebar: React.FC<SidebarProps> = ({ isOpen }) => {
           </li>
           <li>
             <a
-              href="applicant/job-history"
+              href="/applicant/job-history"
               className="flex items-center p-2 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             >
               <svg

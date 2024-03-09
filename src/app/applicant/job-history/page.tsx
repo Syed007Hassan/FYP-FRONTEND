@@ -3,11 +3,48 @@ import React, { useEffect, useState } from "react";
 import JobCard from "@/components/applicant/job/jobCard";
 import { JobCardData, JobCardProps } from "@/data/data";
 import Loader from "@/components/Loader";
+import { parseJwt } from "@/lib/Constants";
+import Cookies from "js-cookie";
+import { useGetApplicationsByApplicantIdQuery } from "@/redux/services/application/applicationAction";
+import { ApplicationData } from "@/types/application";
 
 const JobHistoryPage = () => {
   // use state of type jobCardData as an array
   const [jobCardTempData, setJobCardTempData] = useState<JobCardProps[]>([]);
   const [heading, setHeading] = useState<string>("All Jobs");
+  const [decodedData, setDecodedData] = useState<any>();
+  const [email, setEmail] = useState<string>("");
+  const [applicantId, setApplicantId] = useState<string>("");
+  const [jobsData, setJobsData] = useState<ApplicationData>();
+  const { data, error, isLoading } = useGetApplicationsByApplicantIdQuery({applicantId: applicantId});
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      // const session = await getSession();
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setEmail(decodedData?.email || "");
+      setApplicantId(decodedData.id.toString() || "");
+    };
+    parseJwtFromSession();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setJobsData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (jobsData) {
+      console.log("jobsData", jobsData);
+    }
+  }, [jobsData]);
 
   useEffect(() => {
     // fetch job data from the server
@@ -48,23 +85,34 @@ const JobHistoryPage = () => {
         <h1 className="text-2xl font-bold mb-4 text-blue-900">Job History</h1>
         <div className="space-y-2">
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${heading === 'All Jobs' ? 'bg-gray-200 text-blue-900' : ''}`}
+            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
+              heading === "All Jobs" ? "bg-gray-200 text-blue-900" : ""
+            }`}
             onClick={() => handleClick("all-jobs")}
           >
             All Jobs
           </p>
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${heading === 'Applied Jobs' ? 'bg-gray-200 text-blue-900' : ''}`}            onClick={() => handleClick("applied")}
+            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
+              heading === "Applied Jobs" ? "bg-gray-200 text-blue-900" : ""
+            }`}
+            onClick={() => handleClick("applied")}
           >
             Applied Jobs
           </p>
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${heading === 'Active Jobs' ? 'bg-gray-200 text-blue-900' : ''}`}            onClick={() => handleClick("active")}
+            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
+              heading === "Active Jobs" ? "bg-gray-200 text-blue-900" : ""
+            }`}
+            onClick={() => handleClick("active")}
           >
             Active Jobs
           </p>
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${heading === 'Rejected Jobs' ? 'bg-gray-200 text-blue-900' : ''}`}            onClick={() => handleClick("rejected")}
+            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
+              heading === "Rejected Jobs" ? "bg-gray-200 text-blue-900" : ""
+            }`}
+            onClick={() => handleClick("rejected")}
           >
             Rejected Jobs
           </p>

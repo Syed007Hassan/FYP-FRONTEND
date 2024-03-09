@@ -1,5 +1,5 @@
 "use client";
-import { Job, Applicant } from "@/data/data";
+import { Application } from "@/types/application";
 import CustomNode from "./CustomNode";
 
 import styles from "./Flow.module.css";
@@ -41,7 +41,7 @@ type Nodes = {
 }[];
 
 type Props = {
-  applicantList: Applicant[];
+  applicantList: Application[];
 };
 
 const ApplicationFlow = ({ applicantList }: Props) => {
@@ -80,7 +80,7 @@ const ApplicationFlow = ({ applicantList }: Props) => {
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
-  
+
   useEffect(() => {
     console.log(workflow);
     let x = 0;
@@ -208,25 +208,36 @@ const ApplicationFlow = ({ applicantList }: Props) => {
                       {applicantList
                         .filter(
                           (applicant) =>
-                            parseInt(nodeData?.id || "0") === applicant?.stageId
+                            parseInt(nodeData?.id || "0") ===
+                            applicant?.stage?.stageId
                         )
                         .map((applicant) => (
                           <tr
-                            key={applicant.id}
+                            key={applicant?.applicant?.id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
                             <th
                               scope="row"
                               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              {applicant.id}
+                              {applicant?.applicant?.id}
                             </th>
-                            <td className="px-6 py-4">{applicant.name}</td>
+                            <td className="px-6 py-4">
+                              {applicant?.applicant?.name}
+                            </td>
                             <td className="px-6 py-4">
                               {" "}
                               <a
                                 href="#"
                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  window.open(
+                                    applicant?.applicant?.applicantDetails
+                                      ?.resume || "",
+                                    "_blank"
+                                  );
+                                }}
                               >
                                 View Application
                               </a>

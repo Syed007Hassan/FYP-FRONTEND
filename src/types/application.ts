@@ -1,8 +1,12 @@
+import ApplicantDetails from "./applicant";
+import { Stage } from "./stage";
+
 export type Applicant = {
   id: number;
   name: string;
   email: string;
   role: string;
+  applicantDetails: ApplicantDetails;
 };
 
 export type Application = {
@@ -10,6 +14,7 @@ export type Application = {
   status: string;
   applicationDate: string;
   applicant: Applicant;
+  stage: Stage;
 };
 
 export type ApplicationResponse = {

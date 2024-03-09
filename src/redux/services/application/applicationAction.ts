@@ -2,6 +2,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ApplicationResponse } from "@/types/application";
 
 type CreateApplicationArgs = {
   jobId: string;
@@ -10,7 +11,7 @@ type CreateApplicationArgs = {
 
 type UpdateApplicationStageArgs = {
   jobId: string;
-  applicationId: string;
+  applicantId: string;
   stageId: string;
 };
 
@@ -30,10 +31,24 @@ export const createApplication = createAsyncThunk(
 
 export const updateApplicationStage = createAsyncThunk(
   "application/updateApplicationStage",
-  async ({ jobId, applicationId, stageId }: UpdateApplicationStageArgs) => {
+  async ({ jobId, applicantId, stageId }: UpdateApplicationStageArgs) => {
     try {
       const response = await axios.patch(
-        `${Backend_URL}/application/updateApplicationStage/${jobId}/${applicationId}/${stageId}`
+        `${Backend_URL}/application/updateApplicationStage/${jobId}/${applicantId}/${stageId}`
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
+export const getApplicationsByJobId = createAsyncThunk(
+  "application/getApplicationsByJobId",
+  async (jobId: string) => {
+    try {
+      const response = await axios.get(
+        `${Backend_URL}/application/findByJobId/${jobId}`
       );
       return response.data;
     } catch (err: any) {
@@ -56,7 +71,7 @@ export const ApplicationApi = createApi({
     baseUrl: `${Backend_URL}`,
   }),
   endpoints: (builder) => ({
-    getApplicationsByJobId: builder.query<any, { jobId: string }>({
+    getApplicationsByJobId: builder.query<ApplicationResponse, { jobId: string }>({
       query: ({ jobId }) => `/application/findByJobId/${jobId}`,
     }),
     getApplicationsByApplicantId: builder.query<any, { applicantId: string }>({

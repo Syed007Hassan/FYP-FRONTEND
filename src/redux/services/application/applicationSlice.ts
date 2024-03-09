@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createApplication,
   updateApplicationStage,
+  getApplicationsByJobId,
   resetSuccess,
 } from "./applicationAction";
 
@@ -39,6 +40,17 @@ const applicationSlice = createSlice({
       state.success = false;
     });
     builder.addCase(updateApplicationStage.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message as string;
+    });
+    builder.addCase(getApplicationsByJobId.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getApplicationsByJobId.fulfilled, (state, action) => {
+      state.loading = false;
+      state.application = action.payload;
+    });
+    builder.addCase(getApplicationsByJobId.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error.message as string;
     });

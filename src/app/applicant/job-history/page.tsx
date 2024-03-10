@@ -1,12 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import JobCard from "@/components/applicant/job/jobCard";
-import { JobCardData, JobCardProps } from "@/data/data";
+import { JobCardProps } from "@/data/data";
 import Loader from "@/components/Loader";
 import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
 import { useGetApplicationsByApplicantIdQuery } from "@/redux/services/application/applicationAction";
-import { ApplicationData } from "@/types/application";
+import { ApplicationData, Application } from "@/types/application";
+
+import job_img from "../../../../public/job.png";
 
 const JobHistoryPage = () => {
   // use state of type jobCardData as an array
@@ -15,8 +17,15 @@ const JobHistoryPage = () => {
   const [decodedData, setDecodedData] = useState<any>();
   const [email, setEmail] = useState<string>("");
   const [applicantId, setApplicantId] = useState<string>("");
-  const [jobsData, setJobsData] = useState<ApplicationData>();
-  const { data, error, isLoading } = useGetApplicationsByApplicantIdQuery({applicantId: applicantId});
+  const [jobsData, setJobsData] = useState<Application[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState(jobsData);
+  const { data, error, isLoading } = useGetApplicationsByApplicantIdQuery({
+    applicantId: applicantId,
+  });
+
+  useEffect(() => {
+    setFilteredJobs(jobsData);
+  }, [jobsData]);
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
@@ -36,7 +45,7 @@ const JobHistoryPage = () => {
 
   useEffect(() => {
     if (data) {
-      setJobsData(data);
+      setJobsData(data?.data);
     }
   }, [data]);
 
@@ -47,37 +56,28 @@ const JobHistoryPage = () => {
   }, [jobsData]);
 
   useEffect(() => {
-    // fetch job data from the server
-    setJobCardTempData(JobCardData);
-  }, []);
-
-  useEffect(() => {
     console.log(jobCardTempData);
   }, [jobCardTempData]);
 
   const handleClick = (type: string) => {
+    let newFilteredJobs;
     if (type === "all-jobs") {
       setHeading("All Jobs");
-      setJobCardTempData(JobCardData);
+      newFilteredJobs = jobsData;
     } else if (type === "applied") {
       setHeading("Applied Jobs");
-      setJobCardTempData(
-        JobCardData.filter((job) => job.jobStatus === "Applied")
-      );
+      newFilteredJobs = jobsData?.filter((job) => job?.status === "pending");
     } else if (type === "active") {
       setHeading("Active Jobs");
-      setJobCardTempData(
-        JobCardData.filter((job) => job.jobStatus === "Active")
-      );
+      newFilteredJobs = jobsData?.filter((job) => job?.status === "approved");
     } else if (type === "rejected") {
       setHeading("Rejected Jobs");
-      setJobCardTempData(
-        JobCardData.filter((job) => job.jobStatus === "Rejected")
-      );
+      newFilteredJobs = jobsData?.filter((job) => job?.status === "rejected");
     }
+    setFilteredJobs(newFilteredJobs || []);
   };
 
-  return jobCardTempData.length === 0 ? (
+  return jobsData?.length === 0 ? (
     <Loader />
   ) : (
     <div className="flex gap-4 px-40 py-10 font-sans">
@@ -121,18 +121,18 @@ const JobHistoryPage = () => {
       <div className="bg-gray-200 bg-opacity-50 px-10 py-4 rounded lg:w-[70rem] overflow-y-scroll h-[37rem]">
         <h1 className="font-bold text-2xl text-blue-900">{heading}</h1>
         <div className="grid grid-cols-1 gap-4 mt-4">
-          {jobCardTempData.map((job, index) => (
+          {filteredJobs.map((job, index) => (
             <JobCard
               key={index}
-              jobImage={job.jobImage}
-              jobTitle={job.jobTitle}
-              jobCompany={job.jobCompany}
-              jobLocation={job.jobLocation}
-              jobTimePosted={job.jobTimePosted}
-              jobType={job.jobType}
-              jobUrgency={job.jobUrgency}
-              jobCategory={job.jobCategory}
-              jobStatus={job.jobStatus}
+              jobImage={job_img}
+              jobTitle={job?.job?.jobTitle}
+              jobCompany={job?.job?.company?.companyName}
+              jobLocation={`${job?.job?.jobLocation?.area}, ${job?.job?.jobLocation?.city}, ${job?.job?.jobLocation?.country}`}
+              jobTimePosted={job?.job?.jobCreatedAt}
+              jobType={job?.job?.jobType}
+              jobUrgency={job?.job?.jobUrgency}
+              jobCategory={job?.job?.jobCategory}
+              jobStatus={job?.job?.jobStatus}
             />
           ))}
         </div>

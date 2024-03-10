@@ -200,6 +200,9 @@ const ApplicationFlow = ({ applicantList }: Props) => {
                           Applicant Name
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          Application Status
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           Application
                         </th>
                       </tr>
@@ -224,6 +227,9 @@ const ApplicationFlow = ({ applicantList }: Props) => {
                             </th>
                             <td className="px-6 py-4">
                               {applicant?.applicant?.name}
+                            </td>
+                            <td className="px-6 py-4">
+                              {applicant?.status}
                             </td>
                             <td className="px-6 py-4">
                               {" "}

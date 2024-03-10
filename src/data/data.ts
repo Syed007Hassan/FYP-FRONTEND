@@ -146,7 +146,7 @@ export const assignee: Assignee[] = [
     userName: "John Doe",
     stageId: 100,
     workflowId: 100,
-  }
+  },
 ];
 
 export const applicants: Applicant[] = [
@@ -209,6 +209,7 @@ export const applicants: Applicant[] = [
 // Applicant
 
 export interface JobCardProps {
+  jobId: number;
   jobImage: StaticImageData;
   jobTitle: string;
   jobCompany: string;

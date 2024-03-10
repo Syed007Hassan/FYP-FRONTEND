@@ -55,9 +55,10 @@ const JobHistoryPage = () => {
     }
   }, [jobsData]);
 
-  useEffect(() => {
-    console.log(jobCardTempData);
-  }, [jobCardTempData]);
+  // useEffect(() => {
+  //   console.log(jobCardTempData);
+  // }, [jobCardTempData]);
+
 
   const handleClick = (type: string) => {
     let newFilteredJobs;
@@ -80,50 +81,47 @@ const JobHistoryPage = () => {
   return jobsData?.length === 0 ? (
     <Loader />
   ) : (
-    <div className="flex gap-4 px-40 py-10 font-sans">
-      <div className="bg-gray-200 bg-opacity-50 w-80 rounded p-4 h-72">
-        <h1 className="text-2xl font-bold mb-4 text-blue-900">Job History</h1>
+    <div className="flex gap-4 sticky px-40 py-10 font-sans">
+      <div className="bg-blue-700 h-screen w-80 p-4">
+        <h1 className="text-2xl font-bold mb-4 text-white">Job History</h1>
         <div className="space-y-2">
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
-              heading === "All Jobs" ? "bg-gray-200 text-blue-900" : ""
-            }`}
+            className={`py-2 px-4 rounded hover:bg-blue-900 hover:text-blue cursor-pointer ${heading === "All Jobs" ? "bg-gray-200 text-white-900" : ""
+              }`}
             onClick={() => handleClick("all-jobs")}
           >
             All Jobs
           </p>
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
-              heading === "Applied Jobs" ? "bg-gray-200 text-blue-900" : ""
-            }`}
+            className={`py-2 px-4 rounded hover:bg-blue-700 hover:text-blue cursor-pointer ${heading === "Applied Jobs" ? "bg-gray-200 text-blue-900" : ""
+              }`}
             onClick={() => handleClick("applied")}
           >
             Applied Jobs
           </p>
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
-              heading === "Active Jobs" ? "bg-gray-200 text-blue-900" : ""
-            }`}
+            className={`py-2 px-4 rounded hover:bg-blue-700 hover:text-blue cursor-pointer ${heading === "Active Jobs" ? "bg-gray-200 text-blue-900" : ""
+              }`}
             onClick={() => handleClick("active")}
           >
             Active Jobs
           </p>
           <p
-            className={`py-2 px-4 rounded hover:bg-gray-300 hover:text-blue-900 cursor-pointer ${
-              heading === "Rejected Jobs" ? "bg-gray-200 text-blue-900" : ""
-            }`}
+            className={`py-2 px-4 rounded hover:bg-blue-700 hover:text-blue cursor-pointer ${heading === "Rejected Jobs" ? "bg-gray-200 text-blue-900" : ""
+              }`}
             onClick={() => handleClick("rejected")}
           >
             Rejected Jobs
           </p>
         </div>
       </div>
-      <div className="bg-gray-200 bg-opacity-50 px-10 py-4 rounded lg:w-[70rem] overflow-y-scroll h-[37rem]">
+      <div className="bg-gray-200 bg-opacity-50 px-10 py-4 rounded lg:w-[70rem] h-screen overflow-y-scroll h-[37rem]">
         <h1 className="font-bold text-2xl text-blue-900">{heading}</h1>
-        <div className="grid grid-cols-1 gap-4 mt-4">
+        <div className="grid grid-cols-1 gap-4">
           {filteredJobs.map((job, index) => (
             <JobCard
               key={index}
+              jobId={job?.job?.jobId}
               jobImage={job_img}
               jobTitle={job?.job?.jobTitle}
               jobCompany={job?.job?.company?.companyName}

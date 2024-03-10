@@ -1,5 +1,6 @@
 import ApplicantDetails from "./applicant";
 import { Stage } from "./stage";
+import { Job } from "./job";
 
 export type Applicant = {
   id: number;
@@ -13,6 +14,7 @@ export type Application = {
   applicationId: number;
   status: string;
   applicationDate: string;
+  job: Job;
   applicant: Applicant;
   stage: Stage;
 };

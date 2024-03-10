@@ -16,7 +16,10 @@ import { SingleJobResponse } from "@/types/job";
 import { ApplicationResponse } from "@/types/application";
 import { ResponseData } from "@/types/stage";
 import { useGetApplicationsByJobIdQuery } from "@/redux/services/application/applicationAction";
-import { updateApplicationStage } from "@/redux/services/application/applicationAction";
+import {
+  updateApplicationStage,
+  updateApplicationStatus,
+} from "@/redux/services/application/applicationAction";
 import { ApplicationData } from "@/types/application";
 import { RootState } from "@/redux/store";
 
@@ -83,6 +86,12 @@ const Page = () => {
     loading,
     success: isStageUpdateSuccess,
   } = useAppSelector((state) => state.applicationReducer);
+
+  const {
+    application: applicationState,
+    loading: applicationLoading,
+    success: isStatusUpdate,
+  } = useAppSelector((state) => state.updateApplicationReducer);
 
   useEffect(() => {
     if (jobData) {
@@ -228,6 +237,16 @@ const Page = () => {
     localStorage.setItem("applicants", JSON.stringify(applicants));
   };
 
+  const handleStatusChange = (applicantId: string, status: string) => {
+    dispatch(
+      updateApplicationStatus({
+        applicantId: applicantId,
+        jobId: jobIdParam,
+        status: status,
+      })
+    );
+  };
+
   const handleStageClick = (stage: Stage, applicant: Applicant) => {
     console.log(stage);
     console.log(applicant);
@@ -248,10 +267,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (isStageUpdateSuccess) {
+    if (isStageUpdateSuccess || isStatusUpdate) {
       refetch();
     }
-  }, [isStageUpdateSuccess, refetch]);
+  }, [isStageUpdateSuccess, refetch, isStatusUpdate]);
 
   return (
     <div
@@ -280,7 +299,10 @@ const Page = () => {
                   Applicant Name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Application
+                  Applicant Resume
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Applicant Profile
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Stage
@@ -291,7 +313,7 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-              {applicationApiResponse?.data.map((applicant) => (
+              {applicationApiResponse?.data.map((applicant, index) => (
                 <tr
                   key={applicant?.applicant?.id}
                   className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -300,9 +322,11 @@ const Page = () => {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {applicant?.applicant?.id}
+                    {index+1}
                   </th>
-                  <td className="px-6 py-4">{applicant?.applicant?.name} ({applicant?.status})</td>
+                  <td className="px-6 py-4">
+                    {applicant?.applicant?.name} ({applicant?.status})
+                  </td>
                   <td className="px-6 py-4">
                     {" "}
                     <a
@@ -317,13 +341,35 @@ const Page = () => {
                       View Resume
                     </a>
                   </td>
+                  <td className="px-6 py-4">
+                    <a
+                      href="#"
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      onClick={() =>
+                        window.open(
+                          `/recruiter/view-applicant/${applicant?.applicant?.id}`
+                        )
+                      }
+                    >
+                      View Profile
+                    </a>
+                  </td>
                   <td className="px-6 py-4 relative">
                     <button
                       id={`dropdownDefaultButton-${applicant?.applicant?.id}`}
                       onClick={() => toggleDropdown(applicant?.applicant?.id)}
                       data-dropdown-toggle="dropdown"
-                      className="font-medium rounded-lg text-sm text-center inline-flex items-center"
+                      className={`font-medium rounded-lg text-sm text-center inline-flex items-center ${
+                        applicant?.status === "pending" ||
+                        applicant?.status === "rejected"
+                          ? "cursor-not-allowed"
+                          : ""
+                      }`}
                       type="button"
+                      disabled={
+                        applicant?.status === "pending" ||
+                        applicant?.status === "rejected"
+                      }
                     >
                       {jobStages?.stages.find(
                         (stage) => stage.stageId === applicant?.stage?.stageId
@@ -375,11 +421,29 @@ const Page = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <button
-                      onClick={() => handleDelete(applicant?.applicant?.id)}
+                    <a
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
+                      onClick={() =>
+                        handleStatusChange(
+                          applicant?.applicant?.id?.toString(),
+                          "approved"
+                        )
+                      }
                     >
-                      <FaRegTrashAlt />
-                    </button>
+                      Accept
+                    </a>
+                    /
+                    <a
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
+                      onClick={() =>
+                        handleStatusChange(
+                          applicant?.applicant?.id?.toString(),
+                          "rejected"
+                        )
+                      }
+                    >
+                      Reject
+                    </a>
                   </td>
                 </tr>
               ))}

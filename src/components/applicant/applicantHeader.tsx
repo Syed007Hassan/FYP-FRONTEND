@@ -67,7 +67,7 @@ const ApplicantHeader: React.FC<HeaderProps> = () => {
           >
             <FaUser size={23} />
             {dropdownVisible && (
-              <div className="mr-20 absolute mt-9 z-50 top-0 w-32 bg-white border rounded-lg shadow-md">
+              <div className="mr-32 absolute mt-9 z-50 top-0 w-32 bg-white border rounded-lg shadow-md">
                 <ul>
                   <li>
                     <a

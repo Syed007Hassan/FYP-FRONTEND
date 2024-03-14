@@ -5,7 +5,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import ApplicantGraphs from "@/components/applicant/charts/applicantGraphs";
 import ApplicantStats from "@/components/applicant/charts/applicantStats";
-import TodoList from "@/components/applicant/charts/toDos";
+import TodoList from "@/components/recruiterDashboard/toDos";
 import UserManagementDashboard from "@/components/recruiterDashboard/userManagement";
 import "../../styles/sidebar.css";
 

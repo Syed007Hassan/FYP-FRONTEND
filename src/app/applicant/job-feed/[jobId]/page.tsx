@@ -83,6 +83,7 @@ const Page = () => {
     data: applicationData,
     error: applicationError,
     isLoading: applicationLoading,
+    refetch,
   } = useGetApplicationByJobIdAndApplicantIdQuery({
     jobId: jobId,
     applicantId: applicantId,
@@ -155,6 +156,7 @@ const Page = () => {
   useEffect(() => {
     if (success) {
       setAlertMessage("Application Submitted Successfully");
+      refetch();
     } else if (ApplicationError) {
       setAlertMessage(ApplicationError);
     }
@@ -162,7 +164,7 @@ const Page = () => {
     setTimeout(() => {
       setAlertMessage(null);
     }, 2000);
-  }, [success, ApplicationError]);
+  }, [success, ApplicationError, refetch]);
 
   return (
     <>

@@ -316,9 +316,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        typeDropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${typeDropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -455,9 +454,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        dropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${dropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -510,16 +508,16 @@ const Page = () => {
                         <input
                           type="text"
                           id="location"
-                          placeholder="Bachelors"
+                          placeholder="Gulshan, Karachi, Pakistan"
                           className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75 pr-8"
                           autoComplete="given-name"
                           value={
                             add
                               ? job.location.area +
-                                ", " +
-                                job?.location?.city +
-                                ", " +
-                                job?.location?.country
+                              ", " +
+                              job?.location?.city +
+                              ", " +
+                              job?.location?.country
                               : undefined
                           }
                           required
@@ -641,9 +639,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        restrictedDropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${restrictedDropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"

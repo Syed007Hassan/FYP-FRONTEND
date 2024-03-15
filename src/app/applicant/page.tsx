@@ -1,9 +1,6 @@
 "use client";
 import Head from "next/head";
 import React, { useState } from "react";
-import BarChart from "@/components/barChart";
-import StepAreaChart from "@/components/stepAreaChart";
-import AreaChart from "@/components/areaChart";
 import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import ApplicantGraphs from "@/components/applicant/charts/applicantGraphs";
@@ -17,11 +14,10 @@ export default function Dashboard() {
   );
 
   return (
-    <div className={`content overflow-hidden ${isSidebarOpen ? "" : ""}`}>
+    <div className={`content bg-gray-200 overflow-hidden ${isSidebarOpen ? "" : ""}`}>
       <div
-        className={`content overflow-x-hidden ${
-          isSidebarOpen ? "shifted-dashboard" : ""
-        }`}
+        className={`content overflow-x-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
+          }`}
       >
         <div className="bg-gray-200 container items-center  px-4 py-4">
           <h2 className="pl-10 text-4xl font-bold text-blue-700">

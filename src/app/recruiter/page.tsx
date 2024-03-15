@@ -70,24 +70,23 @@ const RecruiterPage = () => {
 
   return (
     <div
-      className={`content overflow-x-hidden ${
-        isSidebarOpen ? "shifted-dashboard" : ""
-      }`}
+      className={`content overflow-x-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
+        }`}
     >
       {" "}
-      <div className="bg-gray-200 container items-center  px-4 py-4">
+      <div className="container items-center  px-4 py-4">
         <h2 className="pl-10 text-4xl font-bold text-blue-700">
           Recruiter Dashboard
         </h2>
         <RecruiterStats />
       </div>
       <div
-        className=" bg-gray-200 pb-20 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+        className=" pb-20 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
         style={{ height: "10%" }}
       >
         <RecruiterGraphs />
       </div>
-       
+
     </div>
   );
 };

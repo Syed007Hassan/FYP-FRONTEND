@@ -128,22 +128,7 @@ const UpdateProfile = () => {
     // setIsModalOpen(false);
     const id = applicantIdTemp;
     const temp_relocation = reallocation === "yes" ? true : false;
-    // check all the variables are set
 
-    // if (
-    //   !dob ||
-    //   !education ||
-    //   !experience ||
-    //   !tags ||
-    //   !firstName ||
-    //   !lastName ||
-    //   !phone ||
-    //   !reallocation ||
-    //   !desc
-    // ) {
-    //   alert("Please fill all the fields");
-    //   return;
-    // }
     const temp_data = {
       dob,
       gender,

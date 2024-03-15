@@ -263,7 +263,7 @@ const NavBar: React.FC<HeaderProps> = () => {
             {dropdownVisible && (
               <div
                 id="dropdownAvatarName"
-                className="z-10 absolute mt-3 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
+                className="z-10 absolute mt-3 right-0 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600"
                 onClick={toggleDropdown}
                 onBlur={() => setTimeout(() => setDropdownVisible(false), 100)}
                 tabIndex={0}

@@ -32,6 +32,8 @@ import {
 import { Education, Experience, Contact } from "@/types/applicant";
 import UploadData from "@/types/uplaod";
 
+import "../../../styles/sidebar.css";
+
 const Profile = () => {
   const [currentModal, setCurrentModal] = useState(null);
 

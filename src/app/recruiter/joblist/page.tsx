@@ -196,8 +196,8 @@ const Page = () => {
                                 <li className="">
                                   <p className="mb-0 text-sm text-gray-500 dark:text-gray-300">
                                     <i className="mdi mdi-map-marker"></i>{" "}
-                                    {job?.jobLocation.area},{" "}
-                                    {job?.jobLocation.city}
+                                    {job?.jobLocation?.area},{" "}
+                                    {job?.jobLocation?.city}
                                   </p>
                                 </li>
                                 <li className="">

@@ -84,7 +84,7 @@ const Page = () => {
     <div
       className={`content overflow-hidden ${isSidebarOpen ? "shifted" : ""}`}
     >
-      <div className=" min-h-screen justify-center">
+      <div className=" min-h-screen h-full justify-center">
         <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
           <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
             <div className="pr-2 pl-2">

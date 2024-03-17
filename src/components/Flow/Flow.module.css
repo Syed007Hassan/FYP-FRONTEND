@@ -1,16 +1,17 @@
 .flow {
-    flex-grow: 1;
-    font-size: 12px;
-    height: 600px;
-  }
-  
-  .customNode {
-    border: 1px solid #e93a3a;
-    padding: 10px;
-    width: 200px;
-    border-radius: 5px;
-  }
+  flex-grow: 1;
+  font-size: 12px;
+  height: 600px;
+  font-family: "Inter", sans-serif;
+}
 
-  .stages {
-    background-image: linear-gradient(to bottom, #726fa1, #6c5ce7);
-  }
+.customNode {
+  border: 1px solid #e93a3a;
+  padding: 10px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.stages {
+  background-image: linear-gradient(to bottom, #726fa1, #6c5ce7);
+}

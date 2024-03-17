@@ -61,7 +61,7 @@ export default function SignInSide() {
   const handleOauth = async (event: any) => {
     event.preventDefault();
 
-    window.location.href = `${Backend_URL}/auth/google/callback`;
+    window.location.href = `${Backend_URL}/auth/google/callback/recruiter`;
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export default function SignInSide() {
             justifyContent: "center",
             alignItems: "center",
           }}
-        // className="h-screen"
+          // className="h-screen"
         >
           <CssBaseline />
           <Grid

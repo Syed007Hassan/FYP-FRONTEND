@@ -8,11 +8,11 @@ const ApplicantSidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   return (
     <div
       id="logo-sidebar"
-      className={`pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+      className={`pt-16 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 bg-blue-700">
+      <div className="h-full px-3 py-4 bg-sky-900">
         <ul className="space-y-2 font-medium">
           <li>
             <a

@@ -208,6 +208,23 @@ const ApplicationFlow = ({ applicantList }: Props) => {
                       </tr>
                     </thead>
                     <tbody>
+                      {applicantList.filter(
+                        (applicant) =>
+                          parseInt(nodeData?.id || "0") ===
+                          applicant?.stage?.stageId
+                      ).length === 0 && (
+                        <tr
+                          key="0"
+                          className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                        >
+                          <td
+                            colSpan={4}
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                          >
+                            No Applicants
+                          </td>
+                        </tr>
+                      )}
                       {applicantList
                         .filter(
                           (applicant) =>
@@ -228,9 +245,7 @@ const ApplicationFlow = ({ applicantList }: Props) => {
                             <td className="px-6 py-4">
                               {applicant?.applicant?.name}
                             </td>
-                            <td className="px-6 py-4">
-                              {applicant?.status}
-                            </td>
+                            <td className="px-6 py-4">{applicant?.status}</td>
                             <td className="px-6 py-4">
                               {" "}
                               <a

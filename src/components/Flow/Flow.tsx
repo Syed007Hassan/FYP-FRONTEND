@@ -8,8 +8,9 @@ import { useRouter } from "next/navigation";
 import { createStage } from "@/types/stage";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { addStage } from "@/redux/services/stage/stageAction";
+import "../../../tailwind.config.js";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import ReactFlow, {
   ConnectionLineType,
   BackgroundVariant,
@@ -21,38 +22,48 @@ import ReactFlow, {
   addEdge,
   Connection,
   Edge,
+  getOutgoers,
+  useReactFlow,
+  ReactFlowProvider,
+  Node,
 } from "reactflow";
-import axios from "axios";
+import { Dropdown } from "flowbite-react";
 
 const initialNodes = [
   {
     id: "1",
     position: { x: 0, y: 0 },
-    data: { label: "Job Desc", category: "Job_Desc" },
+    type: "custom",
+    data: { label: "Job Description", category: "Description" },
   },
   {
     id: "2",
     position: { x: 0, y: 100 },
-    data: { label: "HR meeting", category: "meeting" },
+    type: "custom",
+    data: { label: "HR meeting", category: "Meeting" },
   },
   {
     id: "3",
     position: { x: 0, y: 200 },
-    data: { label: "Online Test", category: "test" },
+    type: "custom",
+    data: { label: "Online Test", category: "Test" },
   },
   {
     id: "4",
     position: { x: 0, y: 300 },
-    data: { label: "Technical meeting", category: "meeting" },
+    type: "custom",
+    data: { label: "Technical meeting", category: "Meeting" },
   },
   {
     id: "5",
     position: { x: 0, y: 400 },
-    data: { label: "Offer", category: "offer" },
+    type: "custom",
+    data: { label: "Offer", category: "Offer" },
   },
   {
     id: "6",
     position: { x: 0, y: 500 },
+    type: "custom",
     data: { label: "Onboarding", category: "meeting" },
   },
 ];
@@ -71,6 +82,8 @@ const App = () => {
   const router = useRouter();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const { getNodes, getEdges } = useReactFlow();
 
   const dispatch = useAppDispatch();
   const { success } = useAppSelector((state) => state.stageReducer);
@@ -92,12 +105,13 @@ const App = () => {
     setNodes(newNodes);
   };
 
-  const addMeetingNode = (e: { preventDefault: () => void }, name: string) => {
+  const addNode = (e: { preventDefault: () => void }, name: string) => {
     const category = name.split(" ").slice(-1)[0];
     const new_name = name.split(" ").slice(0, -1).join(" ");
     setNodes((nodes) =>
       nodes.concat({
         id: Math.random().toString(),
+        type: "custom",
         data: { label: new_name, category: category },
         position: { x: 0, y: 0 },
       })
@@ -105,202 +119,266 @@ const App = () => {
   };
 
   const handleSaveFlow = (e: any) => {
+    // Find the starting node (the node with no incoming edges)
+    const startingNode = edges.find(
+      (edge) => !edges.some((e) => e.target === edge.source)
+    );
 
-    const sequence = [];
+    if (!startingNode) {
+      console.log("No starting node found");
+      return;
+    }
 
-    sequence.push(nodes[0].data.label);
+    // Follow the edges to sort the nodes
+    const sortedNodes = [];
+    let currentNode = nodes.find((node) => node.id === startingNode.source);
 
-    edges.map((edge) => {
-      const targetNode = nodes.find((node) => node.id === edge.target);
-      if (targetNode) {
-        sequence.push(targetNode.data.label);
-      }
-    });
+    while (currentNode) {
+      sortedNodes.push(currentNode);
 
-    console.log(sequence);
+      const nextEdge = edges.find((edge) => edge.source === currentNode!.id);
+      currentNode = nextEdge
+        ? nodes.find((node) => node.id === nextEdge.target)
+        : undefined;
+    }
 
-    const category: string[] = [];
+    const sequence = sortedNodes.map((node) => node.data.label);
+    const category = sortedNodes.map((node) => node.data.category);
+    // const stageDetail = sortedNodes.map((node) => node.data.detail);
 
-    category.push(nodes[0].data.category);
-
-    edges.map((edge) => {
-      const targetNode = nodes.find((node) => node.id === edge.target);
-      if (targetNode) {
-        category.push(targetNode.data.category);
-      }
-    });
-
-    console.log(category);
+    // console.log(sequence);
+    // console.log(category);
 
     const data = {
       stages: sequence.map((name, index) => ({
         stageName: name,
         category: category[index],
+        // detail: stageDetail[index],
       })),
     };
 
-    // console.log(jobId);
     console.log("data: ", data);
 
     dispatch(addStage({ jobId, stage: data }));
-
-    // workflow.push(data);
-
-    // console.log("workflow: ",workflow);
-
-    // localStorage.setItem('workflow', JSON.stringify(workflow));
 
     router.push(`/recruiter/joblist/${jobId}`);
   };
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log("form submitted");
+    console.log("e:", e);
     const name = (document.getElementById("name") as HTMLInputElement).value;
-    const category = (
-      document.querySelector(
-        'input[name="category"]:checked'
-      ) as HTMLInputElement
-    ).value;
+    const category = (document.getElementById("category") as HTMLInputElement)
+      .value;
+    // const stageDetail = (document.getElementById(
+    //   "stageDetail"
+    // ) as HTMLInputElement).value;
     setNodes((nodes) =>
       nodes.concat({
         id: Math.random().toString(),
-        data: { label: name, category: category },
+        type: "custom",
+        data: { label: name, category: category},
         position: { x: 0, y: 0 },
       })
     );
   };
 
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const isValidConnection = useCallback(
+    (connection: Connection) => {
+      // we are using getNodes and getEdges helpers here
+      // to make sure we create isValidConnection function only once
+      const nodes = getNodes();
+      const edges = getEdges();
+      const target = nodes.find((node) => node.id === connection.target);
+      const hasCycle = (node: Node, visited = new Set()) => {
+        if (visited.has(node.id)) return false;
+
+        visited.add(node.id);
+
+        for (const outgoer of getOutgoers(node, nodes, edges)) {
+          if (outgoer.id === connection.source) return true;
+          if (hasCycle(outgoer, visited)) return true;
+        }
+      };
+
+      if (!target) {
+        console.log("No target node found");
+        return false;
+      }
+
+      if (target.id === connection.source) return false;
+      return !hasCycle(target);
+    },
+    [getNodes, getEdges]
+  );
+
   return (
     <div className={styles.flow}>
-      <div className="flex justify-between">
-        <div className="w-[65%] h-[35rem]">
+      <div className="flex justify-between h-[39.4rem]">
+        <div className="w-full relative">
           <div className="flex justify-center pt-4">
-            <h1 className="text-2xl font-bold">Workflow</h1>
+            {/* Your ReactFlow content */}
           </div>
 
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onNodeClick={onNodeClick}
-            nodeTypes={nodeTypes}
-            defaultEdgeOptions={defaultEdgeOptions}
-            connectionLineType={ConnectionLineType.SmoothStep}
-            fitView
+          <div
+            className={`absolute inset-0 overflow-hidden transition-all duration-500 ${
+              sidebarOpen ? "ml-0" : "-ml-60"
+            }`}
           >
-            <Controls />
-            {/* <MiniMap /> */}
-            <Background
-              id="2"
-              gap={20}
-              color="#888"
-              variant={BackgroundVariant.Dots}
-            />
-          </ReactFlow>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              // onNodeClick={onNodeClick}
+              onNodeDoubleClick={onNodeClick}
+              // onNodesDelete={handleDelete}
+              nodeTypes={nodeTypes}
+              defaultEdgeOptions={defaultEdgeOptions}
+              connectionLineType={ConnectionLineType.SmoothStep}
+              isValidConnection={isValidConnection}
+              fitView
+            >
+              <Controls />
+              {/* <Background
+                id="2"
+                gap={20}
+                color="#888"
+                variant={BackgroundVariant.Dots}
+              /> */}
+            </ReactFlow>
+          </div>
         </div>
 
-        <div className="flex flex-col h-screen gap-5 pt-3 pb-3 bg-gray-300">
-          <span className="flex justify-center pt-2 ">
-            <h1 className="text-2xl font-bold">Add Stages</h1>
-          </span>
-          <span className="flex justify-center pt-4 pb-4 px-2 mr-4 ml-4">
+        {sidebarOpen && (
+          <div
+            className={`flex flex-col gap-5 pt-3 pb-3 bg-gray-200 w-1/2 transition-all duration-500 ease-in-out transform ${
+              sidebarOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            {" "}
+            <span className="flex justify-center pt-2 ">
+              <h1 className="text-2xl font-bold text-gray-600">
+                select from predefined stages
+              </h1>
+            </span>
+            <span className="flex justify-center pt-4 pb-4 px-2 mr-4 ml-4">
+              {/* <button
+                  onClick={handleSaveFlow}
+                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  type="button"
+                >
+                  Save Flow to API
+                </button> */}
+              <div className="grid grid-cols-3 gap-3">
+                {initialNodes.map((node) => {
+                  return (
+                    <button
+                      key={node.id}
+                      name={node.data.label + " " + node.data.category}
+                      onClick={(event) =>
+                        addNode(event, (event.target as HTMLInputElement).name)
+                      }
+                      className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+                    >
+                      {node.data.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </span>
+            <div className="flex flex-col gap-5 pt-4 pb-4 bg-gray-300">
+              <span className="flex justify-center">
+                <h1 className="text-2xl font-bold text-gray-600">
+                  add a custom stage
+                </h1>
+              </span>
+              <form
+                className={`max-w-sm mx-auto flex flex-col gap-5`}
+                onSubmit={handleFormSubmit}
+              >
+                <div className="flex gap-4 mb-4">
+                  <div>
+                    <label
+                      className="block text-gray-700 font-bold mb-2"
+                      htmlFor="name"
+                    >
+                      Name
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-300"
+                      id="name"
+                      type="text"
+                      placeholder="Enter Stage Name"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label
+                      className="block text-gray-700 font-bold"
+                      htmlFor="category"
+                    >
+                      Category:
+                    </label>
+                    <select
+                      className="form-select block w-full h-[38px] rounded-md bg-gray-300 shadow-sm"
+                      name="category"
+                      id="category"
+                    >
+                      <option value="meeting">meeting</option>
+                      <option value="test">test</option>
+                      <option value="offer">offer</option>
+                    </select>
+                  </div>
+                </div>
+                {/* <div className="flex items-center justify-center">
+                  <label htmlFor="" className="block text-gray-700 font-bold">
+                    Details
+                  </label>
+                  <input type="text" name="stageDetail" id="stageDetail" />
+                </div> */}
+                <div className="flex items-center justify-center">
+                  <button
+                    className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="submit"
+                  >
+                    Add stage
+                  </button>
+                </div>
+              </form>
+            </div>
             <button
               onClick={handleSaveFlow}
-              className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className={`fixed bottom-4 left-4 w-80 bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline z-10`}
               type="button"
             >
-              Save Flow to API
+              Save
             </button>
-            <div className="grid grid-cols-3 gap-3">
-              {initialNodes.map((node) => {
-                return (
-                  <button
-                    key={node.id}
-                    name={node.data.label + " " + node.data.category}
-                    onClick={(event) =>
-                      addMeetingNode(
-                        event,
-                        (event.target as HTMLInputElement).name
-                      )
-                    }
-                    className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
-                  >
-                    {node.data.label}
-                  </button>
-                );
-              })}
-            </div>
-          </span>
-
-          <div className=" pt-4 pb-4">
-            <span className="flex justify-center">
-              <h1 className="text-2xl font-bold">Add Custom Stages</h1>
-            </span>
-            <form className={`max-w-sm mx-auto`} onSubmit={handleFormSubmit}>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 font-bold mb-2"
-                  htmlFor="name"
-                >
-                  Name
-                </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name"
-                  type="text"
-                  placeholder="Enter Stage Name"
-                />
-              </div>
-              <div className="mb-4 flex gap-3">
-                <label className="block text-gray-700 font-bold mb-2">
-                  Category:
-                </label>
-                <div>
-                  <label className="inline-flex items-center">
-                    <input
-                      type="radio"
-                      className="form-radio"
-                      name="category"
-                      value="meeting"
-                    />
-                    <span className="ml-2">meeting</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      type="radio"
-                      className="form-radio"
-                      name="category"
-                      value="test"
-                    />
-                    <span className="ml-2">test</span>
-                  </label>
-                  <label className="inline-flex items-center ml-6">
-                    <input
-                      type="radio"
-                      className="form-radio"
-                      name="category"
-                      value="offer"
-                    />
-                    <span className="ml-2">offer</span>
-                  </label>
-                </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <button
-                  className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="submit"
-                >
-                  Add stage
-                </button>
-              </div>
-            </form>
           </div>
-        </div>
+        )}
+
+        {/* Button to toggle the sidebar */}
+        <button
+          className={`fixed bottom-4 right-4 bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline z-10`}
+          onClick={toggleSidebar}
+        >
+          {sidebarOpen ? "Collapse Sidebar" : "Expand Sidebar"}
+        </button>
       </div>
     </div>
   );
 };
-export default App;
+
+const DefaultFlow = () => (
+  <ReactFlowProvider>
+    <App />
+  </ReactFlowProvider>
+);
+
+export default DefaultFlow;

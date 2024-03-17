@@ -5,8 +5,11 @@ import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import ApplicantGraphs from "@/components/applicant/charts/applicantGraphs";
 import ApplicantStats from "@/components/applicant/charts/applicantStats";
-
+import TodoList from "@/components/recruiterDashboard/toDos";
+import UserManagementDashboard from "@/components/recruiterDashboard/userManagement";
 import "../../styles/sidebar.css";
+
+
 
 export default function Dashboard() {
   const isSidebarOpen = useAppSelector(
@@ -20,16 +23,29 @@ export default function Dashboard() {
           }`}
       >
         <div className="bg-gray-200 container items-center  px-4 py-4">
-          <h2 className="pl-10 text-4xl font-bold text-blue-700">
-            Applicant Dashboard
-          </h2>
+
           <ApplicantStats />
         </div>
         <div
-          className=" bg-gray-200 pb-20 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+          className=" bg-gray-200 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
           style={{ height: "10%" }}
         >
           <ApplicantGraphs />
+        </div>
+
+        <div className="flex mt-6 px-24 justify-between">
+          <div className="lg:w-5/6 xl:w-2/3 h-100 bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out mr-2">
+            <h2 className="text-xl font-bold mb-4">User Management</h2>
+            <div className="p-4">
+              <UserManagementDashboard />
+            </div>
+          </div>
+          <div className="lg:w-5/6 xl:w-2/3 h-100 bg-gray-100 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out mr-2">
+            <h2 className="text-xl font-bold mb-4">Tasks</h2>
+            <div className="p-4">
+              <TodoList />
+            </div>
+          </div>
         </div>
       </div>
     </div>

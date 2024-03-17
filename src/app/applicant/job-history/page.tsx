@@ -81,9 +81,9 @@ const JobHistoryPage = () => {
   return jobsData?.length === 0 ? (
     <Loader />
   ) : (
-    <div className="flex gap-4 sticky px-40 py-10 font-sans">
-      <div className="bg-blue-700 h-screen w-80 p-4">
-        <h1 className="text-2xl font-bold mb-4 text-white">Job History</h1>
+    <div className="flex gap-4 px-40 py-10 font-sans">
+      <div className="bg-gray-200 bg-opacity-50 w-80 rounded p-4 h-72">
+        <h1 className="text-2xl font-bold mb-4 text-blue-900">Job History</h1>
         <div className="space-y-2">
           <p
             className={`py-2 px-4 rounded hover:bg-blue-900 hover:text-blue cursor-pointer ${heading === "All Jobs" ? "bg-gray-200 text-white-900" : ""

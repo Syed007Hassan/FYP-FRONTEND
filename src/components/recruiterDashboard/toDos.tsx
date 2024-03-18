@@ -29,13 +29,12 @@ const TodoList = () => {
   };
 
   return (
-    <div className=" h-80 p-4 " style={{ height: '500px' }} font-sans>
+    <div className="rounded-lg shadow-lg p-6 hover:shadow-xl transition duration-300 border-2 border-blue-200 bg-blue-50" style={{ height: '500px' }} font-sans>
 
       <div className="mb-4">
-        <h1 className="text-2xl text-grey-darkest font-medium mb-4">Todo List</h1>
         <div className="flex">
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker focus:outline-none focus:ring-2 focus:ring-teal-600"
+            className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker focus:outline-none focus:ring-2 focus:ring-blue-700"
             placeholder="Add Todo"
             value={newTodo}
             onChange={handleInputChange}
@@ -51,9 +50,9 @@ const TodoList = () => {
       <div>
         {todos.map((todo, index) => (
           <div key={index} className="flex mb-4 items-center border p-2 rounded bg-gray-50">
-            <p className={`w-full ${todo.completed ? 'line-through text-green-600' : 'text-grey-darkest'}`}>{todo.text}</p>
+            <p className={`w-full ${todo.completed ? 'line-through text-blue-600' : 'text-grey-darkest'}`}>{todo.text}</p>
             <button
-              className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded text-green-600 border-green-600 hover:text-white hover:bg-green-600 transition-colors duration-200"
+              className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded text-blue-600 border-blue-600 hover:text-white hover:bg-blue-600 transition-colors duration-200"
               onClick={() => handleCompleteTodo(index)}
             >
               <FaCheck />

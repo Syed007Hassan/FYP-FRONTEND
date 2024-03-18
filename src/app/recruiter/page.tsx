@@ -1,93 +1,52 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
-import { Backend_URL } from "@/lib/Constants";
-import { getSession } from "next-auth/react";
-import { parseJwt } from "@/lib/Constants";
-import BarChart from "@/components/barChart";
-import LineChart from "@/components/lineChart";
-import StepAreaChart from "@/components/stepAreaChart";
-import AreaChart from "@/components/areaChart";
 import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
-import RecruiterGraphs from "@/components/recruiterDashboard/recruiterGraphs";
-import RecruiterStats from "@/components/applicant/charts/applicantStats";
-
+import TodoList from "@/components/recruiterDashboard/toDos";
 import "../../styles/sidebar.css";
+import RecruiterGraphs from "@/components/recruiterDashboard/recruiterGraphs";
+import RecruiterStats from "@/components/recruiterDashboard/recruiterStats";
+import UserManagementDashboard from "@/components/recruiterDashboard/userManagement";
+import HiringPipeline from "@/components/recruiterDashboard/hiringPipeline";
 
-const RecruiterPage = () => {
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+
+export default function Dashboard() {
   const isSidebarOpen = useAppSelector(
     (state: RootState) => state.sidebar.sidebarState
   );
-  const verifyToken = async () => {
-    try {
-      const session = await getSession();
-      if (!session || !session.user || !session.user.data) {
-        throw new Error("Invalid session");
-      }
-
-      console.log(session);
-      const jwt: string = session.user.data.jwt;
-      console.log(jwt);
-      const result = await axios.get(Backend_URL + "/auth/validateToken", {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      console.log(result.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getMySession = async () => {
-    const session = await getSession();
-
-    if (!session) {
-      throw new Error("Invalid session");
-    }
-
-    const jwt: string = session.toString();
-    console.log(jwt);
-    const result = await axios.get(Backend_URL + "/auth/validateToken", {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    });
-    console.log(result.data);
-  };
-
-  const parseTestJwt = async () => {
-    const session = await getSession();
-    if (!session) {
-      throw new Error("Invalid session");
-    }
-    const jwt: string = session.toString();
-    const parsedJwt = parseJwt(jwt);
-    console.log(parsedJwt);
-  };
 
   return (
-    <div
-      className={`content overflow-x-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
-        }`}
-    >
-      {" "}
-      <div className="container items-center  px-4 py-4">
-        <h2 className="pl-10 text-4xl font-bold text-blue-700">
-          Recruiter Dashboard
-        </h2>
-        <RecruiterStats />
-      </div>
+    <div className={`content bg-gray-200 overflow-hidden ${isSidebarOpen ? "" : ""}`}>
       <div
-        className=" pb-20 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-        style={{ height: "10%" }}
+        className={`content overflow-x-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
+          }`}
       >
-        <RecruiterGraphs />
-      </div>
+        <div className="bg-gray-200 container items-center  px-4 py-4">
+          <RecruiterStats />
+        </div>
+        <div
+          className=" bg-gray-200 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+          style={{ height: "10%" }}
+        >
+          <RecruiterGraphs />
+        </div>
 
+        <div className="flex mt-6 px-24 mb-10 justify-between">
+          <div className="flex-1 flex flex-col h-78 pb-0 mb-0 bg-green-50 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out mr-2 border-2 border-green-200">
+            <h2 className="text-xl font-bold text-green-700">Hiring Pipeline</h2>
+            <div className="p-4 flex-grow overflow-auto">
+              <HiringPipeline />
+            </div>
+          </div>
+          <div className="flex-1 flex flex-col p-4 h-64 bg-blue-50 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out mr-2 border-2 border-blue-200">
+            <h2 className="text-xl font-bold mb-4 text-blue-700">Tasks</h2>
+            <div className="p-4 flex-grow overflow-auto">
+              <TodoList />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
-export default RecruiterPage;
+}

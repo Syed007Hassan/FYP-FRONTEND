@@ -1,5 +1,6 @@
 "use client";
 import CustomNode from "./CustomNode";
+import CustomEdge from "./CustomEdge";
 import styles from "./Flow.module.css";
 import "reactflow/dist/style.css";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -9,6 +10,11 @@ import { createStage } from "@/types/stage";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { addStage } from "@/redux/services/stage/stageAction";
 import "../../../tailwind.config.js";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
+import "../../styles/ReactQuill.css";
 
 import React, { useCallback, useState } from "react";
 import ReactFlow, {
@@ -27,7 +33,7 @@ import ReactFlow, {
   ReactFlowProvider,
   Node,
 } from "reactflow";
-import { Dropdown } from "flowbite-react";
+import { HiMiniInformationCircle } from "react-icons/hi2";
 
 const initialNodes = [
   {
@@ -67,10 +73,14 @@ const initialNodes = [
     data: { label: "Onboarding", category: "meeting" },
   },
 ];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [{ id: "e1-2", source: "1", target: "2", type: "custom" }];
 
 const nodeTypes = {
   custom: CustomNode,
+};
+
+const EdgeTypes = {
+  custom: CustomEdge,
 };
 
 const defaultEdgeOptions = {
@@ -82,6 +92,7 @@ const App = () => {
   const router = useRouter();
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [detail, setDetail] = useState("");
 
   const { getNodes, getEdges } = useReactFlow();
 
@@ -95,7 +106,10 @@ const App = () => {
   const jobId = pathParts[pathParts.length - 2] || "";
 
   const onConnect = useCallback(
-    (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
+    (connection: Connection) => {
+      const edge = { ...connection, type: "custom" };
+      setEdges((eds) => addEdge(edge, eds));
+    },
     [setEdges]
   );
 
@@ -112,7 +126,7 @@ const App = () => {
       nodes.concat({
         id: Math.random().toString(),
         type: "custom",
-        data: { label: new_name, category: category },
+        data: { label: new_name, category: category, description: "" },
         position: { x: 0, y: 0 },
       })
     );
@@ -144,6 +158,7 @@ const App = () => {
 
     const sequence = sortedNodes.map((node) => node.data.label);
     const category = sortedNodes.map((node) => node.data.category);
+    const description = sortedNodes.map((node) => node.data.description);
     // const stageDetail = sortedNodes.map((node) => node.data.detail);
 
     // console.log(sequence);
@@ -153,6 +168,7 @@ const App = () => {
       stages: sequence.map((name, index) => ({
         stageName: name,
         category: category[index],
+        description: description[index],
         // detail: stageDetail[index],
       })),
     };
@@ -177,10 +193,11 @@ const App = () => {
       nodes.concat({
         id: Math.random().toString(),
         type: "custom",
-        data: { label: name, category: category},
+        data: { label: name, category: category, description: detail },
         position: { x: 0, y: 0 },
       })
     );
+    setDetail("");
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -241,6 +258,7 @@ const App = () => {
               onNodeDoubleClick={onNodeClick}
               // onNodesDelete={handleDelete}
               nodeTypes={nodeTypes}
+              edgeTypes={EdgeTypes}
               defaultEdgeOptions={defaultEdgeOptions}
               connectionLineType={ConnectionLineType.SmoothStep}
               isValidConnection={isValidConnection}
@@ -253,13 +271,14 @@ const App = () => {
                 color="#888"
                 variant={BackgroundVariant.Dots}
               /> */}
+              <MiniMap nodeColor={nodeColor} />
             </ReactFlow>
           </div>
         </div>
 
         {sidebarOpen && (
           <div
-            className={`flex flex-col gap-5 pt-3 pb-3 bg-gray-200 w-1/2 transition-all duration-500 ease-in-out transform ${
+            className={`flex flex-col gap-5 pt-3 pb-3 bg-gray-200 w-1/2 transition-all duration-500 ease-in-out transform h-[39.4rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 ${
               sidebarOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >
@@ -269,7 +288,7 @@ const App = () => {
                 select from predefined stages
               </h1>
             </span>
-            <span className="flex justify-center pt-4 pb-4 px-2 mr-4 ml-4">
+            <span className="flex justify-center pt-4 px-2 mr-4 ml-4">
               {/* <button
                   onClick={handleSaveFlow}
                   className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -294,7 +313,16 @@ const App = () => {
                 })}
               </div>
             </span>
-            <div className="flex flex-col gap-5 pt-4 pb-4 bg-gray-300">
+            <span className="mr-4 ml-10">
+              <h1 className="text-xs font-bold text-gray-600 flex">
+                <HiMiniInformationCircle />
+                <span className="pl-1">
+                  By selecting a predefined stage, you will not be also to enter
+                  details in your stages.
+                </span>
+              </h1>
+            </span>
+            <div className="flex flex-col gap-5 pt-4 pb-4 bg-gray-300 h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
               <span className="flex justify-center">
                 <h1 className="text-2xl font-bold text-gray-600">
                   add a custom stage
@@ -304,7 +332,7 @@ const App = () => {
                 className={`max-w-sm mx-auto flex flex-col gap-5`}
                 onSubmit={handleFormSubmit}
               >
-                <div className="flex gap-4 mb-4">
+                <div className="flex gap-4">
                   <div>
                     <label
                       className="block text-gray-700 font-bold mb-2"
@@ -337,6 +365,20 @@ const App = () => {
                     </select>
                   </div>
                 </div>
+                <div>
+                  <label
+                    className="block text-gray-700 font-bold"
+                    htmlFor="category"
+                  >
+                    Details:
+                  </label>
+                  <ReactQuill
+                    theme="snow"
+                    value={detail}
+                    onChange={(value) => setDetail(value)}
+                  />
+                </div>
+
                 {/* <div className="flex items-center justify-center">
                   <label htmlFor="" className="block text-gray-700 font-bold">
                     Details
@@ -374,6 +416,17 @@ const App = () => {
     </div>
   );
 };
+
+function nodeColor(node: Node) {
+  switch (node.type) {
+    case "input":
+      return "#071952";
+    case "output":
+      return "#071952";
+    default:
+      return "#071952";
+  }
+}
 
 const DefaultFlow = () => (
   <ReactFlowProvider>

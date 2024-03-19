@@ -9,6 +9,7 @@ type Company = {
     id: number;
     companyName: string;
     companyEmail: string;
+    companyProfile: string;
     companyWebsite: string;
     companyAddress: string;
     companyPhone: number;

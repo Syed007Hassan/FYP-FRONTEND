@@ -13,7 +13,12 @@ interface CustomNodeProps extends NodeProps {
 
 const CustomNode: FC<CustomNodeProps> = ({ data, xPos, yPos }) => {
   return (
-    <div className="px-4 py-2 shadow-md rounded-md bg-gray-100 border-2 border-stone-400">
+    <div
+      className="px-4 py-2 rounded-none bg-gray-100 border-2 border-black"
+      style={{
+        boxShadow: "5px 5px 0 0 rgba(0, 0, 0, 0.3)",
+      }}
+    >
       <div className="flex">
         {/* <div className="rounded-full w-12 h-12 flex justify-center items-center bg-gray-100">
           {data.emoji}
@@ -27,12 +32,12 @@ const CustomNode: FC<CustomNodeProps> = ({ data, xPos, yPos }) => {
       <Handle
         type="target"
         position={Position.Top}
-        className="w-16 rounded-full !bg-sky-900"
+        className="w-full h-1 !bg-transparent border-0"
       />
       <Handle
         type="source"
         position={Position.Bottom}
-        className="w-16 rounded-full !bg-sky-900"
+        className="w-full h-1 !bg-transparent border-0"
       />
 
       {/* <button

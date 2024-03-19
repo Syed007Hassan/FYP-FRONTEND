@@ -107,6 +107,10 @@ const JobFeed = () => {
     // setAllJobs(data?.data || []);
     setAllJobs(
       (data?.data || []).filter((job: Job) => {
+        if (job?.jobStatus !== 'Active') {
+          return false;
+        }
+
         if (job?.restrictedLocationRange) {
           const jobRestriction = job?.restrictedLocationRange;
           const applicantLocation = applicantDetails?.location;

@@ -24,9 +24,15 @@ type UpdateApplicationStatusArgs = {
 export const createApplication = createAsyncThunk(
   "application/createApplication",
   async ({ jobId, applicantId }: CreateApplicationArgs) => {
+    const tem_data = {
+      status: "pending",
+      applicationFeedback: "pending",
+    };
+
     try {
       const response = await axios.post(
-        `${Backend_URL}/application/createApplication/${jobId}/${applicantId}`
+        `${Backend_URL}/application/createApplication/${jobId}/${applicantId}`,
+        tem_data
       );
       return response.data;
     } catch (err: any) {

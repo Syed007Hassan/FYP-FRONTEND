@@ -151,7 +151,14 @@ const Page = () => {
       }
     }
     setApplyModal(false);
-  }, [applyModal]);
+  }, [
+    applyModal,
+    applicantDetailsAvailable,
+    applicantDetailsData,
+    jobId,
+    applicantId,
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (success) {
@@ -507,17 +514,16 @@ const Page = () => {
                                   {applicationStateData?.data?.stage?.category}
                                 </p>
                                 <div className="mt-3">
-                                  <p className="font-bold">
-                                    Description
-                                  </p>
-                                <p
-                                  className="mb-0 text-gray-500 dark:text-gray-300"
-                                  dangerouslySetInnerHTML={{
-                                    __html: applicationStateData?.data?.stage?.description,
-                                  }}
-                                />
+                                  <p className="font-bold">Description</p>
+                                  <p
+                                    className="mb-0 text-gray-500 dark:text-gray-300"
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        applicationStateData?.data?.stage
+                                          ?.description,
+                                    }}
+                                  />
                                 </div>
-
                               </div>
                             </div>
                             <div></div>

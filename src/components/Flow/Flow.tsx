@@ -14,7 +14,7 @@ import dynamic from "next/dynamic";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import "../../styles/ReactQuill.css";
+import "../../styles/react-quill.css"
 
 import React, { useCallback, useState } from "react";
 import ReactFlow, {

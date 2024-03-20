@@ -1,10 +1,10 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 /* @import "react-quill/dist/quill.snow.css"; */
 
 body {
-  font-family: 'Segoe UI Symbol',  sans-serif; 
+  font-family: "Segoe UI Symbol", sans-serif;
 }
 
 /* Global.css */
@@ -48,4 +48,22 @@ body {
   padding: 5px;
   width: 100%;
   font-size: 16px;
+}
+
+.img-container {
+  position: relative;
+}
+
+.img-container .upload-label {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.img-container:hover .upload-label {
+  opacity: 1;
 }

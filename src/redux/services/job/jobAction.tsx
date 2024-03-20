@@ -22,6 +22,17 @@ export const createJob = createAsyncThunk(
   }
 );
 
+export const updateJobStatus = createAsyncThunk(
+  "job/updateJobStatus",
+  async ({ jobId, status }: { jobId: string; status: string }) => {
+    const response = await axios.patch(
+      `${Backend_URL}/job/updateJobStatus/${jobId}`,
+      { status }
+    );
+    return response.data;
+  }
+);
+
 export const resetSuccess = createAsyncThunk("job/resetSuccess", async () => {
   return false;
 });

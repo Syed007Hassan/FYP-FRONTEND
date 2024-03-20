@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createJob, resetSuccess } from "./jobAction";
+import { createJob, resetSuccess, updateJobStatus } from "./jobAction";
 
 const jobSlice = createSlice({
   name: "job",
@@ -21,6 +21,14 @@ const jobSlice = createSlice({
     });
     builder.addCase(resetSuccess.fulfilled, (state) => {
       state.success = false;
+    });
+    builder.addCase(updateJobStatus.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateJobStatus.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.job = action.payload;
     });
     builder.addDefaultCase((state, action) => {
       state.success = false;

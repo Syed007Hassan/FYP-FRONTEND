@@ -174,7 +174,7 @@ const Page = () => {
       jobUrgency: job.urgency,
       jobCategory: selectedCategory,
       jobDescription: job.desc,
-      jobStatus: "Active",
+      jobStatus: "pending",
       jobSkills: tags.map((tag) => tag.text),
       restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };

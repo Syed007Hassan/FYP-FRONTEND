@@ -19,16 +19,23 @@ import Stages from "@/components/Flow/Stages";
 import { Workflow, Stage } from "@/data/data";
 import Job, { JobResponse } from "@/types/job";
 import { ResponseData, ApiResponse } from "@/types/stage";
-import { JobApi, useGetJobQuery } from "@/redux/services/job/jobAction";
+import {
+  JobApi,
+  useGetJobQuery,
+  updateJobStatus,
+} from "@/redux/services/job/jobAction";
 import { useGetStageQuery } from "@/redux/services/stage/stageAction";
 
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 
 import "../../../../styles/sidebar.css";
+import Alert from "@mui/material/Alert";
 
 const Page = () => {
   const [job, setJob] = useState<Job | null>(null);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
+  const [isPublish, setIsPublish] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
   const colorClasses = [
     "bg-blue-100",
     "bg-green-100",
@@ -47,7 +54,7 @@ const Page = () => {
   const jobIdString = pathname.split("/").pop() || "";
   const [jobId, setJobId] = useState<string>("5");
 
-  const { data, error, isLoading } = useGetJobQuery({ jobId: jobId });
+  const { data, error, isLoading, refetch } = useGetJobQuery({ jobId: jobId });
   const {
     data: stageData,
     error: stageError,
@@ -61,9 +68,9 @@ const Page = () => {
     }
   }, [stageData]);
 
-  useEffect(() => {
-    console.log("workflow", workflow);
-  }, [workflow]);
+  // useEffect(() => {
+  //   console.log("workflow", workflow);
+  // }, [workflow]);
 
   useEffect(() => {
     setJobId(jobIdString);
@@ -79,6 +86,35 @@ const Page = () => {
   useEffect(() => {
     console.log("job", job);
   }, [job]);
+
+  const handlePublishJob = () => {
+    // console.log("workflow", workflow);
+    setIsClicked(true);
+    if (workflow?.success) {
+      if (job?.jobStatus === "Active") {
+        dispatch(updateJobStatus({ jobId: jobId, status: "Inactive" }));
+        setIsPublish(true);
+        return;
+      }
+      dispatch(updateJobStatus({ jobId: jobId, status: "Active" }));
+      setIsPublish(true);
+    } else {
+      setIsPublish(false);
+      // alert("Please add workflow to publish job");
+    }
+  };
+
+  setTimeout(() => {
+    setIsClicked(false);
+    setIsPublish(false);
+  }, 5000);
+
+  useEffect(() => {
+    if (isPublish) {
+      console.log("Hello") ;
+      refetch();
+    }
+  }, [isPublish, refetch]);
 
   return (
     <div
@@ -273,7 +309,8 @@ const Page = () => {
                                 Location
                               </h6>
                               <p className="text-gray-500 dark:text-gray-300">
-                                {job && job?.jobLocation?.area} ,{job && job?.jobLocation?.city}
+                                {job && job?.jobLocation?.area} ,
+                                {job && job?.jobLocation?.city}
                               </p>
                             </div>
                           </div>
@@ -357,6 +394,15 @@ const Page = () => {
                           <i className="fas fa-bookmark"></i> Add Workflow
                         </Link>
 
+                        <button
+                          className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                          onClick={handlePublishJob}
+                        >
+                          {job?.jobStatus === "Active"
+                            ? "Unpublish Job"
+                            : "Publish Job"}
+                        </button>
+
                         <Link
                           href="/recruiter/joblist/[jobId]/analytics"
                           as={`/recruiter/joblist/${job?.jobId}/analytics`}
@@ -367,6 +413,18 @@ const Page = () => {
                             style={{ height: "3rem", width: "3rem" }}
                           />
                         </Link>
+                      </div>
+                      <div className="mt-5">
+                        {isClicked && isPublish && (
+                          <Alert severity="success">
+                            job status updated successfully
+                          </Alert>
+                        )}
+                        {isClicked && !isPublish && (
+                          <Alert severity="error">
+                            Please add workflow to publish job
+                          </Alert>
+                        )}
                       </div>
                     </div>
                   </div>

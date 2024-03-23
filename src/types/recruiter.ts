@@ -9,7 +9,7 @@ type Recruiter = {
   role: string;
   designation: string;
   company: company;
-};
+} | null;
 
 export type ApiResponse = {
   success: boolean;

@@ -132,15 +132,15 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
               <Dropdown.Item
                 onClick={() =>
                   handleClick(
-                    user?.recruiterId,
-                    user?.name,
+                    user?.recruiterId as number,
+                    user?.name as string,
                     stage?.stageId.toString(),
                     workflowId.toString()
                   )
                 }
                 key={user?.name}
               >
-                {user.name}
+                {user?.name}
               </Dropdown.Item>
             ))}
           </Dropdown>

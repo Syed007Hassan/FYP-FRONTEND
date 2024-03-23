@@ -3,7 +3,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse } from "@/types/recruiter";
+import { ApiResponse, UpdateRecruiter } from "@/types/recruiter";
 
 type Recruiter = {
   data: {
@@ -14,7 +14,6 @@ type Recruiter = {
     phone: number;
     designation: string;
     role: string;
-    companyId: number;
   };
 };
 
@@ -59,7 +58,6 @@ export const createEmployee = createAsyncThunk<
     }
   }
 );
-
 export const updateUser = createAsyncThunk<
   void,
   {
@@ -114,7 +112,70 @@ export const userApi = createApi({
     getUsers: builder.query<ApiResponse, { companyId: string }>({
       query: ({ companyId }) => `findByCompanyId/${companyId}`,
     }),
+
+    updateUser: builder.mutation<
+      void,
+      {
+        name: string;
+        email: string;
+        password: string;
+        phone: number;
+        designation: string;
+      }
+    >({
+      query: ({ name, email, password, phone, designation }) => ({
+        url: `updateRegisteredEmployee`,
+        method: "PATCH",
+        body: { name, email, password, phone, designation },
+      }),
+    }),
   }),
 });
+
+export const DeleteRegisteredEmployee = createAsyncThunk<
+  void,
+  { recruiterId: string; employeeId: string }
+>(
+  "/recruiter/deleteRegisteredEmployee",
+  async ({ recruiterId, employeeId }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await axios.delete(
+        `${Backend_URL}/recruiter/deleteRegisteredEmployee/${recruiterId}/${employeeId}`,
+        config
+      );
+    } catch (error: any) {
+      // return custom error message from backend if presen
+    }
+  }
+);
+
+export const UpdateRegisteredEmployee = createAsyncThunk(
+  "/recruiter/updateRegisteredEmployee",
+  async ({ recruiterId, employeeId, temp_data }: UpdateRecruiter) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      console.log("temp_data", temp_data);
+      console.log("recruiterId", recruiterId);
+      console.log("employeeId", employeeId);
+
+      await axios.patch(
+        `${Backend_URL}/recruiter/updateRegisteredEmployee/${recruiterId}/${employeeId}`,
+        temp_data,
+        config
+      );
+    } catch (error: any) {
+      console.log("Error is", error.message);
+    }
+  }
+);
 
 export const { useGetUserByEmailQuery, useGetUsersQuery } = userApi;

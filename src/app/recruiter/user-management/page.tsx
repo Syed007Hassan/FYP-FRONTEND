@@ -121,8 +121,8 @@ const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {userData?.data?.map(user => (
-                <tr className="text-center border-b border-blue-200">
+              {userData?.data?.map((user, index) => (
+                <tr key={index} className="text-center border-b border-blue-200">
                   <td className="px-4 py-2 border-2 border-blue-500">{user.name}</td>
 
                   <td className="px-4 py-2 border-2 border-blue-500">{user.phone}</td>
@@ -149,11 +149,13 @@ const UserManagement = () => {
       </div>
       {
         isModalOpen && (
-          userData?.data?.map(user => (
+          userData?.data?.map((user, index) => (
             <div
+              key={index}
               id="select-modal"
               tabIndex={-1}
               aria-hidden="true"
+
               className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full"
             >
               <div className="relative p-4 w-full max-w-md max-h-full">

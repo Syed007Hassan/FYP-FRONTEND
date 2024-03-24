@@ -3,7 +3,8 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse, UpdateRecruiter } from "@/types/recruiter";
+import { ApiResponse } from "@/types/recruiter";
+import { UpdateRecruiter } from "@/types/recruiter";
 import Company from "@/types/company";
 
 type Recruiter = {

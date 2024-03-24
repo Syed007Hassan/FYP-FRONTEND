@@ -167,5 +167,4 @@ export const UpdateRegisteredEmployee = createAsyncThunk(
   }
 );
 
-export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } =
-  userApi;
+export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } = userApi;

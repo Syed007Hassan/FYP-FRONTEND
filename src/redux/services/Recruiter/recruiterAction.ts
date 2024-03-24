@@ -9,7 +9,7 @@ import Company from "@/types/company";
 
 type Recruiter = {
   data: {
-    id: number;
+    recruiterId: number;
     name: string;
     email: string;
     password: string;

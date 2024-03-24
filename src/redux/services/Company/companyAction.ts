@@ -5,8 +5,9 @@ import { Backend_URL } from '@/lib/Constants';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 type Company = {
+  success: boolean;
   data: {
-    id: number;
+    companyId: number;
     companyName: string;
     companyEmail: string;
     companyProfile: string;

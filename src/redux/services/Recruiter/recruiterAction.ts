@@ -4,17 +4,19 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/types/recruiter";
+import Company from "@/types/company";
 
-type Recruiter = {
+export type Recruiter = {
+  success: boolean;
   data: {
-    id: number;
+    recruiterId: number;
     name: string;
     email: string;
     password: string;
     phone: number;
     designation: string;
     role: string;
-    companyId: number;
+    company: Company;
   };
 };
 
@@ -28,12 +30,13 @@ export const createEmployee = createAsyncThunk<
     password: string;
     role: string;
     companyId: number;
+    recruiterId: number;
   },
   { rejectValue: string }
 >(
   "/auth/registerCompanyEmployee",
   async (
-    { name, email, password, phone, designation, role, companyId },
+    { name, email, password, phone, designation, role, companyId, recruiterId },
     { rejectWithValue }
   ) => {
     try {
@@ -45,7 +48,7 @@ export const createEmployee = createAsyncThunk<
 
       //   console.log(name, email, password, phone, designation);
       await axios.post(
-        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}`,
+        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}/${recruiterId}`,
         { name, email, password, phone, designation, role },
         config
       );
@@ -114,7 +117,11 @@ export const userApi = createApi({
     getUsers: builder.query<ApiResponse, { companyId: string }>({
       query: ({ companyId }) => `findByCompanyId/${companyId}`,
     }),
+    getUserById: builder.query<Recruiter, { recruiterId: number }>({
+      query: ({ recruiterId }) => `findOne/${recruiterId}`,
+    }),
   }),
 });
 
-export const { useGetUserByEmailQuery, useGetUsersQuery } = userApi;
+export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } =
+  userApi;

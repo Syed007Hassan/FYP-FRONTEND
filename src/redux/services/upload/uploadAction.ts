@@ -12,6 +12,11 @@ type uploadResumeArgs = {
   resume: File;
 };
 
+type uploadCompanyProfileArgs = {
+  companyId: string;
+  picture: File;
+};
+
 export const uploadProfileImage: any = createAsyncThunk(
   "user/uploadProfileImage",
   async ({ id, image }: uploadProfileImageArgs) => {
@@ -39,6 +44,25 @@ export const uploadResume: any = createAsyncThunk(
       console.log(formData);
       const response = await axios.post(
         `${Backend_URL}/upload/${id}/resume`,
+        formData
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
+export const uploadCompanyProfile = createAsyncThunk(
+  "company/uploadCompanyProfile",
+  async ({ companyId, picture }: uploadCompanyProfileArgs) => {
+    try {
+      // console.log("picture", picture);
+      const formData = new FormData();
+      formData.append("file", picture);
+      console.log(formData);
+      const response = await axios.post(
+        `${Backend_URL}/upload/${companyId}/companyProfilePicture`,
         formData
       );
       return response.data;

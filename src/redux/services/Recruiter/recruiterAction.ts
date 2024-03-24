@@ -9,7 +9,7 @@ import Company from "@/types/company";
 
 type Recruiter = {
   data: {
-    id: number;
+    recruiterId: number;
     name: string;
     email: string;
     password: string;
@@ -167,5 +167,4 @@ export const UpdateRegisteredEmployee = createAsyncThunk(
   }
 );
 
-export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } =
-  userApi;
+export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } = userApi;

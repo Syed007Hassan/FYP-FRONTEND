@@ -1,13 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsFileEarmarkText, BsClock, BsAward, BsCheckCircle } from "react-icons/bs";
 import Chart from "react-apexcharts";
+import {
+  useGetActiveJobsQuery,
+  // useGetApplicationsCountInLastFiveJobsQuery,
+  // useGetApplicationsCountInMonthsQuery,
+  // useGetJobsCountInMonthsQuery,
+  useGetTotalJobsQuery,
+} from "@/redux/services/job/jobAction";
+import { parseJwt } from "@/lib/Constants";
+import Cookies from "js-cookie";
 
 const ApplicantStats = () => {
+
+  const [decodedData, setDecodedData] = useState<any>();
+  const [companyId, setCompanyId] = useState<number>(0);
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      // const session = await getSession();
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      const decodedData = parseJwt(jwt);
+      setDecodedData(decodedData);
+      setCompanyId(decodedData?.companyId || 0);
+    };
+
+    parseJwtFromSession();
+  }, []);
+
+  const { data: totalJobsData } = useGetTotalJobsQuery({ id: companyId });
+  const { data: activeJobsData } = useGetActiveJobsQuery({ id: companyId });
+  // const { data: applicationsCountInLastFiveJobsData } =
+  //   useGetApplicationsCountInLastFiveJobsQuery({ companyId });
+  // const { data: applicationsCountInMonthsData } =
+  //   useGetApplicationsCountInMonthsQuery({ companyId });
+  // const { data: jobsCountInMonthsData } = useGetJobsCountInMonthsQuery({
+  //   id: companyId,
+  // });
+
+  // useEffect(() => {
+  //   console.log("Total Jobs", totalJobsData);
+  //   console.log("Active Jobs", activeJobsData);
+  //   console.log(
+  //     "Applications Count in Last Five Jobs",
+  //     applicationsCountInLastFiveJobsData
+  //   );
+  //   console.log("Applications Count in Months", applicationsCountInMonthsData);
+  //   console.log("Jobs Count in Months", jobsCountInMonthsData);
+  // }, [
+  //   totalJobsData,
+  //   activeJobsData,
+  //   applicationsCountInLastFiveJobsData,
+  //   applicationsCountInMonthsData,
+  //   jobsCountInMonthsData,
+  // ]);
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const data = [
-    { name: "Total Jobs", value: 190, color: "#6366F1", icon: <BsFileEarmarkText size={60} /> },
-    { name: "Active Jobs", value: 80, color: "#F59E0B", icon: <BsClock size={60} /> },
+    { name: "Total Jobs", value: totalJobsData?.data, color: "#6366F1", icon: <BsFileEarmarkText size={60} /> },
+    { name: "Active Jobs", value: activeJobsData?.data, color: "#F59E0B", icon: <BsClock size={60} /> },
     { name: "Running Tasks", value: 20, color: "#4CAF50", icon: <BsAward size={60} /> },
     { name: "Completed Tasks", value: 45, color: "#9C27B0", icon: <BsCheckCircle size={60} /> },
   ];

@@ -27,6 +27,7 @@ export const createApplication = createAsyncThunk(
     const tem_data = {
       status: "pending",
       applicationFeedback: "pending",
+      applicationRating: "0%",
     };
 
     try {

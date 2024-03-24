@@ -4,12 +4,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "@/types/recruiter";
+import { UpdateRecruiter } from "@/types/recruiter";
 import Company from "@/types/company";
 
-export type Recruiter = {
-  success: boolean;
+type Recruiter = {
   data: {
-    recruiterId: number;
+    id: number;
     name: string;
     email: string;
     password: string;
@@ -30,13 +30,12 @@ export const createEmployee = createAsyncThunk<
     password: string;
     role: string;
     companyId: number;
-    recruiterId: number;
   },
   { rejectValue: string }
 >(
   "/auth/registerCompanyEmployee",
   async (
-    { name, email, password, phone, designation, role, companyId, recruiterId },
+    { name, email, password, phone, designation, role, companyId },
     { rejectWithValue }
   ) => {
     try {
@@ -48,7 +47,7 @@ export const createEmployee = createAsyncThunk<
 
       //   console.log(name, email, password, phone, designation);
       await axios.post(
-        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}/${recruiterId}`,
+        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}`,
         { name, email, password, phone, designation, role },
         config
       );
@@ -62,7 +61,6 @@ export const createEmployee = createAsyncThunk<
     }
   }
 );
-
 export const updateUser = createAsyncThunk<
   void,
   {
@@ -122,6 +120,52 @@ export const userApi = createApi({
     }),
   }),
 });
+
+export const DeleteRegisteredEmployee = createAsyncThunk<
+  void,
+  { recruiterId: string; employeeId: string }
+>(
+  "/recruiter/deleteRegisteredEmployee",
+  async ({ recruiterId, employeeId }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      await axios.delete(
+        `${Backend_URL}/recruiter/deleteRegisteredEmployee/${recruiterId}/${employeeId}`,
+        config
+      );
+    } catch (error: any) {
+      // return custom error message from backend if presen
+    }
+  }
+);
+
+export const UpdateRegisteredEmployee = createAsyncThunk(
+  "/recruiter/updateRegisteredEmployee",
+  async ({ recruiterId, employeeId, temp_data }: UpdateRecruiter) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      console.log("temp_data", temp_data);
+      console.log("recruiterId", recruiterId);
+      console.log("employeeId", employeeId);
+
+      await axios.patch(
+        `${Backend_URL}/recruiter/updateRegisteredEmployee/${recruiterId}/${employeeId}`,
+        temp_data,
+        config
+      );
+    } catch (error: any) {
+      console.log("Error is", error.message);
+    }
+  }
+);
 
 export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } =
   userApi;

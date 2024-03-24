@@ -15,4 +15,15 @@ export type ApiResponse = {
   success: boolean;
   data: Recruiter[];
 };
+export type UpdateRecruiter = {
+  recruiterId: string;
+  employeeId: string;
+  temp_data: {
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    designation: string;
+  };
+};
 export default Recruiter;

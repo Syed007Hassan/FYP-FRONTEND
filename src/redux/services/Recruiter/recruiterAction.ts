@@ -4,6 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse, UpdateRecruiter } from "@/types/recruiter";
+import Company from "@/types/company";
 
 type Recruiter = {
   data: {
@@ -14,6 +15,7 @@ type Recruiter = {
     phone: number;
     designation: string;
     role: string;
+    company: Company;
   };
 };
 
@@ -112,22 +114,8 @@ export const userApi = createApi({
     getUsers: builder.query<ApiResponse, { companyId: string }>({
       query: ({ companyId }) => `findByCompanyId/${companyId}`,
     }),
-
-    updateUser: builder.mutation<
-      void,
-      {
-        name: string;
-        email: string;
-        password: string;
-        phone: number;
-        designation: string;
-      }
-    >({
-      query: ({ name, email, password, phone, designation }) => ({
-        url: `updateRegisteredEmployee`,
-        method: "PATCH",
-        body: { name, email, password, phone, designation },
-      }),
+    getUserById: builder.query<Recruiter, { recruiterId: number }>({
+      query: ({ recruiterId }) => `findOne/${recruiterId}`,
     }),
   }),
 });
@@ -178,4 +166,5 @@ export const UpdateRegisteredEmployee = createAsyncThunk(
   }
 );
 
-export const { useGetUserByEmailQuery, useGetUsersQuery } = userApi;
+export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } =
+  userApi;

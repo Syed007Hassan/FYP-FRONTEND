@@ -101,6 +101,7 @@ const Page = () => {
   const [companyId, setCompanyId] = useState<string>("");
   const [recruiterId, setRecruiterId] = useState<string>("");
   const [clickLocation, setClickLocation] = useState(false);
+  const [jwt, setJwt] = useState<string>("");
 
   // skills attributes
   type Tags = { id: string; text: string }[];
@@ -135,6 +136,7 @@ const Page = () => {
         throw new Error("Invalid session");
       }
       const jwt: string = session.toString();
+      setJwt(jwt);
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       console.log("decodedData:", decodedData);
@@ -180,7 +182,7 @@ const Page = () => {
     };
 
     try {
-      await dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+      await dispatch(createJob({ companyId, recruiterId, job: temp_job, token: jwt }));
       // setDispatchSuccess(true);
     } catch (error) {
       console.error("Error:", error);

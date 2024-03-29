@@ -3,7 +3,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse } from "@/types/recruiter";
+import { ApiResponse, StageResponse } from "@/types/recruiter";
 import { UpdateRecruiter } from "@/types/recruiter";
 import Company from "@/types/company";
 
@@ -118,6 +118,12 @@ export const userApi = createApi({
     getUserById: builder.query<Recruiter, { recruiterId: number }>({
       query: ({ recruiterId }) => `findOne/${recruiterId}`,
     }),
+    getAllStagesAssigned: builder.query<StageResponse, { recruiterId: string }>(
+      {
+        query: ({ recruiterId }) =>
+          `findAllTheStagesAssignedToRecruiter/${recruiterId}`,
+      }
+    ),
   }),
 });
 
@@ -167,4 +173,9 @@ export const UpdateRegisteredEmployee = createAsyncThunk(
   }
 );
 
-export const { useGetUserByEmailQuery, useGetUsersQuery, useGetUserByIdQuery } = userApi;
+export const {
+  useGetUserByEmailQuery,
+  useGetUsersQuery,
+  useGetUserByIdQuery,
+  useGetAllStagesAssignedQuery,
+} = userApi;

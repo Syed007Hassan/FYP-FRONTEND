@@ -14,13 +14,21 @@ type CreateJobArgs = {
   companyId: string;
   recruiterId: string;
   job: Jobs;
+  token: string;
 };
 export const createJob = createAsyncThunk(
   "job/createJob",
-  async ({ companyId, recruiterId, job }: CreateJobArgs) => {
+  async ({ companyId, recruiterId, job, token }: CreateJobArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const response = await axios.post(
       `${Backend_URL}/job/createJob/${recruiterId}/${companyId}`,
-      job
+      job,
+      config
     );
     return response.data;
   }
@@ -92,5 +100,5 @@ export const {
   useGetApplicationsCountInLastFiveJobsQuery,
   useGetApplicationsCountInMonthsQuery,
   useGetJobsCountInMonthsQuery,
-  useGetTotalJobsQuery
+  useGetTotalJobsQuery,
 } = JobApi;

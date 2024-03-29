@@ -3,7 +3,15 @@ import axios from "axios";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Backend_URL } from "@/lib/Constants";
 import { ApplicantDetailsApiResponse } from "@/types/applicant";
-import { CreateApplicantDetails, Education, Experience, Contact, AboutInfoData } from "@/types/applicant";
+import {
+  CreateApplicantDetails,
+  Education,
+  Experience,
+  Contact,
+  AboutInfoData,
+} from "@/types/applicant";
+import { JobApplicationResponse } from "@/types/job";
+import { ApplicationCount } from "@/types/company";
 
 type updateApplicantDetailsArgs = {
   id: string;
@@ -32,7 +40,7 @@ type updatePersonalDetailsArgs = {
 
 export const updateApplicantDetails: any = createAsyncThunk(
   "user/updateApplicantDetails",
-  async ({id, temp_data}: updateApplicantDetailsArgs) => {
+  async ({ id, temp_data }: updateApplicantDetailsArgs) => {
     try {
       console.log("id: ", id);
       console.log("temp_datas: ", temp_data);
@@ -49,7 +57,7 @@ export const updateApplicantDetails: any = createAsyncThunk(
 
 export const updateEducationDetails: any = createAsyncThunk(
   "user/updateEducationDetails",
-  async ({id, education}: updateEducationDetailsArgs) => {
+  async ({ id, education }: updateEducationDetailsArgs) => {
     const data = {
       education: education,
     };
@@ -67,7 +75,7 @@ export const updateEducationDetails: any = createAsyncThunk(
 
 export const updateExperienceDetails: any = createAsyncThunk(
   "user/updateExperienceDetails",
-  async ({id, experience}: updateExperienceDetailsArgs) => {
+  async ({ id, experience }: updateExperienceDetailsArgs) => {
     const temp_data = {
       experience: experience,
     };
@@ -85,7 +93,7 @@ export const updateExperienceDetails: any = createAsyncThunk(
 
 export const updateSkillsAndAboutMe: any = createAsyncThunk(
   "user/updateSkills",
-  async ({id, temp_data}: updateApplicantDetailsArgs) => {
+  async ({ id, temp_data }: updateApplicantDetailsArgs) => {
     try {
       const response = await axios.patch(
         `${Backend_URL}/user/updateSkills/${id}`,
@@ -100,7 +108,7 @@ export const updateSkillsAndAboutMe: any = createAsyncThunk(
 
 export const updateProfileDetails: any = createAsyncThunk(
   "user/updateProfileDetails",
-  async ({id, contact}: updatePersonalDetailsArgs) => {
+  async ({ id, contact }: updatePersonalDetailsArgs) => {
     try {
       const response = await axios.patch(
         `${Backend_URL}/user/updateContactDetails/${id}`,
@@ -115,7 +123,7 @@ export const updateProfileDetails: any = createAsyncThunk(
 
 export const updateAboutInfo = createAsyncThunk(
   "user/updateAboutInfo",
-  async ({id, temp_data}: updateAboutInfoArgs) => {
+  async ({ id, temp_data }: updateAboutInfoArgs) => {
     try {
       const response = await axios.patch(
         `${Backend_URL}/user/updateSkillDetails/${id}`,
@@ -139,10 +147,54 @@ export const ApplicantDetailApi = createApi({
     baseUrl: `${Backend_URL}/user/`,
   }),
   endpoints: (builder) => ({
-    getApplicantDetails: builder.query<ApplicantDetailsApiResponse, { id: string }>({
+    getApplicantDetails: builder.query<
+      ApplicantDetailsApiResponse,
+      { id: string }
+    >({
       query: ({ id }) => `findApplicantDetails/${id}`,
+    }),
+    findAllJobApplicationsByApprovedStatusCount: builder.query<
+      any,
+      { id: string }
+    >({
+      query: ({ id }) => `findAllJobApplicationsByStatusCount/${id}/approved`,
+    }),
+    findAllJobApplicationsByPendingStatusCount: builder.query<
+      any,
+      { id: string }
+    >({
+      query: ({ id }) => `findAllJobApplicationsByStatusCount/${id}/pending`,
+    }),
+    findAllJobApplicationsByRejectedStatusCount: builder.query<
+      any,
+      { id: string }
+    >({
+      query: ({ id }) => `findAllJobApplicationsByStatusCount/${id}/rejected`,
+    }),
+    findAllJobApplicationsCount: builder.query<any, { id: string }>({
+      query: ({ id }) => `findAllJobApplicationsCount/${id}`,
+    }),
+    findAllJobApplicationsByMonth: builder.query<
+      ApplicationCount,
+      { id: string }
+    >({
+      query: ({ id }) => `findAllJobApplicationsByMonth/${id}`,
+    }),
+    findRecentJobApplicationsWithFeedback: builder.query<
+      JobApplicationResponse,
+      { id: string }
+    >({
+      query: ({ id }) => `findRecentJobApplicationsWithFeedback/${id}`,
     }),
   }),
 });
 
-export const { useGetApplicantDetailsQuery } = ApplicantDetailApi;
+export const {
+  useGetApplicantDetailsQuery,
+  useFindAllJobApplicationsByApprovedStatusCountQuery,
+  useFindAllJobApplicationsByPendingStatusCountQuery,
+  useFindAllJobApplicationsByRejectedStatusCountQuery,
+  useFindAllJobApplicationsByMonthQuery,
+  useFindAllJobApplicationsCountQuery,
+  useFindRecentJobApplicationsWithFeedbackQuery,
+} = ApplicantDetailApi;

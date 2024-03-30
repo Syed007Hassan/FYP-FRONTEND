@@ -71,6 +71,7 @@ const Page = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [token, setToken] = useState<string>("");
   const jobIdString = pathname.split("/").pop() || "";
   const [jobId, setJobId] = useState<string>("5");
   const [decodedData, setDecodedData] = useState<any>();
@@ -116,6 +117,7 @@ const Page = () => {
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
       setApplicantId(decodedData.id.toString() || "");
+      setToken(jwt);
     };
     parseJwtFromSession();
   }, []);
@@ -147,7 +149,7 @@ const Page = () => {
     if (applyModal === true) {
       if (applicantDetailsAvailable === true) {
         console.log("applicantDetailsData", applicantDetailsData);
-        dispatch(createApplication({ jobId: jobId, applicantId: applicantId }));
+        dispatch(createApplication({ jobId: jobId, applicantId: applicantId, token }));
       }
     }
     setApplyModal(false);
@@ -158,6 +160,7 @@ const Page = () => {
     jobId,
     applicantId,
     dispatch,
+    token,
   ]);
 
   useEffect(() => {

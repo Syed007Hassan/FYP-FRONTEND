@@ -7,6 +7,7 @@ import { ApplicationResponse } from "@/types/application";
 type CreateApplicationArgs = {
   jobId: string;
   applicantId: string;
+  token: string;
 };
 
 type UpdateApplicationStageArgs = {
@@ -25,17 +26,24 @@ type UpdateApplicationStatusArgs = {
 
 export const createApplication = createAsyncThunk(
   "application/createApplication",
-  async ({ jobId, applicantId }: CreateApplicationArgs) => {
+  async ({ jobId, applicantId, token }: CreateApplicationArgs) => {
     const tem_data = {
       status: "pending",
       applicationFeedback: "pending",
       applicationRating: "0%",
     };
 
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     try {
       const response = await axios.post(
         `${Backend_URL}/application/createApplication/${jobId}/${applicantId}`,
-        tem_data
+        tem_data,
+        config
       );
       return response.data;
     } catch (err: any) {

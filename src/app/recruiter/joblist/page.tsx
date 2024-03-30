@@ -85,13 +85,17 @@ const Page = () => {
       }
 
       if (status === "ac") {
-        sortedJobs = sortedJobs.filter((job) => job.jobStatus.toLowerCase() === "active");
+        sortedJobs = sortedJobs.filter(
+          (job) => job.jobStatus.toLowerCase() === "active"
+        );
       } else if (status === "ev") {
         sortedJobs = sortedJobs.filter(
           (job) => job.jobStatus.toLowerCase() === "evaluating"
         );
       } else if (status === "no") {
-        sortedJobs = sortedJobs.filter((job) => job.jobStatus.toLowerCase() === "pending");
+        sortedJobs = sortedJobs.filter(
+          (job) => job.jobStatus.toLowerCase() === "pending"
+        );
       }
 
       // apply pagination
@@ -305,36 +309,19 @@ const Page = () => {
                         </div>
                         <div className="items-center col-span-12 lg:col-span-2 ">
                           <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
-                            <li
-                              className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              aria-label="Edit"
-                              data-bs-original-title="Edit"
-                            >
-                              <a
-                                href="manage-jobs-post.html"
-                                className="text-center avatar-sm success-bg-subtle d-inline-block rounded-circle fs-18"
-                              >
-                                <i className="uil uil-edit"></i>
-                              </a>
-                            </li>
-                            <li
-                              className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              aria-label="Delete"
-                              data-bs-original-title="Delete"
-                            >
-                              <a
-                                href="javascript:void(0)"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteModal"
-                                className="text-center avatar-sm danger-bg-subtle d-inline-block rounded-circle fs-18"
-                              >
-                                <i className="uil uil-trash-alt"></i>
-                              </a>
-                            </li>
+                            {job?.jobStatus.toLowerCase() === "active" ? (
+                              <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20">
+                                <i className="uil uil-check-circle"></i>
+                              </li>
+                            ) : job?.jobStatus === "evaluating" ? (
+                              <li className="w-10 h-10 text-lg leading-10 text-center text-yellow-500 rounded-full bg-yellow-500/20">
+                                <i className="uil uil-spinner"></i>
+                              </li>
+                            ) : (
+                              <li className="w-10 h-10 text-lg leading-10 text-center text-red-500 rounded-full bg-red-500/20">
+                                <i className="uil uil-times-circle"></i>
+                              </li>
+                            )}
                           </ul>
                         </div>
                       </div>

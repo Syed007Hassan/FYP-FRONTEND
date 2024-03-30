@@ -6,6 +6,7 @@ import Image from "next/image";
 import { job_list } from "@/data/data";
 import image_1 from "../../../../public/job.png";
 import { DecodedData } from "@/data/data";
+import Alert from "@mui/material/Alert";
 
 import Chatbot from "@/components/Chatbot";
 import { FaQuestion } from "react-icons/fa6";
@@ -62,6 +63,7 @@ const Page = () => {
   const [restrictedRange, setRestrictedRange] = useState("");
   const [restrictedDropdownOpen, setRestrictedDropdownOpen] = useState(false);
   const [clickRestricted, setClickRestricted] = useState(false);
+  const [message, setMessage] = useState("");
   // const [dispatchSuccess, setDispatchSuccess] = useState(false);
 
   type StateData = {
@@ -162,7 +164,7 @@ const Page = () => {
     e.preventDefault();
 
     if (clickLocation === false) {
-      alert("Please click on the location icon to get the location.");
+      setMessage("Please click on the location icon to get current location");
       return;
     }
 
@@ -189,14 +191,52 @@ const Page = () => {
       restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };
 
+    if (temp_job.jobTitle === "") {
+      setMessage("Please enter job title");
+      return;
+    } else if (temp_job.jobExperience === "") {
+      setMessage("Please enter experience");
+      return;
+    } else if (temp_job.jobQualification === "") {
+      setMessage("Please enter qualification");
+      return;
+    } else if (temp_job.jobSalary === "") {
+      setMessage("Please enter salary");
+      return;
+    } else if (temp_job.jobType === "Select a type") {
+      setMessage("Please select a job type");
+      return;
+    } else if (temp_job.jobCategory === "Select a category") {
+      setMessage("Please select a job category");
+      return;
+    } else if (temp_job.jobUrgency === "") {
+      setMessage("Please enter urgency");
+      return;
+    } else if (temp_job.jobDescription === "") {
+      setMessage("Please enter job description");
+      return;
+    } else if (temp_job.jobSkills.length === 0) {
+      setMessage("Please enter job skills");
+      return;
+    } else if (clickRestricted && temp_job.restrictedLocationRange === "") {
+      setMessage("Please enter restricted location range");
+      return;
+    }
+
     try {
-      await dispatch(createJob({ companyId, recruiterId, job: temp_job, token: jwt }));
+      await dispatch(
+        createJob({ companyId, recruiterId, job: temp_job, token: jwt })
+      );
       // setDispatchSuccess(true);
     } catch (error) {
       console.error("Error:", error);
       // handle error here
     }
   };
+
+  setTimeout(() => {
+    setMessage("");
+  }, 6000);
 
   // useEffect(() => {
   //   console.log(job);
@@ -279,6 +319,12 @@ const Page = () => {
           <div className="pr-2 pl-2">
             <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
 
+            {message && (
+              <Alert severity="error" className="mt-4">
+                {message}
+              </Alert>
+            )}
+
             <form className="mt-8 space-y-6">
               <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-4">
                 <div className="grid grid-rows-1 grid-flow-col">
@@ -334,8 +380,9 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${typeDropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${
+                        typeDropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -472,8 +519,9 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${dropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${
+                        dropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -532,10 +580,10 @@ const Page = () => {
                           value={
                             add
                               ? add?.town +
-                              ", " +
-                              add?.city +
-                              ", " +
-                              add?.country
+                                ", " +
+                                add?.city +
+                                ", " +
+                                add?.country
                               : undefined
                           }
                           required
@@ -659,8 +707,9 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${restrictedDropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${
+                        restrictedDropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"

@@ -16,16 +16,20 @@ import { parseJwt } from "@/lib/Constants";
 
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { toggleSidebar } from "../../redux/features/sidebarStateAction";
+import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applicantAction";
 
-interface HeaderProps {}
 
-const NavBar: React.FC<HeaderProps> = () => {
+
+const NavBar = () => {
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [decodedData, setDecodedData] = useState<any>();
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [role, setRole] = useState<string>("");
+  const [applicantId, setApplicantId] = useState<string>("");
+
+  const { data, error, isLoading } = useGetApplicantDetailsQuery({ id: applicantId});
 
   const toggleNotificationDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -47,6 +51,7 @@ const NavBar: React.FC<HeaderProps> = () => {
       setEmail(decodedData?.email || "");
       setName(decodedData?.name || "");
       setRole(decodedData?.role || "");
+      setApplicantId(decodedData?.id.toString() || "1");
     };
 
     parseJwtFromSession();
@@ -236,7 +241,9 @@ const NavBar: React.FC<HeaderProps> = () => {
               <span className="sr-only">Open user menu</span>
               <Image
                 className="w-8 h-8 me-2 rounded-full"
-                src={companylogo} // replace with the actual path to the user's image
+                src={data?.data?.profilePicture ? data?.data?.profilePicture : companylogo} // replace with the actual path to the user's image
+                width={32}
+                height={32}
                 alt="user photo"
               />
               {name}

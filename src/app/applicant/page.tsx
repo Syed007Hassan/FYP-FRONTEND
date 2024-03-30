@@ -4,9 +4,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { RootState } from "@/redux/store";
 import ApplicantGraphs from "@/components/applicant/charts/applicantGraphs";
 import ApplicantStats from "@/components/applicant/charts/applicantStats";
-import TodoList from "@/components/recruiterDashboard/toDos";
 import "../../styles/sidebar.css";
-import AppliedJobs from "@/components/applicant/charts/appliedJobs";
 import { useEffect } from "react";
 import { parseJwt } from "@/lib/Constants";
 import Cookies from "js-cookie";
@@ -19,8 +17,10 @@ import {
   useFindRecentJobApplicationsWithFeedbackQuery,
 } from "@/redux/services/Applicant/applicantAction";
 import { useGetApplicationsByApplicantIdQuery } from "@/redux/services/application/applicationAction";
+import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applicantAction";
 import { Application } from "@/types/application";
 import { JobApplication } from "@/types/job";
+import Loader from "@/components/Loader";
 
 export default function Dashboard() {
   const isSidebarOpen = useAppSelector(
@@ -70,6 +70,11 @@ export default function Dashboard() {
 
   const { data: recentJobApplicationsWithFeedbackData } =
     useFindRecentJobApplicationsWithFeedbackQuery({
+      id: applicantId,
+    });
+
+  const { data: applicantDetailsData, isLoading: applicantDetailsLoading } =
+    useGetApplicantDetailsQuery({
       id: applicantId,
     });
 
@@ -162,36 +167,42 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div
-      className={`content bg-gray-200 overflow-hidden ${
-        isSidebarOpen ? "" : ""
-      }`}
-    >
-      <div
-        className={`content mb-5 ${
-          isSidebarOpen ? "shifted-dashboard" : ""
-        }`}
-      >
-        <div className="bg-gray-200 container items-center  px-4 py-4">
-          <ApplicantStats
-            allCount={allCount}
-            approvedCount={approvedCount}
-            pendingCount={pendingCount}
-            rejectedCount={rejectedCount}
-          />
-        </div>
+    <>
+      {applicantDetailsLoading ? (
+        <Loader />
+      ) : (
         <div
-          className=" bg-gray-200 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-          style={{ height: "10%" }}
+          className={`content bg-gray-200 overflow-hidden ${
+            isSidebarOpen ? "" : ""
+          }`}
         >
-          <ApplicantGraphs
-            jobApplicationsByMonth={jobApplicationsByMonthData}
-            activeJobs={activeJobs}
-            pendingJobs={pendingJobs}
-            jobsWithFeedback={jobsWithFeedback}
-          />
+          <div
+            className={`content mb-5 ${
+              isSidebarOpen ? "shifted-dashboard" : ""
+            }`}
+          >
+            <div className="bg-gray-200 container items-center  px-4 py-4">
+              <ApplicantStats
+                allCount={allCount}
+                approvedCount={approvedCount}
+                pendingCount={pendingCount}
+                rejectedCount={rejectedCount}
+              />
+            </div>
+            <div
+              className=" bg-gray-200 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+              style={{ height: "10%" }}
+            >
+              <ApplicantGraphs
+                jobApplicationsByMonth={jobApplicationsByMonthData}
+                activeJobs={activeJobs}
+                pendingJobs={pendingJobs}
+                jobsWithFeedback={jobsWithFeedback}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }

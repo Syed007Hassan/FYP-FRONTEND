@@ -68,6 +68,7 @@ const Page = () => {
 
   useEffect(() => {
     if (stageData) {
+      console.log("stageData", stageData);
       setWorkflow(stageData || null);
     }
   }, [stageData]);
@@ -139,8 +140,9 @@ const Page = () => {
         <Loader />
       ) : (
         <div
-          className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
-            }`}
+          className={`content overflow-hidden ${
+            isSidebarOpen ? "shifted-dashboard" : ""
+          }`}
         >
           <div className="main-content">
             <div className="page-content">
@@ -165,10 +167,8 @@ const Page = () => {
                                 <h5 className="mb-1 text-gray-900 dark:text-gray-50 font-bold text-xl">
                                   {job && job?.jobTitle}
                                 </h5>
-
                               </div>
                             </div>
-
                           </div>
 
                           <div className="grid grid-cols-12 mt-8 gap-y-3 lg:gap-3">
@@ -227,7 +227,6 @@ const Page = () => {
                               />
                             </div>
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -356,7 +355,9 @@ const Page = () => {
                                     Date Posted
                                   </h6>
                                   <p className="text-gray-500 dark:text-gray-300">
-                                    {job && job?.jobCreatedAt && job.jobCreatedAt.split("T")[0]}
+                                    {job &&
+                                      job?.jobCreatedAt &&
+                                      job.jobCreatedAt.split("T")[0]}
                                   </p>
                                 </div>
                               </div>
@@ -384,12 +385,25 @@ const Page = () => {
                             <Link
                               href="/recruiter/joblist/[jobId]/analytics"
                               as={`/recruiter/joblist/${job?.jobId}/analytics`}
-                              className="btn text-center px-0 py-0 items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
-                              title="Job analytics"
+                              passHref
                             >
-                              <MdAnalytics
-                                style={{ height: "3rem", width: "3rem" }}
-                              />
+                              <div
+                                className="btn text-center px-0 py-0 items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                                title="Job analytics"
+                                onClick={(e) => {
+                                  if (!stageData?.success) {
+                                    // alert(
+                                    //   "Please add workflow to view analytics"
+                                    // );
+                                    setIsClicked(true);
+                                    e.preventDefault();
+                                  }
+                                }}
+                              >
+                                <MdAnalytics
+                                  style={{ height: "3rem", width: "3rem" }}
+                                />
+                              </div>
                             </Link>
                           </div>
                           <div className="mt-5">
@@ -401,6 +415,11 @@ const Page = () => {
                             {isClicked && !isPublish && (
                               <Alert severity="error">
                                 Please add workflow to publish job
+                              </Alert>
+                            )}
+                            {isClicked && !stageData?.success && (
+                              <Alert severity="error">
+                                Please add workflow to view analytics
                               </Alert>
                             )}
                           </div>

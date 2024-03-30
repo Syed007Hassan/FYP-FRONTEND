@@ -114,7 +114,7 @@ const Page = () => {
   }, [resumeSummary]);
 
   useEffect(() => {
-    if(isModalOpen === false) {
+    if (isModalOpen === false) {
       setTempResumeSummary(null);
     }
   }, [isModalOpen]);
@@ -466,6 +466,9 @@ const Page = () => {
                       Resume Summary
                     </th>
                     <th scope="col" className="px-6 py-3">
+                      Application Rating
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                       Stage
                     </th>
                     <th scope="col" className="px-6 py-3 flex justify-center">
@@ -525,30 +528,23 @@ const Page = () => {
                             View Profile
                           </a>
                         </td>
-                        <td className="px-6 py-4">
-                          <a
-                            href="#"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                            // onClick={() =>
-                            //   dispatch(
-                            //     getResumeSummary({
-                            //       url: applicant?.applicant?.applicantDetails
-                            //         ?.resume,
-                            //       job_description:
-                            //         jobApiResponse?.data?.jobDescription,
-                            //     })
-                            //   )
-                            // }
-                            onClick={() => {
-                              handleResumeSummary(
-                                applicant?.applicant?.applicantDetails?.resume,
-                                jobApiResponse?.data?.jobDescription || ""
-                              );
-                              setIsModalOpen(true);
-                            }}
-                          >
-                            View Summary
-                          </a>
+                        <td
+                          className="px-6 py-4 font-bold hover:cursor-pointer hover:text-blue-600 dark:text-blue-500"
+                          onClick={() => {
+                            handleResumeSummary(
+                              applicant?.applicant?.applicantDetails?.resume,
+                              jobApiResponse?.data?.jobDescription || ""
+                            );
+                            setIsModalOpen(true);
+                          }}
+                        >
+                          View Summary
+                        </td>
+                        <td
+                          className="px-6 py-4 text-center font-bold hover:text-blue-600"
+                          title="It represents how much the applicant skills matched with the job skills"
+                        >
+                          {applicant?.applicationRating + "%" || "Not rated"}
                         </td>
                         <td className="py-4 relative">
                           <button

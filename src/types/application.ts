@@ -13,6 +13,8 @@ export type Applicant = {
 export type Application = {
   applicationId: number;
   status: string;
+  feedback: string;
+  applicationRating: string;
   applicationDate: string;
   job: Job;
   applicant: Applicant;

@@ -31,6 +31,7 @@ export interface JobLocation {
 export type JobResponse = {
   success: boolean;
   data: Job[];
+  message: string;
 };
 
 export type addJobResponse = {

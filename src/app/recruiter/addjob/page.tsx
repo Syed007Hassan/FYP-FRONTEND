@@ -275,9 +275,9 @@ const Page = () => {
             priority
           />
         </div>
-        <div className="pt-16 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
+        <div className="border-2 bg-gray-50 rounded mt-4 lg:mr-8 lg-mb-8 lg:pl-10 lg:pr-10 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
           <div className="pr-2 pl-2">
-            <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
+            <h1 className="text-4xl text-blue-900 pt-5">Add Job</h1>
 
             <form className="mt-8 space-y-6">
               <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-4">
@@ -301,7 +301,7 @@ const Page = () => {
                       required
                     />
                   </div>
-                  <div className="pl-4">
+                  <div className="pl-4 relative">
                     <label
                       htmlFor="jobType"
                       className=" mb-2  font-bold block text-sm text-gray-900 dark:text-white"
@@ -579,7 +579,7 @@ const Page = () => {
                       Job Description
                     </label>
                     <label
-                      className="font-bold block mb-2 text-sm text-gray-900 dark:text-white bg-blue-100 p-2 rounded hover:cursor-pointer"
+                      className="font-bold block mb-2 text-sm text-white dark:text-white bg-blue-700 p-2 rounded hover:cursor-pointer"
                       onClick={() => setClick(!click)}
                     >
                       AI Assistant
@@ -603,10 +603,10 @@ const Page = () => {
                   />
                 </div>
                 <div className="flex justify-between">
-                  <div className="w-72">
+                  <div className="w-1000">
                     <label
                       htmlFor="skills"
-                      className="block text-sm pb-2 font-medium text-gray-700"
+                      className="mb-2 font-bold block text-sm text-gray-900 dark:text-white"
                     >
                       Skills
                     </label>

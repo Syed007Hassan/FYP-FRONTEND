@@ -171,15 +171,15 @@ const Header = () => {
                     </p>
                     <Link href="/login" legacyBehavior>
                       <a href="/login">
-                        <label className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                        <label className="bg-blue-700 inline-flex items-center justify-between w-full p-5 text-white border border-gray-200 rounded-lg cursor-pointer  dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:text-white dark:bg-gray-600">
                           <div className="block">
-                            <div className="w-full text-lg font-semibold">
+                            <div className="w-full text-lg text-white font-bold">
                               Recruiter
                             </div>
                           </div>
 
                           <svg
-                            className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400"
+                            className="w-4 h-4 ms-3 rtl:rotate-180 text-white-500 dark:text-white-400"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -201,14 +201,14 @@ const Header = () => {
                     </p>
                     <Link href="/login-applicant" legacyBehavior>
                       <a href="/login-applicant">
-                        <label className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                        <label className="inline-flex items-center justify-between w-full p-5 text-white bg-blue-700 border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900  dark:text-white dark:bg-gray-600 ">
                           <div className="block">
-                            <div className="w-full text-lg font-semibold">
+                            <div className="w-full text-white text-lg font-bold">
                               Applicant
                             </div>
                           </div>
                           <svg
-                            className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400"
+                            className="w-4 h-4 ms-3 rtl:rotate-180 text-white dark:text-white"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

@@ -54,7 +54,7 @@ const UpdateProfile = () => {
   // skills attributes
   type Tags = { id: string; text: string }[];
   const [tags, setTags] = useState<Tags>([]);
-
+  const [token, setToken] = useState("");
   // experience attributes
   const [company, setCompany] = useState("");
   const [position, setPosition] = useState("");
@@ -97,6 +97,7 @@ const UpdateProfile = () => {
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
       setApplicantIdTemp(decodedData.id.toString() || "");
+      setToken(jwt);
     };
     parseJwtFromSession();
   }, []);
@@ -155,7 +156,7 @@ const UpdateProfile = () => {
     if (success) {
       console.log("success");
     }
-    dispatch(uploadResume({ id, resume: resume }));
+    dispatch(uploadResume({ id, resume: resume, token }));
   };
 
   useEffect(() => {

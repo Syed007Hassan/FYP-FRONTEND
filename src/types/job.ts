@@ -31,6 +31,7 @@ export interface JobLocation {
 export type JobResponse = {
   success: boolean;
   data: Job[];
+  message: string;
 };
 
 export type addJobResponse = {
@@ -42,5 +43,22 @@ export type SingleJobResponse = {
   success: boolean;
   data: Job;
 };
+
+export type JobApplication = {
+  jobTitle: string;
+  jobLocation: JobLocation;
+  jobSkills: string[];
+  applicationStatus: string;
+  applicationDate: string;
+  applicationFeedback: string;
+  applicationRating: string;
+  stageName: string;
+  stageCategory: string;
+}
+
+export type JobApplicationResponse =  {
+  success: boolean;
+  data: JobApplication[];
+}
 
 export default Job;

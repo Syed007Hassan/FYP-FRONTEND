@@ -17,6 +17,7 @@ import "../../../styles/sidebar.css";
 
 const Page = () => {
   const router = useRouter();
+  const [token, setToken] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [designation, setDesignation] = useState("");
@@ -45,6 +46,7 @@ const Page = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -77,6 +79,7 @@ const Page = () => {
         password,
         phone,
         designation,
+        token,
       };
       datas.email = datas.email.toLowerCase();
       console.log(datas);

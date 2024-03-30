@@ -97,10 +97,13 @@ const Page = () => {
     desc: "",
   });
 
+  const [jobDesc, setJobDesc] = useState("");
+  const [urgency, setUrgency] = useState("");
   const [decodedData, setDecodedData] = useState<DecodedData>();
   const [companyId, setCompanyId] = useState<string>("");
   const [recruiterId, setRecruiterId] = useState<string>("");
   const [clickLocation, setClickLocation] = useState(false);
+  const [jwt, setJwt] = useState<string>("");
 
   // skills attributes
   type Tags = { id: string; text: string }[];
@@ -135,6 +138,7 @@ const Page = () => {
         throw new Error("Invalid session");
       }
       const jwt: string = session.toString();
+      setJwt(jwt);
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       console.log("decodedData:", decodedData);
@@ -168,19 +172,25 @@ const Page = () => {
       jobExperience: job.experience,
       jobQualification: job.qualification,
       // company: string;
-      jobLocation: job.location,
+      jobLocation: {
+        area: add?.town || "",
+        city: add?.city || "",
+        country: add?.country || "",
+        latitude: latitude,
+        longitude: longitude,
+      },
       jobSalary: job.salary,
       jobType: selectedType,
-      jobUrgency: job.urgency,
+      jobUrgency: urgency,
       jobCategory: selectedCategory,
-      jobDescription: job.desc,
+      jobDescription: jobDesc,
       jobStatus: "pending",
       jobSkills: tags.map((tag) => tag.text),
       restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };
 
     try {
-      await dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+      await dispatch(createJob({ companyId, recruiterId, job: temp_job, token: jwt }));
       // setDispatchSuccess(true);
     } catch (error) {
       console.error("Error:", error);
@@ -216,6 +226,14 @@ const Page = () => {
     }
   };
 
+  // const setCurrentLocation = async () => {
+  //   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => setAdd(data.address))
+  //     .catch((error) => console.error("Error:", error));
+  // };
+
   useEffect(() => {
     const getCurrentLocation = async () => {
       const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
@@ -227,19 +245,19 @@ const Page = () => {
     getCurrentLocation();
   }, [latitude, longitude]);
 
-  useEffect(() => {
-    if (add) {
-      const { country, city, town } = add;
-      const location = {
-        area: town,
-        city: city,
-        country: country,
-        latitude: latitude,
-        longitude: longitude,
-      };
-      setJob({ ...job, location: location });
-    }
-  }, [add, latitude, longitude, job]);
+  // useEffect(() => {
+  //   if (add) {
+  //     const { country, city, town } = add;
+  //     const location = {
+  //       area: town,
+  //       city: city,
+  //       country: country,
+  //       latitude: latitude,
+  //       longitude: longitude,
+  //     };
+  //     setJob({ ...job, location: location });
+  //   }
+  // }, [add, latitude, longitude, job]);
 
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">
@@ -513,11 +531,11 @@ const Page = () => {
                           autoComplete="given-name"
                           value={
                             add
-                              ? job.location.area +
+                              ? add?.town +
                               ", " +
-                              job?.location?.city +
+                              add?.city +
                               ", " +
-                              job?.location?.country
+                              add?.country
                               : undefined
                           }
                           required
@@ -544,9 +562,10 @@ const Page = () => {
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="given-name"
                       // value="companyName"
-                      onChange={(e) => {
-                        setJob({ ...job, urgency: e.target.value });
-                      }}
+                      // onChange={(e) => {
+                      //   setJob({ ...job, urgency: e.target.value });
+                      // }}
+                      onChange={(e) => setUrgency(e.target.value)}
                       required
                     />
                   </div>
@@ -578,7 +597,8 @@ const Page = () => {
                   <ReactQuill
                     theme="snow"
                     onChange={(content) => {
-                      setJob({ ...job, desc: content });
+                      // setJob({ ...job, desc: content });
+                      setJobDesc(content);
                     }}
                   />
                 </div>

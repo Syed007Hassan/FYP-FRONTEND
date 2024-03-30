@@ -31,6 +31,7 @@ interface stageApplcationsCountProps {
 }
 
 const Page = () => {
+  const [token, setToken] = useState<string>("");
   const [jobId, setJobId] = useState<string>("");
   const [jobList, setJobList] = useState<Job[]>([]);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
@@ -165,6 +166,7 @@ const Page = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setCompanyId(decodedData.companyId);
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -219,6 +221,7 @@ const Page = () => {
         applicantId: applicantId,
         jobId: jobIdParam,
         status: status,
+        token,
       })
     );
   };
@@ -233,6 +236,7 @@ const Page = () => {
         applicantId: applicant?.id?.toString(),
         stageId: stage?.stageId?.toString(),
         jobId: jobIdParam,
+        token,
       })
     );
   };

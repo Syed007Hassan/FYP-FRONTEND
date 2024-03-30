@@ -26,6 +26,7 @@ export const updateCompany = createAsyncThunk<
     companyPhone: number;
     companyEmail: string;
     companyWebsite: string;
+    token: string;
   },
   { rejectValue: string }
 >(
@@ -38,13 +39,14 @@ export const updateCompany = createAsyncThunk<
       companyPhone,
       companyAddress,
       companyWebsite,
+      token,
     },
     { rejectWithValue }
   ) => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       };
 

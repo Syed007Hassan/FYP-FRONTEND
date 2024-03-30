@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsFileEarmarkText, BsClock, BsAward, BsCheckCircle } from "react-icons/bs";
 import Chart from "react-apexcharts";
 
-const ApplicantStats = () => {
+interface ApplicantStatsProps {
+  allCount: number; // replace any with the actual type
+  approvedCount: number;
+  pendingCount: number;
+  rejectedCount: number;
+}
+
+const ApplicantStats: React.FC<ApplicantStatsProps> = ({
+  allCount,
+  approvedCount,
+  pendingCount,
+  rejectedCount,
+}) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
+  useEffect(() => {
+    console.log("jobApplicationsByApprovedStatusCountData:", approvedCount);
+    console.log("jobApplicationsByPendingStatusCountData:", pendingCount);
+    console.log("jobApplicationsByRejectedStatusCountData:", rejectedCount);
+    console.log("jobApplicationsCountData:", allCount);
+  }, [approvedCount, pendingCount, rejectedCount, allCount]);
+
   const data = [
-    { name: "Applications", value: 190, color: "#6366F1", icon: <BsFileEarmarkText size={60} /> },
-    { name: "Interviews", value: 80, color: "#F59E0B", icon: <BsClock size={60} /> },
-    { name: "Active Jobs", value: 20, color: "#4CAF50", icon: <BsAward size={60} /> },
-    { name: "Qualified", value: 45, color: "#9C27B0", icon: <BsCheckCircle size={60} /> },
+    { name: "All Applications", value: allCount, color: "#6366F1", icon: <BsFileEarmarkText size={60} /> },
+    { name: "Active Applications", value: approvedCount, color: "#F59E0B", icon: <BsClock size={60} /> },
+    { name: "Pending Applications", value: pendingCount, color: "#4CAF50", icon: <BsAward size={60} /> },
+    { name: "Rejected Applications", value: rejectedCount, color: "#9C27B0", icon: <BsCheckCircle size={60} /> },
   ];
 
   const chartData = {

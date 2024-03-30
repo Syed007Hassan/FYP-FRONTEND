@@ -1,4 +1,5 @@
 import company from "./company";
+import { Stage } from "./stage";
 
 type Recruiter = {
   recruiterId: number;
@@ -25,5 +26,18 @@ export type UpdateRecruiter = {
     phone: string;
     designation: string;
   };
+  token: string;
 };
+
+export type AllStagesAssigned = {
+  jobId: number;
+  jobTitle: string;
+  stages: Stage[];
+};
+
+export type StageResponse = {
+  success: boolean;
+  data: AllStagesAssigned[];
+};
+
 export default Recruiter;

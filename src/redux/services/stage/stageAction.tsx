@@ -7,14 +7,21 @@ import { Stage, newStage, ApiResponse } from "@/types/stage";
 type CreateStageArgs = {
   jobId: string;
   stage: newStage;
+  token: string;
 };
 
 export const addStage = createAsyncThunk(
   "workflow/createWorkflow",
-  async ({ jobId, stage }: CreateStageArgs) => {
+  async ({ jobId, stage, token }: CreateStageArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     const response = await axios.post(
       `${Backend_URL}/workflow/createWorkflow/${jobId}`,
-      stage
+      stage,
+      config
     );
     return response.data;
   }

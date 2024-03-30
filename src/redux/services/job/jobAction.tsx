@@ -14,13 +14,21 @@ type CreateJobArgs = {
   companyId: string;
   recruiterId: string;
   job: Jobs;
+  token: string;
 };
 export const createJob = createAsyncThunk(
   "job/createJob",
-  async ({ companyId, recruiterId, job }: CreateJobArgs) => {
+  async ({ companyId, recruiterId, job, token }: CreateJobArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const response = await axios.post(
       `${Backend_URL}/job/createJob/${recruiterId}/${companyId}`,
-      job
+      job,
+      config
     );
     return response.data;
   }
@@ -28,10 +36,17 @@ export const createJob = createAsyncThunk(
 
 export const updateJobStatus = createAsyncThunk(
   "job/updateJobStatus",
-  async ({ jobId, status }: { jobId: string; status: string }) => {
+  async ({ jobId, status, token }: { jobId: string; status: string; token: string }) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const response = await axios.patch(
       `${Backend_URL}/job/updateJobStatus/${jobId}`,
-      { status }
+      { status },
+      config
     );
     return response.data;
   }
@@ -92,5 +107,5 @@ export const {
   useGetApplicationsCountInLastFiveJobsQuery,
   useGetApplicationsCountInMonthsQuery,
   useGetJobsCountInMonthsQuery,
-  useGetTotalJobsQuery
+  useGetTotalJobsQuery,
 } = JobApi;

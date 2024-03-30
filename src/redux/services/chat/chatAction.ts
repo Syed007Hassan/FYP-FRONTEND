@@ -45,4 +45,23 @@ export const chatApi = createApi({
   }),
 });
 
+export const getResumeSummary = createAsyncThunk(
+  "chat/getResumeSummary",
+  async ({ url, job_description }: { url: string, job_description: string }) => {
+    const data = {
+      url,
+      job_description,
+    };
+    try {
+      const response = await axios.post(
+        `${FLASK_URL}/getResumeSummary`,
+        data
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
 export const { useGetChatQuery } = chatApi;

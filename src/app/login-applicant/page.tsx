@@ -165,9 +165,8 @@ export default function SignInSide() {
       <div className="relative">
         {!result && (
           <div
-            className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${
-              !alertMessage && "opacity-0"
-            }`}
+            className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${!alertMessage && "opacity-0"
+              }`}
             role="alert"
           >
             <p className="text-base font-semibold text-gray-900 dark:text-white">
@@ -309,7 +308,7 @@ export default function SignInSide() {
                   </button>
                 </div>
 
-                <div className="mb-4 mt-3">
+                {/* <div className="mb-4 mt-3">
                   <button
                     className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
@@ -317,7 +316,7 @@ export default function SignInSide() {
                   >
                     Sign In With Google ➔
                   </button>
-                </div>
+                </div> */}
 
                 <div className="text-center text-sm text-gray-500">
                   <p>

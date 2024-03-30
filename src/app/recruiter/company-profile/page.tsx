@@ -21,6 +21,7 @@ import "../../../styles/sidebar.css";
 import { Upload } from "@mui/icons-material";
 
 const Page = () => {
+  const [token, setToken] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyPhoneNum, setCompanyPhone] = useState("");
@@ -63,6 +64,7 @@ const Page = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setCompanyId(decodedData?.companyId);
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -87,6 +89,7 @@ const Page = () => {
       companyPhone,
       companyEmail,
       companyWebsite,
+      token,
     };
     datas.companyEmail = datas.companyEmail.toLowerCase();
     console.log(datas);
@@ -117,6 +120,7 @@ const Page = () => {
         uploadCompanyProfile({
           companyId: companyId.toString(),
           picture: e.target.files[0],
+          token,
         })
       )
         .then(() => {

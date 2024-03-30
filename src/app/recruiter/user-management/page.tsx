@@ -15,6 +15,7 @@ import { parseJwt } from "@/lib/Constants";
 import { AnyCnameRecord } from "dns";
 
 const UserManagement = () => {
+  const [token, setToken] = useState<string>("");
   const [companyId, setCompanyId] = useState<string>("");
   const [userData, setUserData] = useState<ApiResponse>();
   const [users, setUsers] = useState<Recruiter[]>([]);
@@ -63,6 +64,7 @@ const UserManagement = () => {
       setEmail(decodedData?.email || "");
       setCompanyId(decodedData?.companyId || "");
       setRecruiterId(decodedData?.recruiterId || "");
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -70,7 +72,7 @@ const UserManagement = () => {
 
   const handledelete = async ({ employeeId }: { employeeId: string }) => {
     try {
-      await dispatch(DeleteRegisteredEmployee({ employeeId, recruiterId }));
+      await dispatch(DeleteRegisteredEmployee({ employeeId, recruiterId, token }));
       // setDispatchSuccess(true);
     } catch (error) {
       console.error("Error:", error);
@@ -91,7 +93,7 @@ const UserManagement = () => {
 
     try {
       await dispatch(
-        UpdateRegisteredEmployee({ temp_data, employeeId, recruiterId })
+        UpdateRegisteredEmployee({ temp_data, employeeId, recruiterId, token })
       );
       refetch();
     } catch (error) {

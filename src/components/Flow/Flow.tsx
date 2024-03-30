@@ -11,10 +11,12 @@ import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { addStage } from "@/redux/services/stage/stageAction";
 import "../../../tailwind.config.js";
 import dynamic from "next/dynamic";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import "../../styles/react-quill.css"
+import "../../styles/react-quill.css";
 
 import React, { useCallback, useState } from "react";
 import ReactFlow, {
@@ -90,6 +92,7 @@ const defaultEdgeOptions = {
 
 const App = () => {
   const router = useRouter();
+  const [token, setToken] = useState("");
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [detail, setDetail] = useState("");
@@ -104,6 +107,19 @@ const App = () => {
 
   const pathParts = pathname.split("/");
   const jobId = pathParts[pathParts.length - 2] || "";
+
+  useEffect(() => {
+    const parseJwtFromSession = async () => {
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      setToken(jwt);
+    };
+
+    parseJwtFromSession();
+  }, []);
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -175,7 +191,7 @@ const App = () => {
 
     console.log("data: ", data);
 
-    dispatch(addStage({ jobId, stage: data }));
+    dispatch(addStage({ jobId, stage: data, token }));
 
     router.push(`/recruiter/joblist/${jobId}`);
   };

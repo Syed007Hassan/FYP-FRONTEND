@@ -36,10 +36,17 @@ export const createJob = createAsyncThunk(
 
 export const updateJobStatus = createAsyncThunk(
   "job/updateJobStatus",
-  async ({ jobId, status }: { jobId: string; status: string }) => {
+  async ({ jobId, status, token }: { jobId: string; status: string; token: string }) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const response = await axios.patch(
       `${Backend_URL}/job/updateJobStatus/${jobId}`,
-      { status }
+      { status },
+      config
     );
     return response.data;
   }

@@ -15,6 +15,8 @@ import {
   FaStarHalfAlt,
   FaUser,
 } from "react-icons/fa";
+import Cookies from "js-cookie";
+import { parseJwt } from "@/lib/Constants";
 import Stages from "@/components/Flow/Stages";
 import { Workflow, Stage } from "@/data/data";
 import Job, { JobResponse } from "@/types/job";
@@ -33,6 +35,7 @@ import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
 
 const Page = () => {
+  const [token, setToken] = useState<string>("");
   const [job, setJob] = useState<Job | null>(null);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
   const [isPublish, setIsPublish] = useState<boolean>(false);
@@ -74,6 +77,19 @@ const Page = () => {
   // }, [workflow]);
 
   useEffect(() => {
+    const parseJwtFromSession = async () => {
+      const session = Cookies.get("token");
+      if (!session) {
+        throw new Error("Invalid session");
+      }
+      const jwt: string = session.toString();
+      setToken(jwt);
+    };
+
+    parseJwtFromSession();
+  }, []);
+
+  useEffect(() => {
     setJobId(jobIdString);
   }, [jobIdString]);
 
@@ -93,11 +109,11 @@ const Page = () => {
     setIsClicked(true);
     if (workflow?.success) {
       if (job?.jobStatus === "Active") {
-        dispatch(updateJobStatus({ jobId: jobId, status: "Inactive" }));
+        dispatch(updateJobStatus({ jobId: jobId, status: "Inactive", token }));
         setIsPublish(true);
         return;
       }
-      dispatch(updateJobStatus({ jobId: jobId, status: "Active" }));
+      dispatch(updateJobStatus({ jobId: jobId, status: "Active", token }));
       setIsPublish(true);
     } else {
       setIsPublish(false);

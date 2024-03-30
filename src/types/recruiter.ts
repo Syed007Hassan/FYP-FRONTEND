@@ -26,6 +26,7 @@ export type UpdateRecruiter = {
     phone: string;
     designation: string;
   };
+  token: string;
 };
 
 export type AllStagesAssigned = {

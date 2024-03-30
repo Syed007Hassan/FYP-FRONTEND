@@ -147,7 +147,7 @@ const Page = () => {
             </div>
           </div>
 
-          <section className="py-20">
+          <section className="py-10">
             <div className="container mx-auto">
               <div className="flex justify-between items-center  ml-6 mr-6">
                 <form className="w-96">
@@ -188,7 +188,7 @@ const Page = () => {
                 <div className="flex items-center space-x-3">
                   <div className="selection-widget">
                     <select
-                      className="form-select"
+                      className="form-select rounded"
                       data-trigger
                       name="choices-single-filter-orderby"
                       id="choices-single-filter-orderby"
@@ -206,7 +206,7 @@ const Page = () => {
                   </div>
                   <div className="selection-widget">
                     <select
-                      className="form-select"
+                      className="form-select rounded"
                       data-trigger
                       name="choices-single-filter-orderby"
                       id="choices-single-filter-orderby"
@@ -223,7 +223,7 @@ const Page = () => {
                   </div>
                   <div className="selection-widget">
                     <select
-                      className="form-select"
+                      className="form-select rounded"
                       data-trigger
                       name="choices-candidate-page"
                       id="choices-candidate-page"
@@ -241,7 +241,7 @@ const Page = () => {
               </div>
 
               <div className="justify-center h-32 mb-5">
-                <div className="grid grid-cols-1 gap-y-5">
+                <div className="mt-8 grid grid-cols-1 gap-y-5">
                   {jobList?.length === 0 && (
                     <div className="col-span-1 text-center text-2xl text-gray-500">
                       No Jobs Found
@@ -253,27 +253,27 @@ const Page = () => {
                       onClick={() =>
                         router.push(`/recruiter/joblist/${job?.jobId}`)
                       }
-                      className=" hover:cursor-pointer p-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900"
+                      className="hover:cursor-pointerp-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900"
                       key={job?.jobId}
                     >
-                      <div className="pt-6 pl-10 bg-gray-100 grid grid-cols-12">
+                      <div className="py-4 lg:ml-8 lg:mr-8 bg-white border-2 rounded border-gray grid grid-cols-12">
                         <div className="justify-center col-span-12 lg:col-span-1">
                           <a href="#">
-                            <div className="w-full">
+                            <div className="pl-8 py-4 w-full">
                               <Image
                                 src={job_pic}
                                 alt={job?.jobTitle}
                                 width={100}
-                                height={350}
+                                height={500}
                                 className="rounded-lg"
                               />
                             </div>
                           </a>
                         </div>
-                        <div className="col-span-12 lg:col-span-9">
+                        <div className="pl-8 col-span-12 lg:col-span-9">
                           <div className="pb-3 mt-0 lg:mt-0">
                             <h5 className="mb-1 text-17">
-                              <a className="text-gray-900 dark:text-gray-50">
+                              <a className="text-gray-900 font-bold dark:text-gray-50">
                                 {job?.jobTitle}
                               </a>
                             </h5>
@@ -307,7 +307,7 @@ const Page = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="items-center col-span-12 lg:col-span-2 ">
+                        <div className="py-6 items-center col-span-12 lg:col-span-2 ">
                           <ul className="flex flex-wrap gap-3 mt-4 lg:mt-0">
                             {job?.jobStatus.toLowerCase() === "active" ? (
                               <li className="w-10 h-10 text-lg leading-10 text-center text-green-500 rounded-full bg-green-500/20">

@@ -32,6 +32,7 @@ interface StagesProps {
 
 const Stages = ({ stage, index, workflowId }: StagesProps) => {
   const dispatch = useAppDispatch();
+  const [token, setToken] = useState<string>("");
   const { success } = useAppSelector((state) => state.assigneeReducer);
   const [assignee, setAssignee] = useState<Assignee[]>([]);
   const [employees, setEmployees] = useState<Recruiter[]>([]);
@@ -61,6 +62,7 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setCompanyId(decodedData?.companyId);
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -109,7 +111,7 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
       ],
     };
 
-    dispatch(addAssignee({ stageId, workflowId, assignees: data }));
+    dispatch(addAssignee({ stageId, workflowId, assignees: data, token }));
   };
 
   return (
@@ -132,15 +134,15 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
               <Dropdown.Item
                 onClick={() =>
                   handleClick(
-                    user?.recruiterId,
-                    user?.name,
+                    user?.recruiterId as number,
+                    user?.name as string,
                     stage?.stageId.toString(),
                     workflowId.toString()
                   )
                 }
                 key={user?.name}
               >
-                {user.name}
+                {user?.name}
               </Dropdown.Item>
             ))}
           </Dropdown>

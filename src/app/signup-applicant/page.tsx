@@ -124,7 +124,7 @@ export default function SignInSide() {
             square
             sx={
               {
-                // borderEndEndRadius: "40px",
+                // borderEndEndRadius: "40px"
                 // borderTopRightRadius: "40px",
                 // height: "81vh",
               }
@@ -239,7 +239,7 @@ export default function SignInSide() {
 
                 <div>
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
+                    className="w-full mt-2 bg-blue-700 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
                     onClick={handleSubmit}
                   >
@@ -247,15 +247,15 @@ export default function SignInSide() {
                   </button>
                 </div>
 
-                <div>
+                {/* <div>
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
+                    className="w-full mt-4 bg-blue-700 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
                     onClick={handleOauth}
                   >
                     Sign Up With Google ➔
                   </button>
-                </div>
+                </div> */}
 
                 <div className="text-center ">
                   <a

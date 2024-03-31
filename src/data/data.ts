@@ -146,7 +146,7 @@ export const assignee: Assignee[] = [
     userName: "John Doe",
     stageId: 100,
     workflowId: 100,
-  }
+  },
 ];
 
 export const applicants: Applicant[] = [
@@ -209,7 +209,8 @@ export const applicants: Applicant[] = [
 // Applicant
 
 export interface JobCardProps {
-  jobImage: string;
+  jobId: number;
+  jobImage: StaticImageData;
   jobTitle: string;
   jobCompany: string;
   jobLocation: string;
@@ -220,82 +221,53 @@ export interface JobCardProps {
   jobStatus: string;
 }
 
-export const JobCardData: JobCardProps[] = [
+export const months = [
   {
-    jobImage: "/assets/images/featured-job/img-01.png",
-    jobTitle: "Frontend Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Applied",
+    name: "Jan",
+    value: "01",
   },
   {
-    jobImage: "/assets/images/featured-job/img-02.png",
-    jobTitle: "Backend Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Active",
+    name: "Feb",
+    value: "02",
   },
   {
-    jobImage: "/assets/images/featured-job/img-03.png",
-    jobTitle: "Full Stack Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Rejected",
+    name: "Mar",
+    value: "03",
   },
   {
-    jobImage: "/assets/images/featured-job/img-04.png",
-    jobTitle: "Frontend Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Applied",
+    name: "Apr",
+    value: "04",
   },
   {
-    jobImage: "/assets/images/featured-job/img-05.png",
-    jobTitle: "Frontend Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Active",
+    name: "May",
+    value: "05",
   },
   {
-    jobImage: "/assets/images/featured-job/img-06.png",
-    jobTitle: "Frontend Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Rejected",
+    name: "Jun",
+    value: "06",
   },
   {
-    jobImage: "/assets/images/featured-job/img-07.png",
-    jobTitle: "Frontend Developer",
-    jobCompany: "Google",
-    jobLocation: "New York",
-    jobTimePosted: "3 min ago",
-    jobType: "Full Time",
-    jobUrgency: "urgent",
-    jobCategory: "IT",
-    jobStatus: "Applied",
+    name: "Jul",
+    value: "07",
+  },
+  {
+    name: "Aug",
+    value: "08",
+  },
+  {
+    name: "Sep",
+    value: "09",
+  },
+  {
+    name: "Oct",
+    value: "10",
+  },
+  {
+    name: "Nov",
+    value: "11",
+  },
+  {
+    name: "Dec",
+    value: "12",
   },
 ];

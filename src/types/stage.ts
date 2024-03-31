@@ -11,6 +11,7 @@ export type newStage = {
 export type createStage = {
     stageName: string;
     category: string;
+    description: string;
 };
 
 export type Job = {

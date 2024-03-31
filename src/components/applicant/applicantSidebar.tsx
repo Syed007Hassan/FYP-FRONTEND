@@ -8,15 +8,15 @@ const ApplicantSidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   return (
     <div
       id="logo-sidebar"
-      className={`pt-24 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
+      className={`pt-16 top-0 fixed left-0 z-20 w-64 h-screen transition-transform ${isOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       aria-label="Sidebar"
     >
-      <div className="h-full px-3 py-4 bg-blue-700">
+      <div className="h-full px-3 py-4 bg-sky-900">
         <ul className="space-y-2 font-medium">
           <li>
             <a
-              href="#"
+              href="/applicant"
               className="flex items-center p-2 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             >
               <svg
@@ -52,7 +52,7 @@ const ApplicantSidebar: React.FC<SidebarProps> = ({ isOpen }) => {
           </li>
           <li>
             <a
-              href="#"
+              href="/applicant/job-history"
               className="flex items-center p-2 text-white transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             >
               <svg

@@ -1,21 +1,27 @@
 "use client";
 import TextField from "@mui/material/TextField";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { getSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useGetCompanyQuery } from "@/redux/services/Company/companyAction";
 import { updateCompany } from "@/redux/services/Company/companyAction";
+import { uploadCompanyProfile } from "@/redux/services/upload/uploadAction";
 // import Alert from '@/components/Alert';
 import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
 import { useRouter } from "next/navigation";
 import { parseJwt } from "@/lib/Constants";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
+import UploadData from "@/types/uplaod";
+
+import user from "../../../../public/company-profile.png";
 
 import "../../../styles/sidebar.css";
+import { Upload } from "@mui/icons-material";
 
 const Page = () => {
+  const [token, setToken] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyPhoneNum, setCompanyPhone] = useState("");
@@ -23,18 +29,34 @@ const Page = () => {
   const [companyWebsite, setCompanyWebsite] = useState("");
   const [companyId, setCompanyId] = useState(0);
   const [decodedData, setDecodedData] = useState(null);
+  const [profilePic, setProfilePic] = useState<File | null>(null);
+  const [isUpload, setIsUpload] = useState(false);
   const router = useRouter();
 
   const { success } = useAppSelector((state) => state.companyReducer);
+  const {
+    success: uploadSuccess,
+    data: uploadData,
+    loading,
+    error: uploadError,
+  } = useAppSelector((state) => state.uploadCompanyProfileReducer) as {
+    success: boolean;
+    data: UploadData | null;
+    loading: boolean;
+    error: Error | null;
+  };
+
   const dispatch = useAppDispatch();
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
 
-  const { data, error, isLoading } = useGetCompanyQuery({ id: companyId });
+  const { data, error, isLoading, refetch } = useGetCompanyQuery({
+    id: companyId,
+  });
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
-      const session = Cookies.get('token');
+      const session = Cookies.get("token");
       if (!session) {
         throw new Error("Invalid session");
       }
@@ -42,6 +64,7 @@ const Page = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setCompanyId(decodedData?.companyId);
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -66,6 +89,7 @@ const Page = () => {
       companyPhone,
       companyEmail,
       companyWebsite,
+      token,
     };
     datas.companyEmail = datas.companyEmail.toLowerCase();
     console.log(datas);
@@ -74,21 +98,45 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log('useEffect triggered', { success });
-  
+    console.log("useEffect triggered", { success });
+
     if (success) {
-      console.log('success is true, pushing to /recruiter');
+      console.log("success is true, pushing to /recruiter");
       router.push("/recruiter");
     }
   }, [success, router]);
 
-  const handleClick = (event: any) => {
-    setCompanyName(data?.data?.companyName || "");
-    setCompanyAddress(data?.data?.companyAddress || "");
-    setCompanyPhone(data?.data?.companyPhone.toString() || "");
-    setCompanyEmail(data?.data?.companyEmail || "");
-    setCompanyWebsite(data?.data?.companyWebsite || "");
+  // const handleClick = (event: any) => {
+  //   setCompanyName(data?.data?.companyName || "");
+  //   setCompanyAddress(data?.data?.companyAddress || "");
+  //   setCompanyPhone(data?.data?.companyPhone.toString() || "");
+  //   setCompanyEmail(data?.data?.companyEmail || "");
+  //   setCompanyWebsite(data?.data?.companyWebsite || "");
+  // };
+
+  const handleFileUpload = (e: any) => {
+    try {
+      dispatch(
+        uploadCompanyProfile({
+          companyId: companyId.toString(),
+          picture: e.target.files[0],
+          token,
+        })
+      )
+        .then(() => {
+          setIsUpload(true);
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+
+  useEffect(() => {
+    refetch();
+  }, [isUpload, refetch]);
 
   return isLoading ? (
     <Loader />
@@ -100,8 +148,58 @@ const Page = () => {
         <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
           <div className="pt-6 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
             <div className="pr-2 pl-2">
+              <div className="flex items-center gap-4 mt-14">
+                <div className="relative">
+                  <div className="inline-block img-container">
+                    <Image
+                      src={
+                        uploadData?.data?.Location
+                          ? uploadData?.data?.Location
+                          : data?.data?.companyProfile
+                          ? data?.data?.companyProfile
+                          : user
+                      }
+                      // src={user}
+                      alt="User"
+                      width={50}
+                      height={50}
+                      className="mx-auto rounded-full"
+                    />
+                    <div className="w-full pb-2 upload-label">
+                      <label htmlFor="upload" className="cursor-pointer">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          className="h-5 w-5 text-gray-500"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0020.07 7H21a2 2 0 012 2v9a2 2 0 01-2 2H3a2 2 0 01-2-2V9z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                      </label>
+                    </div>
+                  </div>
 
-              <h1 className="text-4xl text-blue-900 pt-20">Company Profile</h1>
+                  <input
+                    type="file"
+                    id="upload"
+                    style={{ display: "none" }}
+                    onChange={handleFileUpload}
+                  />
+                </div>
+                <h1 className="text-4xl text-blue-900">Company Profile</h1>
+              </div>
               {success && (
                 <Alert severity="success">
                   Company profile updated successfully

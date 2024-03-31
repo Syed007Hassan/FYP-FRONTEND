@@ -5,7 +5,7 @@ import EducationDetails from "@/components/applicant/profileComponents/educatonD
 import locationAndSkillDetails from "@/components/applicant/profileComponents/locationAndSkillDetails";
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
-import "../../../../src/styles/applicant.css";
+import "../../../src/styles/applicant.css";
 import {
   updateApplicantDetails,
 } from "@/redux/services/Applicant/applicantAction";
@@ -54,7 +54,7 @@ const UpdateProfile = () => {
   // skills attributes
   type Tags = { id: string; text: string }[];
   const [tags, setTags] = useState<Tags>([]);
-
+  const [token, setToken] = useState("");
   // experience attributes
   const [company, setCompany] = useState("");
   const [position, setPosition] = useState("");
@@ -97,6 +97,7 @@ const UpdateProfile = () => {
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
       setApplicantIdTemp(decodedData.id.toString() || "");
+      setToken(jwt);
     };
     parseJwtFromSession();
   }, []);
@@ -128,22 +129,7 @@ const UpdateProfile = () => {
     // setIsModalOpen(false);
     const id = applicantIdTemp;
     const temp_relocation = reallocation === "yes" ? true : false;
-    // check all the variables are set
 
-    // if (
-    //   !dob ||
-    //   !education ||
-    //   !experience ||
-    //   !tags ||
-    //   !firstName ||
-    //   !lastName ||
-    //   !phone ||
-    //   !reallocation ||
-    //   !desc
-    // ) {
-    //   alert("Please fill all the fields");
-    //   return;
-    // }
     const temp_data = {
       dob,
       gender,
@@ -166,11 +152,11 @@ const UpdateProfile = () => {
     };
     console.log("temp Data: ", temp_data);
     // console.log("id: ",id);
-    dispatch(updateApplicantDetails({ id, temp_data }));
+    dispatch(updateApplicantDetails({ id, temp_data, token }));
     if (success) {
       console.log("success");
     }
-    dispatch(uploadResume({ id, resume: resume }));
+    dispatch(uploadResume({ id, resume: resume, token }));
   };
 
   useEffect(() => {

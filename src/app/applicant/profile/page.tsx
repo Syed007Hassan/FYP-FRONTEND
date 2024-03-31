@@ -32,10 +32,13 @@ import {
 import { Education, Experience, Contact } from "@/types/applicant";
 import UploadData from "@/types/uplaod";
 
+import "../../../styles/sidebar.css";
+
 const Profile = () => {
   const [currentModal, setCurrentModal] = useState(null);
 
   const dispatch = useAppDispatch();
+  const [token, setToken] = useState<string>("");
   // personal detail attributes
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -154,6 +157,7 @@ const Profile = () => {
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
       setApplicantIdTemp(decodedData.id.toString() || "");
+      setToken(jwt);
     };
     parseJwtFromSession();
   }, []);
@@ -164,7 +168,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    dispatch(uploadProfileImage({ id: applicantIdTemp, image: profilePic }));
+    dispatch(uploadProfileImage({ id: applicantIdTemp, image: profilePic, token }));
   }, [profilePic, dispatch, applicantIdTemp]);
 
   useEffect(() => {
@@ -197,6 +201,7 @@ const Profile = () => {
         updateEducationDetails({
           id: applicantIdTemp,
           education: updateEducation,
+          token,
         })
       );
       setUpdateEdButton(false);
@@ -236,6 +241,7 @@ const Profile = () => {
         updateExperienceDetails({
           id: applicantIdTemp,
           experience: updateExperience,
+          token,
         })
       );
       setUpdateExpButton(false);
@@ -308,6 +314,7 @@ const Profile = () => {
         updateProfileDetails({
           id: applicantIdTemp,
           contact: updateContact,
+          token,
         })
       );
       setUpdateContactButton(false);
@@ -337,6 +344,7 @@ const Profile = () => {
         updateAboutInfo({
           id: applicantIdTemp,
           temp_data: updateAbout,
+          token,
         })
       );
       setUpdateAboutButton(false);
@@ -347,7 +355,7 @@ const Profile = () => {
   const handleUploadResume = (event: any) => {
     console.log("Resume:", event.target.files[0]);
     dispatch(
-      uploadResume({ id: applicantIdTemp, resume: event.target.files[0] })
+      uploadResume({ id: applicantIdTemp, resume: event.target.files[0], token })
     );
   };
 
@@ -377,7 +385,7 @@ const Profile = () => {
                                     ? uploadData?.data?.Location
                                     : applicantDetails?.profilePicture &&
                                       applicantDetails?.profilePicture !==
-                                        "adas"
+                                        "null"
                                     ? applicantDetails?.profilePicture
                                     : "/user.png"
                                 }

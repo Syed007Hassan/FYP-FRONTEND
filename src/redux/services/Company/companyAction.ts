@@ -1,14 +1,16 @@
 // authActions.js
-import axios from 'axios'
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { Backend_URL } from '@/lib/Constants';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 type Company = {
+  success: boolean;
   data: {
-    id: number;
+    companyId: number;
     companyName: string;
     companyEmail: string;
+    companyProfile: string;
     companyWebsite: string;
     companyAddress: string;
     companyPhone: number;
@@ -17,23 +19,47 @@ type Company = {
 
 export const updateCompany = createAsyncThunk<
   void,
-  { companyId: number,companyName: string, companyAddress: string, companyPhone: number, companyEmail: string; companyWebsite: string },
+  {
+    companyId: number;
+    companyName: string;
+    companyAddress: string;
+    companyPhone: number;
+    companyEmail: string;
+    companyWebsite: string;
+    token: string;
+  },
   { rejectValue: string }
 >(
   "/company/updateCompanyById",
-  async ({ companyId ,companyName, companyEmail, companyPhone, companyAddress, companyWebsite}, { rejectWithValue }) => {
-    
+  async (
+    {
+      companyId,
+      companyName,
+      companyEmail,
+      companyPhone,
+      companyAddress,
+      companyWebsite,
+      token,
+    },
+    { rejectWithValue }
+  ) => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       };
 
-    //   console.log(name, email, password, phone, designation);
+      //   console.log(name, email, password, phone, designation);
       await axios.patch(
         `${Backend_URL}/company/updateCompanyById/${companyId}`,
-        {companyName ,companyEmail, companyWebsite, companyAddress, companyPhone },
+        {
+          companyName,
+          companyEmail,
+          companyWebsite,
+          companyAddress,
+          companyPhone,
+        },
         config
       );
     } catch (error: any) {

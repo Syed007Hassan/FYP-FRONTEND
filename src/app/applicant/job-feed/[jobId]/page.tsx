@@ -71,6 +71,7 @@ const Page = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [token, setToken] = useState<string>("");
   const jobIdString = pathname.split("/").pop() || "";
   const [jobId, setJobId] = useState<string>("5");
   const [decodedData, setDecodedData] = useState<any>();
@@ -83,6 +84,7 @@ const Page = () => {
     data: applicationData,
     error: applicationError,
     isLoading: applicationLoading,
+    refetch,
   } = useGetApplicationByJobIdAndApplicantIdQuery({
     jobId: jobId,
     applicantId: applicantId,
@@ -115,6 +117,7 @@ const Page = () => {
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
       setApplicantId(decodedData.id.toString() || "");
+      setToken(jwt);
     };
     parseJwtFromSession();
   }, []);
@@ -146,15 +149,24 @@ const Page = () => {
     if (applyModal === true) {
       if (applicantDetailsAvailable === true) {
         console.log("applicantDetailsData", applicantDetailsData);
-        dispatch(createApplication({ jobId: jobId, applicantId: applicantId }));
+        dispatch(createApplication({ jobId: jobId, applicantId: applicantId, token }));
       }
     }
     setApplyModal(false);
-  }, [applyModal]);
+  }, [
+    applyModal,
+    applicantDetailsAvailable,
+    applicantDetailsData,
+    jobId,
+    applicantId,
+    dispatch,
+    token,
+  ]);
 
   useEffect(() => {
     if (success) {
       setAlertMessage("Application Submitted Successfully");
+      refetch();
     } else if (ApplicationError) {
       setAlertMessage(ApplicationError);
     }
@@ -162,7 +174,7 @@ const Page = () => {
     setTimeout(() => {
       setAlertMessage(null);
     }, 2000);
-  }, [success, ApplicationError]);
+  }, [success, ApplicationError, refetch]);
 
   return (
     <>
@@ -170,18 +182,16 @@ const Page = () => {
         <Loader />
       ) : (
         <div
-          className={`content overflow-hidden ${
-            isSidebarOpen ? "shifted-dashboard" : ""
-          }`}
+          className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
+            }`}
         >
           <div className="main-content font-inter">
             <div className="page-content">
               <div className="relative">
                 {success && (
                   <div
-                    className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-200 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${
-                      !alertMessage && "opacity-0"
-                    }`}
+                    className={`p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-200 dark:bg-gray-800 dark:text-green-400 absolute top-4 right-4 transform -translate-y-3/2 z-20 transition-opacity duration-2000 ${!alertMessage && "opacity-0"
+                      }`}
                     role="alert"
                   >
                     <p className="text-base font-semibold text-gray-900 dark:text-white">
@@ -196,57 +206,30 @@ const Page = () => {
                     <div className="col-span-12 lg:col-span-8">
                       <div className="border border-dark rounded-md border-gray-100/30 dark:border-neutral-600/80">
                         <div className="relative">
-                          <Image
+                          {/* <Image
                             src={job_img}
                             alt=""
                             width={1000}
                             // height={200}
                             className="rounded-md img-fluid mb-7"
-                          />
+                          /> */}
                         </div>
-                        <div className="p-6">
-                          <div className="grid grid-cols-12">
+                        <div className="border-2 border-gray p-6">
+                          <div className=" grid grid-cols-12">
                             <div className="col-span-12 lg:col-span-8">
                               <div className="relative">
                                 <h5 className="mb-1 text-gray-900 dark:text-gray-50 font-bold text-xl">
                                   {job && job?.jobTitle}
                                 </h5>
-                                {/* <ul className="flex gap-4 text-gray-500 dark:text-gray-300">
-                            <li>
-                              <i className="mdi mdi-account"></i> 8 Vacancy
-                            </li>
-                            <li className="text-yellow-500">
-                              <span className="px-2 py-1 text-white bg-yellow-500 rounded text-13">
-                                4.8
-                              </span>{" "}
-                              <i className="align-middle mdi mdi-star"></i>
-                              <i className="align-middle mdi mdi-star"></i>
-                              <i className="align-middle mdi mdi-star"></i>
-                              <i className="align-middle mdi mdi-star"></i>
-                              <i className="align-middle mdi mdi-star-half-full"></i>
-                            </li>
-                          </ul> */}
+
                               </div>
                             </div>
-                            {/* <div className="col-span-12 lg:col-span-4">
-                        <div className="flex gap-3 md:justify-end">
-                          <div className="w-8 h-8 text-center text-gray-100 transition-all duration-300 bg-transparent border rounded cursor-pointer border-gray-100/50 hover:bg-red-600 hover:text-white hover:border-transparent dark:border-zinc-700">
-                            <a href="javascript:void(0)">
-                              <i className="uil uil-heart-alt text-lg leading-[1.8]"></i>
-                            </a>
-                          </div>
-                          <div className="w-8 h-8 text-center text-gray-100 transition-all duration-300 bg-transparent border rounded cursor-pointer border-gray-100/50 hover:bg-red-600 hover:text-white hover:border-transparent dark:border-zinc-700">
-                            <a href="javascript:void(0)">
-                              <i className="uil uil-setting text-lg leading-[1.8]"></i>
-                            </a>
-                          </div>
-                        </div>
-                      </div> */}
+
                           </div>
 
-                          <div className="grid grid-cols-12 mt-8 gap-y-3 lg:gap-3">
+                          <div className="grid border-2 border-gray grid-cols-12 mt-8 gap-y-3 lg:gap-3">
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border rounded border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 bg-yellow-200 border rounded border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Experience
                                 </p>
@@ -256,7 +239,7 @@ const Page = () => {
                               </div>
                             </div>
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border rounded border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border bg-blue-200 rounded border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Employee type
                                 </p>
@@ -266,7 +249,7 @@ const Page = () => {
                               </div>
                             </div>
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border rounded border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border rounded bg-pink-200 border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Company
                                 </p>
@@ -276,7 +259,7 @@ const Page = () => {
                               </div>
                             </div>
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border rounded border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border rounded bg-green-200 border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Offer Salary
                                 </p>
@@ -301,28 +284,11 @@ const Page = () => {
                             </div>
                           </div>
 
-                          <div className="mt-4">
-                            <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                              PHP
-                            </span>
-                            <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                              JS
-                            </span>
-                            <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                              Marketing
-                            </span>
-                            <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                              REACT
-                            </span>
-                            <span className="px-2 py-1 text-white rounded text-11 group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=sky]:bg-sky-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=pink]:bg-pink-500 group-data-[theme-color=blue]:bg-blue-500">
-                              PHOTOSHOP
-                            </span>
-                          </div>
                         </div>
                       </div>
                     </div>
                     <div className="col-span-12 space-y-6 lg:col-span-4">
-                      <div className="border rounded border-gray-100/30 dark:border-neutral-600/80">
+                      <div className="border-2 border-gray rounded dark:border-neutral-600/80">
                         <div className="p-6">
                           <h6 className="text-gray-900 text-17 font-bold dark:text-gray-50">
                             Job Overview
@@ -430,23 +396,8 @@ const Page = () => {
                                 </div>
                               </div>
                             </li>
-                            {/* <li>
-                        <div className="flex mt-6">
-                          <div className="rounded-full border border-purple-500 p-3">
-                            <FaBuilding
-                              style={{ color: "purple", fontSize: "24px" }}
-                            />
-                          </div>
-                          <div className="pl-4">
-                            <h6 className="mb-2 text-sm text-gray-900 font-bold dark:text-gray-50">
-                              Industry
-                            </h6>
-                            <p className="text-gray-500 dark:text-gray-300">
-                              Private
-                            </p>
-                          </div>
-                        </div>
-                      </li> */}
+
+
                             <li>
                               <div className="flex mt-6">
                                 <div className="rounded-ful p-3">
@@ -462,7 +413,8 @@ const Page = () => {
                                     Date Posted
                                   </h6>
                                   <p className="text-gray-500 dark:text-gray-300">
-                                    Posted 2 hrs ago
+                                    {job && job?.jobCreatedAt && job.jobCreatedAt.split("T")[0]}
+
                                   </p>
                                 </div>
                               </div>
@@ -504,6 +456,17 @@ const Page = () => {
                                 <p>
                                   {applicationStateData?.data?.stage?.category}
                                 </p>
+                                <div className="mt-3">
+                                  <p className="font-bold">Description</p>
+                                  <p
+                                    className="mb-0 text-gray-500 dark:text-gray-300"
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        applicationStateData?.data?.stage
+                                          ?.description,
+                                    }}
+                                  />
+                                </div>
                               </div>
                             </div>
                             <div></div>

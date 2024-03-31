@@ -1,35 +1,74 @@
-// components/Dashboard.js
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { BsFileEarmarkText, BsClock, BsAward, BsCheckCircle } from "react-icons/bs";
+import Chart from "react-apexcharts";
 
-const ApplicantStats = () => {
+interface ApplicantStatsProps {
+  allCount: number; // replace any with the actual type
+  approvedCount: number;
+  pendingCount: number;
+  rejectedCount: number;
+}
+
+const ApplicantStats: React.FC<ApplicantStatsProps> = ({
+  allCount,
+  approvedCount,
+  pendingCount,
+  rejectedCount,
+}) => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    console.log("jobApplicationsByApprovedStatusCountData:", approvedCount);
+    console.log("jobApplicationsByPendingStatusCountData:", pendingCount);
+    console.log("jobApplicationsByRejectedStatusCountData:", rejectedCount);
+    console.log("jobApplicationsCountData:", allCount);
+  }, [approvedCount, pendingCount, rejectedCount, allCount]);
+
   const data = [
-    { name: "Applications Submitted", value: 190, color: "#6366F1" },
-    { name: "Interviews Scheduled", value: 80, color: "#F59E0B" },
-    { name: "Offers Received", value: 20, color: "#4CAF50" },
-    { name: "Qualified", value: 45, color: "#9C27B0" },
+    { name: "All Applications", value: allCount, color: "#6366F1", icon: <BsFileEarmarkText size={60} /> },
+    { name: "Active Applications", value: approvedCount, color: "#F59E0B", icon: <BsClock size={60} /> },
+    { name: "Pending Applications", value: pendingCount, color: "#4CAF50", icon: <BsAward size={60} /> },
+    { name: "Rejected Applications", value: rejectedCount, color: "#9C27B0", icon: <BsCheckCircle size={60} /> },
   ];
-  const colors = [
-    "bg-blue-400",
-    "bg-green-400",
-    "bg-red-400",
-    "bg-yellow-400",
-    "bg-indigo-400",
-    "bg-purple-400",
-  ];
+
+  const chartData = {
+    options: {
+      chart: {
+        toolbar: {
+          show: false
+        },
+      },
+      xaxis: {
+        categories: data.map(item => item.name)
+      }
+    },
+    series: [{
+      name: "Progress",
+      data: data.map(item => item.value)
+    }]
+  };
+
+  const handleBoxClick = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
 
   return (
-    <div className="bg-gray-200 container mx-auto mt-2 px-20 font-serif">
-      <div className="flex flex-wrap justify-end">
+    <div className={`container mx-auto mt-2 px-4 sm:px-8 md:px-20 font-serif ${isSidebarOpen ? 'ml-sidebar' : ''}`}>
+      <div className="flex flex-nowrap text-white justify-end sm:justify-end">
         {data.map((item, index) => (
           <div
             key={index}
-            className={`w-100 mt-2 mr-8 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 flex flex-col justify-center items-center p-6 ${
-              colors[index % colors.length]
-            } text-white`}
-            style={{ width: "300px", height: "200px" }}
+            className={`w-1/4 mt-2 mr-2 rounded-lg overflow-hidden shadow-xl transition-all duration-300 flex flex-row justify-between items-center p-6`}
+            style={{ minHeight: "100px", maxHeight: "150px", cursor: "pointer", backgroundColor: item.color, opacity: isSidebarOpen ? 0.3 : 1 }}
+            onClick={handleBoxClick}
           >
-            <h2 className="text-2xl font-medium mb-4">{item.name}</h2>
-            <p className="text-7xl font-bold mb-4">{item.value}</p>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 whitespace-nowrap">{item.name}</h2>
+              <p className="text-6xl sm:text-7xl font-bold mb-4">{item.value}</p>
+            </div>
+            <div className="flex items-center justify-center mb-4 mr-4 mt-4" style={{ opacity: 0.7, fontSize: "smaller", height: "100%" }}>
+              {item.icon}
+            </div>
           </div>
         ))}
       </div>

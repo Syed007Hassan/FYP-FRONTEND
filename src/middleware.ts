@@ -7,7 +7,7 @@ import { parseJwt } from "@/lib/Constants";
 
 export function middleware(req: NextRequest) {
   const cookies = cookie.parse(req.headers.get("Cookie") || "");
-  const token = cookies.token;
+  let token = cookies.token;
   const tokenFromOauth = req.cookies.get("token");
 
   let tokenData;
@@ -25,18 +25,22 @@ export function middleware(req: NextRequest) {
   }
 
   // if signout
+
   if (req.nextUrl.pathname.startsWith("/signout")) {
     console.log("signout");
     const url = req.nextUrl.clone();
     url.pathname = "/";
-    const response = NextResponse.next();
+  
+    const response = NextResponse.redirect(url.toString());
     response.cookies.set({
       name: "token",
       value: "",
-      maxAge: -1, // this will delete the cookie
+      maxAge: 0, // Set maxAge to 0 to delete the cookie
     });
-    return NextResponse.redirect(url.toString());
+  
+    return response;
   }
+
 
   // if no token and trying to access recruiter page
 
@@ -60,23 +64,23 @@ export function middleware(req: NextRequest) {
 
   // if token but not recruiter and trying to access recruiter page
 
-  if (
-    token &&
-    tokenData.role !== "employer" &&
-    req.nextUrl.pathname.startsWith("/recruiter")
-  ) {
-    return NextResponse.redirect(new URL("/applicant", req.url));
-  }
+  // if (
+  //   token &&
+  //   tokenData.role !== "employer" &&
+  //   req.nextUrl.pathname.startsWith("/recruiter")
+  // ) {
+  //   return NextResponse.redirect(new URL("/applicant", req.url));
+  // }
 
   // if token but not applicant and trying to access applicant page
 
-  if (
-    token &&
-    tokenData.role !== "employee" &&
-    req.nextUrl.pathname.startsWith("/applicant")
-  ) {
-    return NextResponse.redirect(new URL("/recruiter", req.url));
-  }
+  // if (
+  //   token &&
+  //   tokenData.role !== "employee" &&
+  //   req.nextUrl.pathname.startsWith("/applicant")
+  // ) {
+  //   return NextResponse.redirect(new URL("/recruiter", req.url));
+  // }
 
   // redirected from oauth with token in url params and trying to access recruiter page
 

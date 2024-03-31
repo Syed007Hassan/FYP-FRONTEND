@@ -35,7 +35,7 @@ export default function SignInSide() {
   const handleSubmit = (event: any) => {
     const name = firstName + " " + lastName;
     const role = "employer";
-    const designation = "HR";
+    const designation = "Head HR";
     const phone = phoneNum;
     const data = {
       name,
@@ -61,7 +61,7 @@ export default function SignInSide() {
   const handleOauth = async (event: any) => {
     event.preventDefault();
 
-    window.location.href = `${Backend_URL}/auth/google/callback`;
+    window.location.href = `${Backend_URL}/auth/google/callback/recruiter`;
   };
 
   useEffect(() => {
@@ -278,7 +278,7 @@ export default function SignInSide() {
 
                 <div>
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
+                    className="w-full mt-2 bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
                     onClick={handleSubmit}
                   >
@@ -286,15 +286,15 @@ export default function SignInSide() {
                   </button>
                 </div>
 
-                <div>
+                {/* <div>
                   <button
-                    className="w-full bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
+                    className="w-full mt-4 bg-blue-500 hover:bg-blue-700 sm:mb-0 text-white font-bold py-2 px-4 rounded-full"
                     type="button"
                     onClick={handleOauth}
                   >
                     Sign Up With Google ➔
                   </button>
-                </div>
+                </div> */}
 
                 <div className="text-center ">
                   <a

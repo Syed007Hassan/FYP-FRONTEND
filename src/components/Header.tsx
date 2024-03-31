@@ -86,14 +86,13 @@ const Header = () => {
             </button>
           </div>
           <div
-            className={`items-center justify-between w-25 md:flex md:w-auto md:order-1 ${
-              sidebarOpen ? "absolute top-16 right-6" : "hidden"
-            }`}
+            className={`items-center justify-between w-25 md:flex md:w-auto md:order-1 ${sidebarOpen ? "absolute top-16 right-6" : "hidden"
+              }`}
             id="navbar-sticky"
           >
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-bold border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <Link href="#" legacyBehavior>
+                <Link href="/#" legacyBehavior>
                   <a
                     className="block py-2 pl-3 pr-4 font-bold text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
                     aria-current="page"
@@ -103,14 +102,14 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#about" legacyBehavior>
+                <Link href="/#about" legacyBehavior>
                   <a className="block py-2 pl-3 pr-4 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                     About
                   </a>
                 </Link>
               </li>
               <li>
-                <Link href="#services" legacyBehavior>
+                <Link href="/#services" legacyBehavior>
                   <a className="block py-2 pl-3 pr-4 font-bold  text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
                     Services
                   </a>
@@ -172,15 +171,15 @@ const Header = () => {
                     </p>
                     <Link href="/login" legacyBehavior>
                       <a href="/login">
-                        <label className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                        <label className="bg-blue-700 inline-flex items-center justify-between w-full p-5 text-white border border-gray-200 rounded-lg cursor-pointer  dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 dark:text-white dark:bg-gray-600">
                           <div className="block">
-                            <div className="w-full text-lg font-semibold">
+                            <div className="w-full text-lg text-white font-bold">
                               Recruiter
                             </div>
                           </div>
 
                           <svg
-                            className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400"
+                            className="w-4 h-4 ms-3 rtl:rotate-180 text-white-500 dark:text-white-400"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -202,14 +201,14 @@ const Header = () => {
                     </p>
                     <Link href="/login-applicant" legacyBehavior>
                       <a href="/login-applicant">
-                        <label className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900 hover:bg-gray-100 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500">
+                        <label className="inline-flex items-center justify-between w-full p-5 text-white bg-blue-700 border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-500 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-900  dark:text-white dark:bg-gray-600 ">
                           <div className="block">
-                            <div className="w-full text-lg font-semibold">
+                            <div className="w-full text-white text-lg font-bold">
                               Applicant
                             </div>
                           </div>
                           <svg
-                            className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500 dark:text-gray-400"
+                            className="w-4 h-4 ms-3 rtl:rotate-180 text-white dark:text-white"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

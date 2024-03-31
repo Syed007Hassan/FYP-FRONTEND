@@ -8,14 +8,21 @@ type CreateStageArgs = {
     stageId: string;
     workflowId: string;
     assignees: newAssignee;
+    token: string;
 };
 
 export const addAssignee = createAsyncThunk(
     "workflow/assignStage",
-    async ({ stageId, workflowId, assignees }: CreateStageArgs) => {
+    async ({ stageId, workflowId, assignees, token }: CreateStageArgs) => {
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
         const response = await axios.post(
             `${Backend_URL}/workflow/assignStage/${workflowId}/${stageId}`,
-            assignees
+            assignees,
+            config
         );
         return response.data;
     }

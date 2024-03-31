@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { FaMapMarkerAlt, FaRegClock } from "react-icons/fa";
 import { JobCardProps } from "@/data/data";
+import Link from "next/link"; // Import the Link component from next/link package
 
 const JobCard = (job: JobCardProps) => (
   <div className="relative mt-4 overflow-hidden transition-all duration-500 ease-in-out bg-white border rounded-md border-gray-100 group hover:border-violet-500 dark:bg-neutral-900 dark:border-neutral-600 transform transition-transform hover:-translate-y-1">
@@ -9,7 +10,11 @@ const JobCard = (job: JobCardProps) => (
       <div className="grid items-center grid-cols-12">
         <div className="col-span-12 lg:col-span-2">
           <div className="mb-4 text-center mb-md-0">
-            <a href="company-details.html">
+            <Link
+              href="/applicant/job-feed/[jobId]"
+              as={`/applicant/job-feed/${job?.jobId}`}
+            >
+
               <Image
                 src={job.jobImage}
                 alt={job.jobTitle}
@@ -17,14 +22,16 @@ const JobCard = (job: JobCardProps) => (
                 height={50}
                 className="mx-auto rounded-3"
               />
-            </a>
+            </Link>
+
           </div>
         </div>
         <div className="col-span-12 lg:col-span-3">
           <div className="mb-2 mb-md-0">
             <h5 className="mb-1 fs-18">
               <a
-                href="job-details.html"
+                href={`/applicant/job-feed/${job?.jobId}`}
+
                 className="text-blue-900 dark:text-gray-50 font-bold text-lg"
               >
                 {job.jobTitle}

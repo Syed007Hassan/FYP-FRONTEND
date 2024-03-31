@@ -46,12 +46,12 @@ type updatePersonalDetailsArgs = {
 export const updateApplicantDetails: any = createAsyncThunk(
   "user/updateApplicantDetails",
   async ({ id, temp_data, token }: updateApplicantDetailsArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
       // console.log("id: ", id);
       // console.log("temp_datas: ", temp_data);
       const response = await axios.post(

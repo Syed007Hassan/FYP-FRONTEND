@@ -5,7 +5,7 @@ import EducationDetails from "@/components/applicant/profileComponents/educatonD
 import locationAndSkillDetails from "@/components/applicant/profileComponents/locationAndSkillDetails";
 import experienceDetails from "@/components/applicant/profileComponents/experienceDetails";
 import UploadResume from "@/components/applicant/profileComponents/uploadResume";
-import "../../../../src/styles/applicant.css";
+import "../../../src/styles/applicant.css";
 import {
   updateApplicantDetails,
 } from "@/redux/services/Applicant/applicantAction";
@@ -152,7 +152,7 @@ const UpdateProfile = () => {
     };
     console.log("temp Data: ", temp_data);
     // console.log("id: ",id);
-    dispatch(updateApplicantDetails({ id, temp_data }));
+    dispatch(updateApplicantDetails({ id, temp_data, token }));
     if (success) {
       console.log("success");
     }

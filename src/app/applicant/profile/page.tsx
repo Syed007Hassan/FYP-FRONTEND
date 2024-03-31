@@ -385,7 +385,7 @@ const Profile = () => {
                                     ? uploadData?.data?.Location
                                     : applicantDetails?.profilePicture &&
                                       applicantDetails?.profilePicture !==
-                                        "adas"
+                                        "null"
                                     ? applicantDetails?.profilePicture
                                     : "/user.png"
                                 }

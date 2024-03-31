@@ -22,6 +22,8 @@ import { JobLocation } from "@/types/job";
 import { WithContext as ReactTags } from "react-tag-input";
 import SKILLS from "@/data/skills";
 import { Job } from "@/types/job";
+import jobCategoryList from "@/data/jobCateory";
+import jobTypes from "@/data/jobTypes";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -380,7 +382,7 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
+                      className={`z-10 h-36 overflow-auto ${
                         typeDropdownOpen ? "" : "hidden"
                       } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
@@ -388,37 +390,19 @@ const Page = () => {
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownDefaultButton"
                       >
-                        <li
-                          onClick={() => {
-                            setTypeDropdownOpen(false);
-                            setSelectedType("Full Time");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Full Time
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setTypeDropdownOpen(false);
-                            setSelectedType("Part Time");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Part Time
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setTypeDropdownOpen(false);
-                            setSelectedType("Remote");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Remote
-                          </p>
-                        </li>
-                        {/* Add more options as needed */}
+                        {jobTypes.map((type) => (
+                          <li
+                            key={type}
+                            onClick={() => {
+                              setTypeDropdownOpen(false);
+                              setSelectedType(type);
+                            }}
+                          >
+                            <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                              {type}
+                            </p>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -519,7 +503,7 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
+                      className={`z-10 h-36 overflow-auto ${
                         dropdownOpen ? "" : "hidden"
                       } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
@@ -527,36 +511,19 @@ const Page = () => {
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownDefaultButton"
                       >
-                        <li
-                          onClick={() => {
-                            setDropdownOpen(false);
-                            setSelectedCategory("Permanent");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Permanent
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setDropdownOpen(false);
-                            setSelectedCategory("Contract");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Contract
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setDropdownOpen(false);
-                            setSelectedCategory("Internship");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Internship
-                          </p>
-                        </li>
+                        {jobCategoryList.map((category) => (
+                          <li
+                            key={category}
+                            onClick={() => {
+                              setDropdownOpen(false);
+                              setSelectedCategory(category);
+                            }}
+                          >
+                            <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                              {category}
+                            </p>
+                          </li>
+                        ))}
 
                         {/* Add more options as needed */}
                       </ul>

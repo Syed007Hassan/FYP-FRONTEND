@@ -365,9 +365,8 @@ const Profile = () => {
         <Loader />
       ) : (
         <div
-          className={`content overflow-hidden ${
-            isSidebarOpen ? "shifted-dashboard" : ""
-          }`}
+          className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
+            }`}
         >
           <div className="main-content">
             <div className="pt-4 page-content">
@@ -385,9 +384,9 @@ const Profile = () => {
                                     ? uploadData?.data?.Location
                                     : applicantDetails?.profilePicture &&
                                       applicantDetails?.profilePicture !==
-                                        "adas"
-                                    ? applicantDetails?.profilePicture
-                                    : "/user.png"
+                                      "adas"
+                                      ? applicantDetails?.profilePicture
+                                      : "/user.png"
                                 }
                                 alt="User"
                                 width={100}
@@ -521,8 +520,8 @@ const Profile = () => {
                           </h6>
                           <button
                             className=" text-blue-700"
-                            data-modal-target="education"
-                            data-modal-toggle="education"
+                            data-modal-target="contact"
+                            data-modal-toggle="contact"
                             onClick={() => openModal("contact")}
                           >
                             <svg

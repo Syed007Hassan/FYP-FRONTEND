@@ -32,7 +32,7 @@ export default function SignInSide() {
 
   const handleSubmit = (event: any) => {
     const name = firstName + " " + lastName;
-    const role = "applicant";
+    const role = "employee";
     const data = {
       name,
       email,

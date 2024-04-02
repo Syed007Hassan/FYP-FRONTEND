@@ -384,9 +384,9 @@ const Profile = () => {
                                     ? uploadData?.data?.Location
                                     : applicantDetails?.profilePicture &&
                                       applicantDetails?.profilePicture !==
-                                      "adas"
-                                      ? applicantDetails?.profilePicture
-                                      : "/user.png"
+                                        "null"
+                                    ? applicantDetails?.profilePicture
+                                    : "/user.png"
                                 }
                                 alt="User"
                                 width={100}

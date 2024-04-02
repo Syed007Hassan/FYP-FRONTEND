@@ -137,7 +137,7 @@ export default function SignInSide() {
       console.log("data", data);
       Router.push("/applicant");
     } else if (data?.success === false) {
-      Router.push("/applicant/build-profile");
+      Router.push("build-profile");
     }
   }, [data, Router]);
 

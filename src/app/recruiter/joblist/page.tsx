@@ -253,10 +253,10 @@ const Page = () => {
                       onClick={() =>
                         router.push(`/recruiter/joblist/${job?.jobId}`)
                       }
-                      className="hover:cursor-pointerp-5 border border-gray-100/50 rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900"
+                      className="hover:cursor-pointer p-5 border-2  lg:ml-8 lg:mr-8 px-8 border-gray rounded-md relative hover:-translate-y-1.5 transition-all duration-500 ease-in-out group-data-[theme-color=violet]:hover:border-violet-500 group-data-[theme-color=sky]:hover:border-sky-500 group-data-[theme-color=red]:hover:border-red-500 group-data-[theme-color=green]:hover:border-green-500 group-data-[theme-color=pink]:hover:border-pink-500 group-data-[theme-color=blue]:hover:border-blue-500 hover:shadow-md hover:shadow-gray-100/30 dark:border-neutral-600 dark:hover:shadow-neutral-900"
                       key={job?.jobId}
                     >
-                      <div className="py-4 lg:ml-8 lg:mr-8 bg-white border-2 rounded border-gray grid grid-cols-12">
+                      <div className=" bg-white grid grid-cols-12">
                         <div className="justify-center col-span-12 lg:col-span-1">
                           <a href="#">
                             <div className="pl-8 py-4 w-full">

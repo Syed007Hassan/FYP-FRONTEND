@@ -5,6 +5,7 @@ import {
   getApplicationsByJobId,
   updateApplicationStatus,
   resetSuccess,
+  updateApplicationFeedback,
 } from "./applicationAction";
 
 const applicationSlice = createSlice({
@@ -92,5 +93,35 @@ const updateApplicationSlice = createSlice({
   },
 });
 
+const updateApplicationFeedbackSlice = createSlice({
+  name: "updateApplicationFeedback",
+  initialState: {
+    application: null,
+    loading: false,
+    error: null as string | null,
+    success: false,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(updateApplicationFeedback.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateApplicationFeedback.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.application = action.payload;
+    });
+    builder.addCase(updateApplicationFeedback.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message as string;
+    });
+    builder.addDefaultCase((state, action) => {
+      state.success = false;
+    });
+  },
+});
+
 export const applicationReducer = applicationSlice.reducer;
 export const updateApplicationReducer = updateApplicationSlice.reducer;
+export const updateApplicationFeedbackReducer =
+  updateApplicationFeedbackSlice.reducer;

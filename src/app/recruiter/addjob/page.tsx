@@ -25,7 +25,7 @@ import { Job } from "@/types/job";
 import jobCategoryList from "@/data/jobCateory";
 import jobTypes from "@/data/jobTypes";
 
-import applicantImage from "../../../../public/applicant.png";
+import applicantImage from "../../../../public/applicantt.jpg";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";

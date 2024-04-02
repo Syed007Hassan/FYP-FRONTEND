@@ -227,9 +227,9 @@ const Page = () => {
 
                           </div>
 
-                          <div className="grid border-2 border-gray grid-cols-12 mt-8 gap-y-3 lg:gap-3">
+                          <div className="grid grid-cols-12 mt-8 gap-y-3 lg:gap-3">
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 bg-yellow-200 border rounded border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border bg-blue-200 font-bold rounded border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Experience
                                 </p>
@@ -239,7 +239,7 @@ const Page = () => {
                               </div>
                             </div>
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border bg-blue-200 rounded border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border rounded bg-yellow-200 font-bold  border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Employee type
                                 </p>
@@ -249,17 +249,17 @@ const Page = () => {
                               </div>
                             </div>
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border rounded bg-pink-200 border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border rounded bg-pink-200 font-bold  border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
-                                  Company
+                                  Job Status
                                 </p>
                                 <p className="font-medium text-gray-900 dark:text-gray-50">
-                                  {job?.company?.companyName}
+                                  {job?.jobStatus}
                                 </p>
                               </div>
                             </div>
                             <div className="col-span-12 lg:col-span-3">
-                              <div className="p-4 border rounded bg-green-200 border-gray-100/50 dark:border-neutral-600/80">
+                              <div className="p-4 border rounded bg-green-200 font-bold  border-gray-100/50 dark:border-neutral-600/80">
                                 <p className="mb-1 text-gray-500 dark:text-gray-300 text-13">
                                   Offer Salary
                                 </p>

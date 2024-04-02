@@ -32,7 +32,7 @@ interface stageApplcationsCountProps {
 }
 
 const Page = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(null);
   const [tempResumeSummary, setTempResumeSummary] = useState<string | null>();
   const [token, setToken] = useState<string>("");
   const [jobId, setJobId] = useState<string>("");
@@ -119,6 +119,16 @@ const Page = () => {
     }
   }, [isModalOpen]);
 
+
+  const openModal = (modalId: any) => {
+    console.log("Modal ID:", modalId); // Check the received modal ID
+    setIsModalOpen(modalId); // Update the state
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(null);
+  };
   const {
     application: applicationState,
     loading: applicationLoading,
@@ -310,9 +320,8 @@ const Page = () => {
         <Loader />
       ) : (
         <div
-          className={`content overflow-hidden ${
-            isSidebarOpen ? "shifted-dashboard" : ""
-          }`}
+          className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
+            }`}
         >
           <div className="mx-auto max-w-screen-xl flex flex-col gap-4">
             <h1 className="text-2xl font-bold font-inter text-blue-800 pt-6">
@@ -529,13 +538,17 @@ const Page = () => {
                           </a>
                         </td>
                         <td
+
                           className="px-6 py-4 font-bold hover:cursor-pointer hover:text-blue-600 dark:text-blue-500"
+                          data-modal-target="profile-summary"
+                          data-modal-toggle="profile-summary"
                           onClick={() => {
+                            openModal("profile-summary")
                             handleResumeSummary(
                               applicant?.applicant?.applicantDetails?.resume,
                               jobApiResponse?.data?.jobDescription || ""
-                            );
-                            setIsModalOpen(true);
+                            )
+
                           }}
                         >
                           View Summary
@@ -553,12 +566,11 @@ const Page = () => {
                               toggleDropdown(applicant?.applicant?.id)
                             }
                             data-dropdown-toggle="dropdown"
-                            className={`font-bold rounded-lg text-sm text-center inline-flex items-center ${
-                              applicant?.status === "pending" ||
+                            className={`font-bold rounded-lg text-sm text-center inline-flex items-center ${applicant?.status === "pending" ||
                               applicant?.status === "rejected"
-                                ? "cursor-not-allowed"
-                                : ""
-                            }`}
+                              ? "cursor-not-allowed"
+                              : ""
+                              }`}
                             type="button"
                             disabled={
                               applicant?.status === "pending" ||
@@ -589,11 +601,10 @@ const Page = () => {
                           {/* Dropdown menu */}
                           <div
                             id={`dropdown-${applicant?.applicant?.id}`}
-                            className={`absolute z-10 ${
-                              openDropdownId === applicant?.applicant?.id
-                                ? ""
-                                : "hidden"
-                            } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+                            className={`absolute z-10 ${openDropdownId === applicant?.applicant?.id
+                              ? ""
+                              : "hidden"
+                              } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
                           >
                             <ul
                               className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -632,13 +643,11 @@ const Page = () => {
                           </a>
                           <a
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
-                            onClick={() =>
-                              handleStatusChange(
-                                applicant?.applicant?.id?.toString(),
-                                "rejected"
-                              )
-                            }
+                            data-modal-target="status"
+                            data-modal-toggle="status"
+                            onClick={() => openModal("status")}
                           >
+
                             Reject
                           </a>
                         </td>
@@ -648,7 +657,7 @@ const Page = () => {
                 </tbody>
               </table>
             </div>
-            {isModalOpen && (
+            {isModalOpen === "profile-summary" && (
               <>
                 <div className="fixed inset-0 bg-black opacity-50" />
                 <div
@@ -665,11 +674,18 @@ const Page = () => {
                         <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                           Resume Summary
                         </h3>
-                        <button
+                        {/* <button
                           type="button"
                           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                           data-modal-hide="default-modal"
-                          onClick={() => setIsModalOpen(false)}
+                          onClick={() => openModal("summary")}
+                        > */}
+
+                        <button
+                          type="button"
+                          onClick={closeModal}
+                          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-toggle="select-modal"
                         >
                           <svg
                             className="w-3 h-3"
@@ -688,6 +704,7 @@ const Page = () => {
                           </svg>
                           <span className="sr-only">Close modal</span>
                         </button>
+                        {/* </button> */}
                       </div>
                       {/* Modal body */}
                       <div className="p-4 md:p-5 space-y-4">
@@ -701,6 +718,70 @@ const Page = () => {
               </>
             )}
 
+            {isModalOpen === "status" && (
+              <div
+                id="select-modal"
+                tabIndex={-1}
+                aria-hidden="true"
+                className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full"
+              >
+                <div className="relative p-4 w-full max-w-md max-h-full">
+                  <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        Feedback on Rejection
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="select-modal"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Close modal</span>
+                      </button>
+                    </div>
+                    <div className="p-4 md:p-5">
+                      <form>
+                        <div className="pt-1">
+                          <textarea
+                            id="feedback"
+                            name="feedback"
+                            rows={4}
+                            className="shadow-sm focus:ring-indigo-500 focus:border-blue-700 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Enter your feedback here"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="mt-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                          Submit Feedback
+                        </button>
+                      </form>
+
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="flex flex-col">
               <h6 className=" text-gray-900 dark:text-gray-50 font-bold">
                 Stages
@@ -710,7 +791,7 @@ const Page = () => {
               />
             </div>
           </div>
-        </div>
+        </div >
       )}
     </>
   );

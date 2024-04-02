@@ -20,6 +20,7 @@ import { useGetApplicationsByJobIdQuery } from "@/redux/services/application/app
 import {
   updateApplicationStage,
   updateApplicationStatus,
+  updateApplicationFeedback,
 } from "@/redux/services/application/applicationAction";
 import { ApplicationData } from "@/types/application";
 import Loader from "@/components/Loader";
@@ -32,7 +33,7 @@ interface stageApplcationsCountProps {
 }
 
 const Page = () => {
-  const [isModalOpen, setIsModalOpen] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState("");
   const [tempResumeSummary, setTempResumeSummary] = useState<string | null>();
   const [token, setToken] = useState<string>("");
   const [jobId, setJobId] = useState<string>("");
@@ -114,20 +115,29 @@ const Page = () => {
   }, [resumeSummary]);
 
   useEffect(() => {
-    if (isModalOpen === false) {
+    if (isModalOpen === "") {
       setTempResumeSummary(null);
     }
   }, [isModalOpen]);
 
+  const [applicantTempId, setApplicantTempId] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
 
-  const openModal = (modalId: any) => {
-    console.log("Modal ID:", modalId); // Check the received modal ID
+  const openModal = (
+    jobId: string,
+    applicantId: string,
+    status: string,
+    modalId: string
+  ) => {
+    // console.log("Modal ID:", modalId); // Check the received modal ID
     setIsModalOpen(modalId); // Update the state
+    setApplicantTempId(applicantId);
+    setStatus(status);
   };
 
   // Function to close the modal
   const closeModal = () => {
-    setIsModalOpen(null);
+    setIsModalOpen("");
   };
   const {
     application: applicationState,
@@ -159,29 +169,37 @@ const Page = () => {
 
   useEffect(() => {
     if (applicationApiResponse) {
-      setApplicationCount(applicationApiResponse.data.length);
+      setApplicationCount(
+        applicationApiResponse.data ? applicationApiResponse.data.length : 0
+      );
       setActiveApplications(
-        applicationApiResponse.data.filter(
-          (applicant) => applicant.status === "approved"
-        ).length
+        applicationApiResponse.data
+          ? applicationApiResponse.data.filter(
+              (applicant) => applicant.status === "approved"
+            ).length
+          : 0
       );
       setPendingApplications(
-        applicationApiResponse.data.filter(
-          (applicant) => applicant.status === "pending"
-        ).length
+        applicationApiResponse.data
+          ? applicationApiResponse.data.filter(
+              (applicant) => applicant.status === "pending"
+            ).length
+          : 0
       );
       setStageApplcationsCount(
-        applicationApiResponse.data.reduce((acc, applicant) => {
-          const foundStage = acc.find(
-            (stage) => stage.stageName === applicant.stage.stageName
-          );
-          if (foundStage) {
-            foundStage.count += 1;
-          } else {
-            acc.push({ stageName: applicant.stage.stageName, count: 1 });
-          }
-          return acc;
-        }, [] as stageApplcationsCountProps[])
+        applicationApiResponse.data
+          ? applicationApiResponse.data.reduce((acc, applicant) => {
+              const foundStage = acc.find(
+                (stage) => stage.stageName === applicant.stage.stageName
+              );
+              if (foundStage) {
+                foundStage.count += 1;
+              } else {
+                acc.push({ stageName: applicant.stage.stageName, count: 1 });
+              }
+              return acc;
+            }, [] as stageApplcationsCountProps[])
+          : []
       );
     }
   }, [applicationApiResponse]);
@@ -225,25 +243,11 @@ const Page = () => {
     setJobId(jobIdParam);
   }, [jobIdParam]);
 
-  useEffect(() => {
-    // fetch data from local storage
-    const data = localStorage.getItem("job_list");
-
-    // if data is not null
-    if (data) {
-      // parse data to JSON format
-      const jsonData = JSON.parse(data);
-
-      // set job list
-      setJobList(jsonData);
-    }
-  }, [jobIdParam]);
-
-  useEffect(() => {
-    // Save jobs to local storage whenever it changes
-    //   localStorage.setItem('job_list', JSON.stringify(jobList));
-    setJob(jobList.find((job) => job.id === parseInt(jobId)) || null);
-  }, [jobList, jobId]);
+  // useEffect(() => {
+  //   // Save jobs to local storage whenever it changes
+  //   //   localStorage.setItem('job_list', JSON.stringify(jobList));
+  //   setJob(jobList.find((job) => job.id === parseInt(jobId)) || null);
+  // }, [jobList, jobId]);
 
   const handleStatusChange = (applicantId: string, status: string) => {
     dispatch(
@@ -314,14 +318,33 @@ const Page = () => {
     console.log("isModalOpen", isModalOpen);
   }, [isModalOpen]);
 
+  const [applicationFeedback, setApplicationFeedback] = useState<string>("");
+
+  const handleFeedback = () => {
+    dispatch(
+      updateApplicationFeedback({
+        jobId: jobIdParam,
+        applicantId: applicantTempId,
+        applicationFeedback: applicationFeedback,
+        token,
+      })
+    );
+    closeModal();
+    handleStatusChange(applicantTempId, "rejected");
+    setApplicationFeedback("");
+    setApplicantTempId("");
+    setStatus("");
+  };
+
   return (
     <>
       {isLoading || applicationLoading || applicationByJobIdLoading ? (
         <Loader />
       ) : (
         <div
-          className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
-            }`}
+          className={`content overflow-hidden ${
+            isSidebarOpen ? "shifted-dashboard" : ""
+          }`}
         >
           <div className="mx-auto max-w-screen-xl flex flex-col gap-4">
             <h1 className="text-2xl font-bold font-inter text-blue-800 pt-6">
@@ -486,14 +509,14 @@ const Page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredApplicants?.data.length === 0 ? (
+                  {filteredApplicants?.data?.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="text-center h-10">
                         No applicants found
                       </td>
                     </tr>
                   ) : (
-                    filteredApplicants?.data.map((applicant, index) => (
+                    filteredApplicants?.data?.map((applicant, index) => (
                       <tr
                         key={applicant?.applicant?.id}
                         className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -538,17 +561,20 @@ const Page = () => {
                           </a>
                         </td>
                         <td
-
                           className="px-6 py-4 font-bold hover:cursor-pointer hover:text-blue-600 dark:text-blue-500"
                           data-modal-target="profile-summary"
                           data-modal-toggle="profile-summary"
                           onClick={() => {
-                            openModal("profile-summary")
+                            openModal(
+                              jobIdParam,
+                              applicant?.applicant?.id?.toString(),
+                              "",
+                              "profile-summary"
+                            );
                             handleResumeSummary(
                               applicant?.applicant?.applicantDetails?.resume,
                               jobApiResponse?.data?.jobDescription || ""
-                            )
-
+                            );
                           }}
                         >
                           View Summary
@@ -566,11 +592,12 @@ const Page = () => {
                               toggleDropdown(applicant?.applicant?.id)
                             }
                             data-dropdown-toggle="dropdown"
-                            className={`font-bold rounded-lg text-sm text-center inline-flex items-center ${applicant?.status === "pending" ||
+                            className={`font-bold rounded-lg text-sm text-center inline-flex items-center ${
+                              applicant?.status === "pending" ||
                               applicant?.status === "rejected"
-                              ? "cursor-not-allowed"
-                              : ""
-                              }`}
+                                ? "cursor-not-allowed"
+                                : ""
+                            }`}
                             type="button"
                             disabled={
                               applicant?.status === "pending" ||
@@ -601,10 +628,11 @@ const Page = () => {
                           {/* Dropdown menu */}
                           <div
                             id={`dropdown-${applicant?.applicant?.id}`}
-                            className={`absolute z-10 ${openDropdownId === applicant?.applicant?.id
-                              ? ""
-                              : "hidden"
-                              } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+                            className={`absolute z-10 ${
+                              openDropdownId === applicant?.applicant?.id
+                                ? ""
+                                : "hidden"
+                            } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
                           >
                             <ul
                               className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -645,9 +673,15 @@ const Page = () => {
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
                             data-modal-target="status"
                             data-modal-toggle="status"
-                            onClick={() => openModal("status")}
+                            onClick={() =>
+                              openModal(
+                                jobIdParam,
+                                applicant?.applicant?.id?.toString(),
+                                "rejected",
+                                "status"
+                              )
+                            }
                           >
-
                             Reject
                           </a>
                         </td>
@@ -764,19 +798,24 @@ const Page = () => {
                             rows={4}
                             className="shadow-sm focus:ring-indigo-500 focus:border-blue-700 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
                             placeholder="Enter your feedback here"
+                            onChange={(e) => {
+                              setApplicationFeedback(e.target.value);
+                            }}
                           />
                         </div>
                         <button
                           type="submit"
                           className="mt-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          onClick={() => {
+                            console.log("Feedback submitted");
+                            handleFeedback();
+                            closeModal();
+                          }}
                         >
                           Submit Feedback
                         </button>
                       </form>
-
-
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -791,7 +830,7 @@ const Page = () => {
               />
             </div>
           </div>
-        </div >
+        </div>
       )}
     </>
   );

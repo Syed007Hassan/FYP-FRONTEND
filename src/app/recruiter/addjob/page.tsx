@@ -25,6 +25,8 @@ import { Job } from "@/types/job";
 import jobCategoryList from "@/data/jobCateory";
 import jobTypes from "@/data/jobTypes";
 
+import applicantImage from "../../../../public/applicant.png";
+
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
@@ -309,7 +311,7 @@ const Page = () => {
           style={{ width: "580px", height: "560px" }}
         >
           <Image
-            src="/applicant.png"
+            src={applicantImage}
             alt="Picture of the author"
             width={500}
             height={500}

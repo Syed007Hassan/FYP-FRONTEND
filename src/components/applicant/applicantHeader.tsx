@@ -101,7 +101,7 @@ const NavBar = () => {
         </div>
 
         <div className="flex space-x-8 items-center">
-          <div className="relative">
+          {/* <div className="relative">
             <button
               id="dropdownNotificationButton"
               data-dropdown-toggle="dropdownNotification"
@@ -122,7 +122,6 @@ const NavBar = () => {
               <div className="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0.5 start-2.5 dark:border-gray-900"></div>
             </button>
 
-            {/* Notification dropdown menu */}
             <div
               id="dropdownNotification"
               className={`z-20 ${
@@ -229,7 +228,7 @@ const NavBar = () => {
                 </div>
               </a>
             </div>
-          </div>
+          </div> */}
           <div className="relative">
             <button
               id="dropdownAvatarNameButton"

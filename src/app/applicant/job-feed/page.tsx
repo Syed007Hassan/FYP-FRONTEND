@@ -19,6 +19,8 @@ import Pagination from "@mui/material/Pagination";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 import Link from "next/link";
+import jobCategoryList from "@/data/jobCateory";
+import jobTypes from "@/data/jobTypes";
 
 import "../../../styles/sidebar.css";
 
@@ -107,7 +109,7 @@ const JobFeed = () => {
     // setAllJobs(data?.data || []);
     setAllJobs(
       (data?.data || []).filter((job: Job) => {
-        if (job?.jobStatus !== 'Active') {
+        if (job?.jobStatus !== "Active") {
           return false;
         }
 
@@ -398,10 +400,11 @@ const JobFeed = () => {
                                       setJobCategory(e.target.value);
                                     }}
                                   >
-                                    <option value="4">Accounting</option>
-                                    <option value="1">IT & Software</option>
-                                    <option value="3">Marketing</option>
-                                    <option value="5">Banking</option>
+                                    {jobCategoryList.map((category, index) => (
+                                      <option key={index} value={category}>
+                                        {category}
+                                      </option>
+                                    ))}
                                   </select>
                                 </div>
                               </div>
@@ -517,7 +520,7 @@ const JobFeed = () => {
                                   <div className="grid items-center grid-cols-12">
                                     <div className="col-span-12 lg:col-span-2">
                                       <div className="mb-4 text-center mb-md-0">
-                                        <Link 
+                                        <Link
                                           href="/applicant/job-feed/[jobId]"
                                           as={`/applicant/job-feed/${job?.jobId}`}
                                         >
@@ -626,7 +629,7 @@ const JobFeed = () => {
                           />
                         </div>
                       </div>
-                      <div className="container mx-auto px-4 py-8">
+                      <div className="container mx-auto px-4 py-0">
                         <div className="grid gap-6">
                           <div className="col-span-12 md:col-span-2 flex items-center">
                             <button
@@ -850,91 +853,29 @@ const JobFeed = () => {
                                 {isJobTypeOpen && (
                                   <div className="accordion-body block transition-all duration-300">
                                     <div className="p-5">
-                                      <div className="mt-2">
-                                        <input
-                                          className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                          type="radio"
-                                          // checked
-                                          value="Freelance"
-                                          id="flexCheckChecked1"
-                                          name="jobType"
-                                          onClick={(e) =>
-                                            setJobType(
-                                              (e.target as HTMLInputElement)
-                                                .value
-                                            )
-                                          }
-                                        />
-                                        <label
-                                          className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
-                                          htmlFor="flexCheckChecked1"
-                                        >
-                                          Freelance
-                                        </label>
-                                      </div>
-                                      <div className="mt-2">
-                                        <input
-                                          className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                          type="radio"
-                                          value="full time"
-                                          id="flexCheckChecked2"
-                                          name="jobType"
-                                          onClick={(e) =>
-                                            setJobType(
-                                              (e.target as HTMLInputElement)
-                                                .value
-                                            )
-                                          }
-                                        />
-                                        <label
-                                          className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
-                                          htmlFor="flexCheckChecked2"
-                                        >
-                                          Full Time
-                                        </label>
-                                      </div>
-                                      <div className="mt-2">
-                                        <input
-                                          className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                          type="radio"
-                                          value="part time"
-                                          id="flexCheckChecked3"
-                                          name="jobType"
-                                          onClick={(e) =>
-                                            setJobType(
-                                              (e.target as HTMLInputElement)
-                                                .value
-                                            )
-                                          }
-                                        />
-                                        <label
-                                          className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
-                                          htmlFor="flexCheckChecked3"
-                                        >
-                                          Part Time
-                                        </label>
-                                      </div>
-                                      <div className="mt-2">
-                                        <input
-                                          className=" cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
-                                          type="radio"
-                                          value="internship"
-                                          id="flexCheckChecked4"
-                                          name="jobType"
-                                          onClick={(e) =>
-                                            setJobType(
-                                              (e.target as HTMLInputElement)
-                                                .value
-                                            )
-                                          }
-                                        />
-                                        <label
-                                          className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
-                                          htmlFor="flexCheckChecked4"
-                                        >
-                                          Internship
-                                        </label>
-                                      </div>
+                                      {jobTypes.map((type, index) => (
+                                        <div key={index} className="mt-2">
+                                          <input
+                                            className="cursor-pointer checked:bg-violet-500 focus:ring-0 focus:ring-offset-0 dark:bg-neutral-600 dark:checked:bg-violet-500/20"
+                                            type="radio"
+                                            value={type}
+                                            id={`jobType${index}`}
+                                            name="jobType"
+                                            onClick={(e) =>
+                                              setJobType(
+                                                (e.target as HTMLInputElement)
+                                                  .value
+                                              )
+                                            }
+                                          />
+                                          <label
+                                            className="text-gray-500 cursor-pointer ml-2 dark:text-gray-300"
+                                            htmlFor={`jobType${index}`}
+                                          >
+                                            {type}
+                                          </label>
+                                        </div>
+                                      ))}
                                     </div>
                                   </div>
                                 )}

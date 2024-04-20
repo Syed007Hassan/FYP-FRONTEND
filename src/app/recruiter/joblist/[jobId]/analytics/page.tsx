@@ -8,6 +8,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { useGetStageQuery } from "@/redux/services/stage/stageAction";
 import { useGetJobQuery } from "@/redux/services/job/jobAction";
+import { getResumeSummary } from "@/redux/services/chat/chatAction";
 import { getSession } from "next-auth/react";
 import { parseJwt } from "@/lib/Constants";
 import { ApiResponse, Stage } from "@/types/stage";
@@ -19,6 +20,7 @@ import { useGetApplicationsByJobIdQuery } from "@/redux/services/application/app
 import {
   updateApplicationStage,
   updateApplicationStatus,
+  updateApplicationFeedback,
 } from "@/redux/services/application/applicationAction";
 import { ApplicationData } from "@/types/application";
 import Loader from "@/components/Loader";
@@ -31,6 +33,9 @@ interface stageApplcationsCountProps {
 }
 
 const Page = () => {
+  const [isModalOpen, setIsModalOpen] = useState("");
+  const [tempResumeSummary, setTempResumeSummary] = useState<string | null>();
+  const [token, setToken] = useState<string>("");
   const [jobId, setJobId] = useState<string>("");
   const [jobList, setJobList] = useState<Job[]>([]);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
@@ -99,6 +104,42 @@ const Page = () => {
   } = useAppSelector((state) => state.applicationReducer);
 
   const {
+    resumeSummary,
+    loading: resumeSummaryLoading,
+    success: resumeSummarySuccess,
+  } = useAppSelector((state) => state.resumeSummaryReducer);
+
+  useEffect(() => {
+    console.log("resumeSummary", resumeSummary);
+    setTempResumeSummary(resumeSummary);
+  }, [resumeSummary]);
+
+  useEffect(() => {
+    if (isModalOpen === "") {
+      setTempResumeSummary(null);
+    }
+  }, [isModalOpen]);
+
+  const [applicantTempId, setApplicantTempId] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+
+  const openModal = (
+    jobId: string,
+    applicantId: string,
+    status: string,
+    modalId: string
+  ) => {
+    // console.log("Modal ID:", modalId); // Check the received modal ID
+    setIsModalOpen(modalId); // Update the state
+    setApplicantTempId(applicantId);
+    setStatus(status);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen("");
+  };
+  const {
     application: applicationState,
     loading: applicationLoading,
     success: isStatusUpdate,
@@ -128,29 +169,37 @@ const Page = () => {
 
   useEffect(() => {
     if (applicationApiResponse) {
-      setApplicationCount(applicationApiResponse.data.length);
+      setApplicationCount(
+        applicationApiResponse.data ? applicationApiResponse.data.length : 0
+      );
       setActiveApplications(
-        applicationApiResponse.data.filter(
-          (applicant) => applicant.status === "approved"
-        ).length
+        applicationApiResponse.data
+          ? applicationApiResponse.data.filter(
+              (applicant) => applicant.status === "approved"
+            ).length
+          : 0
       );
       setPendingApplications(
-        applicationApiResponse.data.filter(
-          (applicant) => applicant.status === "pending"
-        ).length
+        applicationApiResponse.data
+          ? applicationApiResponse.data.filter(
+              (applicant) => applicant.status === "pending"
+            ).length
+          : 0
       );
       setStageApplcationsCount(
-        applicationApiResponse.data.reduce((acc, applicant) => {
-          const foundStage = acc.find(
-            (stage) => stage.stageName === applicant.stage.stageName
-          );
-          if (foundStage) {
-            foundStage.count += 1;
-          } else {
-            acc.push({ stageName: applicant.stage.stageName, count: 1 });
-          }
-          return acc;
-        }, [] as stageApplcationsCountProps[])
+        applicationApiResponse.data
+          ? applicationApiResponse.data.reduce((acc, applicant) => {
+              const foundStage = acc.find(
+                (stage) => stage.stageName === applicant.stage.stageName
+              );
+              if (foundStage) {
+                foundStage.count += 1;
+              } else {
+                acc.push({ stageName: applicant.stage.stageName, count: 1 });
+              }
+              return acc;
+            }, [] as stageApplcationsCountProps[])
+          : []
       );
     }
   }, [applicationApiResponse]);
@@ -165,6 +214,7 @@ const Page = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setCompanyId(decodedData.companyId);
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -193,25 +243,11 @@ const Page = () => {
     setJobId(jobIdParam);
   }, [jobIdParam]);
 
-  useEffect(() => {
-    // fetch data from local storage
-    const data = localStorage.getItem("job_list");
-
-    // if data is not null
-    if (data) {
-      // parse data to JSON format
-      const jsonData = JSON.parse(data);
-
-      // set job list
-      setJobList(jsonData);
-    }
-  }, [jobIdParam]);
-
-  useEffect(() => {
-    // Save jobs to local storage whenever it changes
-    //   localStorage.setItem('job_list', JSON.stringify(jobList));
-    setJob(jobList.find((job) => job.id === parseInt(jobId)) || null);
-  }, [jobList, jobId]);
+  // useEffect(() => {
+  //   // Save jobs to local storage whenever it changes
+  //   //   localStorage.setItem('job_list', JSON.stringify(jobList));
+  //   setJob(jobList.find((job) => job.id === parseInt(jobId)) || null);
+  // }, [jobList, jobId]);
 
   const handleStatusChange = (applicantId: string, status: string) => {
     dispatch(
@@ -219,6 +255,7 @@ const Page = () => {
         applicantId: applicantId,
         jobId: jobIdParam,
         status: status,
+        token,
       })
     );
   };
@@ -233,6 +270,7 @@ const Page = () => {
         applicantId: applicant?.id?.toString(),
         stageId: stage?.stageId?.toString(),
         jobId: jobIdParam,
+        token,
       })
     );
   };
@@ -265,6 +303,38 @@ const Page = () => {
   useEffect(() => {
     console.log("applicationApiResponse", applicationApiResponse);
   }, [applicationApiResponse]);
+
+  const handleResumeSummary = (url: string, job_description: string) => {
+    console.log(url, job_description);
+    dispatch(
+      getResumeSummary({
+        url: url,
+        job_description: job_description,
+      })
+    );
+  };
+
+  useEffect(() => {
+    console.log("isModalOpen", isModalOpen);
+  }, [isModalOpen]);
+
+  const [applicationFeedback, setApplicationFeedback] = useState<string>("");
+
+  const handleFeedback = () => {
+    dispatch(
+      updateApplicationFeedback({
+        jobId: jobIdParam,
+        applicantId: applicantTempId,
+        applicationFeedback: applicationFeedback,
+        token,
+      })
+    );
+    closeModal();
+    handleStatusChange(applicantTempId, "rejected");
+    setApplicationFeedback("");
+    setApplicantTempId("");
+    setStatus("");
+  };
 
   return (
     <>
@@ -303,7 +373,9 @@ const Page = () => {
                 </li>
                 <li className="border p-[6px] border-gray-100/50 rounded group/joblist dark:border-gray-100/20">
                   <div className="flex gap-2 items-center">
-                  <div className="h-8 w-8 text-center bg-blue-700/20 leading-[2.4] rounded text-blue-700 text-sm font-medium">                      {pendingApplications}
+                    <div className="h-8 w-8 text-center bg-blue-700/20 leading-[2.4] rounded text-blue-700 text-sm font-medium">
+                      {" "}
+                      {pendingApplications}
                     </div>
                     <a
                       href="javascript:void(0)"
@@ -317,7 +389,9 @@ const Page = () => {
                 </li>
                 <li className="border p-[6px] border-gray-100/50 rounded group/joblist dark:border-gray-100/20">
                   <div className="flex gap-2 items-center">
-                  <div className="h-8 w-8 text-center bg-blue-700/20 leading-[2.4] rounded text-blue-700 text-sm font-medium">                      {activeApplications}
+                    <div className="h-8 w-8 text-center bg-blue-700/20 leading-[2.4] rounded text-blue-700 text-sm font-medium">
+                      {" "}
+                      {activeApplications}
                     </div>
                     <a
                       href="javascript:void(0)"
@@ -342,7 +416,9 @@ const Page = () => {
                     className="border p-[6px] border-gray-100/50 rounded group/joblist dark:border-gray-100/20 inline-block"
                   >
                     <div className="flex gap-2 items-center">
-                    <div className="h-8 w-8 text-center bg-blue-700/20 leading-[2.4] rounded text-blue-700 text-sm font-medium">                        {stageApplcationsCount?.find(
+                      <div className="h-8 w-8 text-center bg-blue-700/20 leading-[2.4] rounded text-blue-700 text-sm font-medium">
+                        {" "}
+                        {stageApplcationsCount?.find(
                           (stageCount) =>
                             stageCount.stageName === stage.stageName
                         )?.count || 0}
@@ -419,6 +495,12 @@ const Page = () => {
                       Profile
                     </th>
                     <th scope="col" className="px-6 py-3">
+                      Resume Summary
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Application Rating
+                    </th>
+                    <th scope="col" className="px-6 py-3">
                       Stage
                     </th>
                     <th scope="col" className="px-6 py-3 flex justify-center">
@@ -427,14 +509,14 @@ const Page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredApplicants?.data.length === 0 ? (
+                  {filteredApplicants?.data?.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="text-center h-10">
                         No applicants found
                       </td>
                     </tr>
                   ) : (
-                    filteredApplicants?.data.map((applicant, index) => (
+                    filteredApplicants?.data?.map((applicant, index) => (
                       <tr
                         key={applicant?.applicant?.id}
                         className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -477,6 +559,31 @@ const Page = () => {
                           >
                             View Profile
                           </a>
+                        </td>
+                        <td
+                          className="px-6 py-4 font-bold hover:cursor-pointer hover:text-blue-600 dark:text-blue-500"
+                          data-modal-target="profile-summary"
+                          data-modal-toggle="profile-summary"
+                          onClick={() => {
+                            openModal(
+                              jobIdParam,
+                              applicant?.applicant?.id?.toString(),
+                              "",
+                              "profile-summary"
+                            );
+                            handleResumeSummary(
+                              applicant?.applicant?.applicantDetails?.resume,
+                              jobApiResponse?.data?.jobDescription || ""
+                            );
+                          }}
+                        >
+                          View Summary
+                        </td>
+                        <td
+                          className="px-6 py-4 text-center font-bold hover:text-blue-600"
+                          title="It represents how much the applicant skills matched with the job skills"
+                        >
+                          {applicant?.applicationRating + "%" || "Not rated"}
                         </td>
                         <td className="py-4 relative">
                           <button
@@ -564,10 +671,14 @@ const Page = () => {
                           </a>
                           <a
                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
+                            data-modal-target="status"
+                            data-modal-toggle="status"
                             onClick={() =>
-                              handleStatusChange(
+                              openModal(
+                                jobIdParam,
                                 applicant?.applicant?.id?.toString(),
-                                "rejected"
+                                "rejected",
+                                "status"
                               )
                             }
                           >
@@ -580,6 +691,135 @@ const Page = () => {
                 </tbody>
               </table>
             </div>
+            {isModalOpen === "profile-summary" && (
+              <>
+                <div className="fixed inset-0 bg-black opacity-50" />
+                <div
+                  id="default-modal"
+                  tabIndex={-1}
+                  aria-hidden="true"
+                  className="overflow-y-auto overflow-x-hidden fixed flex z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+                >
+                  <div className="relative p-4 w-full max-w-5xl max-h-full">
+                    {/* Modal content */}
+                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                      {/* Modal header */}
+                      <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                          Resume Summary
+                        </h3>
+                        {/* <button
+                          type="button"
+                          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-hide="default-modal"
+                          onClick={() => openModal("summary")}
+                        > */}
+
+                        <button
+                          type="button"
+                          onClick={closeModal}
+                          className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-toggle="select-modal"
+                        >
+                          <svg
+                            className="w-3 h-3"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 14"
+                          >
+                            <path
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                            />
+                          </svg>
+                          <span className="sr-only">Close modal</span>
+                        </button>
+                        {/* </button> */}
+                      </div>
+                      {/* Modal body */}
+                      <div className="p-4 md:p-5 space-y-4">
+                        <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                          {tempResumeSummary || "Generating Summary..."}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {isModalOpen === "status" && (
+              <div
+                id="select-modal"
+                tabIndex={-1}
+                aria-hidden="true"
+                className="flex items-center justify-center bg-black bg-opacity-50 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full"
+              >
+                <div className="relative p-4 w-full max-w-md max-h-full">
+                  <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        Feedback on Rejection
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={closeModal}
+                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="select-modal"
+                      >
+                        <svg
+                          className="w-3 h-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 14"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                          />
+                        </svg>
+                        <span className="sr-only">Close modal</span>
+                      </button>
+                    </div>
+                    <div className="p-4 md:p-5">
+                      <form>
+                        <div className="pt-1">
+                          <textarea
+                            id="feedback"
+                            name="feedback"
+                            rows={4}
+                            className="shadow-sm focus:ring-indigo-500 focus:border-blue-700 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Enter your feedback here"
+                            onChange={(e) => {
+                              setApplicationFeedback(e.target.value);
+                            }}
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="mt-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-700 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          onClick={() => {
+                            console.log("Feedback submitted");
+                            handleFeedback();
+                            closeModal();
+                          }}
+                        >
+                          Submit Feedback
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="flex flex-col">
               <h6 className=" text-gray-900 dark:text-gray-50 font-bold">

@@ -17,6 +17,7 @@ import "../../../styles/sidebar.css";
 
 const Page = () => {
   const router = useRouter();
+  const [token, setToken] = useState<string>("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [designation, setDesignation] = useState("");
@@ -54,6 +55,7 @@ const Page = () => {
       setDecodedData(decodedData);
       setCompanyIdTemp(decodedData.companyId.toString() || "");
       setRecruiterId(decodedData.recruiterId);
+      setToken(jwt);
     };
 
     parseJwtFromSession();
@@ -116,6 +118,7 @@ const Page = () => {
       password,
       companyId,
       recruiterId,
+      token,  
     };
     console.log(data);
     dispatch(createEmployee(data));

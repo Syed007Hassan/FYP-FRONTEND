@@ -6,6 +6,7 @@ import Image from "next/image";
 import { job_list } from "@/data/data";
 import image_1 from "../../../../public/job.png";
 import { DecodedData } from "@/data/data";
+import Alert from "@mui/material/Alert";
 
 import Chatbot from "@/components/Chatbot";
 import { FaQuestion } from "react-icons/fa6";
@@ -21,6 +22,10 @@ import { JobLocation } from "@/types/job";
 import { WithContext as ReactTags } from "react-tag-input";
 import SKILLS from "@/data/skills";
 import { Job } from "@/types/job";
+import jobCategoryList from "@/data/jobCateory";
+import jobTypes from "@/data/jobTypes";
+
+import applicantImage from "../../../../public/applicantt.jpg";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -62,6 +67,7 @@ const Page = () => {
   const [restrictedRange, setRestrictedRange] = useState("");
   const [restrictedDropdownOpen, setRestrictedDropdownOpen] = useState(false);
   const [clickRestricted, setClickRestricted] = useState(false);
+  const [message, setMessage] = useState("");
   // const [dispatchSuccess, setDispatchSuccess] = useState(false);
 
   type StateData = {
@@ -97,10 +103,13 @@ const Page = () => {
     desc: "",
   });
 
+  const [jobDesc, setJobDesc] = useState("");
+  const [urgency, setUrgency] = useState("");
   const [decodedData, setDecodedData] = useState<DecodedData>();
   const [companyId, setCompanyId] = useState<string>("");
   const [recruiterId, setRecruiterId] = useState<string>("");
   const [clickLocation, setClickLocation] = useState(false);
+  const [jwt, setJwt] = useState<string>("");
 
   // skills attributes
   type Tags = { id: string; text: string }[];
@@ -135,6 +144,7 @@ const Page = () => {
         throw new Error("Invalid session");
       }
       const jwt: string = session.toString();
+      setJwt(jwt);
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       console.log("decodedData:", decodedData);
@@ -158,7 +168,7 @@ const Page = () => {
     e.preventDefault();
 
     if (clickLocation === false) {
-      alert("Please click on the location icon to get the location.");
+      setMessage("Please click on the location icon to get current location");
       return;
     }
 
@@ -168,25 +178,69 @@ const Page = () => {
       jobExperience: job.experience,
       jobQualification: job.qualification,
       // company: string;
-      jobLocation: job.location,
+      jobLocation: {
+        area: add?.town || "",
+        city: add?.city || "",
+        country: add?.country || "",
+        latitude: latitude,
+        longitude: longitude,
+      },
       jobSalary: job.salary,
       jobType: selectedType,
-      jobUrgency: job.urgency,
+      jobUrgency: urgency,
       jobCategory: selectedCategory,
-      jobDescription: job.desc,
+      jobDescription: jobDesc,
       jobStatus: "pending",
       jobSkills: tags.map((tag) => tag.text),
       restrictedLocationRange: clickRestricted ? restrictedRange : "",
     };
 
+    if (temp_job.jobTitle === "") {
+      setMessage("Please enter job title");
+      return;
+    } else if (temp_job.jobExperience === "") {
+      setMessage("Please enter experience");
+      return;
+    } else if (temp_job.jobQualification === "") {
+      setMessage("Please enter qualification");
+      return;
+    } else if (temp_job.jobSalary === "") {
+      setMessage("Please enter salary");
+      return;
+    } else if (temp_job.jobType === "Select a type") {
+      setMessage("Please select a job type");
+      return;
+    } else if (temp_job.jobCategory === "Select a category") {
+      setMessage("Please select a job category");
+      return;
+    } else if (temp_job.jobUrgency === "") {
+      setMessage("Please enter urgency");
+      return;
+    } else if (temp_job.jobDescription === "") {
+      setMessage("Please enter job description");
+      return;
+    } else if (temp_job.jobSkills.length === 0) {
+      setMessage("Please enter job skills");
+      return;
+    } else if (clickRestricted && temp_job.restrictedLocationRange === "") {
+      setMessage("Please enter restricted location range");
+      return;
+    }
+
     try {
-      await dispatch(createJob({ companyId, recruiterId, job: temp_job }));
+      await dispatch(
+        createJob({ companyId, recruiterId, job: temp_job, token: jwt })
+      );
       // setDispatchSuccess(true);
     } catch (error) {
       console.error("Error:", error);
       // handle error here
     }
   };
+
+  setTimeout(() => {
+    setMessage("");
+  }, 6000);
 
   // useEffect(() => {
   //   console.log(job);
@@ -216,6 +270,14 @@ const Page = () => {
     }
   };
 
+  // const setCurrentLocation = async () => {
+  //   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => setAdd(data.address))
+  //     .catch((error) => console.error("Error:", error));
+  // };
+
   useEffect(() => {
     const getCurrentLocation = async () => {
       const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
@@ -227,19 +289,19 @@ const Page = () => {
     getCurrentLocation();
   }, [latitude, longitude]);
 
-  useEffect(() => {
-    if (add) {
-      const { country, city, town } = add;
-      const location = {
-        area: town,
-        city: city,
-        country: country,
-        latitude: latitude,
-        longitude: longitude,
-      };
-      setJob({ ...job, location: location });
-    }
-  }, [add, latitude, longitude, job]);
+  // useEffect(() => {
+  //   if (add) {
+  //     const { country, city, town } = add;
+  //     const location = {
+  //       area: town,
+  //       city: city,
+  //       country: country,
+  //       latitude: latitude,
+  //       longitude: longitude,
+  //     };
+  //     setJob({ ...job, location: location });
+  //   }
+  // }, [add, latitude, longitude, job]);
 
   return (
     <div className="min-h-screen justify-center overflow-x-hidden">
@@ -249,7 +311,7 @@ const Page = () => {
           style={{ width: "580px", height: "560px" }}
         >
           <Image
-            src="/applicant.png"
+            src={applicantImage}
             alt="Picture of the author"
             width={500}
             height={500}
@@ -257,9 +319,15 @@ const Page = () => {
             priority
           />
         </div>
-        <div className="pt-16 pb-16 lg:pl-10 lg:pr-20 lg:-mr-0 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
+        <div className="border-2 bg-gray-50 rounded mt-4 lg:mr-8 lg-mb-8 lg:pl-10 lg:pr-10 md:-mr-4 sm:ml-10 sm:mr-10 md:ml-0">
           <div className="pr-2 pl-2">
-            <h1 className="text-4xl text-blue-900 pt-5">Add A Job</h1>
+            <h1 className="text-4xl text-blue-900 pt-5">Add Job</h1>
+
+            {message && (
+              <Alert severity="error" className="mt-4">
+                {message}
+              </Alert>
+            )}
 
             <form className="mt-8 space-y-6">
               <div className="rounded-md shadow-sm -space-y-px flex flex-col gap-4">
@@ -283,7 +351,7 @@ const Page = () => {
                       required
                     />
                   </div>
-                  <div className="pl-4">
+                  <div className="pl-4 relative">
                     <label
                       htmlFor="jobType"
                       className=" mb-2  font-bold block text-sm text-gray-900 dark:text-white"
@@ -316,44 +384,27 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${typeDropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 h-36 overflow-auto ${
+                        typeDropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownDefaultButton"
                       >
-                        <li
-                          onClick={() => {
-                            setTypeDropdownOpen(false);
-                            setSelectedType("Full Time");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Full Time
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setTypeDropdownOpen(false);
-                            setSelectedType("Part Time");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Part Time
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setTypeDropdownOpen(false);
-                            setSelectedType("Remote");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Remote
-                          </p>
-                        </li>
-                        {/* Add more options as needed */}
+                        {jobTypes.map((type) => (
+                          <li
+                            key={type}
+                            onClick={() => {
+                              setTypeDropdownOpen(false);
+                              setSelectedType(type);
+                            }}
+                          >
+                            <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                              {type}
+                            </p>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -454,43 +505,27 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${dropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 h-36 overflow-auto ${
+                        dropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownDefaultButton"
                       >
-                        <li
-                          onClick={() => {
-                            setDropdownOpen(false);
-                            setSelectedCategory("Permanent");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Permanent
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setDropdownOpen(false);
-                            setSelectedCategory("Contract");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Contract
-                          </p>
-                        </li>
-                        <li
-                          onClick={() => {
-                            setDropdownOpen(false);
-                            setSelectedCategory("Internship");
-                          }}
-                        >
-                          <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Internship
-                          </p>
-                        </li>
+                        {jobCategoryList.map((category) => (
+                          <li
+                            key={category}
+                            onClick={() => {
+                              setDropdownOpen(false);
+                              setSelectedCategory(category);
+                            }}
+                          >
+                            <p className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                              {category}
+                            </p>
+                          </li>
+                        ))}
 
                         {/* Add more options as needed */}
                       </ul>
@@ -513,11 +548,11 @@ const Page = () => {
                           autoComplete="given-name"
                           value={
                             add
-                              ? job.location.area +
-                              ", " +
-                              job?.location?.city +
-                              ", " +
-                              job?.location?.country
+                              ? add?.town +
+                                ", " +
+                                add?.city +
+                                ", " +
+                                add?.country
                               : undefined
                           }
                           required
@@ -544,9 +579,10 @@ const Page = () => {
                       className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                       autoComplete="given-name"
                       // value="companyName"
-                      onChange={(e) => {
-                        setJob({ ...job, urgency: e.target.value });
-                      }}
+                      // onChange={(e) => {
+                      //   setJob({ ...job, urgency: e.target.value });
+                      // }}
+                      onChange={(e) => setUrgency(e.target.value)}
                       required
                     />
                   </div>
@@ -560,7 +596,7 @@ const Page = () => {
                       Job Description
                     </label>
                     <label
-                      className="font-bold block mb-2 text-sm text-gray-900 dark:text-white bg-blue-100 p-2 rounded hover:cursor-pointer"
+                      className="font-bold block mb-2 text-sm text-white dark:text-white bg-blue-700 p-2 rounded hover:cursor-pointer"
                       onClick={() => setClick(!click)}
                     >
                       AI Assistant
@@ -578,15 +614,16 @@ const Page = () => {
                   <ReactQuill
                     theme="snow"
                     onChange={(content) => {
-                      setJob({ ...job, desc: content });
+                      // setJob({ ...job, desc: content });
+                      setJobDesc(content);
                     }}
                   />
                 </div>
                 <div className="flex justify-between">
-                  <div className="w-72">
+                  <div className="w-1000">
                     <label
                       htmlFor="skills"
-                      className="block text-sm pb-2 font-medium text-gray-700"
+                      className="mb-2 font-bold block text-sm text-gray-900 dark:text-white"
                     >
                       Skills
                     </label>
@@ -639,8 +676,9 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${restrictedDropdownOpen ? "" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${
+                        restrictedDropdownOpen ? "" : "hidden"
+                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"

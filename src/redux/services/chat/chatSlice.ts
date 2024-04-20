@@ -1,42 +1,27 @@
-// import { createSlice, PayloadAction, SerializedError } from "@reduxjs/toolkit";
-// import { chatApi } from "./chatAction";
+import { getResumeSummary } from "./chatAction";
+import { createSlice } from "@reduxjs/toolkit";
 
-// interface ChatState {
-//   loading: "idle" | "pending" | "succeeded" | "failed";
-//   error: string | null;
-//   res: string | null;
-// }
+const initialState = {
+  resumeSummary: null,
+  success: false,
+  loading: false,
+  error: "",
+};
 
-// const initialState: ChatState = {
-//   loading: "idle",
-//   error: null,
-//   res: null,
-// };
+const ResumeSummarySlice = createSlice({
+  name: "resumeSummary",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getResumeSummary.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getResumeSummary.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.resumeSummary = payload.data;
+      state.success = true;
+    });
+  },
+});
 
-// const chatSlice = createSlice({
-//   name: "chat",
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(chatApi.pending, (state) => {
-//         state.loading = "pending";
-//         state.error = null;
-//       })
-//       .addCase(chatApi.fulfilled, (state, action: PayloadAction<any>) => {
-//         state.loading = "succeeded";
-//         state.error = null;
-//         state.res = action.payload;
-//       })
-//         .addCase(chatApi.rejected, (state, action: PayloadAction<any>) => {
-//           state.loading = "failed";
-//           state.error = action.payload;
-//         });
-//     //   .addDefaultCase((state, action) => {
-//     //     state.loading = "failed";
-//     //     state.error = action.payload;
-//     //   });
-//   },
-// });
-
-// export default chatSlice.reducer;
+export const resumeSummaryReducer = ResumeSummarySlice.reducer;

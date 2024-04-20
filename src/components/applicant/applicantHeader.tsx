@@ -16,16 +16,20 @@ import { parseJwt } from "@/lib/Constants";
 
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { toggleSidebar } from "../../redux/features/sidebarStateAction";
+import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applicantAction";
 
-interface HeaderProps {}
 
-const NavBar: React.FC<HeaderProps> = () => {
+
+const NavBar = () => {
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [decodedData, setDecodedData] = useState<any>();
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [role, setRole] = useState<string>("");
+  const [applicantId, setApplicantId] = useState<string>("");
+
+  const { data, error, isLoading } = useGetApplicantDetailsQuery({ id: applicantId});
 
   const toggleNotificationDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -47,6 +51,7 @@ const NavBar: React.FC<HeaderProps> = () => {
       setEmail(decodedData?.email || "");
       setName(decodedData?.name || "");
       setRole(decodedData?.role || "");
+      setApplicantId(decodedData?.id.toString() || "1");
     };
 
     parseJwtFromSession();
@@ -96,7 +101,7 @@ const NavBar: React.FC<HeaderProps> = () => {
         </div>
 
         <div className="flex space-x-8 items-center">
-          <div className="relative">
+          {/* <div className="relative">
             <button
               id="dropdownNotificationButton"
               data-dropdown-toggle="dropdownNotification"
@@ -117,7 +122,6 @@ const NavBar: React.FC<HeaderProps> = () => {
               <div className="absolute block w-3 h-3 bg-red-500 border-2 border-white rounded-full -top-0.5 start-2.5 dark:border-gray-900"></div>
             </button>
 
-            {/* Notification dropdown menu */}
             <div
               id="dropdownNotification"
               className={`z-20 ${
@@ -224,7 +228,7 @@ const NavBar: React.FC<HeaderProps> = () => {
                 </div>
               </a>
             </div>
-          </div>
+          </div> */}
           <div className="relative">
             <button
               id="dropdownAvatarNameButton"
@@ -236,7 +240,9 @@ const NavBar: React.FC<HeaderProps> = () => {
               <span className="sr-only">Open user menu</span>
               <Image
                 className="w-8 h-8 me-2 rounded-full"
-                src={companylogo} // replace with the actual path to the user's image
+                src={data?.data?.profilePicture ? data?.data?.profilePicture : companylogo} // replace with the actual path to the user's image
+                width={32}
+                height={32}
                 alt="user photo"
               />
               {name}

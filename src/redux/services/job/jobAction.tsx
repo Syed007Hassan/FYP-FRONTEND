@@ -4,19 +4,31 @@ import { Backend_URL } from "@/lib/Constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { JobResponse, SingleJobResponse } from "@/types/job";
 import { Jobs } from "@/data/data";
-
+import {
+  CompanyCount,
+  ApplicationCount,
+  ApplicationsInLastFiveJobs,
+} from "@/types/company";
 
 type CreateJobArgs = {
   companyId: string;
   recruiterId: string;
   job: Jobs;
+  token: string;
 };
 export const createJob = createAsyncThunk(
   "job/createJob",
-  async ({ companyId, recruiterId, job }: CreateJobArgs) => {
+  async ({ companyId, recruiterId, job, token }: CreateJobArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const response = await axios.post(
       `${Backend_URL}/job/createJob/${recruiterId}/${companyId}`,
-      job
+      job,
+      config
     );
     return response.data;
   }
@@ -24,10 +36,17 @@ export const createJob = createAsyncThunk(
 
 export const updateJobStatus = createAsyncThunk(
   "job/updateJobStatus",
-  async ({ jobId, status }: { jobId: string; status: string }) => {
+  async ({ jobId, status, token }: { jobId: string; status: string; token: string }) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     const response = await axios.patch(
       `${Backend_URL}/job/updateJobStatus/${jobId}`,
-      { status }
+      { status },
+      config
     );
     return response.data;
   }
@@ -54,7 +73,39 @@ export const JobApi = createApi({
     getAllJobs: builder.query<JobResponse, void>({
       query: () => `findAll`,
     }),
+    getTotalJobs: builder.query<CompanyCount, { id: number }>({
+      query: ({ id }) => `findTotalJobsByCompanyId/${id}`,
+    }),
+    getActiveJobs: builder.query<CompanyCount, { id: number }>({
+      query: ({ id }) => `findActiveJobsByCompanyId/${id}`,
+    }),
+    getJobsCountInMonths: builder.query<ApplicationCount, { id: number }>({
+      query: ({ id }) => `findJobsCountInAllMonthsByCompanyId/${id}`,
+    }),
+    getApplicationsCountInMonths: builder.query<
+      ApplicationCount,
+      { companyId: number }
+    >({
+      query: ({ companyId }) =>
+        `findApplicationsCountInAllMonthsByCompanyId/${companyId}`,
+    }),
+    getApplicationsCountInLastFiveJobs: builder.query<
+      ApplicationsInLastFiveJobs,
+      { companyId: number }
+    >({
+      query: ({ companyId }) =>
+        `findApplicationsInLastFiveJobsByCompanyId/${companyId}`,
+    }),
   }),
 });
 
-export const { useGetJobsQuery, useGetJobQuery, useGetAllJobsQuery } = JobApi;
+export const {
+  useGetJobsQuery,
+  useGetJobQuery,
+  useGetAllJobsQuery,
+  useGetActiveJobsQuery,
+  useGetApplicationsCountInLastFiveJobsQuery,
+  useGetApplicationsCountInMonthsQuery,
+  useGetJobsCountInMonthsQuery,
+  useGetTotalJobsQuery,
+} = JobApi;

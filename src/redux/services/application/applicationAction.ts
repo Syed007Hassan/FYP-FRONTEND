@@ -7,32 +7,50 @@ import { ApplicationResponse } from "@/types/application";
 type CreateApplicationArgs = {
   jobId: string;
   applicantId: string;
+  token: string;
 };
 
 type UpdateApplicationStageArgs = {
   jobId: string;
   applicantId: string;
   stageId: string;
+  token: string;
 };
 
 type UpdateApplicationStatusArgs = {
   jobId: string;
   applicantId: string;
   status: string;
+  token: string;
+};
+
+type updateApplicationFeedbackArgs = {
+  jobId: string;
+  applicantId: string;
+  applicationFeedback: string;
+  token: string;
 };
 
 export const createApplication = createAsyncThunk(
   "application/createApplication",
-  async ({ jobId, applicantId }: CreateApplicationArgs) => {
+  async ({ jobId, applicantId, token }: CreateApplicationArgs) => {
     const tem_data = {
       status: "pending",
       applicationFeedback: "pending",
+      applicationRating: "0%",
+    };
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
 
     try {
       const response = await axios.post(
         `${Backend_URL}/application/createApplication/${jobId}/${applicantId}`,
-        tem_data
+        tem_data,
+        config
       );
       return response.data;
     } catch (err: any) {
@@ -43,10 +61,16 @@ export const createApplication = createAsyncThunk(
 
 export const updateApplicationStage = createAsyncThunk(
   "application/updateApplicationStage",
-  async ({ jobId, applicantId, stageId }: UpdateApplicationStageArgs) => {
+  async ({ jobId, applicantId, stageId, token }: UpdateApplicationStageArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
     try {
       const response = await axios.patch(
-        `${Backend_URL}/application/updateApplicationStage/${jobId}/${applicantId}/${stageId}`
+        `${Backend_URL}/application/updateApplicationStage/${jobId}/${applicantId}/${stageId}`,
+        config
       );
       return response.data;
     } catch (err: any) {
@@ -57,11 +81,41 @@ export const updateApplicationStage = createAsyncThunk(
 
 export const updateApplicationStatus = createAsyncThunk(
   "application/updateApplicationStatus",
-  async ({ jobId, applicantId, status }: UpdateApplicationStatusArgs) => {
+  async ({ jobId, applicantId, status, token }: UpdateApplicationStatusArgs) => {
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
     try {
       const response = await axios.patch(
         `${Backend_URL}/application/updateApplicationStatus/${jobId}/${applicantId}`,
-        { status }
+        { status },
+        config
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
+export const updateApplicationFeedback = createAsyncThunk(
+  "application/updateApplicationFeedback",
+  async ({ jobId, applicantId, applicationFeedback, token }: updateApplicationFeedbackArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await axios.patch(
+        `${Backend_URL}/application/updateApplicationFeedback/${jobId}/${applicantId}`,
+        { applicationFeedback },
+        config
       );
       return response.data;
     } catch (err: any) {

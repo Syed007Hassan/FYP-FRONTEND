@@ -92,6 +92,7 @@ const ApplicationFlow = ({ applicantList }: Props) => {
           ...nodes,
           {
             id: stage?.stageId.toString(),
+            type: "custom",
             position: { x: (x = x), y: (y += 50) },
             data: { label: stage?.stageName, category: stage?.category },
           },

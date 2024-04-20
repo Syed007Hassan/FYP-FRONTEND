@@ -64,23 +64,23 @@ export function middleware(req: NextRequest) {
 
   // if token but not recruiter and trying to access recruiter page
 
-  // if (
-  //   token &&
-  //   tokenData.role !== "employer" &&
-  //   req.nextUrl.pathname.startsWith("/recruiter")
-  // ) {
-  //   return NextResponse.redirect(new URL("/applicant", req.url));
-  // }
+  if (
+    token &&
+    tokenData.role !== "employer" &&
+    req.nextUrl.pathname.startsWith("/recruiter")
+  ) {
+    return NextResponse.redirect(new URL("/applicant", req.url));
+  }
 
   // if token but not applicant and trying to access applicant page
 
-  // if (
-  //   token &&
-  //   tokenData.role !== "employee" &&
-  //   req.nextUrl.pathname.startsWith("/applicant")
-  // ) {
-  //   return NextResponse.redirect(new URL("/recruiter", req.url));
-  // }
+  if (
+    token &&
+    tokenData.role !== "employee" &&
+    req.nextUrl.pathname.startsWith("/applicant")
+  ) {
+    return NextResponse.redirect(new URL("/recruiter", req.url));
+  }
 
   // redirected from oauth with token in url params and trying to access recruiter page
 

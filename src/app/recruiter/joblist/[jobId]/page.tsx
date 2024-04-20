@@ -49,6 +49,7 @@ const Page = () => {
   ];
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
+  const jobState = useAppSelector((state) => state.jobReducer.success);
 
   const dispatch = useAppDispatch();
 
@@ -64,6 +65,7 @@ const Page = () => {
     error: stageError,
     isLoading: stageLoading,
     isSuccess,
+    refetch: refetchStage,
   } = useGetStageQuery({ id: jobId });
 
   useEffect(() => {
@@ -105,16 +107,13 @@ const Page = () => {
     console.log("job", job);
   }, [job]);
 
-  const handlePublishJob = () => {
+  const handlePublishJob = (status: string) => {
     // console.log("workflow", workflow);
+    console.log("status", status);
     setIsClicked(true);
+
     if (workflow?.success) {
-      if (job?.jobStatus === "Active") {
-        dispatch(updateJobStatus({ jobId: jobId, status: "Inactive", token }));
-        setIsPublish(true);
-        return;
-      }
-      dispatch(updateJobStatus({ jobId: jobId, status: "Active", token }));
+      dispatch(updateJobStatus({ jobId: jobId, status: status, token }));
       setIsPublish(true);
     } else {
       setIsPublish(false);
@@ -133,6 +132,10 @@ const Page = () => {
       refetch();
     }
   }, [isPublish, refetch]);
+
+  useEffect(() => {
+      refetchStage();
+  }, [refetchStage, workflow]);
 
   return (
     <>
@@ -373,14 +376,18 @@ const Page = () => {
                               <i className="fas fa-bookmark"></i> Add Workflow
                             </Link>
 
-                            <button
+                            <select
                               className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
-                              onClick={handlePublishJob}
+                              value={job?.jobStatus || ""}
+                              onChange={(e) =>
+                                handlePublishJob(e.target.value.toString())
+                              }
                             >
-                              {job?.jobStatus === "Active"
-                                ? "Unpublish Job"
-                                : "Publish Job"}
-                            </button>
+                              <option value="">Select a status</option>
+                              <option value="Active">Active</option>
+                              <option value="Evaluating">Evaluating</option>
+                              <option value="UnActive">Un Active</option>
+                            </select>
 
                             <Link
                               href="/recruiter/joblist/[jobId]/analytics"

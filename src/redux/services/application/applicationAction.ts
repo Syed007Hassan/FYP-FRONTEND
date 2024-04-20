@@ -24,6 +24,13 @@ type UpdateApplicationStatusArgs = {
   token: string;
 };
 
+type updateApplicationFeedbackArgs = {
+  jobId: string;
+  applicantId: string;
+  applicationFeedback: string;
+  token: string;
+};
+
 export const createApplication = createAsyncThunk(
   "application/createApplication",
   async ({ jobId, applicantId, token }: CreateApplicationArgs) => {
@@ -86,6 +93,28 @@ export const updateApplicationStatus = createAsyncThunk(
       const response = await axios.patch(
         `${Backend_URL}/application/updateApplicationStatus/${jobId}/${applicantId}`,
         { status },
+        config
+      );
+      return response.data;
+    } catch (err: any) {
+      return err.message;
+    }
+  }
+);
+
+export const updateApplicationFeedback = createAsyncThunk(
+  "application/updateApplicationFeedback",
+  async ({ jobId, applicantId, applicationFeedback, token }: updateApplicationFeedbackArgs) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const response = await axios.patch(
+        `${Backend_URL}/application/updateApplicationFeedback/${jobId}/${applicantId}`,
+        { applicationFeedback },
         config
       );
       return response.data;

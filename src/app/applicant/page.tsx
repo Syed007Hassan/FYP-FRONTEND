@@ -87,7 +87,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (allApplicationsData) {
       setActiveJobs(
-        allApplicationsData?.data.filter(
+        allApplicationsData?.data?.filter(
           (job: Application) => job.status.toLowerCase() === "approved"
         )
       );

@@ -146,7 +146,7 @@ const UpdateProfile = () => {
       experience: experience,
       relocation: temp_relocation,
       phoneNo: phone,
-      profilePicture: "adas",
+      profilePicture: "null",
       resume: "adas",
       languages: "adas",
     };
@@ -337,11 +337,17 @@ const UpdateProfile = () => {
                       <h3 className="text-blue-500 font-bold">
                         Education Details
                       </h3>
-                      <p>Institute: {institute}</p>
-                      <p>Degree Title: {degreeTitle}</p>
-                      <p>Degree Name: {degreeName}</p>
-                      <p>Start Date: {startDate}</p>
-                      <p>End Date: {endDate}</p>
+                      {
+                        education.map((edu) => (
+                          <div key={edu.startDate}>
+                            <p>Institute: {edu.institution}</p>
+                            <p>Degree Name: {edu.degree}</p>
+                            <p>Start Date: {edu.startDate}</p>
+                            <p>End Date: {edu.endDate}</p>
+                            <br />
+                          </div>
+                        ))
+                      }
                     </div>
                   </div>
                   <div className="flex">
@@ -349,10 +355,17 @@ const UpdateProfile = () => {
                       <h3 className="text-blue-500 font-bold">
                         Experience Details
                       </h3>
-                      <p>Company: {company}</p>
-                      <p>Position: {position}</p>
-                      <p>Start Date: {expStartDate}</p>
-                      <p>End Date: {expEndDate}</p>
+                      {
+                        experience.map((exp) => (
+                          <div key={exp.startDate}>
+                            <p>Company: {exp.company}</p>
+                            <p>Position: {exp.title}</p>
+                            <p>Start Date: {exp.startDate}</p>
+                            <p>End Date: {exp.endDate}</p>
+                            <br />
+                          </div>
+                        ))
+                      }
                       <p>Reallocation: {reallocation}</p>
 
                       <p>Skills: {tags.map((tag) => tag.text).join(", ")}</p>

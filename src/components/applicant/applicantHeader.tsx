@@ -240,7 +240,7 @@ const NavBar = () => {
               <span className="sr-only">Open user menu</span>
               <Image
                 className="w-8 h-8 me-2 rounded-full"
-                src={data?.data?.profilePicture ? data?.data?.profilePicture : companylogo} // replace with the actual path to the user's image
+                src={data?.data?.profilePicture && data?.data?.profilePicture !== "null" ? data?.data?.profilePicture : companylogo} // replace with the actual path to the user's image
                 width={32}
                 height={32}
                 alt="user photo"

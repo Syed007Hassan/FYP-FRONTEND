@@ -31,12 +31,13 @@ export const createEmployee = createAsyncThunk<
     role: string;
     companyId: number;
     token: string;
+    recruiterId: number;
   },
   { rejectValue: string }
 >(
   "/auth/registerCompanyEmployee",
   async (
-    { name, email, password, phone, designation, role, companyId, token },
+    { name, email, password, phone, designation, role, companyId, token, recruiterId },
     { rejectWithValue }
   ) => {
     try {
@@ -48,7 +49,7 @@ export const createEmployee = createAsyncThunk<
 
       //   console.log(name, email, password, phone, designation);
       await axios.post(
-        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}`,
+        `${Backend_URL}/auth/registerCompanyEmployee/${companyId}/${recruiterId}`,
         { name, email, password, phone, designation, role },
         config
       );

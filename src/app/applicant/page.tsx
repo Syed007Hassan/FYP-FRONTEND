@@ -63,10 +63,9 @@ export default function Dashboard() {
       id: applicantId,
     });
 
-  const { data: allApplicationsData, isLoading } =
-    useGetApplicationsByApplicantIdQuery({
-      applicantId: applicantId,
-    });
+  const { data: allApplicationsData } = useGetApplicationsByApplicantIdQuery({
+    applicantId: applicantId,
+  });
 
   const { data: recentJobApplicationsWithFeedbackData } =
     useFindRecentJobApplicationsWithFeedbackQuery({
@@ -87,12 +86,12 @@ export default function Dashboard() {
   useEffect(() => {
     if (allApplicationsData) {
       setActiveJobs(
-        allApplicationsData?.data.filter(
+        allApplicationsData?.data?.filter(
           (job: Application) => job.status.toLowerCase() === "approved"
         )
       );
       setPendingJobs(
-        allApplicationsData?.data.filter(
+        allApplicationsData?.data?.filter(
           (job: Application) => job.status.toLowerCase() === "pending"
         )
       );

@@ -7,5 +7,6 @@ const jobTypes = [
   "Internship",
   "Remote",
 ];
+export const qualifications = ["Intermediate", "Bachelors", "Masters", "PhD"];
 
 export default jobTypes;

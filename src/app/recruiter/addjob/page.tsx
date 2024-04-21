@@ -24,6 +24,7 @@ import SKILLS from "@/data/skills";
 import { Job } from "@/types/job";
 import jobCategoryList from "@/data/jobCateory";
 import jobTypes from "@/data/jobTypes";
+import { qualifications } from "@/data/jobTypes";
 
 import applicantImage from "../../../../public/applicantt.jpg";
 
@@ -384,9 +385,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 h-36 overflow-auto ${
-                        typeDropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 h-36 overflow-auto ${typeDropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -457,7 +457,7 @@ const Page = () => {
                     >
                       Qualification
                     </label>
-                    <input
+                    {/* <input
                       type="text"
                       id="qalification"
                       placeholder="Bachelors"
@@ -468,7 +468,20 @@ const Page = () => {
                         setJob({ ...job, qualification: e.target.value });
                       }}
                       required
-                    />
+                    /> */}
+                    <select
+                      id="qualification"
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      onChange={(e) => setJob({ ...job, qualification: e.target.value })}
+                      required
+                    >
+                      <option value="">Select qualification</option>
+                      {qualifications.map((qualification, index) => (
+                        <option key={index} value={qualification}>
+                          {qualification}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="grid grid-rows-1 grid-flow-col gap-5">
@@ -505,9 +518,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 h-36 overflow-auto ${
-                        dropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 h-36 overflow-auto ${dropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -549,10 +561,10 @@ const Page = () => {
                           value={
                             add
                               ? add?.town +
-                                ", " +
-                                add?.city +
-                                ", " +
-                                add?.country
+                              ", " +
+                              add?.city +
+                              ", " +
+                              add?.country
                               : undefined
                           }
                           required
@@ -565,7 +577,7 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="">
+                  {/* <div className="">
                     <label
                       htmlFor="urgency"
                       className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
@@ -585,6 +597,24 @@ const Page = () => {
                       onChange={(e) => setUrgency(e.target.value)}
                       required
                     />
+                  </div> */}
+                  <div className="">
+                    <label
+                      htmlFor="urgency"
+                      className="mb-2 font-bold block text-sm text-gray-900 dark:text-white"
+                    >
+                      Urgency
+                    </label>
+                    <select
+                      id="Urgency"
+                      className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                      onChange={(e) => setUrgency(e.target.value)}
+                      required
+                    >
+                      <option value="">Select urgency</option>
+                      <option value="Yes">Yes</option>
+                      <option value="No">No</option>
+                    </select>
                   </div>
                 </div>
                 <div>
@@ -676,9 +706,8 @@ const Page = () => {
                     </button>
                     <div
                       id="dropdown"
-                      className={`z-10 ${
-                        restrictedDropdownOpen ? "" : "hidden"
-                      } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
+                      className={`z-10 ${restrictedDropdownOpen ? "" : "hidden"
+                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700`}
                     >
                       <ul
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"

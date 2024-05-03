@@ -33,9 +33,13 @@ import { Education, Experience, Contact } from "@/types/applicant";
 import UploadData from "@/types/uplaod";
 
 import "../../../styles/sidebar.css";
+import icon from "../../../../public/google-bard-icon.svg";
+import { useGetApplicantSupportQuery } from "@/redux/services/chat/chatAction";
+import UserSupport from "@/components/userSupport";
 
 const Profile = () => {
   const [currentModal, setCurrentModal] = useState(null);
+  const [clicked, setClicked] = useState(false);
 
   const dispatch = useAppDispatch();
   const [token, setToken] = useState<string>("");
@@ -364,6 +368,17 @@ const Profile = () => {
       {isLoading ? (
         <Loader />
       ) : (
+        <div>
+        <div className="fixed bottom-3 right-6 z-10">
+          <button
+          className="rounded-full bg-white p-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+            onClick={() => {
+              setClicked(!clicked);
+            }}
+          >
+            <Image src={icon} alt="icon" width={30} height={30} />
+          </button>
+        </div>
         <div
           className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
             }`}
@@ -987,6 +1002,8 @@ const Profile = () => {
             )}
           </div>
         </div>
+        <UserSupport click={clicked}/>
+      </div>
       )}
     </>
   );

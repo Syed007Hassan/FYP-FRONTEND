@@ -67,3 +67,8 @@ body {
 .img-container:hover .upload-label {
   opacity: 1;
 }
+
+input#react-select-2-input {
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: transparent !important;
+}

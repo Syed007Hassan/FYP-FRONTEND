@@ -328,15 +328,17 @@ const Page = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-center mt-9">
-                  <Pagination
-                    count={10}
-                    defaultPage={1}
-                    onChange={(event, page) => onPageChange(page)}
-                    size="large"
-                    className="mb-10"
-                  />
-                </div>
+                {jobList.length > 0 && (
+                  <div className="flex justify-center mt-9">
+                    <Pagination
+                      count={10}
+                      defaultPage={1}
+                      onChange={(event, page) => onPageChange(page)}
+                      size="large"
+                      className="mb-10"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </section>

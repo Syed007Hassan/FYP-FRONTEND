@@ -6,7 +6,10 @@ import { User } from "@/data/data";
 import { Dropdown } from "flowbite-react";
 // import { Assignee, assignee } from "@/data/data";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { addAssignee, resetSuccess } from "@/redux/services/assignee/assigneeAction";
+import {
+  addAssignee,
+  resetSuccess,
+} from "@/redux/services/assignee/assigneeAction";
 import { useGetUsersQuery } from "@/redux/services/Recruiter/recruiterAction";
 import { useGetAssigneeQuery } from "@/redux/services/assignee/assigneeAction";
 import { Stage } from "@/types/stage";
@@ -102,14 +105,22 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
     stageId: string,
     workflowId: string
   ) => {
+
+    if (assignee?.find((assignee) => assignee.recruiterId === userId)) {
+      return;
+    }
+
     const data = {
       assignees: [
+        ...(assignee ? assignee : []),
         {
           recruiterId: userId,
           name: userName,
         },
       ],
     };
+
+    // console.log("data", data);
 
     dispatch(addAssignee({ stageId, workflowId, assignees: data, token }));
   };
@@ -148,10 +159,7 @@ const Stages = ({ stage, index, workflowId }: StagesProps) => {
           </Dropdown>
         </div>
         <div className="flex gap-1">
-          {assignee &&
-            assignee?.map((assignee) => (
-              <p key={assignee.recruiterId}>{assignee?.name}</p>
-            ))}
+          {assignee && assignee.map((assignee) => assignee?.name).join(", ")}
         </div>
       </div>
     </div>

@@ -42,6 +42,9 @@ export const chatApi = createApi({
     getChat: builder.query<Chat, { query: string }>({
       query: ({ query }) => `getJobDescription/${query}`,
     }),
+    getApplicantSupport: builder.query<Chat, { query: string }>({
+      query: ({ query }) => `getApplicantSupport/${query}`,
+    }),
   }),
 });
 
@@ -64,4 +67,4 @@ export const getResumeSummary = createAsyncThunk(
   }
 );
 
-export const { useGetChatQuery } = chatApi;
+export const { useGetChatQuery, useGetApplicantSupportQuery } = chatApi;

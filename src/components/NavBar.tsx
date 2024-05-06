@@ -351,14 +351,14 @@ const NavBar: React.FC<HeaderProps> = () => {
                           Profile
                         </a>
                       </li>
-                      <li>
+                      {/* <li>
                         <a
                           href="/recruiter/addemployee"
                           className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         >
                           Add Employee
                         </a>
-                      </li>
+                      </li> */}
                       <li>
                         <a
                           href="/recruiter/company-profile"

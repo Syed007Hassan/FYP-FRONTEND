@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useGetChatQuery } from "@/redux/services/chat/chatAction";
+import { useGetApplicantSupportQuery } from "@/redux/services/chat/chatAction";
 import { FcGoogle } from "react-icons/fc";
 import bardIcon from "../../public/google-bard-icon.svg";
 
@@ -12,7 +12,7 @@ interface ChatbotProps {
   click: boolean;
 }
 
-const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
+const UserSupport: React.FC<ChatbotProps> = ({ click }) => {
   const [query, setQuery] = useState("Hi");
   const [input, setInput] = useState("");
 
@@ -20,7 +20,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
 
   const dispatch = useAppDispatch();
 
-  const { data, error, isLoading, isFetching } = useGetChatQuery({
+  const { data, error, isLoading, isFetching } = useGetApplicantSupportQuery({
     query: query,
   });
 
@@ -70,7 +70,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
       }`}
     >
       {/* Prompt Messages Container - Modify the height according to your need */}
-      <div className="flex w-3/12 flex-col absolute right-[5rem] top-2/3 ">
+      <div className="flex w-3/12 flex-col fixed right-6 bottom-16 ">
         {/* Prompt Messages */}
         <div className="flex flex-col overflow-y-auto rounded-[0.5rem] bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
           {/* <div className="flex flex-row px-4 py-8 sm:px-6">
@@ -201,4 +201,4 @@ const Chatbot: React.FC<ChatbotProps> = ({ click }) => {
   );
 };
 
-export default Chatbot;
+export default UserSupport;

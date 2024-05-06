@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import COUNTRIES from "@/data/countries";
 import CreatableSelect from "react-select/creatable";
 import { FaLocationCrosshairs } from "react-icons/fa6";
+import SKILLS from "@/data/skills";
 interface LocationAndSkillDetailsProps {
   country: string;
   city: string;
@@ -22,29 +23,6 @@ interface LocationAndSkillDetailsProps {
   nextStep: () => void;
   prevStep: () => void;
 }
-
-const SKILLS = [
-  "React",
-  "Angular",
-  "Vue",
-  "Node",
-  "Express",
-  "Django",
-  "Flask",
-  "Laravel",
-  "Spring",
-  "Hibernate",
-  "Django Rest Framework",
-  "Flask Restful",
-  "Laravel Sanctum",
-  "Spring Boot",
-  "Spring Security",
-  "Spring Data JPA",
-  "Spring Data MongoDB",
-  "Spring Data Redis",
-  "Spring Cloud",
-  "Spring Cloud Netflix",
-];
 
 const suggestions = SKILLS.map((country) => {
   return {
@@ -169,7 +147,9 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
             placeholder="G-9/1"
             // onChange={(e) => setArea(e.target.value)}
             required
-            value={area && city && country ? `${area}, ${city}, ${country}` : ""}
+            value={
+              area && city && country ? `${area}, ${city}, ${country}` : ""
+            }
           />
           <FaLocationCrosshairs
             className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:cursor-pointer hover:text-gray-600"
@@ -186,7 +166,7 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
         >
           Skills
         </label>
-        <ReactTags
+        {/* <ReactTags
           id="skills"
           tags={tags}
           suggestions={suggestions}
@@ -197,6 +177,28 @@ const LocationAndSkillDetails: React.FC<LocationAndSkillDetailsProps> = ({
           handleTagClick={handleTagClick}
           inputFieldPosition="top"
           autocomplete
+        /> */}
+        <CreatableSelect
+          isMulti
+          // options={suggestions}
+          options={SKILLS.map((skill) => ({
+            value: skill,
+            label: skill,
+          }))}
+          onChange={(newValue) => {
+            if (newValue) {
+              setTags(
+                newValue.map((tag) => ({
+                  id: tag.value,
+                  text: tag.value,
+                }))
+              );
+            }
+          }}
+          value={tags.map((tag) => ({
+            value: tag.id,
+            label: tag.text,
+          }))}
         />
       </div>
 

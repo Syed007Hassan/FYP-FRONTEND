@@ -50,6 +50,7 @@ const Page = () => {
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
   const jobState = useAppSelector((state) => state.jobReducer.success);
+  const [selectedOption, setSelectedOption] = useState("");
 
   const dispatch = useAppDispatch();
 
@@ -131,11 +132,11 @@ const Page = () => {
       console.log("Hello");
       refetch();
     }
-  }, [isPublish, refetch]);
+  }, [isPublish]);
 
   useEffect(() => {
-      refetchStage();
-  }, [refetchStage, workflow]);
+    refetchStage();
+  }, [refetchStage, stageData]);
 
   return (
     <>
@@ -378,12 +379,13 @@ const Page = () => {
 
                             <select
                               className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
-                              value={job?.jobStatus || ""}
-                              onChange={(e) =>
-                                handlePublishJob(e.target.value.toString())
-                              }
+                              value={selectedOption !== "" ? selectedOption : job?.jobStatus}
+                              onChange={(e) => {
+                                setSelectedOption(e.target.value);
+                                handlePublishJob(e.target.value);
+                              }}
                             >
-                              <option value="">Select a status</option>
+                              <option value="Select a status">Select a status</option>
                               <option value="Active">Active</option>
                               <option value="Evaluating">Evaluating</option>
                               <option value="UnActive">Un Active</option>

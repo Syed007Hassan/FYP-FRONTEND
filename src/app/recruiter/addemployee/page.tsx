@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import { useGetUserByIdQuery } from "@/redux/services/Recruiter/recruiterAction";
 import Recruiter from "@/types/recruiter";
 import Loader from "@/components/Loader";
+import { designations } from "@/data/jobTypes";
 
 import "../../../styles/sidebar.css";
 
@@ -118,7 +119,7 @@ const Page = () => {
       password,
       companyId,
       recruiterId,
-      token,  
+      token,
     };
     console.log(data);
     dispatch(createEmployee(data));
@@ -134,9 +135,8 @@ const Page = () => {
         <Loader />
       ) : (
         <div
-          className={`content overflow-hidden ${
-            isSidebarOpen ? "shifted" : ""
-          }`}
+          className={`content overflow-hidden ${isSidebarOpen ? "shifted" : ""
+            }`}
         >
           <div className=" min-h-screen h-full justify-center">
             <div className="grid grid-rows-1 grid-flow-col lg:ml-20 md:ml-10">
@@ -207,13 +207,19 @@ const Page = () => {
                           >
                             Designation
                           </label>
-                          <input
-                            type="text"
+                          <select
                             id="designation"
                             className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
                             onChange={(e) => setDesignation(e.target.value)}
                             required
-                          />
+                          >
+                            <option value="">Select a designation</option>
+                            {designations.map((designation) => (
+                              <option key={designation.value} value={designation.value}>
+                                {designation.label}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <div className="pl-4">
                           <label
@@ -284,9 +290,8 @@ const Page = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className={`flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-                          !isHeadHR ? "cursor-not-allowed " : ""
-                        }`}
+                        className={`flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${!isHeadHR ? "cursor-not-allowed " : ""
+                          }`}
                         title={!isHeadHR ? tooltipText : ""}
                       >
                         Add Employee
@@ -295,7 +300,7 @@ const Page = () => {
                   </form>
                 </div>
               </div>
-              <div className="bg-white shadow-lg ml-10 pr-20 p-6 hidden md:block lg:-mr-0">
+              <div className="bg-white h-full sticky mt-0 shadow-lg ml-10 pr-20 p-6 hidden md:block lg:-mr-0">
                 <h2 className="text-2xl font-bold mb-4 text-center text-gray-800 uppercase tracking-wide pt-10">
                   Guidelines
                 </h2>

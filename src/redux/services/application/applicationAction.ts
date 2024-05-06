@@ -68,8 +68,10 @@ export const updateApplicationStage = createAsyncThunk(
       },
     };
     try {
+      console.log("token", token);
       const response = await axios.patch(
         `${Backend_URL}/application/updateApplicationStage/${jobId}/${applicantId}/${stageId}`,
+        {},
         config
       );
       return response.data;

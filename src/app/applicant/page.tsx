@@ -21,6 +21,9 @@ import { useGetApplicantDetailsQuery } from "@/redux/services/Applicant/applican
 import { Application } from "@/types/application";
 import { JobApplication } from "@/types/job";
 import Loader from "@/components/Loader";
+import UserSupport from "@/components/userSupport";
+import icon from "../../../public/google-bard-icon.svg";
+import Image from 'next/image';
 
 export default function Dashboard() {
   const isSidebarOpen = useAppSelector(
@@ -33,6 +36,8 @@ export default function Dashboard() {
   const [activeJobs, setActiveJobs] = useState<Application[]>();
   const [pendingJobs, setPendingJobs] = useState<Application[]>();
   const [jobsWithFeedback, setJobsWithFeedback] = useState<JobApplication[]>();
+
+  const [clicked, setClicked] = useState<boolean>(false);
 
   const [decodedData, setDecodedData] = useState<any>();
   // const [email, setEmail] = useState<string>("");
@@ -63,10 +68,9 @@ export default function Dashboard() {
       id: applicantId,
     });
 
-  const { data: allApplicationsData, isLoading } =
-    useGetApplicationsByApplicantIdQuery({
-      applicantId: applicantId,
-    });
+  const { data: allApplicationsData } = useGetApplicationsByApplicantIdQuery({
+    applicantId: applicantId,
+  });
 
   const { data: recentJobApplicationsWithFeedbackData } =
     useFindRecentJobApplicationsWithFeedbackQuery({
@@ -87,12 +91,12 @@ export default function Dashboard() {
   useEffect(() => {
     if (allApplicationsData) {
       setActiveJobs(
-        allApplicationsData?.data.filter(
+        allApplicationsData?.data?.filter(
           (job: Application) => job.status.toLowerCase() === "approved"
         )
       );
       setPendingJobs(
-        allApplicationsData?.data.filter(
+        allApplicationsData?.data?.filter(
           (job: Application) => job.status.toLowerCase() === "pending"
         )
       );
@@ -171,36 +175,49 @@ export default function Dashboard() {
       {applicantDetailsLoading ? (
         <Loader />
       ) : (
-        <div
-          className={`content bg-gray-200 overflow-hidden ${
-            isSidebarOpen ? "" : ""
-          }`}
-        >
+        <div>
+          <div className="fixed bottom-3 right-6 z-10">
+            <button
+            className="rounded-full bg-white p-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+              onClick={() => {
+                setClicked(!clicked);
+              }}
+            >
+              <Image src={icon} alt="icon" width={30} height={30} />
+            </button>
+          </div>
           <div
-            className={`content mb-5 ${
-              isSidebarOpen ? "shifted-dashboard" : ""
+            className={`content bg-gray-200 overflow-hidden ${
+              isSidebarOpen ? "" : ""
             }`}
           >
-            <div className="bg-gray-200 container items-center  px-4 py-4">
-              <ApplicantStats
-                allCount={allCount}
-                approvedCount={approvedCount}
-                pendingCount={pendingCount}
-                rejectedCount={rejectedCount}
-              />
-            </div>
             <div
-              className=" bg-gray-200 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
-              style={{ height: "10%" }}
+              className={`content mb-5 ${
+                isSidebarOpen ? "shifted-dashboard" : ""
+              }`}
             >
-              <ApplicantGraphs
-                jobApplicationsByMonth={jobApplicationsByMonthData}
-                activeJobs={activeJobs}
-                pendingJobs={pendingJobs}
-                jobsWithFeedback={jobsWithFeedback}
-              />
+              <div className="bg-gray-200 container items-center  px-4 py-4">
+                <ApplicantStats
+                  allCount={allCount}
+                  approvedCount={approvedCount}
+                  pendingCount={pendingCount}
+                  rejectedCount={rejectedCount}
+                />
+              </div>
+              <div
+                className=" bg-gray-200 px-24 border-gray-200 border-dashed rounded-lg dark:border-gray-700"
+                style={{ height: "10%" }}
+              >
+                <ApplicantGraphs
+                  jobApplicationsByMonth={jobApplicationsByMonthData}
+                  activeJobs={activeJobs}
+                  pendingJobs={pendingJobs}
+                  jobsWithFeedback={jobsWithFeedback}
+                />
+              </div>
             </div>
           </div>
+          <UserSupport click={clicked} />
         </div>
       )}
     </>

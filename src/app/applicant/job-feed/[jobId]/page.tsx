@@ -33,8 +33,11 @@ import Cookies from "js-cookie";
 
 import "../../../../styles/sidebar.css";
 import { Alert } from "flowbite-react";
+import UserSupport from "@/components/userSupport";
+import icon from "../../../../../public/google-bard-icon.svg";
 
 const Page = () => {
+  const [clicked, setClicked] = useState<boolean>(false);
   const [job, setJob] = useState<Job | null>(null);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
   const [applicationStateData, setApplicationStateData] =
@@ -181,6 +184,17 @@ const Page = () => {
       {isLoading && applicantDetailsLoading ? (
         <Loader />
       ) : (
+        <div>
+        <div className="fixed bottom-3 right-6 z-10">
+          <button
+            className="rounded-full bg-white p-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+            onClick={() => {
+              setClicked(!clicked);
+            }}
+          >
+            <Image src={icon} alt="icon" width={30} height={30} />
+          </button>
+        </div>
         <div
           className={`content overflow-hidden ${isSidebarOpen ? "shifted-dashboard" : ""
             }`}
@@ -507,6 +521,8 @@ const Page = () => {
               <section className="py-16 px-16"></section>
             </div>
           </div>
+        </div>
+        <UserSupport click={clicked} />
         </div>
       )}
     </>

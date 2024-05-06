@@ -594,14 +594,16 @@ const Page = () => {
                             data-dropdown-toggle="dropdown"
                             className={`font-bold rounded-lg text-sm text-center inline-flex items-center ${
                               applicant?.status === "pending" ||
-                              applicant?.status === "rejected"
+                              applicant?.status === "rejected" ||
+                              applicant?.status === "waiting"
                                 ? "cursor-not-allowed"
                                 : ""
                             }`}
                             type="button"
                             disabled={
                               applicant?.status === "pending" ||
-                              applicant?.status === "rejected"
+                              applicant?.status === "rejected" ||
+                              applicant?.status === "waiting"
                             }
                           >
                             {jobStages?.stages.find(
@@ -683,6 +685,17 @@ const Page = () => {
                             }
                           >
                             Reject
+                          </a>
+                          <a
+                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
+                            onClick={() =>
+                              handleStatusChange(
+                                applicant?.applicant?.id?.toString(),
+                                "waiting"
+                              )
+                            }
+                          >
+                            Wait
                           </a>
                         </td>
                       </tr>

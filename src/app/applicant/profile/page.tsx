@@ -128,9 +128,14 @@ const Profile = () => {
 
   const [applicantDetails, setApplicantDetails] = useState<ApplicantDetails>();
 
-  const { data, error, isLoading } = useGetApplicantDetailsQuery({
+  const { data, error, isLoading, refetch } = useGetApplicantDetailsQuery({
     id: applicantIdTemp,
   });
+
+  useEffect(() => {
+    console.log("Success:", success);
+    refetch();
+  }, [success]);
 
   const openModal = (modalId: any) => {
     console.log("Modal ID:", modalId); // Check the received modal ID

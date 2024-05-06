@@ -7,6 +7,7 @@ import {
   updateExperienceDetails,
   updateSkillsAndAboutMe,
   updateProfileDetails,
+  updateAboutInfo,
 } from "./applicantAction";
 
 const applicantSlice = createSlice({
@@ -63,6 +64,15 @@ const applicantSlice = createSlice({
       state.error = null;
     });
     builder.addCase(updateProfileDetails.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
+    });
+    builder.addCase(updateAboutInfo.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateAboutInfo.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
       state.data = action.payload;

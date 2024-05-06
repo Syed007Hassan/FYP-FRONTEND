@@ -245,7 +245,7 @@ const EducationDetails: React.FC<EducationProps> = ({
         onClick={handleAddMore}
         className="mt-4 px-7 py-2 bg-blue-700 text-white rounded"
       >
-        Add More
+        Add
       </button>
     </div>
   );

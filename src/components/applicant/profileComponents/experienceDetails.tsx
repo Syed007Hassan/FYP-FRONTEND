@@ -154,7 +154,7 @@ const ExperienceDetails: React.FC<ExperienceDetailsProps> = ({
         className="bg-blue-700 text-white px-7 py-2 rounded"
         onClick={handleAddMore}
       >
-        Add More
+        Add
       </button>
     </div>
   );

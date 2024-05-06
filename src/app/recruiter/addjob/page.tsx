@@ -25,6 +25,7 @@ import { Job } from "@/types/job";
 import jobCategoryList from "@/data/jobCateory";
 import jobTypes from "@/data/jobTypes";
 import CreatableSelect from "react-select/creatable";
+import { qualifications } from "@/data/jobTypes";
 
 import applicantImage from "../../../../public/applicantt.jpg";
 
@@ -463,7 +464,7 @@ const Page = () => {
                       >
                         Qualification
                       </label>
-                      <input
+                      {/* <input
                         type="text"
                         id="qalification"
                         placeholder="Bachelors"
@@ -474,7 +475,22 @@ const Page = () => {
                           setJob({ ...job, qualification: e.target.value });
                         }}
                         required
-                      />
+                      /> */}
+                      <select
+                        id="qualification"
+                        className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
+                        onChange={(e) =>
+                          setJob({ ...job, qualification: e.target.value })
+                        }
+                        required
+                      >
+                        <option value="">Select qualification</option>
+                        {qualifications.map((qualification, index) => (
+                          <option key={index} value={qualification}>
+                            {qualification}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                   <div className="grid grid-rows-1 grid-flow-col gap-5">
@@ -574,23 +590,20 @@ const Page = () => {
                     <div className="">
                       <label
                         htmlFor="urgency"
-                        className="mb-2  font-bold block text-sm text-gray-900 dark:text-white"
+                        className="mb-2 font-bold block text-sm text-gray-900 dark:text-white"
                       >
                         Urgency
                       </label>
-                      <input
-                        type="text"
+                      <select
                         id="Urgency"
-                        placeholder="Urgent"
                         className="w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                        autoComplete="given-name"
-                        // value="companyName"
-                        // onChange={(e) => {
-                        //   setJob({ ...job, urgency: e.target.value });
-                        // }}
                         onChange={(e) => setUrgency(e.target.value)}
                         required
-                      />
+                      >
+                        <option value="">Select urgency</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
                     </div>
                   </div>
                   <div>

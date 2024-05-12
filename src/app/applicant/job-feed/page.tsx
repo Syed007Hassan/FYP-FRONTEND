@@ -636,14 +636,16 @@ const JobFeed = () => {
                               ))
                             )}
                           </div>
-                          <div className="flex justify-center mt-9">
-                            <Pagination
-                              count={10}
-                              defaultPage={1}
-                              onChange={(event, page) => onPageChange(page)}
-                              size="large"
-                            />
-                          </div>
+                          {filteredJobs.length !== 0 && (
+                            <div className="flex justify-center mt-9">
+                              <Pagination
+                                count={10}
+                                defaultPage={1}
+                                onChange={(event, page) => onPageChange(page)}
+                                size="large"
+                              />
+                            </div>
+                          )}
                         </div>
                         <div className="container mx-auto px-4 py-0">
                           <div className="grid gap-6">

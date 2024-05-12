@@ -8,11 +8,12 @@ import { workflow } from "@/data/data";
 import { useRouter } from "next/navigation";
 import { createStage } from "@/types/stage";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { addStage } from "@/redux/services/stage/stageAction";
+import { addStage, resetSuccess } from "@/redux/services/stage/stageAction";
 import "../../../tailwind.config.js";
 import dynamic from "next/dynamic";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
+import Toast, { ToastProps } from "@/components/Toast";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -92,6 +93,7 @@ const defaultEdgeOptions = {
 
 const App = () => {
   const router = useRouter();
+  const [toastProps, setToastProps] = useState<ToastProps | null>(null);
   const [token, setToken] = useState("");
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -121,6 +123,16 @@ const App = () => {
     parseJwtFromSession();
   }, []);
 
+  useEffect(() => {
+    if (toastProps) {
+      const timer = setTimeout(() => {
+        setToastProps(null);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [toastProps]);
+
   const onConnect = useCallback(
     (connection: Connection) => {
       const edge = { ...connection, type: "custom" };
@@ -148,7 +160,7 @@ const App = () => {
     );
   };
 
-  const handleSaveFlow = (e: any) => {
+  const handleSaveFlow = async (e: any) => {
     // Find the starting node (the node with no incoming edges)
     const startingNode = edges.find(
       (edge) => !edges.some((e) => e.target === edge.source)
@@ -189,12 +201,34 @@ const App = () => {
       })),
     };
 
-    console.log("data: ", data);
+    // dispatch(addStage({ jobId, stage: data, token }));
+    try {
+      await dispatch(addStage({ jobId, stage: data, token }));
 
-    dispatch(addStage({ jobId, stage: data, token }));
+      setToastProps({
+        type: "success",
+        message: "Workflow saved successfully",
+      });
 
-    router.push(`/recruiter/joblist/${jobId}`);
+      await dispatch(resetSuccess());
+
+      // router.push(`/recruiter/joblist/${jobId}`);
+    } catch (error) {
+      setToastProps({
+        type: "error",
+        message: "Failed to save workflow",
+      });
+    }
+
+    // router.push(`/recruiter/joblist/${jobId}`);
   };
+
+  useEffect(() => {
+    console.log("success:", success);
+    if (success) {
+      router.push(`/recruiter/joblist/${jobId}`);
+    }
+  }, [success]);
 
   const handleFormSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -253,6 +287,7 @@ const App = () => {
 
   return (
     <div className={styles.flow}>
+      {toastProps && <Toast {...toastProps} />}
       <div className="flex justify-between h-[39.4rem]">
         <div className="w-full relative">
           <div className="flex justify-center pt-4">

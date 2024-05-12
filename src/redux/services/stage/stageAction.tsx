@@ -27,6 +27,26 @@ export const addStage = createAsyncThunk(
   }
 );
 
+export const removeWorkflow = createAsyncThunk(
+  "workflow/deleteStage",
+  async ({ workflowId, token }: { workflowId: string; token: string }) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.delete(
+      `${Backend_URL}/workflow/removeWorkflow/${workflowId}`,
+      config
+    );
+    return response.data;
+  }
+);
+
+export const resetSuccess = createAsyncThunk("stage/resetSuccess", async () => {
+  return false;
+});
+
 export const stageApi = createApi({
   reducerPath: "stageApi",
   refetchOnFocus: true,

@@ -275,7 +275,7 @@ const NavBar = () => {
                 tabIndex={0}
               >
                 <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                  <div className="font-medium">{role}</div>
+                  <div className="font-medium">Applicant</div>
                   <div className="truncate">{email}</div>
                 </div>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">

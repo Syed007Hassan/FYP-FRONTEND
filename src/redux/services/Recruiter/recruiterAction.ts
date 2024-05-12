@@ -161,7 +161,7 @@ export const UpdateRegisteredEmployee = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      // console.log("temp_data", temp_data);
+      console.log("temp_data", temp_data);
       // console.log("recruiterId", recruiterId);
       // console.log("employeeId", employeeId);
 
@@ -175,6 +175,11 @@ export const UpdateRegisteredEmployee = createAsyncThunk(
     }
   }
 );
+
+export const resetSuccess = createAsyncThunk("job/resetSuccess", async () => {
+  return false;
+});
+
 
 export const {
   useGetUserByEmailQuery,

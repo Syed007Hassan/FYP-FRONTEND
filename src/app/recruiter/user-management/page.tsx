@@ -4,7 +4,10 @@ import { FaEdit, FaTrashAlt, FaPlus } from "react-icons/fa";
 import "/src/styles/sidebar.css";
 import { RootState } from "@/redux/store";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useGetUsersQuery } from "@/redux/services/Recruiter/recruiterAction";
+import {
+  useGetUsersQuery,
+  resetSuccess,
+} from "@/redux/services/Recruiter/recruiterAction";
 import Recruiter, { ApiResponse } from "@/types/recruiter";
 import {
   DeleteRegisteredEmployee,
@@ -12,9 +15,10 @@ import {
 } from "@/redux/services/Recruiter/recruiterAction";
 import Cookies from "js-cookie";
 import { parseJwt } from "@/lib/Constants";
-import { AnyCnameRecord } from "dns";
+import Toast, { ToastProps } from "@/components/Toast";
 
 const UserManagement = () => {
+  const [toastProps, setToastProps] = useState<ToastProps | null>(null);
   const [token, setToken] = useState<string>("");
   const [companyId, setCompanyId] = useState<string>("");
   const [userData, setUserData] = useState<ApiResponse>();
@@ -34,6 +38,8 @@ const UserManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const { success } = useAppSelector((state: RootState) => state.userReducer);
 
   const isSidebarOpen = useAppSelector(
     (state: RootState) => state.sidebar.sidebarState
@@ -70,15 +76,43 @@ const UserManagement = () => {
     parseJwtFromSession();
   }, []);
 
+  useEffect(() => {
+    if (toastProps) {
+      const timer = setTimeout(() => {
+        setToastProps(null);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [toastProps]);
+
   const handledelete = async ({ employeeId }: { employeeId: string }) => {
     try {
-      await dispatch(DeleteRegisteredEmployee({ employeeId, recruiterId, token }));
+      await dispatch(
+        DeleteRegisteredEmployee({ employeeId, recruiterId, token })
+      );
+      setToastProps({
+        type: "success",
+        message: "Employee deleted successfully",
+      });
       // setDispatchSuccess(true);
+      // refetch();
     } catch (error) {
       console.error("Error:", error);
       // handle error here
+      setToastProps({
+        type: "error",
+        message: "Failed to delete employee",
+      });
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      dispatch(resetSuccess());
+      refetch();
+    }
+  }, [success]);
 
   const handleUpdate = async ({ employeeId }: { employeeId: string }) => {
     // e.preventDefault();
@@ -95,9 +129,16 @@ const UserManagement = () => {
       await dispatch(
         UpdateRegisteredEmployee({ temp_data, employeeId, recruiterId, token })
       );
+      setToastProps({
+        type: "success",
+        message: "Employee updated successfully",
+      });
       refetch();
     } catch (error) {
-      console.error("Error:", error);
+      setToastProps({
+        type: "error",
+        message: "Failed to update employee",
+      });
     }
   };
 
@@ -107,6 +148,7 @@ const UserManagement = () => {
         isSidebarOpen ? "sidebar-open" : "sidebar-closed"
       }`}
     >
+      {toastProps && <Toast {...toastProps} />}
       <div
         className={`content overflow-x-hidden ${
           isSidebarOpen ? "shifted-dashboard" : ""
@@ -167,7 +209,9 @@ const UserManagement = () => {
                       className="text-red-600 hover:text-red-900"
                       onClick={() =>
                         handledelete({
-                          employeeId: user?.recruiterId ? user.recruiterId.toString() : "",
+                          employeeId: user?.recruiterId
+                            ? user.recruiterId.toString()
+                            : "",
                         })
                       }
                     >

@@ -13,10 +13,11 @@ interface ChatbotProps {
 }
 
 const UserSupport: React.FC<ChatbotProps> = ({ click }) => {
-  const [query, setQuery] = useState("Hi");
+  const [query, setQuery] = useState("Hello SyncFlow!");
   const [input, setInput] = useState("");
 
   const [displayedText, setDisplayedText] = useState("");
+  const [dots, setDots] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -30,6 +31,12 @@ const UserSupport: React.FC<ChatbotProps> = ({ click }) => {
   useEffect(() => {
     console.log(data);
   }, [data]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prevDots) => (prevDots.length < 3 ? prevDots + '.' : ''));
+    }, 100); 
+  }, []);
 
   useEffect(() => {
     setDisplayedText("");
@@ -70,38 +77,32 @@ const UserSupport: React.FC<ChatbotProps> = ({ click }) => {
       }`}
     >
       {/* Prompt Messages Container - Modify the height according to your need */}
-      <div className="flex w-3/12 flex-col fixed right-6 bottom-16 ">
+      <div className="flex w-3/12 flex-col fixed right-6 bottom-16 rounded-lg border border-slate-400">
         {/* Prompt Messages */}
-        <div className="flex flex-col overflow-y-auto rounded-[0.5rem] bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
-          {/* <div className="flex flex-row px-4 py-8 sm:px-6">
-            <Image
-              className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-              src="https://dummyimage.com/256x256/363536/ffffff&text=U"
-              alt="User Image"
-              width={256}
-              height={256}
-            />
-
-            <div className="flex max-w-3xl items-center">
-              <p>What are three great applications of quantum computing?</p>
+        <div className="flex flex-col rounded-t-lg overflow-y-auto bg-slate-300 text-sm leading-6 text-slate-900 shadow-md dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
+          <div className="flex justify-between py-2 px-5 bg-slate-200">
+            <div className="flex gap-2">
+              <Image
+                className="flex h-8 w-10 items-center align-middle justify-center"
+                src={bardIcon}
+                alt="Bard Icon"
+                width={30}
+                height={10}
+              />
+              <label className="font-bold">SyncFlow Assistant</label>
             </div>
-          </div> */}
+          </div>
 
-          <div className="flex bg-slate-100 px-4 py-8 dark:bg-slate-900 sm:px-6 chatbot h-[11.5rem]">
-            <Image
-              className="mr-2 flex h-8 w-10 sm:mr-4 items-center align-middle justify-center"
-              src={bardIcon}
-              alt="Bard Icon"
-              width={30}
-              height={10}
-            />
-
-            <div className="flex w-full flex-col items-start lg:flex-row lg:justify-between">
+          <div className="flex bg-slate-100 px-4 py-3 dark:bg-slate-900 sm:px-6 chatbot h-[11.5rem]">
+            <div className="flex gap-4 w-full flex-col items-start lg:flex-row lg:justify-between">
               <p className="max-w-3xl">
                 {isFetching ? (
-                  "Loading..."
+                  <label className="font-bold text-slate-900">Generating {dots}</label>
                 ) : (
-                  <div>
+                  <div className="flex flex-col gap-3">
+                    {query && (
+                      <label className="font-bold text-slate-900">You: {query}</label>
+                    )}
                     <Markdown>{displayedText}</Markdown>
                   </div>
                 )}
@@ -135,35 +136,12 @@ const UserSupport: React.FC<ChatbotProps> = ({ click }) => {
 
         {/* Prompt message input */}
         <form
-          className="flex w-full items-center rounded-b-md border-t border-slate-300 bg-slate-200 p-2 dark:border-slate-700 dark:bg-slate-900"
+          className="flex w-full items-center rounded-b-lg border-t border-slate-300 bg-slate-200 p-2 dark:border-slate-700 dark:bg-slate-900"
           onSubmit={handleSubmit}
         >
           <label htmlFor="chat" className="sr-only">
             Enter your prompt
           </label>
-          {/* <div>
-            <button
-              className="hover:text-blue-600 dark:text-slate-200 dark:hover:text-blue-600 sm:p-2"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M12 5l0 14"></path>
-                <path d="M5 12l14 0"></path>
-              </svg>
-              <span className="sr-only">Add</span>
-            </button>
-          </div> */}
           <textarea
             id="chat-input"
             rows={1}

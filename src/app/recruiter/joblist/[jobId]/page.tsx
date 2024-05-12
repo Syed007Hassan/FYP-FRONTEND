@@ -26,7 +26,11 @@ import {
   useGetJobQuery,
   updateJobStatus,
 } from "@/redux/services/job/jobAction";
-import { useGetStageQuery } from "@/redux/services/stage/stageAction";
+import {
+  removeWorkflow,
+  useGetStageQuery,
+} from "@/redux/services/stage/stageAction";
+import Toast, { ToastProps } from "@/components/Toast";
 
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 
@@ -35,6 +39,7 @@ import Alert from "@mui/material/Alert";
 import Loader from "@/components/Loader";
 
 const Page = () => {
+  const [toastProps, setToastProps] = useState<ToastProps | null>(null);
   const [token, setToken] = useState<string>("");
   const [job, setJob] = useState<Job | null>(null);
   const [workflow, setWorkflow] = useState<ApiResponse | null>(null);
@@ -49,6 +54,7 @@ const Page = () => {
   ];
 
   const isSidebarOpen = useAppSelector((state) => state.sidebar.sidebarState);
+  const { deleteSuccess } = useAppSelector((state) => state.stageReducer);
   const jobState = useAppSelector((state) => state.jobReducer.success);
   const [selectedOption, setSelectedOption] = useState("");
 
@@ -76,9 +82,15 @@ const Page = () => {
     }
   }, [stageData]);
 
-  // useEffect(() => {
-  //   console.log("workflow", workflow);
-  // }, [workflow]);
+  useEffect(() => {
+    if (toastProps) {
+      const timer = setTimeout(() => {
+        setToastProps(null);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [toastProps]);
 
   useEffect(() => {
     const parseJwtFromSession = async () => {
@@ -138,6 +150,45 @@ const Page = () => {
     refetchStage();
   }, [refetchStage, stageData]);
 
+  const deleteWorkflow = async () => {
+    // if (workflow && workflow.data[0]) {
+    //   dispatch(removeWorkflow({ workflowId: workflow.data[0].workflowId.toString(), token }));
+    // } else {
+    //   console.error("Cannot delete workflow: workflow data is not available");
+    // }
+
+    try {
+      if (workflow && workflow.data[0]) {
+        await dispatch(
+          removeWorkflow({
+            workflowId: workflow.data[0].workflowId.toString(),
+            token,
+          })
+        );
+        setToastProps({
+          type: "success",
+          message: "Workflow deleted successfully",
+        });
+      } else {
+        setToastProps({
+          type: "error",
+          message: "Cannot delete workflow: workflow data is not available",
+        });
+      }
+    } catch (error) {
+      setToastProps({
+        type: "error",
+        message: "Error deleting workflow",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      refetchStage();
+    }
+  }, [deleteSuccess]);
+
   return (
     <>
       {isLoading ? (
@@ -148,6 +199,7 @@ const Page = () => {
             isSidebarOpen ? "shifted-dashboard" : ""
           }`}
         >
+          {toastProps && <Toast {...toastProps} />}
           <div className="main-content">
             <div className="page-content">
               <section className="py-16 px-16">
@@ -369,23 +421,37 @@ const Page = () => {
                           </ul>
 
                           <div className="mt-8 flex gap-5">
-                            <Link
-                              href="/recruiter/joblist/[jobId]/workflow"
-                              as={`/recruiter/joblist/${job?.jobId}/workflow`}
-                              className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
-                            >
-                              <i className="fas fa-bookmark"></i> Add Workflow
-                            </Link>
-
+                            {workflow?.data ? (
+                              <button
+                                onClick={deleteWorkflow}
+                                className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                              >
+                                Delete Workflow
+                              </button>
+                            ) : (
+                              <Link
+                                href="/recruiter/joblist/[jobId]/workflow"
+                                as={`/recruiter/joblist/${job?.jobId}/workflow`}
+                                className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
+                              >
+                                <i className="fas fa-bookmark"></i> Add Workflow
+                              </Link>
+                            )}
                             <select
                               className="btn w-full py-2 text-center items-center justify-center flex bg-yellow-500/20 border-transparent text-yellow-500 hover:-translate-y-1.5 dark:bg-yellow-500/30"
-                              value={selectedOption !== "" ? selectedOption : job?.jobStatus}
+                              value={
+                                selectedOption !== ""
+                                  ? selectedOption
+                                  : job?.jobStatus
+                              }
                               onChange={(e) => {
                                 setSelectedOption(e.target.value);
                                 handlePublishJob(e.target.value);
                               }}
                             >
-                              <option value="Select a status">Select a status</option>
+                              <option value="Select a status">
+                                Select a status
+                              </option>
                               <option value="Active">Active</option>
                               <option value="Evaluating">Evaluating</option>
                               <option value="UnActive">Un Active</option>

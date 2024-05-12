@@ -58,13 +58,13 @@ export default function Dashboard() {
   useEffect(() => {
     if (data) {
       setCompany({
-        companyId: data.data.companyId, // add this line
-        companyName: data.data.companyName,
-        companyEmail: data.data.companyEmail,
-        companyProfile: data.data.companyProfile,
-        companyWebsite: data.data.companyWebsite,
-        companyAddress: data.data.companyAddress,
-        companyPhone: data.data.companyPhone,
+        companyId: data.data?.companyId, // add this line
+        companyName: data.data?.companyName,
+        companyEmail: data.data?.companyEmail,
+        companyProfile: data.data?.companyProfile,
+        companyWebsite: data.data?.companyWebsite,
+        companyAddress: data.data?.companyAddress,
+        companyPhone: data.data?.companyPhone,
       });
     }
     // console.log("Company", data);
@@ -89,25 +89,6 @@ export default function Dashboard() {
 
     parseJwtFromSession();
   }, []);
-
-  useEffect(() => {
-    console.log("Decoded Data", decodedData);
-  }, [decodedData]);
-
-  useEffect(() => {
-    if (data) {
-      setCompany({
-        companyId: data.data.companyId, // add this line
-        companyName: data.data.companyName,
-        companyEmail: data.data.companyEmail,
-        companyProfile: data.data.companyProfile,
-        companyWebsite: data.data.companyWebsite,
-        companyAddress: data.data.companyAddress,
-        companyPhone: data.data.companyPhone,
-      });
-    }
-    // console.log("Company", data);
-  }, [data]);
 
   return (
     <>

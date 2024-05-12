@@ -62,7 +62,7 @@ export default function SignInSide() {
       // });
 
       dispatch(
-        loginApplicant({ email: email, password: password, role: "employee" })
+        loginApplicant({ email: email, password: password, role: "applicant" })
       );
 
       // console.log(result?.data?.data?.jwt);

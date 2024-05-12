@@ -4,7 +4,7 @@ import {
   UpdateRegisteredEmployee,
   createEmployee,
 } from "./recruiterAction";
-import { updateUser } from "./recruiterAction";
+import { updateUser, resetSuccess } from "./recruiterAction";
 
 export interface UpdateState {
   success: boolean;
@@ -57,6 +57,9 @@ const userSlice = createSlice({
           state.success = true;
         }
       )
+      .addCase(resetSuccess.fulfilled.toString(), (state) => {
+        state.success = false;
+      })
       .addDefaultCase((state, action) => {
         state.success = false;
       });

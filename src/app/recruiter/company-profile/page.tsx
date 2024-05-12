@@ -73,7 +73,7 @@ const Page = () => {
   useEffect(() => {
     setCompanyName(data?.data?.companyName || "");
     setCompanyAddress(data?.data?.companyAddress || "");
-    setCompanyPhone(data?.data?.companyPhone.toString() || "");
+    setCompanyPhone(data?.data?.companyPhone?.toString() || "");
     setCompanyEmail(data?.data?.companyEmail || "");
     setCompanyWebsite(data?.data?.companyWebsite || "");
   }, [data]);

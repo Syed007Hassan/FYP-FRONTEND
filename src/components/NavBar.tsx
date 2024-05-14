@@ -77,7 +77,6 @@ const NavBar: React.FC<HeaderProps> = () => {
       const decodedData = parseJwt(jwt);
       setDecodedData(decodedData);
       setEmail(decodedData?.email || "");
-      setName(decodedData?.name || "");
       setRole(decodedData?.role || "");
       setCompanyId(decodedData?.companyId || 0);
       setRecruiterId(decodedData?.recruiterId || 0);
@@ -305,7 +304,7 @@ const NavBar: React.FC<HeaderProps> = () => {
                     width={44}
                     height={44} // replace with the actual path to the user's image
                   />
-                  {name}
+                  {recruiter?.name}
                   <svg
                     className={`w-2.5 h-2.5 ms-3 transform transition-transform ${
                       dropdownVisible ? "rotate-180" : ""

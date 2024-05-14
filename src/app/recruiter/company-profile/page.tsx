@@ -81,7 +81,7 @@ const Page = () => {
   const handleSubmit = (event: any) => {
     event.preventDefault();
 
-    const companyPhone = parseInt(companyPhoneNum);
+    const companyPhone = companyPhoneNum;
     const datas = {
       companyId,
       companyName,

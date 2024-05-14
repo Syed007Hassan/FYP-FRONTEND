@@ -23,7 +23,7 @@ export const updateCompany = createAsyncThunk<
     companyId: number;
     companyName: string;
     companyAddress: string;
-    companyPhone: number;
+    companyPhone: string;
     companyEmail: string;
     companyWebsite: string;
     token: string;

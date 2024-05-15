@@ -1,136 +1,208 @@
-"use client"
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+"use strict";
+import Header from "@/components/Header";
+import * as React from "react";
 
 export default function Demo() {
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      firstName: data.get('firstName'),
+  const videoSrc = "https://drive.google.com/file/d";
 
-    });
-  };
+  // recruiter
+  const signUp_Login_Recruiter = "/1fl-BIko3kw2Tb2i_VOnGWpLEr-Jlq1U2/preview";
+  const job_Recruiter = "/1p69Km9cKM-YieAAFdr5awCtKgdUpzOrM/preview";
+  const profile_company_Recruiter =
+    "/1PMaglAkznn3xC3SYYDGVn4EGcUPMk7HJ/preview";
+  const userManagement_Recruiter = "/1ujzvuFzVz6IH0SD2vOPU7B-k1cUTXnRR/preview";
+  const jobAnalytics_Recruiter = "/1F0TW_PZSCCJot_XbkDY6hbgGScxJa1qx/preview";
+
+  // applicant
+  const signUp_Login_BuildProfile_Applicant =
+    "/1A3KvXB5gtwhnnivAXSckqasvkWonZshq/preview";
+  const profileManagement_Applicant =
+    "/11TSbhxYuA-0vy-uMuc10XTanrIvR1ham/preview";
+  const jobFilteration_And_Apply_Applicant =
+    "/1BkJ5uhbW37JpBRRg290CGrG27lDkqj40/preview";
+  const jobHistory_Applicant = "/12IcD7SpOUrkzI7I6zEZWfUtjV993oqhf/preview";
+  const emailGeneration_Applicant =
+    "/1KBzbSTrqRepjYbPfSLxFu0OYF2RiDK9H/preview";
 
   return (
-    <div>
-
+    <>
       <Header />
-      <ThemeProvider theme={defaultTheme}>
-        <Grid container component="main" sx={{ height: '100vh' }}>
+      <div className="bg-gray-100 p-4 space-y-12 font-inter">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-blue-900">Recruiter</h1>
+        </div>
 
-          <CssBaseline />
-          <Grid item xs={false} sm={4} md={7} className="px-10 py-10 ">
-            <Box>
-              <Typography variant="h4">Get A Demo of SyncFlow</Typography>
-              {/* Other content within the Box */}
-              From recruiting through onboarding, Greenhouse gives your company everything you need to be great at hiring.
-
-              Here’s what you can expect when you request a Greenhouse demo.
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <Box
-              sx={{
-                my: 8,
-                mx: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-
-              {/* <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, width: '70%', maxWidth: '400px', height: '300px' }} > */}
-              <div className='container pb-3 y-space-3'>
-                <label htmlFor="email" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Email address</label>
-                <input
-                  type="email"
-                  id="email"
-                  className="mb-4 w-full border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                  placeholder="john.doe@company.com"
-                  required />
-
-                {/* // create for first name  */}
-
-                <label htmlFor="firstName" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">First name</label>
-                <input type="text"
-                  id="firstName"
-                  className="mb-4 w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                  placeholder="John"
-                  required />
-                {/* // create for last name  */}
-                <label htmlFor="lastName" className="mb-2 block text-sm font-bold text-gray-900 dark:text-white">Last name</label>
-                <input type="text"
-                  id="lastName"
-                  className="mb-4 w-full  min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                  placeholder="Doe"
-                  required />
-
-                {/*create for company name  */}
-
-                <label htmlFor="companyName" className="mb-2 block mt-2 text-sm font-bold text-gray-900 dark:text-white">Company Name</label>
-                <input type="text"
-                  id="companyName"
-                  className="mb-4 w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                  required
+        <div>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Sign Up/Login</h2>
+                <p className="text-lg mb-6">
+                  This video explains how to sign up or log in as a recruiter.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + signUp_Login_Recruiter}
+                  allow="autoplay"
+                  title="Sign Up/Login for Recruiter"
                 />
-                <label htmlFor="companySize" className="mb-2 block mt-2 text-sm font-bold text-gray-900 dark:text-white">Company Size</label>
-                <input type="text"
-                  id="companySize"
-                  className="mb-4 w-full min-w-fit border rounded p-2 transition duration-300 ease-in-out hover:bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-opacity-50 hover:placeholder-opacity-75"
-                  required
-                />
-
-
-                <button
-                  className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 my-3 px-4 rounded-full"
-                  type="button"
-                  onClick={handleSubmit}
-                >
-                  Show Demo ➔
-                </button>
-
-                <Copyright sx={{ mt: 1 }} />
-
               </div>
-            </Box>
-          </Grid>
-        </Grid>
-        <Footer />
-      </ThemeProvider>
+            </div>
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Job Posting</h2>
+                <p className="text-lg mb-6">
+                  This video guides you on how to post jobs as a recruiter.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + job_Recruiter}
+                  allow="autoplay"
+                  title="Job Posting for Recruiter"
+                />
+              </div>
+            </div>
+          </div>
 
-    </div>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">
+                  Profile and Company Setup
+                </h2>
+                <p className="text-lg mb-6">
+                  This video shows you how to set up your profile and company
+                  information.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + profile_company_Recruiter}
+                  allow="autoplay"
+                  title="Profile and Company Setup for Recruiter"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">User Management</h2>
+                <p className="text-lg mb-6">
+                  This video provides an overview of user management for recruiters.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + userManagement_Recruiter}
+                  allow="autoplay"
+                  title="User Management for Recruiter"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Job Analytics</h2>
+                <p className="text-lg mb-6">
+                  In this demo video, you will be guided on how to use the Analytics
+                  page for Job to efficiently filter out the candidates and run a
+                  smooth hiring process.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + jobAnalytics_Recruiter}
+                  allow="autoplay"
+                  title="Job Analytics for Recruiter"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-blue-900">Applicant</h1>
+        </div>
+
+        <div>
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Sign Up/Login & Build Profile</h2>
+                <p className="text-lg mb-6">
+                  This video explains how to sign up, log in, and build your profile as an applicant.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + signUp_Login_BuildProfile_Applicant}
+                  allow="autoplay"
+                  title="Sign Up/Login & Build Profile for Applicant"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Profile Management</h2>
+                <p className="text-lg mb-6">
+                  This video shows you how to manage your profile information as an applicant.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + profileManagement_Applicant}
+                  allow="autoplay"
+                  title="Profile Management for Applicant"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Job Filteration & Apply</h2>
+                <p className="text-lg mb-6">
+                  This video guides you on how to filter and apply for jobs as an applicant.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + jobFilteration_And_Apply_Applicant}
+                  allow="autoplay"
+                  title="Job Filteration & Apply for Applicant"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Job History</h2>
+                <p className="text-lg mb-6">
+                  This video provides an overview of job history management for applicants.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + jobHistory_Applicant}
+                  allow="autoplay"
+                  title="Job History for Applicant"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap -mx-4 mb-8">
+            <div className="w-full md:w-1/2 p-4">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h2 className="text-2xl font-semibold mb-4">Email Generation</h2>
+                <p className="text-lg mb-6">
+                  This video explains how to generate and manage emails as an applicant.
+                </p>
+                <iframe
+                  className="w-full h-64 md:h-96 rounded-lg"
+                  src={videoSrc + emailGeneration_Applicant}
+                  allow="autoplay"
+                  title="Email Generation for Applicant"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

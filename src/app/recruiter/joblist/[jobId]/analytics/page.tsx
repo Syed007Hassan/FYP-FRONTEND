@@ -320,8 +320,8 @@ const Page = () => {
 
   const [applicationFeedback, setApplicationFeedback] = useState<string>("");
 
-  const handleFeedback = () => {
-    dispatch(
+  const handleFeedback = async () => {
+    await dispatch(
       updateApplicationFeedback({
         jobId: jobIdParam,
         applicantId: applicantTempId,

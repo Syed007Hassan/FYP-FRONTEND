@@ -27,9 +27,11 @@ export default function Home() {
             </p>
             {/* request a demo button */}
             <div className="flex pt-9">
+              <a href="/demo"> 
               <button className="bg-blue-700 text-white rounded-full py-3 px-6 font-semibold hover:bg-blue-600">
                 Request a demo
               </button>
+              </a>
             </div>
           </header>
         </div>
